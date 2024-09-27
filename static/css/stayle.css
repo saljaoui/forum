@@ -53,6 +53,8 @@ body {
   gap: 15px;
 }
 
+
+
 /* Title Styles */
 .title {
   display: flex;
@@ -77,6 +79,15 @@ body {
   outline: none;
   resize: none;
 
+}
+
+.sgin a {
+  font-weight: 600;
+  color: #e8e8e8;
+}
+
+.sgin {
+  color: #e8e8e8;
 }
 
 .container #inputText::placeholder {
@@ -122,11 +133,14 @@ button::before {
   /* Center horizontally */
   height: 100%;
   width: 0;
-  background-color: #212121;
+  background-color: #01659f;
   z-index: -1;
   box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
   transition: all 300ms
     /* Sync with button hover */
+}
+.box img {
+  width: 100%;
 }
 
 button:hover {
