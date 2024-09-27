@@ -1,0 +1,143 @@
+/* Font Face */
+@font-face {
+  font-family: myFont;
+  src: url('/static/font/SoufianFont.otf');
+}
+
+/* Animation */
+@keyframes soufian {
+  0% {
+    transform: scale(0.5);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.soufian {
+  animation: soufian 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+
+}
+
+/* Global Reset */
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+/* Body Styles */
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: url("/static/imgs/soso.png") no-repeat center/cover;
+  font-family: "Poppins", sans-serif;
+  /* Default font family */
+}
+
+/* Container Styles */
+.container {
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  padding: 25px 30px;
+  margin-top: 15px;
+  max-width: 350px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Title Styles */
+.title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  margin-bottom: 25px;
+  font-size: 37px;
+  font-family: myFont;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, .3);
+}
+
+/* Input Styles */
+.container .inputUsername {
+  margin: 5px 0;
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 15px;
+  color: #fff;
+  padding: 10px 15px;
+  width: 100%;
+  outline: none;
+  resize: none;
+
+}
+
+.container #inputText::placeholder {
+  font-family: myFont;
+  font-size: smaller;
+  color: #fff;
+}
+
+/* Button Styles */
+.button {
+  position: relative;
+  width: 100%;
+  height: 45px;
+  background: #e8e8e8;
+  border: none;
+  outline: none;
+  border-radius: 40px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  font-size: 16px;
+  color: #212121;
+  font-weight: 600;
+  margin-top: 5%;
+  z-index: 1;
+  overflow: hidden;
+  box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
+  transition: all 300ms;
+}
+
+/* Center Select Styles */
+.center-select {
+  text-align: center;
+}
+
+
+button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  /* Start from the middle */
+  transform: translateX(-50%);
+  /* Center horizontally */
+  height: 100%;
+  width: 0;
+  background-color: #212121;
+  z-index: -1;
+  box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
+  transition: all 300ms
+    /* Sync with button hover */
+}
+
+button:hover {
+  color: #fff;
+  box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
+  /* Ensure box-shadow remains consistent */
+}
+
+button:hover::before {
+  width: 100%;
+  /* Expand beyond the button width */
+  transform: translateX(-50%);
+  /* Center the expansion */
+}
