@@ -69,7 +69,7 @@ func createdtbles(db *sql.DB) {
 	for _, table := range tables {
 		_, err := db.Exec(table)
 		if err != nil {
-			fmt.Println(err)
+			fmt.Print(err)
 			return
 		}
 	}
