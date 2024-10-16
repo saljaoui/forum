@@ -1,5 +1,3 @@
-module forum
+module forum-project
 
-go 1.18
-
-require github.com/mattn/go-sqlite3 v1.14.23 // indirect
+go 1.22.3
