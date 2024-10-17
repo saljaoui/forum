@@ -21,7 +21,7 @@ func main() {
 	http.HandleFunc("/api/login", handlers.LoginHandler)
 
 	// Serve static files
-	
+	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("./static"))))
 
 	// Serve HTML templates
 	http.HandleFunc("/login", func(w http.ResponseWriter, r *http.Request) {
