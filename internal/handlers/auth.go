@@ -58,6 +58,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 
     // Here you would typically create a session or generate a JWT token
     // For simplicity, we'll just return a success message
+    
     w.WriteHeader(http.StatusOK)
     json.NewEncoder(w).Encode(map[string]string{"message": "Login successful"})
 }

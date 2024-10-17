@@ -19,6 +19,7 @@ func main() {
 	// API routes
 	http.HandleFunc("/api/register", handlers.RegisterHandler)
 	http.HandleFunc("/api/login", handlers.LoginHandler)
+	http.HandleFunc("/dachboard", handlers.Dachboard)
 
 	// Serve static files
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("./static"))))
