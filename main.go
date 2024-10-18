@@ -15,11 +15,12 @@ func main() {
 		log.Fatal(err)
 	}
 
+
 	// API routes
 	http.HandleFunc("/api/register", handlers.RegisterHandler)
 	http.HandleFunc("/api/login", handlers.LoginHandler)
-	http.HandleFunc("/api/home", handlers.HomeHandler)
-	http.HandleFunc("/api/createPost", handlers.CreatePostHandler)
+	http.HandleFunc("/api/home", handlers.Dachboard)
+	http.HandleFunc("/api/createPost", handlers.CreateNewPost)
 
 	// Serve static files
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("./static"))))
@@ -31,7 +32,7 @@ func main() {
 	http.HandleFunc("/register", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "templates/register.html")
 	})
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc("/home", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "templates/home.html")
 	})
 

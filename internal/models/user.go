@@ -1,26 +1,9 @@
 package models
 
 import (
-	"time"
-
 	"golang.org/x/crypto/bcrypt"
 )
-
-type User struct {
-	ID        int64
-	Username  string
-	Email     string
-	Password  string
-	CreatedAt time.Time
-}
-
-type CreatePost struct {
-	ID int64
-	UserID int64
-	Title string
-	Content string
-	CreatedAt time.Time
-}
+ 
 
 func (u *User) HashPassword() error {
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(u.Password), bcrypt.DefaultCost)
