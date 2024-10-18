@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form id="postForm">
+        <textarea id="post">Enter Your Post</textarea>
+        <input type="submit" name="submit" id="submit">
+    </form>
+    <script>
+        document.getElementById('postForm').addEventListener('submit', (e) => {
+            e.preventDefault()
+            const response = fetch('/api/home', {
+                method: 'POST',
+                headerxs: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    user_id: 1,
+                    title: "",
+                    content: document.getElementById('post').value,
+                }),
+            });
+            if (response.ok) {
+                alert('sucssece creted post');
+            } else {
+                alert('Registration failed');
+            }
+        })
+    </script>
+</body>
+</html>
