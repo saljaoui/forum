@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Forum Home</title>
+        <link rel="stylesheet" href="/static/css/styles.css">
+        <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            padding: 20px;
+        }
+        header {
+            background: #333;
+            color: #fff;
+            padding: 1rem;
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        nav ul li {
+            margin-right: 10px;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+        }
+        .post {
+            background: #f4f4f4;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        .post-title {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+        .post-meta {
+            font-size: 0.8rem;
+            color: #666;
+        }
+        .categories {
+            margin-top: 20px;
+        }
+        .category {
+            display: inline-block;
+            background: #333;
+            color: #fff;
+            padding: 5px 10px;
+            margin-right: 5px;
+            border-radius: 5px;
+        }
+    </style>
+    </head>
+    <body>
+        <header>
+            <nav>
+                <h1>My Forum</h1>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/login">Login</a></li>
+                    <li><a href="/register">Register</a></li>
+                    <li><a onclick="showPopup()" href="/create-post">Create Post</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <div class="container">
+            <main>
+                <h2>Recent Posts</h2>
+                <div id="posts">
+                    <!-- Posts will be dynamically loaded here -->
+                </div>
+            </main>
+
+            <aside class="categories">
+                <h3>Categories</h3>
+                <div id="categories">
+                    <!-- Categories will be dynamically loaded here -->
+                </div>
+            </aside>
+        </div>
+
+        <script>
+        // Dummy data for demonstration
+        const posts = [
+            { id: 1, title: 'First Post', content: 'This is the content of the first post.', author: 'User1', date: '2023-04-18', likes: 5, dislikes: 1 },
+            { id: 2, title: 'Second Post', content: 'This is the content of the second post.', author: 'User2', date: '2023-04-19', likes: 3, dislikes: 0 },
+        ];
+
+        const categories = ['General', 'Technology', 'Sports', 'Entertainment'];
+
+        function displayPosts() {
+            const postsContainer = document.getElementById('posts');
+            postsContainer.innerHTML = posts.map(post => `
+                <div class="post">
+                    <h3 class="post-title">${post.title}</h3>
+                    <p>${post.content}</p>
+                    <div class="post-meta">
+                        Posted by ${post.author} on ${post.date}
+                        | Likes: ${post.likes} | Dislikes: ${post.dislikes}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function displayCategories() {
+            const categoriesContainer = document.getElementById('categories');
+            categoriesContainer.innerHTML = categories.map(category => `
+                <span class="category">${category}</span>
+            `).join('');
+        }
+
+        // Load posts and categories when the page loads
+        window.onload = () => {
+            displayPosts();
+            displayCategories();
+        };
+        function showPopup() {
+    const title = prompt("Enter post title:");
+    const content = prompt("Enter post content:");
+    
+    if (title && content) {
+        sendPostToServer(title, content);
+    } else {
+        alert("Both title and content are required.");
+    }
+}
+
+async function sendPostToServer(title, content) {
+        const response = fetch('/api/createPost', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ 
+                title: title,
+                user_id: 1,
+                content: content 
+            }),
+        });
+        console.log(response.status);
+        if (response.status === 201) {
+            alert("Post created successfully!");
+        } else {
+            alert("Failed to create post. Please try again.");
+        }
+}
+    </script>
+    </body>
+</html>
