@@ -12,6 +12,12 @@
     <div class="post">
         <div id="inputs">
             <form id="create_post">
+                <select name="category" id="category">
+                    <option value="General">General</option>
+                    <option value="News">News</option>
+                    <option value="Resources">Resources</option>
+                    <option value="Suggestions">Suggestions</option>
+                </select>
                 <input type="text" id="title">
                 <input type="text" id="content">
                 <button type="submit">Create New Post</button>
@@ -28,6 +34,7 @@
 
         let title = document.querySelector("#title")
         let content = document.querySelector("#content")
+        let category = document.querySelector("#category")
         let create_post = document.querySelector("#create_post")
         create_post.addEventListener("submit",async (e) => {
             e.preventDefault();
@@ -39,7 +46,8 @@
                 body: JSON.stringify({
                     user_id: +user,
                     title: title.value,
-                    content: content.value
+                    content: content.value,
+                    category: category.value
                 })
             })
             if (response.ok) {

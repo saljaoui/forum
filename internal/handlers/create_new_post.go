@@ -20,5 +20,10 @@ func CreateNewPost(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Error creating user", http.StatusInternalServerError)
 		return
 	}
+	_, err = database.DB.Exec("INSERT INTO categories (name)VALUES(?)", post.Category)
+	if err != nil {
+		http.Error(w, "Error creating category", http.StatusInternalServerError)
+		return
+	}
 	w.WriteHeader(http.StatusCreated)
 }
