@@ -74,10 +74,11 @@ func createSchema() error {
         name TEXT NOT NULL UNIQUE
     );
 
-    INSERT INTO categories (name) VALUES ('General');
-    INSERT INTO categories (name) VALUES ('News');
-    INSERT INTO categories (name) VALUES ('Resources');
-    INSERT INTO categories (name) VALUES ('Suggestions');
+    INSERT OR IGNORE INTO categories (name) VALUES ('General');
+    INSERT OR IGNORE INTO categories (name) VALUES ('News');
+    INSERT OR IGNORE INTO categories (name) VALUES ('Resources');
+    INSERT OR IGNORE INTO categories (name) VALUES ('Suggestions');
+
 
     CREATE TABLE IF NOT EXISTS post_categories (
         post_id INTEGER,
