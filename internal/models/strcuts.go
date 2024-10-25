@@ -11,8 +11,8 @@ type User struct {
 }
 
 type Post struct {
-	Id      int
-	User_id int
+	ID      int64
+	User_id int64
 	Title   string
 	Content string
 	Category string
