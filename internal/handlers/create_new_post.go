@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 	"fmt"
+	"strconv"
 	"forum-project/internal/database"
 	"forum-project/internal/models"
 )
@@ -26,6 +27,12 @@ func CreateNewPost(w http.ResponseWriter, r *http.Request) {
 	post.ID, err = result.LastInsertId()
 	if err != nil {
 		http.Error(w, "Error retrieving post ID", http.StatusInternalServerError)
+		return
+	}
+
+	err = database.DB.Exec("INSERT INTO posts (post_id, title) VALUES (?, ?)", post.ID, strconv.Atoi(post.Category))
+	if err != nil {
+		http.Error(w, "Error creating post", http.StatusInternalServerError)
 		return
 	}
 
