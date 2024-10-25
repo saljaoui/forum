@@ -13,6 +13,7 @@ type User struct {
 type Post struct {
 	ID      int64
 	User_id int64
+	Username string
 	Title   string
 	Content string
 	Category string
