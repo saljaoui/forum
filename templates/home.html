@@ -24,18 +24,18 @@
         <div class="categories">
             <h2>Categories</h2>
             <ul class="category-list">
-                <li class="category-item active">General Discussion</li>
-                <li class="category-item">News & Updates</li>
-                <li class="category-item">Resources & Guides</li>
-                <li class="category-item">Suggestions & Feedback</li>
+                <li class="category-item active">General</li>
+                <li class="category-item">News</li>
+                <li class="category-item">Resources</li>
+                <li class="category-item">Suggestions</li>
             </ul>
         </div>
 
         <!-- Posts Section -->
-        <div class="posts">
+        <div id="posts-list" class="posts">
             <h2>Recent Posts</h2>
             <!-- Sample post cards -->
-            <div class="post-card">
+            <!-- <div class="post-card">
                 <h3 class="post-title">Welcome to our new forum!</h3>
                 <div class="post-meta">Posted by Admin • General Discussion • 2 hours ago</div>
                 <div class="post-content">
@@ -48,7 +48,7 @@
                 <div class="post-meta">Posted by John • News & Updates • 5 hours ago</div>
                 <div class="post-content">
                     Here are the latest updates for Q4...
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
@@ -132,9 +132,11 @@
                 });
 
                 if (response.ok) {
+                    fetchPosts();
                     alert('Post created successfully!');
                     closeModal();
                     create_post.reset();
+
                 } else {
                     alert('Failed to create post. Please try again.');
                 }
@@ -156,7 +158,41 @@
                 // Here you would typically fetch posts for the selected category
             });
         });
+        
+        async function fetchPosts() {
+        try {
+            const response = await fetch('/api/getPosts');
+            console.log(response);
+            
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const posts = await response.json();
+            console.log(posts);
+            
+            const postsList = document.getElementById('posts-list');
 
+            // Clear the list before adding new items
+            postsList.innerHTML = '';
+
+            posts.forEach(post => {
+                const postCard = document.createElement('div');
+                postCard.classList.add('post-card');
+                postCard.innerHTML = `
+                    <h3 class="post-title">${post.Title}</h3>
+                    <div class="post-meta">Posted by User ID: ${post.User_id} • Category: General • ${new Date(post.created_at).toLocaleString()}</div>
+                    <div class="post-content">${post.Content}</div>
+                `;
+                postsList.appendChild(postCard);
+            });
+        } catch (error) {
+            console.error('Error fetching posts:', error);
+            const postsList = document.getElementById('posts-list');
+            postsList.innerHTML = `<div>Error: ${error.message}</div>`;
+        }
+    }
+    // Fetch posts when the page loads
+    fetchPosts();
 
     </script>
 </body>

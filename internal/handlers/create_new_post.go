@@ -35,18 +35,39 @@ func CreateNewPost(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Error creating post", http.StatusInternalServerError)
 		return
 	}
-
-	// fmt.Println(post.ID)
-	// Responseuser.Id = int(user.ID)
-	// Responseuser.Username = user.Username
-	// w.WriteHeader(http.StatusOK)
-	// w.Header().Set("Content-Type", "application/json")
-	// json.NewEncoder(w).Encode(Responseuser)
-
-	// _, err = database.DB.Exec("INSERT INTO categories (name)VALUES(?)", post.Category)
-	// if err != nil {
-	// 	http.Error(w, "Error creating category", http.StatusInternalServerError)
-	// 	return
-	// }
 	w.WriteHeader(http.StatusCreated)
+}
+
+
+func GetPostsHandler(w http.ResponseWriter, r *http.Request) {
+
+	rows, err := database.DB.Query("SELECT id, user_id, title, content FROM posts")
+	if err != nil {
+		http.Error(w, "Error fetching posts", http.StatusInternalServerError)
+		return
+	}
+	defer rows.Close()
+
+	
+	var posts []models.Post
+
+
+	for rows.Next() {
+		var post models.Post
+		err := rows.Scan(&post.ID, &post.User_id, &post.Title, &post.Content)
+		if err != nil {
+			http.Error(w, "Error scanning post", http.StatusInternalServerError)
+			return
+		}
+		posts = append(posts, post)
+	}
+
+	if err = rows.Err(); err != nil {
+		http.Error(w, "Error iterating over posts", http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(posts)
 }

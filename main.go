@@ -21,6 +21,7 @@ func main() {
 	http.HandleFunc("/api/login", handlers.LoginHandler)
 	http.HandleFunc("/api/home", handlers.Dachboard)
 	http.HandleFunc("/api/createPost", handlers.CreateNewPost)
+	http.HandleFunc("/api/getPosts", handlers.GetPostsHandler)
 
 	// Serve static files
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("./static"))))
