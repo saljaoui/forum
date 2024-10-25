@@ -41,7 +41,7 @@ func CreateNewPost(w http.ResponseWriter, r *http.Request) {
 
 func GetPostsHandler(w http.ResponseWriter, r *http.Request) {
 
-	rows, err := database.DB.Query("SELECT id, user_id, title, content FROM posts")
+	rows, err := database.DB.Query("SELECT id, user_id, title, content, created_at FROM posts")
 	if err != nil {
 		http.Error(w, "Error fetching posts", http.StatusInternalServerError)
 		return
@@ -54,7 +54,7 @@ func GetPostsHandler(w http.ResponseWriter, r *http.Request) {
 
 	for rows.Next() {
 		var post models.Post
-		err := rows.Scan(&post.ID, &post.User_id, &post.Title, &post.Content)
+		err := rows.Scan(&post.ID, &post.User_id, &post.Title, &post.Content, &post.Created_at)
 		if err != nil {
 			http.Error(w, "Error scanning post", http.StatusInternalServerError)
 			return

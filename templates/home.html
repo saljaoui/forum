@@ -180,7 +180,7 @@
                 postCard.classList.add('post-card');
                 postCard.innerHTML = `
                     <h3 class="post-title">${post.Title}</h3>
-                    <div class="post-meta">Posted by User ID: ${post.User_id} • Category: General • ${new Date(post.created_at).toLocaleString()}</div>
+                    <div class="post-meta">Posted by User ID: ${post.User_id} • Category: General • ${new Date(post.Created_at).toLocaleString()}</div>
                     <div class="post-content">${post.Content}</div>
                 `;
                 postsList.insertBefore(postCard, postsList.firstChild);

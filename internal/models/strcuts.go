@@ -16,4 +16,5 @@ type Post struct {
 	Title   string
 	Content string
 	Category string
+	Created_at time.Time
 }
