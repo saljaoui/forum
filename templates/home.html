@@ -323,8 +323,10 @@
                         title: document.querySelector("#title").value,
                         content: document.querySelector("#content").value,
                         category: document.querySelector("#category").value
+                   
                     })
                 });
+
                 if (response.ok) {
                     alert('Post created successfully!');
                     closeModal();
