@@ -29,14 +29,14 @@ func CreateNewPost(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Error retrieving post ID", http.StatusInternalServerError)
 		return
 	}
-
-	err = database.DB.Exec("INSERT INTO posts (post_id, title) VALUES (?, ?)", post.ID, strconv.Atoi(post.Category))
+	idc, _ := strconv.Atoi(post.Category)
+	_, err = database.DB.Exec("INSERT INTO post_categories (post_id, category_id) VALUES (?, ?)", post.ID, idc)
 	if err != nil {
 		http.Error(w, "Error creating post", http.StatusInternalServerError)
 		return
 	}
 
-	fmt.Println(post.ID)
+	// fmt.Println(post.ID)
 	// Responseuser.Id = int(user.ID)
 	// Responseuser.Username = user.Username
 	// w.WriteHeader(http.StatusOK)
