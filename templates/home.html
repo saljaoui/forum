@@ -19,6 +19,41 @@
         </header>
     </div>
 
+    <div class="main-content">
+        <!-- Categories Sidebar -->
+        <div class="categories">
+            <h2>Categories</h2>
+            <ul class="category-list">
+                <li class="category-item active">General Discussion</li>
+                <li class="category-item">News & Updates</li>
+                <li class="category-item">Resources & Guides</li>
+                <li class="category-item">Suggestions & Feedback</li>
+            </ul>
+        </div>
+
+        <!-- Posts Section -->
+        <div class="posts">
+            <h2>Recent Posts</h2>
+            <!-- Sample post cards -->
+            <div class="post-card">
+                <h3 class="post-title">Welcome to our new forum!</h3>
+                <div class="post-meta">Posted by Admin • General Discussion • 2 hours ago</div>
+                <div class="post-content">
+                    Welcome to our new forum! Feel free to explore and join the discussions...
+                </div>
+            </div>
+
+            <div class="post-card">
+                <h3 class="post-title">Important Updates for Q4</h3>
+                <div class="post-meta">Posted by John • News & Updates • 5 hours ago</div>
+                <div class="post-content">
+                    Here are the latest updates for Q4...
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
     <!-- Modal Overlay -->
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal">
@@ -48,9 +83,6 @@
                 <button type="submit">Create Post</button>
             </form>
         </div>
-    </div>
-    <div>
-        <p>hwrwe</p>
     </div>
     <script>
         // User data
@@ -112,6 +144,20 @@
                 button.classList.remove('loading');
             }
         });
+
+                // Keep your existing JavaScript
+        // Add category click handler
+        document.querySelectorAll('.category-item').forEach(item => {
+            item.addEventListener('click', () => {
+                // Remove active class from all items
+                document.querySelectorAll('.category-item').forEach(i => i.classList.remove('active'));
+                // Add active class to clicked item
+                item.classList.add('active');
+                // Here you would typically fetch posts for the selected category
+            });
+        });
+
+
     </script>
 </body>
 </html>
