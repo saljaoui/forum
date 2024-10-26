@@ -2,13 +2,11 @@ package handlers
 
 import (
 	"encoding/json"
-	"fmt"
+	"net/http"
+
 	"forum-project/internal/database"
 	"forum-project/internal/models"
-	"net/http"
 )
-
-
 
 func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	var user models.User
@@ -36,8 +34,14 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	var loginData struct {
+		Id       int    `json:"id"`
 		Email    string `json:"email"`
 		Password string `json:"password"`
+	}
+
+	var Responseuser struct {
+		Id       int    `json:"id"`
+		Username string `json:"username"`
 	}
 
 	err := json.NewDecoder(r.Body).Decode(&loginData)
@@ -58,10 +62,11 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Invalid credentials", http.StatusUnauthorized)
 		return
 	}
-
-	fmt.Println(user)
 	// Here you would typically create a session or generate a JWT token
 	// For simplicity, we'll just return a success message
-
+	Responseuser.Id = int(user.ID)
+	Responseuser.Username = user.Username
 	w.WriteHeader(http.StatusOK)
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(Responseuser)
 }

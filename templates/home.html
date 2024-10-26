@@ -3,33 +3,216 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Forum Home</title>
+    <link rel="stylesheet" href="/static/css/home.css">
+    <link rel="icon" type="image/png" href="https://cdn.iconscout.com/icon/premium/png-256-thumb/forum-3053893-2548590.png">
 </head>
 <body>
-    <form id="postForm">
-        <textarea id="post">Enter Your Post</textarea>
-        <input type="submit" name="submit" id="submit">
-    </form>
+    <div class="container">
+        <header class="header">
+            <p class="welcome-message">Welcome back, <span id="user"></span>! 👋</p>
+            <button class="create-post-btn" onclick="openModal()">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M12 4v16m8-8H4"></path>
+                </svg>
+                Create New Post
+            </button>
+        </header>
+    </div>
+
+    <div class="main-content">
+        <!-- Categories Sidebar -->
+        <div class="categories">
+            <h2>Categories</h2>
+            <ul class="category-list">
+                <li class="category-item active">General</li>
+                <li class="category-item">News</li>
+                <li class="category-item">Resources</li>
+                <li class="category-item">Suggestions</li>
+            </ul>
+        </div>
+
+        <!-- Posts Section -->
+        <div id="posts-list" class="posts">
+            <h2>Recent Posts</h2>
+            <!-- Sample post cards -->
+            <!-- <div class="post-card">
+                <h3 class="post-title">Welcome to our new forum!</h3>
+                <div class="post-meta">Posted by Admin • General Discussion • 2 hours ago</div>
+                <div class="post-content">
+                    Welcome to our new forum! Feel free to explore and join the discussions...
+                </div>
+            </div>
+
+            <div class="post-card">
+                <h3 class="post-title">Important Updates for Q4</h3>
+                <div class="post-meta">Posted by John • News & Updates • 5 hours ago</div>
+                <div class="post-content">
+                    Here are the latest updates for Q4...
+                </div> -->
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- Modal Overlay -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <button class="close-modal" onclick="closeModal()">×</button>
+            <h2 class="modal-title">Create a New Post</h2>
+            <form id="create_post">
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <select name="category" id="category">
+                        <option value="1">General Discussion</option>
+                        <option value="2">News & Updates</option>
+                        <option value="3">Resources & Guides</option>
+                        <option value="4">Suggestions & Feedback</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="title">Post Title</label>
+                    <input type="text" id="title" placeholder="Enter a descriptive title" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="content">Post Content</label>
+                    <textarea id="content" placeholder="Write your post content here..." required></textarea>
+                </div>
+
+                <button type="submit">Create Post</button>
+            </form>
+        </div>
+    </div>
     <script>
-        document.getElementById('postForm').addEventListener('submit', (e) => {
-            e.preventDefault()
-            const response = fetch('/api/home', {
-                method: 'POST',
-                headerxs: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    user_id: 1,
-                    title: "",
-                    content: document.getElementById('post').value,
-                }),
-            });
-            if (response.ok) {
-                alert('sucssece creted post');
-            } else {
-                alert('Registration failed');
+        // User data
+        let user = sessionStorage.getItem('user_id');
+        let username = sessionStorage.getItem('username');
+        let userspan = document.querySelector("#user");
+        userspan.textContent = username;
+
+        // Modal functions
+        function openModal() {
+            document.getElementById('modalOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+        }
+
+        function closeModal() {
+            document.getElementById('modalOverlay').classList.remove('active');
+            document.body.style.overflow = ''; // Restore scrolling
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('modalOverlay').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) {
+                closeModal();
             }
-        })
+        });
+
+        // Form submission
+        let create_post = document.querySelector("#create_post");
+        create_post.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const button = e.target.querySelector('button');
+            button.classList.add('loading');
+            
+            try {
+                const response = await fetch("/api/createPost", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        user_id: +user,
+                        username: username,
+                        title: document.querySelector("#title").value,
+                        content: document.querySelector("#content").value,
+                        category: document.querySelector("#category").value
+                   
+                    })
+                });
+
+                if (response.ok) {
+                    fetchPosts();
+                    alert('Post created successfully!');
+                    closeModal();
+                    create_post.reset();
+
+                } else {
+                    alert('Failed to create post. Please try again.');
+                }
+            } catch (error) {
+                alert('An error occurred. Please try again.');
+            } finally {
+                button.classList.remove('loading');
+            }
+        });
+
+                // Keep your existing JavaScript
+        // Add category click handler
+        document.querySelectorAll('.category-item').forEach(item => {
+            item.addEventListener('click', () => {
+                // Remove active class from all items
+                document.querySelectorAll('.category-item').forEach(i => i.classList.remove('active'));
+                // Add active class to clicked item
+                item.classList.add('active');
+                // Here you would typically fetch posts for the selected category
+            });
+        });
+        
+        async function fetchPosts() {
+        try {
+            const response = await fetch('/api/getPosts');
+            console.log(response);
+            
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const posts = await response.json();
+            console.log(posts);
+            
+            const postsList = document.getElementById('posts-list');
+
+            // Clear the list before adding new items
+            postsList.innerHTML = '';
+
+            posts.forEach(post => {
+                const postCard = document.createElement('div');
+                postCard.classList.add('post-card');
+                postCard.innerHTML = `
+                    <h3 class="post-title">${post.Title}</h3>
+                    <div class="post-meta">Posted by User ID: ${post.User_id} • Category: General • ${formatTimeAgo(post.Created_at)}</div>
+                    <div class="post-content">${post.Content}</div>
+                `;
+                postsList.insertBefore(postCard, postsList.firstChild);
+            });
+        } catch (error) {
+            console.error('Error fetching posts:', error);
+            const postsList = document.getElementById('posts-list');
+            postsList.innerHTML = `<div>Error: ${error.message}</div>`;
+        }
+    }
+    // Fetch posts when the page loads
+    fetchPosts();
+    
+    function formatTimeAgo(date) {
+        const now = new Date();
+        const seconds = Math.floor((now - new Date(date)) / 1000);
+        let interval = Math.floor(seconds / 31536000); // years
+        if (interval > 1) return interval + " years ago";
+        interval = Math.floor(seconds / 2592000); // months
+        if (interval > 1) return interval + " months ago";
+        interval = Math.floor(seconds / 86400); // days
+        if (interval > 1) return interval + " days ago";
+        interval = Math.floor(seconds / 3600); // hours
+        if (interval > 1) return interval + " hours ago";
+        interval = Math.floor(seconds / 60); // minutes
+        if (interval > 1) return interval + " minutes ago";
+        return seconds + " seconds ago";
+    }
+
+
     </script>
 </body>
 </html>

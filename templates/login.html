@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="icon" type="image/png" href="https://cdn.iconscout.com/icon/premium/png-256-thumb/forum-3053893-2548590.png">
+
 </head>
+
 <body>
     <h1>Login</h1>
     <form id="loginForm">
@@ -29,8 +33,13 @@
                 }),
             });
             if (response.ok) {
-               
-                alert('Login successful');
+                const data = await response.json();
+
+                sessionStorage.setItem('username', data.username);
+                sessionStorage.setItem('user_id', data.id);
+
+
+                alert(`Login successful! Your user ID is: ${data.id}`);
                 window.location.href = "/home"
                 // Redirect to home page or dashboard
             } else {
@@ -39,4 +48,5 @@
         });
     </script>
 </body>
+
 </html>

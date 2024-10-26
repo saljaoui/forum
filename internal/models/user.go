@@ -1,18 +1,9 @@
 package models
 
 import (
-	"time"
-
 	"golang.org/x/crypto/bcrypt"
 )
-
-type User struct {
-	ID        int64
-	Username  string
-	Email     string
-	Password  string
-	CreatedAt time.Time
-}
+ 
 
 type Post struct {
 	ID        int64
