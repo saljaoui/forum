@@ -15,7 +15,6 @@ func main() {
 		log.Fatal(err)
 	}
 
-
 	// API routes
 	http.HandleFunc("/api/register", handlers.RegisterHandler)
 	http.HandleFunc("/api/login", handlers.LoginHandler)
