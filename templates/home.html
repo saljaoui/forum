@@ -11,6 +11,12 @@
     <div class="container">
         <header class="header">
             <p class="welcome-message">Welcome back, <span id="user"></span>! 👋</p>
+            <div class="profile" >
+                <div class="user-avatar-pic">
+                    <img src="/static/imgs/pic.jpeg" alt="profile-pc">
+                </div>
+                <h3 class="name"></h3>
+            </div>
         </header>
     </div>
 
@@ -82,6 +88,8 @@
         let user = sessionStorage.getItem('user_id');
         let username = sessionStorage.getItem('username');
         let userspan = document.querySelector("#user");
+        let userna = document.querySelector(".profile h3")
+        userna.textContent = username;
         userspan.textContent = username;
 
         // Modal functions
