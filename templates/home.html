@@ -11,12 +11,12 @@
     <div class="container">
         <header class="header">
             <p class="welcome-message">Welcome back, <span id="user"></span>! 👋</p>
-            <button class="create-post-btn" onclick="openModal()">
-                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                    <path d="M12 4v16m8-8H4"></path>
-                </svg>
-                Create New Post
-            </button>
+            <div class="profile" >
+                <div class="user-avatar-pic">
+                    <img src="/static/imgs/pic.jpeg" alt="profile-pc">
+                </div>
+                <h3 class="name"></h3>
+            </div>
         </header>
     </div>
 
@@ -33,24 +33,22 @@
         </div>
 
         <!-- Posts Section -->
-        <div id="posts-list" class="posts">
-            <h2>Recent Posts</h2>
-            <!-- Sample post cards -->
-            <!-- <div class="post-card">
-                <h3 class="post-title">Welcome to our new forum!</h3>
-                <div class="post-meta">Posted by Admin • General Discussion • 2 hours ago</div>
-                <div class="post-content">
-                    Welcome to our new forum! Feel free to explore and join the discussions...
-                </div>
+        <div class="posts" >
+            <button class="create-post-btn" onclick="openModal()">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M12 4v16m8-8H4"></path>
+                </svg>
+                Create New Post
+            </button>
+            <div id="posts-list" >
+                        <button class="create-post-btn" onclick="openModal()">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M12 4v16m8-8H4"></path>
+                </svg>
+                Create New Post
+            </button>
             </div>
-
-            <div class="post-card">
-                <h3 class="post-title">Important Updates for Q4</h3>
-                <div class="post-meta">Posted by John • News & Updates • 5 hours ago</div>
-                <div class="post-content">
-                    Here are the latest updates for Q4...
-                </div> -->
-            </div>
+         </div>
         </div>
     </div>
 </div>
@@ -90,6 +88,8 @@
         let user = sessionStorage.getItem('user_id');
         let username = sessionStorage.getItem('username');
         let userspan = document.querySelector("#user");
+        let userna = document.querySelector(".profile h3")
+        userna.textContent = username;
         userspan.textContent = username;
 
         // Modal functions

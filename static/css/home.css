@@ -29,7 +29,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 24px 0;
+    padding: 10px 0 21px 0;
     margin-bottom: 20px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
@@ -63,6 +63,8 @@ body {
     border-radius: 6px;
     font-size: 0.95rem;
     font-weight: 500;
+    margin-left: auto;
+    margin-bottom: 10px;
     cursor: pointer;
     transition: background-color 0.2s ease;
 }
@@ -140,6 +142,11 @@ body {
     margin: 0 auto;
 }
 
+.profile {
+    display: flex;
+    align-items: center;
+}
+
 .posts-header {
     display: flex;
     justify-content: space-between;
@@ -159,6 +166,7 @@ body {
     color: white;
     padding: 8px 16px;
     border-radius: 4px;
+    
     text-decoration: none;
     font-size: 0.9rem;
 }
@@ -284,6 +292,19 @@ body {
     color: #2d3748;
 }
 
+.user-avatar-pic {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+    overflow: hidden;
+    border-radius: 50%;
+}
+
+.user-avatar-pic img {
+    width: 100%; /* Ensure the image covers the div */
+    height: auto; /* Maintain aspect ratio */
+}
+
 .modal-title {
     font-size: 1.5rem;
     color: #2d3748;
@@ -364,6 +385,10 @@ button.loading::after {
     border-top-color: white;
     border-radius: 50%;
     animation: spin 1s linear infinite;
+}
+
+.name{
+color: #f0f2f5;
 }
 
 /* Animations */
