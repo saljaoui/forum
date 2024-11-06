@@ -1,7 +1,6 @@
 
 
 document.getElementById('fetchDataBtn').addEventListener('click', function() {
-
     fetch('http://localhost:3333/')
         .then(response => response.json())
         .then(data => {
