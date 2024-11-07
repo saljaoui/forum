@@ -16,6 +16,7 @@ func main() {
 	if Err != nil {
 		fmt.Println(Err)
 	}
+
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", handlers.TestHandlers)
 	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("../../frontend/static"))))
@@ -24,7 +25,7 @@ func main() {
 	})
 
 	fmt.Println("Server running at :3333")
-	fmt.Println("http://localhost:3333/")
+	fmt.Println("http://localhost:3333")
 	err := http.ListenAndServe(":3333", mux)
 	if err != nil {
 		log.Fatal("ListenAndServe Error: ", err)
