@@ -1,7 +1,7 @@
 -- database: :memory:
 
 CREATE TABLE users(
-    id INTEGER PRIMARY KEY AUTOINCREMENT ,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     firstname text   not NULL,
     lastname text not NULL,
     email text not NULL ,
