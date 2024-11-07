@@ -14,6 +14,7 @@ func main() {
     mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("../../frontend/static"))))    
 	mux.HandleFunc("/login", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "../../frontend/templates/login.html")
+		// fmt.Println("ok")
 	})
 
     fmt.Println("Server running at :3333")
