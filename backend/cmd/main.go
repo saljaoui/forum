@@ -7,7 +7,7 @@ import (
 
 	_ "github.com/mattn/go-sqlite3"
 
-	"forum-project/backend/database"
+	"forum-project/backend/internal/database"
 	"forum-project/backend/internal/handlers"
 )
 
