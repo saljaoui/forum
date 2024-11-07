@@ -51,7 +51,7 @@ header {
   left: 0;
   bottom: -6px;
   height: 3px;
-  background-color: #fff; 
+  background-color: #fff;
   border-radius: 5px;
   transform: scaleX(0);
   transform-origin: right center;
@@ -60,6 +60,7 @@ header {
 
 .navigation a:hover::after {
   transform: scaleX(1);
+  transform-origin: left center;
 }
 
 .navigation button {
