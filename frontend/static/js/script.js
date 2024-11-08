@@ -9,3 +9,5 @@ registerLink.addEventListener('click', () => {
 loginLink.addEventListener('click', () => {
   wrapper.classList.remove('active');
 });
+
+console.log(document.cookie.match(/JSESSIONID=[^;]+/))
