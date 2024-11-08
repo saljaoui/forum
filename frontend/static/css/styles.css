@@ -221,7 +221,7 @@ header {
   overflow: hidden;
   position: relative;
   z-index: 10;
-  transition: all 0.4s; 
+  transition: all 0.5s; 
 }
 
 .btn:hover {
@@ -240,7 +240,7 @@ header {
   z-index: -1;
   transform: scaleX(0);
   transform-origin: right center;
-  transition: transform 0.4s ease;
+  transition: transform 0.5s ease;
 }
 
 .btn:hover::before {
