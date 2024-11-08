@@ -4,9 +4,9 @@ CREATE TABLE users(
     id INTEGER PRIMARY KEY AUTOINCREMENT ,
     firstname text   not NULL,
     lastname text not NULL,
-    email text not NULL ,
+    email text not NULL UNIQUE,
     password text not NULL,
-    CreateAt DATE 
+    CreateAt DATETIME DEFAULT CURRENT_TIMESTAMP 
 );
 
 CREATE TABLE posts (
