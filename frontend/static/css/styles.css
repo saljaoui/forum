@@ -218,6 +218,34 @@ header {
   font-size: 1em;
   color: #fff;
   font-weight: 500;
+  overflow: hidden;
+  position: relative;
+  z-index: 10;
+  transition: all 0.4s; 
+}
+
+.btn:hover {
+  color: #162938;
+  font-weight: 700;
+}
+
+.btn::before {
+  content: '';
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 100%;
+  position: absolute;
+  background-color: #fff;
+  z-index: -1;
+  transform: scaleX(0);
+  transform-origin: right center;
+  transition: transform 0.4s ease;
+}
+
+.btn:hover::before {
+  transform: scaleX(1);
+  transform-origin: left center;
 }
 
 .login-register {
