@@ -76,6 +76,7 @@ header {
   color: #fff;
   font-weight: 500;
   transition: all 0.5s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 
@@ -83,6 +84,7 @@ header {
   background: #fff;
   transform: translateY(-3px);
   color: #162938;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
 }
 
 
@@ -221,12 +223,14 @@ header {
   overflow: hidden;
   position: relative;
   z-index: 10;
-  transition: all 0.5s; 
+  transition: all 0.5s;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .btn:hover {
   color: #162938;
   font-weight: 700;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.4);
 }
 
 .btn::before {
