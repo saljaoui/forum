@@ -20,6 +20,8 @@ func main() {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", handlers.TestHandlers)
 	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("../../frontend/static"))))
+
+	
 	mux.HandleFunc("/login", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "../../frontend/templates/login.html")
 	})
