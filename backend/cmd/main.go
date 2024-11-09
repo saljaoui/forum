@@ -7,21 +7,23 @@ import (
 
 	_ "github.com/mattn/go-sqlite3"
 
+	"forum-project/backend/internal/auth"
 	"forum-project/backend/internal/database"
 	"forum-project/backend/internal/handlers"
 )
 
 func main() {
+	mux := http.NewServeMux()
 	Err := database.InitDB()
 	if Err != nil {
-		fmt.Println(Err)
+		log.Fatal(Err)
 	}
 
-	mux := http.NewServeMux()
+	mux.HandleFunc("/api/register", auth.RegisterHandler)
+
 	mux.HandleFunc("/", handlers.TestHandlers)
 	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("../../frontend/static"))))
 
-	
 	mux.HandleFunc("/login", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "../../frontend/templates/login.html")
 	})
