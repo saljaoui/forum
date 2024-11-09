@@ -1,5 +1,3 @@
--- database: :memory:
-
 CREATE TABLE users(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     firstname text   not NULL,
