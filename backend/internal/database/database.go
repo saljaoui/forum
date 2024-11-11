@@ -3,6 +3,7 @@ package database
 import (
 	"database/sql"
 	"fmt"
+	"log"
 	"os"
 )
 
@@ -24,4 +25,16 @@ func InitDB() error {
 		}
 	}
 	return nil
+}
+
+func Config() *sql.DB {
+	db, err := sql.Open("sqlite3", "../../app.db")
+	if err != nil {
+		log.Fatal("error connecting to database: ", err)
+	}
+	err = db.Ping()
+	if err != nil {
+		log.Fatal("error connecting to database:", err)
+	}
+	return db
 }

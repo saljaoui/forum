@@ -10,19 +10,18 @@ import (
 )
 
 func HandleRegister(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-
 	user := models.User{}
-	db := repository.Connect{}  
-
 	err := json.NewDecoder(r.Body).Decode(&user)
 	if err != nil {
-		fmt.Println("error decoding JSON:")
-		//http.Error(w, `{"error": "Invalid JSON data"}`, http.StatusBadRequest)
+		fmt.Println("error decoding JSON:", err)
 		return
 	}
-	err = db.Register(&user)
-	if err != nil {
-		fmt.Println("register:")
+	message := repository.Register(&user)
+	if message.ErrorBool {
+		w.WriteHeader(400)
+		json.NewEncoder(w).Encode(string(message.MessageError))
+	} else {
+		json.NewEncoder(w).Encode(string(message.MessageSucc))
 	}
+	w.Header().Set("Content-Type", "application/json")
 }

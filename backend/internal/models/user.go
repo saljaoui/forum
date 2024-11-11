@@ -1,7 +1,6 @@
 package models
 
 import "time"
-
 type User struct {
 	Id        int64     `json:"id"`
 	Firstname string    `json:"firstname"`
@@ -10,3 +9,4 @@ type User struct {
 	Password  string    `json:"password"`
 	CreatedAt time.Time `json:"createdat"`
 }
+
