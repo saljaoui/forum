@@ -1,8 +1,8 @@
 package messages
 
-type UserAllReadyExists struct {
+type Messages struct {
 	MessageError string
-	ErrorBool bool
-	SuccBool bool
+	ErrorBool    bool
+	// SuccBool bool
 	MessageSucc string
 }
