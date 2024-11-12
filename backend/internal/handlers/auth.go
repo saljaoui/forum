@@ -25,3 +25,14 @@ func HandleRegister(w http.ResponseWriter, r *http.Request) {
 	}
 	w.Header().Set("Content-Type", "application/json")
 }
+
+func LoginHandle(w http.ResponseWriter, r *http.Request) {
+	user := models.Login{}
+	err := json.NewDecoder(r.Body).Decode(&user)
+	if err != nil {
+		fmt.Println("error to login")
+		return
+	}
+	fmt.Println(user)
+	repository.Login(&user)
+}
