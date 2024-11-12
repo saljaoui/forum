@@ -16,8 +16,8 @@ func HandlePost(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("error decoding JSON Post:", err)
 		return
 	}
-	fmt.Println(post)
-	message := repository.Register(&post)
+	// fmt.Println(post)
+	message := repository.Post(&post)
 	if message.ErrorBool {
 		w.WriteHeader(400)
 		json.NewEncoder(w).Encode(string(message.MessageError))
