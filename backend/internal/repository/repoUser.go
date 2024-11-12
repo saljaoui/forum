@@ -11,7 +11,9 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-type UserModel struct{}
+type UserModel struct {
+	models.User
+}
 
 func Register(users *models.User) messages.Messages {
 	message := messages.Messages{}
@@ -36,20 +38,24 @@ func Register(users *models.User) messages.Messages {
 func Login(user *models.Login) {
 	db := database.Config()
 	passwordhased := ""
-	id := 0
+	var id int64
 	email := ""
-	query := "select id,email,password from user where email=? and password=?"
+	query := "select id,email,password from user where email=?"
 
-	
 	err := db.QueryRow(query, user.Email, user.Password).Scan(&id, &email, &passwordhased)
 	if err != nil {
 		fmt.Println("errror", err)
 	}
-	if checkPassword(user.Password, passwordhased) {
-		} else {
-			fmt.Println("Your Password Encorect")
-		}
-	fmt.Println(id, email, passwordhased)
+	if CheckPassword(passwordhased, user.Password) {
+		fmt.Println("welcom")
+	} else {
+		fmt.Println("Password Uncroect")
+	}
+}
+
+func CheckPassword(passwordhas, passwordUser string) bool {
+	err := bcrypt.CompareHashAndPassword([]byte(passwordhas), []byte(passwordUser))
+	return err == nil
 }
 
 func hashPassword(pass *models.User) string {
@@ -58,12 +64,8 @@ func hashPassword(pass *models.User) string {
 		fmt.Println("error", err)
 	}
 	pass.Password = string(haspassword)
-	return pass.Password
-}
 
-func checkPassword(passwordUser, password string) bool {
-	err := bcrypt.CompareHashAndPassword([]byte(passwordUser), []byte(password))
-	return err == nil
+	return pass.Password
 }
 
 func emailExists(email string) bool {

@@ -36,10 +36,6 @@ func Config() *sql.DB {
 	if err != nil {
 		log.Fatal("error connecting to database:", err)
 	}
-	_, err = db.Exec(`INSERT INTO user (firstname,lastname,email,password,UUID) VALUES ("t1", "qq", "we3", "SADF", "") `)
-	if err != nil {
-		fmt.Println(err)
-	}
 
 	return db
 }
