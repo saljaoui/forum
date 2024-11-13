@@ -36,10 +36,7 @@ func Config() *sql.DB {
 	if err != nil {
 		log.Fatal("error connecting to database:", err)
 	}
-	_, err = db.Exec(`INSERT INTO user (firstname,lastname,email,password) VALUES ("sss", "sdsd", "@hh.com", "3&jk")`)
-	if err != nil {
-		fmt.Println(err)
-	}
+
 	return db
 }
 
@@ -65,6 +62,6 @@ func Exec(query string, model ...any) {
 	db := Config()
 	_, err := db.Exec(query, model...)
 	if err != nil {
-		fmt.Println("error here:", err)
+		fmt.Println(err)
 	}
 }

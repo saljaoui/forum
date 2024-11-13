@@ -5,8 +5,13 @@ import (
 	"fmt"
 	"net/http"
 
+<<<<<<< HEAD
 	"forum-project/backend/internal/models/users"
 	"forum-project/backend/internal/repository"
+=======
+	"forum-project/backend/internal/models"
+	repository "forum-project/backend/internal/repository/users"
+>>>>>>> soufian
 )
 
 func HandleRegister(w http.ResponseWriter, r *http.Request) {
@@ -33,6 +38,14 @@ func LoginHandle(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("error to login")
 		return
 	}
-	fmt.Println(user)
-	repository.Login(&user)
+	loged, message := repository.Login(&user)
+	if message.ErrorBool {
+		w.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(w).Encode(message.MessageError)
+		return
+	} else {
+
+		w.WriteHeader(http.StatusOK)
+		json.NewEncoder(w).Encode(loged)
+	}
 }
