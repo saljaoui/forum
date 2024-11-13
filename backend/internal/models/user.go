@@ -15,7 +15,7 @@ type User struct {
 	CreatedAt time.Time `json:"createdat"`
 	UUID      uuid.UUID `json:"uuid"`
 }
-type Loged struct {
+type ResponceUser struct {
 	Id        int64     `json:"id"`
 	Firstname string    `json:"firstname"`
 	Lastname  string    `json:"lastname"`

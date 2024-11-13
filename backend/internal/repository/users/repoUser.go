@@ -18,8 +18,8 @@ type UserModel struct {
 
 func Register(users *models.User) messages.Messages {
 	message := messages.Messages{}
-	if strings.Trim(users.Firstname, " ") == "" || strings.Trim(users.Email, " ") == "" || 
-	strings.Trim(users.Lastname, " ") == "" || strings.Trim(users.Password, " ") == "" {
+	if strings.Trim(users.Firstname, " ") == "" || strings.Trim(users.Email, " ") == "" ||
+		strings.Trim(users.Lastname, " ") == "" || strings.Trim(users.Password, " ") == "" {
 		message.MessageError = "All Input is Requerd"
 		message.ErrorBool = true
 		return message
@@ -38,14 +38,14 @@ func Register(users *models.User) messages.Messages {
 	return message
 }
 
-func Login(log *models.Login) (models.Loged, messages.Messages) {
+func Login(log *models.Login) (models.ResponceUser, messages.Messages) {
 	user := models.User{}
 	message := messages.Messages{}
 	db := database.Config()
 	if log.Email == "" || !emailExists(log.Email) {
 		message.ErrorBool = true
 		message.MessageError = "Envalid Email"
-		return models.Loged{}, message
+		return models.ResponceUser{}, message
 	} else {
 
 		query := "select id,email,password, firstname ,lastname FROM user where email=?"
@@ -59,7 +59,7 @@ func Login(log *models.Login) (models.Loged, messages.Messages) {
 			if err != nil {
 				fmt.Println("Error to Generate uuid", err)
 			}
-			loged := models.Loged{
+			loged := models.ResponceUser{
 				Id:        user.Id,
 				UUID:      uuid,
 				Email:     user.Email,
@@ -70,16 +70,8 @@ func Login(log *models.Login) (models.Loged, messages.Messages) {
 			return loged, messages.Messages{}
 		} else {
 			message.MessageError = "Email Or Password Encorect "
-			return models.Loged{}, message
+			return models.ResponceUser{}, message
 		}
-	}
-}
-
-func updateuuidUser(uudi uuid.UUID, userId int64) {
-	db := database.Config()
-	_, err := db.Exec("UPDATE user SET UUID=? WHERE id=?", uudi, userId)
-	if err != nil {
-		fmt.Println("Error To Update User uuid")
 	}
 }
 
@@ -95,11 +87,4 @@ func hashPassword(password string) string {
 		fmt.Println("error", err)
 	}
 	return string(hashedPassword)
-}
-
-func emailExists(email string) bool {
-	var exists bool
-	query := "SELECT EXISTS (select email from user where email=?)"
-	database.SelectOneRow(query, email, &exists)
-	return exists
 }

@@ -6,7 +6,7 @@ import (
 	"net/http"
 
 	"forum-project/backend/internal/models"
-	"forum-project/backend/internal/repository"
+	repository "forum-project/backend/internal/repository/users"
 )
 
 func HandleRegister(w http.ResponseWriter, r *http.Request) {
