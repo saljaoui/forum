@@ -5,13 +5,8 @@ import (
 	"fmt"
 	"net/http"
 
-<<<<<<< HEAD
-	models "forum-project/backend/internal/models/posts"
-	"forum-project/backend/internal/repository"
-=======
 	"forum-project/backend/internal/models"
 	"forum-project/backend/internal/repository/posts"
->>>>>>> soufian
 )
 
 func HandlePost(w http.ResponseWriter, r *http.Request) {

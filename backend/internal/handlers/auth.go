@@ -5,13 +5,8 @@ import (
 	"fmt"
 	"net/http"
 
-<<<<<<< HEAD
-	"forum-project/backend/internal/models/users"
-	"forum-project/backend/internal/repository"
-=======
 	"forum-project/backend/internal/models"
 	repository "forum-project/backend/internal/repository/users"
->>>>>>> soufian
 )
 
 func HandleRegister(w http.ResponseWriter, r *http.Request) {
