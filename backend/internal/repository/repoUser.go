@@ -5,7 +5,7 @@ import (
 
 	messages "forum-project/backend/internal/Messages"
 	"forum-project/backend/internal/database"
-	"forum-project/backend/internal/models"
+	"forum-project/backend/internal/models/users"
 
 	"golang.org/x/crypto/bcrypt"
 )
