@@ -22,6 +22,12 @@ CREATE TABLE category (
     name text not NULL
 );
 
+INSERT INTO category ("name")
+VALUES
+    ("Technology"),
+    ("Gaming"),
+    ("Arts & Entertainment"),
+    ("General Discussion");
 
 CREATE TABLE post_category (
     post_id INTEGER,

@@ -7,6 +7,7 @@ type Post struct {
 	User_id    int64     `json:"user_id"`
 	Title      string    `json:"title"`
 	Content    string    `json:"content"`
+	Category   string    `json:"category"`
 	Created_at time.Time `json:"created_at"`
 }
 
