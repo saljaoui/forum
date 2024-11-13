@@ -1,11 +1,11 @@
-package repository
+package models
 
 import (
 	"fmt"
 
 	messages "forum-project/backend/internal/Messages"
 	"forum-project/backend/internal/database"
-	"forum-project/backend/internal/models"
+	models "forum-project/backend/internal/models/categories"
 )
 
 func Post(post *models.Post) messages.Messages {

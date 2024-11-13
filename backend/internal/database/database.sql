@@ -42,9 +42,9 @@ CREATE TABLE card (
 CREATE TABLE comment (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     card_id INTEGER,
-    post_id INTEGER,
+    target_id INTEGER,
     FOREIGN KEY (card_id) REFERENCES card(id),
-    FOREIGN KEY (post_id) REFERENCES post(id)
+    FOREIGN KEY (target_id) REFERENCES card(id)
 );
 
 CREATE TABLE likes (

@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"forum-project/backend/internal/models"
+	models "forum-project/backend/internal/models/posts"
 	"forum-project/backend/internal/repository"
 )
 
