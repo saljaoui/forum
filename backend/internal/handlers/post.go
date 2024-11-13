@@ -6,7 +6,7 @@ import (
 	"net/http"
 
 	"forum-project/backend/internal/models"
-	"forum-project/backend/internal/repository"
+	"forum-project/backend/internal/repository/posts"
 )
 
 func HandlePost(w http.ResponseWriter, r *http.Request) {
@@ -17,7 +17,7 @@ func HandlePost(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	// fmt.Println(post)
-	message := repository.Post(&post)
+	message := posts.Post(&post)
 	if message.ErrorBool {
 		w.WriteHeader(400)
 		json.NewEncoder(w).Encode(string(message.MessageError))

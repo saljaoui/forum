@@ -22,6 +22,7 @@ func main() {
 	mux.HandleFunc("/api/register", handlers.HandleRegister)
 	mux.HandleFunc("/api/post", handlers.HandlePost)
 	mux.HandleFunc("/api/login", handlers.LoginHandle)
+	
 	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("../../frontend/static"))))
 	mux.HandleFunc("/login", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "../../frontend/templates/login.html")
