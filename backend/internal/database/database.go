@@ -58,7 +58,7 @@ func SelectRows(query string, model ...any) *sql.Rows {
 	return rows
 }
 
-func Exec(query string, model ...any)  {
+func Exec(query string, model ...any) int {
 	db := Config()
 	res, err := db.Exec(query, model...)
 	if err != nil {
