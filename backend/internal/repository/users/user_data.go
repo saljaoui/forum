@@ -9,6 +9,7 @@ import (
 	"github.com/gofrs/uuid/v5"
 )
 
+
 func emailExists(email string) bool {
 	var exists bool
 	query := "SELECT EXISTS (select email from user where email=?)"

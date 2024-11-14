@@ -38,11 +38,11 @@ func Register(users *models.User) messages.Messages {
 	return message
 }
 
-func Login(log *models.Login) (models.ResponceUser, messages.Messages) {
+func Login(log *models.Login) (models.ResponceUser, messages.Messages, uuid.UUID) {
 	message := messages.Messages{}
 	if log.Email == "" || !emailExists(log.Email) {
 		message.MessageError = "Envalid Email"
-		return models.ResponceUser{}, message
+		return models.ResponceUser{}, message, uuid.UUID{}
 	} else {
 		user := selectUser(log)
 		if CheckPasswordHash(user.Password, log.Password) {
@@ -58,10 +58,10 @@ func Login(log *models.Login) (models.ResponceUser, messages.Messages) {
 				Lastname:  user.Lastname,
 			}
 			updateuuidUser(uuid, user.Id)
-			return loged, messages.Messages{}
+			return loged, messages.Messages{}, uuid
 		} else {
 			message.MessageError = "Email Or Password Encorect "
-			return models.ResponceUser{}, message
+			return models.ResponceUser{}, message, uuid.UUID{}
 		}
 	}
 }
