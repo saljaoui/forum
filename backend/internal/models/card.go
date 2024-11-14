@@ -6,4 +6,3 @@ type card struct {
 	Content   string
 	CreatedAt string
 }
- 
