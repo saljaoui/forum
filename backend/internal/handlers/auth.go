@@ -17,7 +17,7 @@ func HandleRegister(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	message := repository.Register(&user)
-	if message.ErrorBool {
+	if message.MessageError != "" {
 		w.WriteHeader(400)
 		json.NewEncoder(w).Encode(string(message.MessageError))
 	} else {
@@ -34,7 +34,7 @@ func LoginHandle(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	loged, message := repository.Login(&user)
-	if message.ErrorBool {
+	if message.MessageError != "" {
 		w.WriteHeader(http.StatusBadRequest)
 		json.NewEncoder(w).Encode(message.MessageError)
 		return

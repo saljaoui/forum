@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"forum-project/backend/internal/database"
+	"forum-project/backend/internal/models"
 
 	"github.com/gofrs/uuid/v5"
 )
@@ -23,3 +24,21 @@ func updateuuidUser(uudi uuid.UUID, userId int64) {
 	}
 }
 
+func insertUser(users *models.User, password string) error {
+	db := database.Config()
+	stm := "INSERT INTO user (firstname,lastname,email,password) VALUES(?,?,?,?)"
+	_, err := db.Exec(stm, users.Firstname, users.Lastname, users.Email, password)
+	return err
+}
+
+func selectUser(log *models.Login) *models.User {
+	db := database.Config()
+	user := models.User{}
+	query := "select id,email,password, firstname ,lastname FROM user where email=?"
+	err := db.QueryRow(query, log.Email, log.Password).Scan(&user.Id, &user.Email,
+		&user.Password, &user.Firstname, &user.Lastname)
+	if err != nil {
+		fmt.Println("Error ", err)
+	}
+	return &user
+}
