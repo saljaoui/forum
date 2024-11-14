@@ -56,10 +56,12 @@ func SelectRows(query string, model []any,scan ...any ) *sql.Rows {
 	return rows
 }
 
-func Exec(query string, model ...any)  {
+func Exec(query string, model ...any) int {
 	db := Config()
-	_, err := db.Exec(query, model...)
+	res, err := db.Exec(query, model...)
 	if err != nil {
 		fmt.Println(err)
 	}
+	id,_ := res.LastInsertId()
+	return int(id)
 }
