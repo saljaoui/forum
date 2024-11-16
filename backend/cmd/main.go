@@ -9,6 +9,7 @@ import (
 
 	"forum-project/backend/internal/database"
 	"forum-project/backend/internal/handlers"
+	card "forum-project/backend/internal/repository/cards"
 )
 
 func main() {
@@ -16,7 +17,8 @@ func main() {
 	if Err != nil {
 		fmt.Println(Err)
 	}
-
+	myCard := card.GetCard(1)
+	myCard.PrintInfo()
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", handlers.TestHandlers)
 	mux.HandleFunc("/api/register", handlers.HandleRegister)
