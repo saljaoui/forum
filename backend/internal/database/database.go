@@ -40,12 +40,10 @@ func Config() *sql.DB {
 	return db
 }
 
-func SelectOneRow(query string, model any, st ...any) {
+func SelectOneRow(query string, model ...any) *sql.Row {
 	db := Config()
-	err := db.QueryRow(query, model).Scan(st...)
-	if err != nil {
-		fmt.Println(err)
-	}
+	DataRow := db.QueryRow(query, model...)
+	return DataRow
 }
 
 func SelectRows(query string, model ...any) *sql.Rows {
