@@ -45,12 +45,12 @@ func selectUser(log *Login) *User {
 
 func checkAuthenticat(id string) bool {
 	db := database.Config()
-	fmt.Println()
-	stm := "SELECT EXISTS (SELECT UUID FROM user WHERE UUID=?)"
+	stm := `SELECT 
+		EXISTS (SELECT 1 FROM user WHERE UUID =  ?) as ex,
+		(SELECT UUID FROM user WHERE UUID =?)  as  uuid`
 	var exists bool
-	err := db.QueryRow(stm, id).Scan(&exists)
-	if err != nil {
-		return false
-	}
-	return true
+	var uuid string
+	err := db.QueryRow(stm, id, id).Scan(&exists, &uuid)
+	fmt.Println(exists, uuid)
+	return err == nil
 }

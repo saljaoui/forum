@@ -37,20 +37,19 @@ func (users *User) Register() messages.Messages {
 	message := messages.Messages{}
 	if strings.Trim(users.Firstname, " ") == "" || strings.Trim(users.Email, " ") == "" ||
 		strings.Trim(users.Lastname, " ") == "" || strings.Trim(users.Password, " ") == "" {
-		message.MessageError = "All Input is Requerd"
-		message.ErrorBool = true
+		message.MessageError = "All Input is Required"
 		return message
 	}
 	exists := emailExists(users.Email)
 	if exists {
-		message.MessageError = "Email User Is Allready Exsist"
+		message.MessageError = "Email user already exists"
 	} else {
 		password := hashPassword(users.Password)
 		err := insertUser(users, password)
 		if err != nil {
-			message.MessageError = "Error To Create this user"
+			message.MessageError = "Error creating this user."
 		} else {
-			message.MessageSucc = "User created successfully"
+			message.MessageSucc = "User created successfully."
 		}
 	}
 	return message
@@ -59,7 +58,7 @@ func (users *User) Register() messages.Messages {
 func (log *Login) Authentication() (ResponceUser, messages.Messages, uuid.UUID) {
 	message := messages.Messages{}
 	if log.Email == "" || !emailExists(log.Email) {
-		message.MessageError = "Envalid Email"
+		message.MessageError = "Invalid email"
 		return ResponceUser{}, message, uuid.UUID{}
 	} else {
 		user := selectUser(log)
@@ -78,7 +77,7 @@ func (log *Login) Authentication() (ResponceUser, messages.Messages, uuid.UUID) 
 			updateuuidUser(uuid, user.Id)
 			return loged, messages.Messages{}, uuid
 		} else {
-			message.MessageError = "Email Or Password Encorect "
+			message.MessageError = "Email or password incorrect."
 			return ResponceUser{}, message, uuid.UUID{}
 		}
 	}
@@ -100,10 +99,11 @@ func hashPassword(password string) string {
 
 func (us *User) AuthenticatLogin(UUID string) (m messages.Messages) {
 	exists := checkAuthenticat(UUID)
-	if exists {
-		m.MessageError = " Unauthorized Token"
+	if !exists {
+		m.MessageError = "Unauthorized token"
 		return m
 	}
 	m.MessageSucc = "welcom"
 	return m
 }
+

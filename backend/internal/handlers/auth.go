@@ -12,7 +12,7 @@ import (
 func AuthenticateMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		cookies, err := r.Cookie("token")
-		// user := repository.User{}
+		user := repository.User{}
 		if err != nil || cookies == nil {
 			if err == http.ErrNoCookie {
 				http.Error(w, "Unauthorized: Cookie not present", http.StatusUnauthorized)
@@ -24,12 +24,13 @@ func AuthenticateMiddleware(next http.Handler) http.Handler {
 			http.Error(w, "Unauthorized", http.StatusUnauthorized)
 			return
 		}
-		// messages := user.AuthenticatLogin(cookies.Value)
-		// if messages.MessageError != "" {
-		// 	// json.NewEncoder(w).Encode(messages.MessageError)
-		// 	http.Error(w, "Unauthorized", http.StatusUnauthorized)
-		// 	return
-		// }
+		messages := user.AuthenticatLogin(cookies.Value)
+		if messages.MessageError != "" {
+			json.NewEncoder(w).Encode(messages.MessageError)
+			http.Error(w, "Unauthorized", http.StatusUnauthorized)
+			return
+		}
+		json.NewEncoder(w).Encode(messages.MessageSucc)
 		next.ServeHTTP(w, r)
 	})
 }

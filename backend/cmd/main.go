@@ -20,12 +20,12 @@ func main() {
 	mux := http.NewServeMux()
 
 	mux.HandleFunc("/", handlers.TestHandlers)
-	mux.HandleFunc("/api/register", handlers.HandleRegister)
+	// mux.HandleFunc("/api/register", handlers.HandleRegister)
 	mux.HandleFunc("/api/login", handlers.LoginHandle)
 
 	mux.Handle("/api/post", handlers.AuthenticateMiddleware(http.HandlerFunc(handlers.DisplyPost)))
-	mux.Handle("/api/commnet", handlers.AuthenticateMiddleware(http.HandlerFunc(handlers.DisplyPost)))
-
+	mux.Handle("/api/comment", handlers.AuthenticateMiddleware(http.HandlerFunc(handlers.HandleRegister)))
+	mux.Handle("/api/register", handlers.AuthenticateMiddleware(http.HandlerFunc(handlers.HandleRegister)))
 
 	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("../../frontend/static"))))
 	mux.HandleFunc("/login", func(w http.ResponseWriter, r *http.Request) {
