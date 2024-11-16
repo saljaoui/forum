@@ -18,7 +18,8 @@ func NewCard(user_id int , content string) *card {
 }
 
 func (C *card) Add() int {
-	return insertCard(C.User_Id,C.Content)
+	C.Id = insertCard(C.User_Id,C.Content)
+	return C.Id
 }
 
 func GetCard(id int) *card {

@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+
 	"log"
 	"net/http"
 
@@ -9,16 +10,23 @@ import (
 
 	"forum-project/backend/internal/database"
 	"forum-project/backend/internal/handlers"
-	card "forum-project/backend/internal/repository/cards"
+	//"forum-project/backend/internal/repository/cards"
+	//comment "forum-project/backend/internal/repository/comments"
 )
+
 
 func main() {
 	Err := database.InitDB()
 	if Err != nil {
 		fmt.Println(Err)
-	}
-	myCard := card.GetCard(1)
-	myCard.PrintInfo()
+	}  //18
+	fmt.Printf("1 & 7 : %v \n", 18 & 16) //     1 2 4 8 16 32 64 128
+										//    1 1 1 0 0  0  0   0
+										//    1 1 0 0 0  0  0   0
+	/*MyComment := comment.NewComment(2,"omar",1)
+	MyComment.Add()
+	myCard := cards.GetCard(MyComment.Card_Id)
+	myCard.PrintInfo()*/
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", handlers.TestHandlers)
 	mux.HandleFunc("/api/register", handlers.HandleRegister)

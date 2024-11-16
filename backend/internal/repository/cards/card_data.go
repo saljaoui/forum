@@ -18,7 +18,7 @@ func insertCard(user_id int , content string) int {
 }
 
 func getCardById(id int) *Card_Row {
-    query := "SELECT * FROM card WHERE card.id =? ;"
+    query := "SELECT * FROM card WHERE card.id =?;"
     myCard_Row := &Card_Row{}
     err := database.SelectOneRow(query,id).Scan(&id,&myCard_Row.User_Id,&myCard_Row.Content,&myCard_Row.CreatedAt)
 
