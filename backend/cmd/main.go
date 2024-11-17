@@ -30,6 +30,7 @@ func main() {
 	mux.HandleFunc("/", handlers.Middleware)
 	mux.HandleFunc("/api/register", handlers.HandleRegister)
 	mux.HandleFunc("/api/login", handlers.LoginHandle)
+	mux.HandleFunc("/api/comment",handlers.Comment_handler)
 
 	mux.Handle("/api/post", handlers.AuthenticateMiddleware(http.HandlerFunc(handlers.DisplyPost)))
 	mux.Handle("/api/Logout/{id}", handlers.AuthenticateMiddleware(http.HandlerFunc(handlers.HandleLogOut)))

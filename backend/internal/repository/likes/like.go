@@ -17,6 +17,8 @@ func NewLike(user_id, card_id int) *like {
 		isLiked: -1,
 	}
 }
+
+
 func (l *like) SetIsLike(val int) error {
 	if val < -1 || val > 1 {
 		return errors.New("like is a property that can be -1, 0 or 1 .")

@@ -8,6 +8,7 @@ import (
 )
 
 func InitDB() error {
+
 	if _, err := os.Stat("../../app.db"); os.IsNotExist(err) {
 		fmt.Println("Creating new database file...")
 		db, err := sql.Open("sqlite3", "../../app.db")
