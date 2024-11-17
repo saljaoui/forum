@@ -273,6 +273,7 @@ header {
 }
 
 .about-container {
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
   max-width: 1200px;
   margin: 10vh 25px 25px 25px;
   backdrop-filter: blur(20px);
