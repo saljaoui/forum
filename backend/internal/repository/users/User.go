@@ -1,4 +1,4 @@
-package repository
+package user
 
 import (
 	"fmt"
@@ -89,8 +89,7 @@ func checkPasswordHash(hash, password string) bool {
 }
 
 func hashPassword(password string) string {
-	fmt.Println(password)
-	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+ 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	if err != nil {
 		fmt.Println("error", err)
 	}

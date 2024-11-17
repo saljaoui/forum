@@ -1,4 +1,4 @@
-package repository
+package user
 
 import (
 	"fmt"
@@ -16,18 +16,16 @@ func emailExists(email string) bool {
 }
 
 func updateuuidUser(uudi uuid.UUID, userId int64) {
-	db := database.Config()
-	_, err := db.Exec("UPDATE user SET UUID=? WHERE id=?", uudi, userId)
+	stm := "UPDATE user SET UUID=? WHERE id=?"
+	err := database.Exec(stm, uudi, userId)
 	if err != nil {
 		fmt.Println("Error To Update User uuid")
 	}
 }
 
 func insertUser(users *User, password string) error {
-	db := database.Config()
-
 	stm := "INSERT INTO user (firstname,lastname,email,password) VALUES(?,?,?,?)"
-	_, err := db.Exec(stm, users.Firstname, users.Lastname, users.Email, password)
+	err := database.Exec(stm, users.Firstname, users.Lastname, users.Email, password)
 	return err
 }
 
@@ -45,12 +43,8 @@ func selectUser(log *Login) *User {
 
 func checkAuthenticat(id string) bool {
 	db := database.Config()
-	stm := `SELECT 
-		EXISTS (SELECT 1 FROM user WHERE UUID =  ?) as ex,
-		(SELECT UUID FROM user WHERE UUID =?)  as  uuid`
+	stm := `SELECT EXISTS (SELECT 1 FROM user WHERE UUID =  ?)  `
 	var exists bool
-	var uuid string
-	err := db.QueryRow(stm, id, id).Scan(&exists, &uuid)
-	fmt.Println(exists, uuid)
+	err := db.QueryRow(stm, id, id).Scan(&exists)
 	return err == nil
 }
