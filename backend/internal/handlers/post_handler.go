@@ -3,17 +3,17 @@ package handlers
 import (
 	"encoding/json"
 	"fmt"
+	"forum-project/backend/internal/repository/posts"
 	"net/http"
-
-	"forum-project/backend/internal/models"
 )
 
 func HandlePost(w http.ResponseWriter, r *http.Request) {
-	post := models.Post{}
+	post := posts.Post{}
 	err := json.NewDecoder(r.Body).Decode(&post)
 	if err != nil {
-		fmt.Println("error decoding JSON Post:", err)
+		fmt.Println("error decoding JSON:", err)
 		return
 	}
-	w.Header().Set("Content-Type", "application/json")
+	post.Add()
+	fmt.Println(post)
 }
