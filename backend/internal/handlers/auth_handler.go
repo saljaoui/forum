@@ -9,32 +9,6 @@ import (
 	repository "forum-project/backend/internal/repository/users"
 )
 
-func AuthenticateMiddleware(next http.Handler) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		cookies, err := r.Cookie("token")
-		user := repository.User{}
-		if err != nil || cookies == nil {
-			if err == http.ErrNoCookie {
-				http.Error(w, "Unauthorized: Cookie not present", http.StatusUnauthorized)
-				fmt.Println("Unauthorized: Cookie not present")
-				return
-			}
-		}
-		if cookies.Value == "" {
-			http.Error(w, "Unauthorized", http.StatusUnauthorized)
-			return
-		}
-		messages := user.AuthenticatLogin(cookies.Value)
-		if messages.MessageError != "" {
-			json.NewEncoder(w).Encode(messages.MessageError)
-			http.Error(w, "Unauthorized", http.StatusUnauthorized)
-			return
-		}
-		json.NewEncoder(w).Encode(messages.MessageSucc)
-		next.ServeHTTP(w, r)
-	})
-}
-
 func HandleRegister(w http.ResponseWriter, r *http.Request) {
 	user := repository.User{}
 	err := json.NewDecoder(r.Body).Decode(&user)
@@ -74,13 +48,25 @@ func LoginHandle(w http.ResponseWriter, r *http.Request) {
 		user := http.Cookie{
 			Name:    "token",
 			Value:   uuid.String(),
-			Expires: time.Now().Add(10 * time.Second),
+			Expires: time.Now().Add(30 * time.Second),
 			Path:    "/",
 		}
 		http.SetCookie(w, &user)
 		w.WriteHeader(http.StatusOK)
 		json.NewEncoder(w).Encode(loged)
 	}
+}
+
+func HandleLogOut(w http.ResponseWriter, r *http.Request) {
+	id := r.URL.RawQuery
+	fmt.Print(id)
+	// logout := repository.Login{}
+	// iduser, err := strconv.Atoi(id)
+	// if err != nil {
+	// 	fmt.Println("error to get id user")
+	// }
+	// logout.Id = int64(iduser)
+	// logout.LogOut()
 }
 
 func DisplyPost(w http.ResponseWriter, r *http.Request) {

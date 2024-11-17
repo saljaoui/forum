@@ -36,16 +36,13 @@ func Config() *sql.DB {
 	if err != nil {
 		log.Fatal("error connecting to database:", err)
 	}
-
 	return db
 }
 
-func SelectOneRow(query string, model any, st ...any) {
+func SelectOneRow(query string, model ...any) *sql.Row {
 	db := Config()
-	err := db.QueryRow(query, model).Scan(st...)
-	if err != nil {
-		fmt.Println(err,"ccc")
-	}
+	DataRow := db.QueryRow(query, model...)
+	return DataRow
 }
 
 func SelectRows(query string, model ...any) *sql.Rows {
@@ -54,11 +51,16 @@ func SelectRows(query string, model ...any) *sql.Rows {
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	return rows
 }
 
-func Exec(query string, model ...any) error {
+func Exec(query string, model ...any) int {
 	db := Config()
-	_, err := db.Exec(query, model...)
-	return err
+	res, err := db.Exec(query, model...)
+	if err != nil {
+		fmt.Println(err)
+	}
+	id,_ := res.LastInsertId()
+	return int(id)
 }

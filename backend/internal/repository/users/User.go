@@ -74,7 +74,7 @@ func (log *Login) Authentication() (ResponceUser, messages.Messages, uuid.UUID) 
 				Firstname: user.Firstname,
 				Lastname:  user.Lastname,
 			}
-			updateuuidUser(uuid, user.Id)
+			updateUUIDUser(uuid, user.Id)
 			return loged, messages.Messages{}, uuid
 		} else {
 			message.MessageError = "Email or password incorrect."
@@ -83,13 +83,18 @@ func (log *Login) Authentication() (ResponceUser, messages.Messages, uuid.UUID) 
 	}
 }
 
+func (Log *Login) LogOut() {
+	//	user := ResponceUser{}
+	fmt.Println(Log.Id)
+}
+
 func checkPasswordHash(hash, password string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
 	return err == nil
 }
 
 func hashPassword(password string) string {
- 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	if err != nil {
 		fmt.Println("error", err)
 	}
@@ -105,4 +110,3 @@ func (us *User) AuthenticatLogin(UUID string) (m messages.Messages) {
 	m.MessageSucc = "welcom"
 	return m
 }
-
