@@ -14,7 +14,12 @@ type Card_Row struct {
 
 func insertCard(user_id int , content string) int {
     query := "INSERT INTO card(user_id,content) VALUES(?,?)"
-    return database.Exec(query,user_id,content)    
+     resl,_:= database.Exec(query,user_id,content) 
+     id,err := resl.LastInsertId()
+     if err != nil {
+        return -1
+     }
+     return   int(id)
 }
 
 func getCardById(id int) *Card_Row {
