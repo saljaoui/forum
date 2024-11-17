@@ -68,8 +68,3 @@ func HandleLogOut(w http.ResponseWriter, r *http.Request) {
 	// logout.Id = int64(iduser)
 	// logout.LogOut()
 }
-
-func DisplyPost(w http.ResponseWriter, r *http.Request) {
-	json.NewEncoder(w).Encode("Welcom to Page Home")
-	fmt.Fprintln(w, "welcom")
-}

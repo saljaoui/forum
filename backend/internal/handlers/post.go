@@ -15,5 +15,6 @@ func HandlePost(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("error decoding JSON Post:", err)
 		return
 	}
+	fmt.Println(post)
 	w.Header().Set("Content-Type", "application/json")
 }
