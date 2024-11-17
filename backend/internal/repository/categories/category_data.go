@@ -11,9 +11,9 @@ func PostCategory(postId int64, category string) {
 }
 
 func GetCategoryId(category string) int {
+    categoryId := 0
     query := "SELECT id FROM category WHERE name = ?"
     db := database.Config()
-    categoryId := 0
     db.QueryRow(query, category).Scan(&categoryId)
     return categoryId
 }
