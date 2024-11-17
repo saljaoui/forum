@@ -9,17 +9,24 @@ import (
 
 	"forum-project/backend/internal/database"
 	"forum-project/backend/internal/handlers"
+	like "forum-project/backend/internal/repository/likes"
 	//"forum-project/backend/internal/repository/cards"
 	//comment "forum-project/backend/internal/repository/comments"
 )
 
 func main() {
+	myLike := like.NewLike(1,2)
+	myerr := myLike.SetIsLike(0)
+	if myerr != nil {
+		fmt.Println(myerr.Error())
+		return
+	}
+	fmt.Println(myLike.GetIsLike())
 	Err := database.InitDB()
 	if Err != nil {
 		fmt.Println(Err)
 	} // 18
 	mux := http.NewServeMux()
-
 	mux.HandleFunc("/", handlers.Middleware)
 	mux.HandleFunc("/api/register", handlers.HandleRegister)
 	mux.HandleFunc("/api/login", handlers.LoginHandle)
