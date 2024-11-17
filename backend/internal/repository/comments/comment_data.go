@@ -14,7 +14,12 @@ type comment_Row struct {
 
 func insertComment(card_id,target_id int) int {
     query := "INSERT INTO comment(card_id,target_id) VALUES(?,?);"
-    return database.Exec(query,card_id,target_id)
+    resl,_:= database.Exec(query,card_id,target_id)
+    id,err := resl.LastInsertId()
+    if err != nil {
+        return -1
+    }
+    return int(id)
 }
 
 func GetCommentById(id int) *comment_Row {
@@ -24,5 +29,5 @@ func GetCommentById(id int) *comment_Row {
     if err != nil{
         return nil
     }
-    return &Row
+    return &Row  
 }
