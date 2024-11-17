@@ -83,6 +83,18 @@ func LoginHandle(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func HandleLogOut(w http.ResponseWriter, r *http.Request) {
+	id := r.URL.RawQuery
+	fmt.Print(id)
+	// logout := repository.Login{}
+	// iduser, err := strconv.Atoi(id)
+	// if err != nil {
+	// 	fmt.Println("error to get id user")
+	// }
+	// logout.Id = int64(iduser)
+	// logout.LogOut()
+}
+
 func DisplyPost(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode("Welcom to Page Home")
 	fmt.Fprintln(w, "welcom")
