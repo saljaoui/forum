@@ -36,7 +36,6 @@ func Config() *sql.DB {
 	if err != nil {
 		log.Fatal("error connecting to database:", err)
 	}
-
 	return db
 }
 
