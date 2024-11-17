@@ -32,7 +32,7 @@ func updateUUIDUser(uudi uuid.UUID, userId int64) {
 func insertUser(users *User, password string) error {
 	db := database.Config()
 	stm := "INSERT INTO user (firstname,lastname,email,password) VALUES(?,?,?,?)"
-	_, err := db.Exec(stm, users.Firstname, users.Lastname, users.Email, password)
+	_, err := database.Exec(stm, users.Firstname, users.Lastname, users.Email, password)
 	return err
 }
 
