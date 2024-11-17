@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Us</title>
+    <link rel="stylesheet" href="../static/css/styles.css" />
+</head>
+<body>
+    <header>
+        <h2 class="logo">Logo</h2>
+        <nav class="navigation">
+            <a href="#">Forum</a>
+            <a href="#">About</a>
+            <a href="/contact">Contact</a>
+            <button class="btnLogin-popup" onclick="window.location.href='/login';">Login</button>
+        </nav>
+    </header>
+    
+    <main class="contact-content">
+        <!-- <h1>Contact Us</h1>
+        <div class="contact-container">
+            <div class="contact-info">
+                <h2>Get in Touch</h2>
+                <p>Have questions? We'd love to hear from you.</p>
+                
+                <div class="contact-details">
+                    <div class="contact-item">
+                        <ion-icon name="location"></ion-icon>
+                        <p>123 Street Name, City, Country</p>
+                    </div>
+                    <div class="contact-item">
+                        <ion-icon name="mail"></ion-icon>
+                        <p>email@example.com</p>
+                    </div>
+                    <div class="contact-item">
+                        <ion-icon name="call"></ion-icon>
+                        <p>+1 234 567 890</p>
+                    </div>
+                </div>
+            </div> -->
+            <div class="wrapper">
+            <form class="contact-form">
+                <div class="input-box">
+                    <span class="icon"><ion-icon name="person-circle"></ion-icon></span>
+                    <input type="text" required />
+                    <label>Full Name</label>
+                </div>
+                <div class="input-box">
+                    <span class="icon"><ion-icon name="mail"></ion-icon></span>
+                    <input type="text" required />
+                    <label>Email</label>
+                </div>
+                <div class="input-box">
+                    <textarea required></textarea>
+                    <label>Your Message</label>
+                </div>
+                <button type="submit" class="btn">Send Message</button>
+            </form>
+        </div>
+        </div>
+    </main>
+
+    <script src="../static/js/script.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

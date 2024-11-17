@@ -5,20 +5,19 @@ import (
 	"fmt"
 	"net/http"
 
-	"forum-project/backend/internal/models"
 	"forum-project/backend/internal/repository/posts"
 )
 
 func HandlePost(w http.ResponseWriter, r *http.Request) {
-	post := models.Post{}
+	post := posts.Post{}
 	err := json.NewDecoder(r.Body).Decode(&post)
 	if err != nil {
 		fmt.Println("error decoding JSON Post:", err)
 		return
 	}
 	// fmt.Println(post)
-	message := posts.Post(&post)
-	if message.ErrorBool {
+	message := posts.AddPost(&post)
+	if message.MessageError != "" {
 		w.WriteHeader(400)
 		json.NewEncoder(w).Encode(string(message.MessageError))
 	} else {
