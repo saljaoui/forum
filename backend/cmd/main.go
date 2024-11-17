@@ -22,10 +22,9 @@ func main() {
 
 	mux.HandleFunc("/", handlers.Middleware)
 	mux.HandleFunc("/api/register", handlers.HandleRegister)
-	mux.HandleFunc("/api/post", handlers.HandlePost)
 	mux.HandleFunc("/api/login", handlers.LoginHandle)
 
-	mux.Handle("/api/post", handlers.AuthenticateMiddleware(http.HandlerFunc(handlers.DisplyPost)))
+	mux.Handle("/api/post", handlers.AuthenticateMiddleware(http.HandlerFunc(handlers.HandlePost)))
 	mux.Handle("/api/Logout/{id}", handlers.AuthenticateMiddleware(http.HandlerFunc(handlers.HandleLogOut)))
 
 	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("../../frontend/static"))))
