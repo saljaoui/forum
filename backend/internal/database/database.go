@@ -44,7 +44,7 @@ func SelectOneRow(query string, model any, st ...any) {
 	db := Config()
 	err := db.QueryRow(query, model).Scan(st...)
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println(err,"ccc")
 	}
 }
 
@@ -54,14 +54,11 @@ func SelectRows(query string, model ...any) *sql.Rows {
 	if err != nil {
 		fmt.Println(err)
 	}
-
 	return rows
 }
 
-func Exec(query string, model ...any) {
+func Exec(query string, model ...any) error {
 	db := Config()
 	_, err := db.Exec(query, model...)
-	if err != nil {
-		fmt.Println(err)
-	}
+	return err
 }
