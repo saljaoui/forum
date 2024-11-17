@@ -9,9 +9,7 @@ import (
 func AddPost(post *Post) messages.Messages {
     message := messages.Messages{}
     query := "INSERT INTO card (user_id,content) VALUES(?,?)"
-
-     database.Exec(query, post.User_id, post.Content)
-
+    database.Exec(query, post.User_id, post.Content)
     categories.PostCategory(post.Id, post.Category)
     return message
 }
