@@ -36,7 +36,7 @@ func main() {
 	myCard := cards.GetCard(MyComment.Card_Id)
 	myCard.PrintInfo()*/
 	mux := http.NewServeMux()
-	mux.HandleFunc("/", handlers.TestHandlers)
+	mux.HandleFunc("/", handlers.Middleware)
 	mux.HandleFunc("/api/register", handlers.HandleRegister)
 	mux.HandleFunc("/api/login", handlers.LoginHandle)
 	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("../../frontend/static"))))
