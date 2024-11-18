@@ -1,18 +1,26 @@
-package categories
+package category
 
 import (
+	"fmt"
+
 	"forum-project/backend/internal/database"
 )
 
-func postCategory(postId int64, category string) {
+func postCategory(postId int, category string) {
 	categoryId := getCategoryId(category)
 	query := "INSERT INTO post_category (post_id, category_id) VALUES(?,?)"
-	database.Exec(query, postId, categoryId)
+	_, err := database.Exec(query, postId, categoryId)
+	if err != nil {
+		fmt.Println(err)
+	}
 }
 
 func getCategoryId(category string) int {
-	categoryId := 0
+	categoryId := -1
 	query := "SELECT id FROM category WHERE name = ?"
-	database.SelectOneRow(query, category).Scan(&categoryId)
+	err:=database.SelectOneRow(query, category).Scan(&categoryId)
+	if err!=nil {
+		fmt.Println("error To Get Id") 
+	}
 	return categoryId
 }

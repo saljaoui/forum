@@ -1,7 +1,5 @@
 package comment
 
-import "forum-project/backend/internal/repository/cards"
-
 type comment struct {
 	ID        int    `json:"id"`
 	User_Id   int    `json:"user_id"`
@@ -21,12 +19,12 @@ func NewComment(user_id int, content string, target int) *comment {
 	}
 }
 
-func (c *comment) Add() int {
-	card := cards.NewCard(c.User_Id, c.Content)
-	card.Add()
-	if card.Id == -1 {
-		return -1
-	}
-	c.Card_Id = card.Id
-	return insertComment(c.Card_Id, c.Target_Id)
-}
+// func (c *comment) Add() int {
+// 	card := cards.NewCard(c.User_Id, c.Content)
+// 	card.Add()
+// 	if card.Id == -1 {
+// 		return -1
+// 	}
+// 	c.Card_Id = card.Id
+// 	return insertComment(c.Card_Id, c.Target_Id)
+// }

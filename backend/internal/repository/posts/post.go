@@ -1,20 +1,27 @@
 package posts
 
 import (
-	"forum-project/backend/internal/repository/categories"
-	"time"
+	"forum-project/backend/internal/repository/cards"
 )
 
 type Post struct {
-	Id         int64     `json:"id"`
-	User_id    int64     `json:"user_id"`
-	Title      string    `json:"title"`
-	Content    string    `json:"content"`
-	Category   string    `json:"category"`
-	Created_at time.Time `json:"created_at"`
+	ID        int    `json:"id"`
+	User_Id   int    `json:"user_id"`
+	Title     string `json:"title"`
+	Content   string `json:"content"`
+	Name      []string `json:"name"`
+	CreatedAt string `json:"createdat"`
+	Card_Id   int    `json:"card_id"`
 }
 
-func (p *Post) AddPost() {
-	insertPost(p)
-	categories.InsertCategory(p.Id, p.Category)
+func (p *Post) Add() int {
+	card := cards.NewCard(p.User_Id, p.Content)
+	card.Add()
+	if card.Id == -1 {
+		return -1
+	}
+	p.Card_Id = card.Id
+	id_posr := inserPost(p.Title, p.Card_Id)
+
+	return int(id_posr)
 }

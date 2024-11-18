@@ -2,29 +2,36 @@ package cards
 
 import (
 	//"fmt"
+	"fmt"
+
 	"forum-project/backend/internal/database"
 )
 
 type Card_Row struct {
-	Id  int
-	User_Id  int
+	Id        int
+	User_Id   int
 	Content   string
 	CreatedAt string
 }
 
-func insertCard(user_id int , content string) int {
-    query := "INSERT INTO card(user_id,content) VALUES(?,?)"
-    return database.Exec(query,user_id,content)    
+func insertCard(user_id int, content string) int {
+	query := "INSERT INTO card(user_id,content) VALUES(?,?)"
+	row, _ := database.Exec(query, user_id, content)
+	id, err := row.LastInsertId()
+	if err != nil {
+		fmt.Println("error ")
+	}
+	return int(id)
 }
 
 func getCardById(id int) *Card_Row {
-    query := "SELECT * FROM card WHERE card.id =?;"
-    myCard_Row := &Card_Row{}
-    err := database.SelectOneRow(query,id).Scan(&id,&myCard_Row.User_Id,&myCard_Row.Content,&myCard_Row.CreatedAt)
+	query := "SELECT * FROM card WHERE card.id =?;"
+	myCard_Row := &Card_Row{}
+	err := database.SelectOneRow(query, id).Scan(&id, &myCard_Row.User_Id, &myCard_Row.Content, &myCard_Row.CreatedAt)
 
-    if err != nil {
-        return nil
-    } else {
-        return myCard_Row
-    }
+	if err != nil {
+		return nil
+	} else {
+		return myCard_Row
+	}
 }

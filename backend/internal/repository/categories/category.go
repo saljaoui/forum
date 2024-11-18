@@ -1,6 +1,5 @@
-package categories
+package category
 
-
-func InsertCategory(post_id int64, category string) {
+func AddCategory(post_id int, category string) {
 	postCategory(post_id, category)
 }
