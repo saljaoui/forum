@@ -2,8 +2,6 @@ package cards
 
 import (
 	//"fmt"
-	"fmt"
-
 	"forum-project/backend/internal/database"
 )
 
@@ -16,10 +14,10 @@ type Card_Row struct {
 
 func insertCard(user_id int, content string) int {
 	query := "INSERT INTO card(user_id,content) VALUES(?,?)"
-	row, _ := database.Exec(query, user_id, content)
-	id, err := row.LastInsertId()
+	resl, _ := database.Exec(query, user_id, content)
+	id, err := resl.LastInsertId()
 	if err != nil {
-		fmt.Println("error ")
+		return -1
 	}
 	return int(id)
 }

@@ -1,6 +1,8 @@
 package comment
 
-type comment struct {
+import "forum-project/backend/internal/repository/cards"
+
+type Comment struct {
 	ID        int    `json:"id"`
 	User_Id   int    `json:"user_id"`
 	Content   string `json:"content"`
@@ -9,8 +11,8 @@ type comment struct {
 	Target_Id int    `json:"target_id"`
 }
 
-func NewComment(user_id int, content string, target int) *comment {
-	return &comment{
+func NewComment(user_id int, content string, target int) *Comment {
+	return &Comment{
 		ID:        -1,
 		Card_Id:   -1,
 		Target_Id: target,
@@ -19,12 +21,12 @@ func NewComment(user_id int, content string, target int) *comment {
 	}
 }
 
-// func (c *comment) Add() int {
-// 	card := cards.NewCard(c.User_Id, c.Content)
-// 	card.Add()
-// 	if card.Id == -1 {
-// 		return -1
-// 	}
-// 	c.Card_Id = card.Id
-// 	return insertComment(c.Card_Id, c.Target_Id)
-// }
+func (c *Comment) Add() int {
+	card := cards.NewCard(c.User_Id, c.Content)
+	idcard := card.Add()
+	if card.Id == -1 {
+		return -1
+	}
+	c.Card_Id = card.Id
+	return insertComment(idcard, c.Target_Id)
+}

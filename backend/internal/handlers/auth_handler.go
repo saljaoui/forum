@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strconv"
 	"time"
 
 	repository "forum-project/backend/internal/repository/users"
@@ -11,7 +12,9 @@ import (
 
 func HandleRegister(w http.ResponseWriter, r *http.Request) {
 	user := repository.User{}
-	err := json.NewDecoder(r.Body).Decode(&user)
+	decode := json.NewDecoder(r.Body)
+	decode.DisallowUnknownFields()
+	err := decode.Decode(&user)
 	if err != nil {
 		fmt.Println("error decoding JSON:", err)
 		return
@@ -33,9 +36,14 @@ func LoginHandle(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	user := repository.Login{}
-	err := json.NewDecoder(r.Body).Decode(&user)
+	decode := json.NewDecoder(r.Body)
+	decode.DisallowUnknownFields()
+	err := decode.Decode(&user)
 	if err != nil {
-		fmt.Println("error to login")
+		w.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(w).Encode(map[string]string{
+			"message": err.Error(),
+		})
 		return
 	}
 	loged, message, uuid := user.Authentication()
@@ -51,25 +59,67 @@ func LoginHandle(w http.ResponseWriter, r *http.Request) {
 			Expires: time.Now().Add(30 * time.Second),
 			Path:    "/",
 		}
+
+		user_id := http.Cookie{
+			Name:    "user_id",
+			Value:   fmt.Sprint(loged.Id),
+			Expires: time.Now().Add(30 * time.Second),
+			Path:    "/",
+		}
 		http.SetCookie(w, &user)
+		http.SetCookie(w, &user_id)
 		w.WriteHeader(http.StatusOK)
 		json.NewEncoder(w).Encode(loged)
 	}
 }
 
 func HandleLogOut(w http.ResponseWriter, r *http.Request) {
-	id := r.URL.RawQuery
-	fmt.Print(id)
-	// logout := repository.Login{}
-	// iduser, err := strconv.Atoi(id)
-	// if err != nil {
-	// 	fmt.Println("error to get id user")
-	// }
-	// logout.Id = int64(iduser)
-	// logout.LogOut()
+	logout := repository.Login{}
+
+	decoder := json.NewDecoder(r.Body)
+	decoder.DisallowUnknownFields()
+	err := decoder.Decode(&logout)
+	if err != nil {
+		jsoneResponse(w, "Invalid request format", http.StatusBadRequest)
+		return
+	}
+
+	jsonValue, err := r.Cookie("user_id")
+	if err != nil {
+		jsoneResponse(w, "Missing or invalid user_id cookie", http.StatusBadRequest)
+		return
+ 	}
+	user_id, err := strconv.Atoi(jsonValue.Value)
+	if err != nil {
+		jsoneResponse(w, "Invalid user_id value", http.StatusBadRequest)
+		return
+ 	}
+	if int64(user_id) != logout.Id {
+		jsoneResponse(w, "Unauthorized user", http.StatusUnauthorized)
+		return
+	}
+
+	message := logout.LogOut()
+	if message.MessageError != "" {
+		jsoneResponse(w, message.MessageError, http.StatusBadRequest)
+		return
+	}
+	cookieLogOut(w)
 }
 
-func DisplyPost(w http.ResponseWriter, r *http.Request) {
-	json.NewEncoder(w).Encode("Welcom to Page Home")
-	fmt.Fprintln(w, "welcom")
+func cookieLogOut(w http.ResponseWriter) {
+	user := http.Cookie{
+		Name:    "token",
+		Value:   "",
+		Expires: time.Now(),
+		Path:    "/",
+	}
+	http.SetCookie(w, &user)
+}
+
+func jsoneResponse(w http.ResponseWriter, message string, code int) {
+	w.WriteHeader(code)
+	json.NewEncoder(w).Encode(map[string]string{
+		"Message": message,
+	})
 }
