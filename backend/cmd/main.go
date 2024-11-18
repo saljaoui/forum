@@ -9,6 +9,8 @@ import (
 
 	"forum-project/backend/internal/database"
 	"forum-project/backend/internal/handlers"
+	//"forum-project/backend/internal/repository/cards"
+	//comment "forum-project/backend/internal/repository/comments"
 )
 
 func main() {

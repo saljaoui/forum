@@ -32,9 +32,6 @@ type Login struct {
 	Email    string `json:"email"`
 	Password string `json:"password"`
 }
-type RequestData struct {
-	Id int64 `json:"id"`
-}
 
 func (users *User) Register() messages.Messages {
 	message := messages.Messages{}
