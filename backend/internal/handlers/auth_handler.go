@@ -11,75 +11,51 @@ import (
 )
 
 func HandleRegister(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		jsoneResponse(w, "Status Method Not Allowed", http.StatusMethodNotAllowed)
+		return
+	}
 	user := repository.User{}
-	decode := json.NewDecoder(r.Body)
-	decode.DisallowUnknownFields()
-	err := decode.Decode(&user)
+	err := decodeJson(r, user)
 	if err != nil {
-		fmt.Println("error decoding JSON:", err)
+		jsoneResponse(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 	message := user.Register()
 	if message.MessageError != "" {
-		w.WriteHeader(400)
-		json.NewEncoder(w).Encode(string(message.MessageError))
+		jsoneResponse(w, message.MessageError, http.StatusBadRequest)
 	} else {
-		json.NewEncoder(w).Encode(string(message.MessageSucc))
+		jsoneResponse(w, message.MessageSucc, http.StatusOK)
 	}
-	w.Header().Set("Content-Type", "application/json")
 }
 
 func LoginHandle(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
-		w.WriteHeader(http.StatusMethodNotAllowed)
-		json.NewEncoder(w).Encode("Status Method Not Allowed")
+		jsoneResponse(w, "Status Method Not Allowed", http.StatusMethodNotAllowed)
 		return
 	}
 	user := repository.Login{}
-	decode := json.NewDecoder(r.Body)
-	decode.DisallowUnknownFields()
-	err := decode.Decode(&user)
+	err := decodeJson(r, user)
+	
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		json.NewEncoder(w).Encode(map[string]string{
-			"message": err.Error(),
-		})
+		jsoneResponse(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 	loged, message, uuid := user.Authentication()
 	if message.MessageError != "" {
-		w.WriteHeader(http.StatusBadRequest)
-		json.NewEncoder(w).Encode(message.MessageError)
+		jsoneResponse(w, message.MessageError, http.StatusBadRequest)
 		return
 
 	} else {
-
-		user := http.Cookie{
-			Name:    "token",
-			Value:   uuid.String(),
-			Expires: time.Now().Add(30 * time.Second),
-			Path:    "/",
-		}
-
-		user_id := http.Cookie{
-			Name:    "user_id",
-			Value:   fmt.Sprint(loged.Id),
-			Expires: time.Now().Add(30 * time.Second),
-			Path:    "/",
-		}
-		http.SetCookie(w, &user)
-		http.SetCookie(w, &user_id)
-		w.WriteHeader(http.StatusOK)
-		json.NewEncoder(w).Encode(loged)
+		SetCookie(w, "token", uuid.String(), time.Now().Add(10*time.Second))
+		SetCookie(w, "user_id", fmt.Sprint(loged.Id), time.Now().Add(10*time.Second))
+		jsoneResponse(w, message.MessageSucc, http.StatusOK)
 	}
 }
 
 func HandleLogOut(w http.ResponseWriter, r *http.Request) {
 	logout := repository.Login{}
-
-	decoder := json.NewDecoder(r.Body)
-	decoder.DisallowUnknownFields()
-	err := decoder.Decode(&logout)
+	err := decodeJson(r, logout)
 	if err != nil {
 		jsoneResponse(w, "Invalid request format", http.StatusBadRequest)
 		return
@@ -89,12 +65,12 @@ func HandleLogOut(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		jsoneResponse(w, "Missing or invalid user_id cookie", http.StatusBadRequest)
 		return
- 	}
+	}
 	user_id, err := strconv.Atoi(jsonValue.Value)
 	if err != nil {
 		jsoneResponse(w, "Invalid user_id value", http.StatusBadRequest)
 		return
- 	}
+	}
 	if int64(user_id) != logout.Id {
 		jsoneResponse(w, "Unauthorized user", http.StatusUnauthorized)
 		return
@@ -105,17 +81,25 @@ func HandleLogOut(w http.ResponseWriter, r *http.Request) {
 		jsoneResponse(w, message.MessageError, http.StatusBadRequest)
 		return
 	}
-	cookieLogOut(w)
+	SetCookie(w, "token", "", time.Now())
+	SetCookie(w, "user_id", "", time.Now())
 }
 
-func cookieLogOut(w http.ResponseWriter) {
+func SetCookie(w http.ResponseWriter, name string, value string, time time.Time) {
 	user := http.Cookie{
-		Name:    "token",
-		Value:   "",
-		Expires: time.Now(),
+		Name:    name,
+		Value:   value,
+		Expires: time,
 		Path:    "/",
 	}
 	http.SetCookie(w, &user)
+}
+
+func decodeJson(r *http.Request, user any) error {
+	decode := json.NewDecoder(r.Body)
+	decode.DisallowUnknownFields()
+	err := decode.Decode(&user)
+	return err
 }
 
 func jsoneResponse(w http.ResponseWriter, message string, code int) {
