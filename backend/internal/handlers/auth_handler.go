@@ -16,7 +16,8 @@ func HandleRegister(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	user := repository.User{}
-	err := decodeJson(r, user)
+	decode := decodeJson(r)
+	err := decode.Decode(&user)
 	if err != nil {
 		jsoneResponse(w, err.Error(), http.StatusBadRequest)
 		return
@@ -35,27 +36,28 @@ func LoginHandle(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	user := repository.Login{}
-	err := decodeJson(r, user)
-	
+	decode := decodeJson(r)
+	err := decode.Decode(&user)
 	if err != nil {
 		jsoneResponse(w, err.Error(), http.StatusBadRequest)
 		return
 	}
+	fmt.Println(user.Email)
 	loged, message, uuid := user.Authentication()
 	if message.MessageError != "" {
 		jsoneResponse(w, message.MessageError, http.StatusBadRequest)
 		return
-
 	} else {
 		SetCookie(w, "token", uuid.String(), time.Now().Add(10*time.Second))
 		SetCookie(w, "user_id", fmt.Sprint(loged.Id), time.Now().Add(10*time.Second))
-		jsoneResponse(w, message.MessageSucc, http.StatusOK)
+		jsoneResponse(w, "User created successfully", http.StatusCreated)
 	}
 }
 
 func HandleLogOut(w http.ResponseWriter, r *http.Request) {
 	logout := repository.Login{}
-	err := decodeJson(r, logout)
+	decode := decodeJson(r)
+	err := decode.Decode(&logout)
 	if err != nil {
 		jsoneResponse(w, "Invalid request format", http.StatusBadRequest)
 		return
@@ -95,11 +97,10 @@ func SetCookie(w http.ResponseWriter, name string, value string, time time.Time)
 	http.SetCookie(w, &user)
 }
 
-func decodeJson(r *http.Request, user any) error {
+func decodeJson(r *http.Request) *json.Decoder {
 	decode := json.NewDecoder(r.Body)
 	decode.DisallowUnknownFields()
-	err := decode.Decode(&user)
-	return err
+	return decode
 }
 
 func jsoneResponse(w http.ResponseWriter, message string, code int) {
