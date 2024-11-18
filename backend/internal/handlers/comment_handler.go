@@ -3,31 +3,48 @@ package handlers
 import (
 	//"encoding/json"
 	"encoding/json"
-	"fmt"
-	"net/http"
 	"strconv"
 
+	//"fmt"
 	comment "forum-project/backend/internal/repository/comments"
+	"net/http"
 )
 
-func convertToInteger(data  string) int{
-	number,err := strconv.Atoi(data)
-	if err != nil {
-		return -1
+func Comment_handler(res http.ResponseWriter, req *http.Request) {
+	if req.Method == "GET" {
+		id, err := strconv.Atoi(req.FormValue("id"))
+		if err != nil {
+			res.WriteHeader(http.StatusBadRequest)
+			return 
+		}
+		comment := comment.GetComment(id)
+		if comment == nil {
+			res.WriteHeader(http.StatusNotFound)
+			return 
+		}
+		res.WriteHeader(http.StatusOK)
+		json.NewEncoder(res).Encode(comment)
+	} else if req.Method == "POST" {
+		statusCode := addComment(req)
+		if statusCode == http.StatusOK {
+			res.Write([]byte("comment added succesfuly"))
+			return 
+		}
+		if statusCode == http.StatusBadRequest {
+			res.Write([]byte("comment Infos are wrongs!! "))
+			return 
+		}
+		res.WriteHeader(statusCode)
 	}
-	return number
 }
 
-func Comment_handler(res http.ResponseWriter, req *http.Request) {
-	userId := convertToInteger(req.FormValue("user_id"))
-	content := req.FormValue("content")
-	target,errTarget := strconv.Atoi(req.FormValue("target"))
-	decode:=json.NewDecoder(req.Body)
-	decode.DisallowUnknownFields()
-
-	myComment := comment.NewComment()
-	json.NewDecoder(req.Body).Decode(&myComment)
-	myComment.Add()
-	fmt.Printf("comment with id  : %v  is created\n", myComment.ID)
-	// json.NewDecoder(req.Body).Decode()
+func addComment(req *http.Request) int {
+	comment := comment.Comment{}
+	decoder := json.NewDecoder(req.Body)
+	err := decoder.Decode(&comment)
+	if err != nil {
+		return http.StatusBadRequest
+	}
+	comment.Add()
+	return http.StatusOK
 }

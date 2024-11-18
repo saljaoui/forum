@@ -34,7 +34,6 @@ func Middleware(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Error encoding JSON", http.StatusInternalServerError)
 		return
 	}
-	w.WriteHeader(200)
 	w.Write(jsonData)
 }
 

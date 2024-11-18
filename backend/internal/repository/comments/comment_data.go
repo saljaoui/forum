@@ -1,6 +1,8 @@
 package comment
 
-import "forum-project/backend/internal/database"
+import (
+	"forum-project/backend/internal/database"
+)
 
 
 type comment_Row struct {
@@ -22,10 +24,10 @@ func insertComment(card_id,target_id int) int {
     return int(id)
 }
 
-func GetCommentById(id int) *comment_Row {
+func getCommentById(id int) *comment_Row {
     Row := comment_Row{}
     query := "SELECT * FROM comment WHERE comment.id =?;"
-    err := database.SelectOneRow(query,Row.ID,Row.Card_Id,Row.Target_Id)
+    err := database.SelectOneRow(query,id).Scan(&Row.ID,&Row.Card_Id,&Row.Target_Id)
     if err != nil{
         return nil
     }
