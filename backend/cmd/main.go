@@ -17,8 +17,8 @@ func main() {
 	Err := database.InitDB()
 	if Err != nil {
 		fmt.Println(Err)
-	} // 18
 	}
+	
 	mux := http.NewServeMux()
 
 	mux.HandleFunc("/", handlers.Middleware)
@@ -47,9 +47,6 @@ func main() {
 		http.ServeFile(w, r, "../../frontend/templates/post.html")
 	})
 
-	mux.HandleFunc("/post", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, "../../frontend/templates/post.html")
-	})
 	fmt.Println("Server running at :3333")
 	fmt.Println("http://localhost:3333")
 	err := http.ListenAndServe(":3333", mux)
