@@ -284,6 +284,7 @@ header {
   color: #fff;
   padding-top: 4rem;
   min-height: 800px;
+  overflow: hidden;
 }
 
 .about-title {
@@ -359,5 +360,53 @@ header {
 @media (max-width: 480px) {
   .team-grid {
       grid-template-columns: 1fr;
+  }
+}
+
+
+.about-card {
+  animation: slideRight 1.5s ease-in-out ;
+}
+
+.about-subtitle , .about-title {
+  animation: slideLeft 1.5s ease-in-out ;
+}
+
+.about-container {
+  animation: fromTO 1s ease-in-out ;
+}
+
+.form-box {
+  animation:  fromTO 1s ease-in-out;
+}
+
+@keyframes slideRight {
+  0% {
+      transform: translateX(-100%);
+      opacity: 0;
+  }
+  100% {
+      transform: translateX(0);
+      opacity: 1;
+  }
+}
+
+@keyframes fromTO {
+  0% {
+      opacity: 0;
+  }
+  100% {
+      opacity: 1;
+  }
+}
+
+@keyframes slideLeft {
+  0% {
+      transform: translateX(100%);
+      opacity: 0;
+  }
+  100% {
+      transform: translateX(0);
+      opacity: 1;
   }
 }
