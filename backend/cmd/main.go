@@ -9,15 +9,13 @@ import (
 
 	"forum-project/backend/internal/database"
 	"forum-project/backend/internal/handlers"
-	//"forum-project/backend/internal/repository/cards"
-	//comment "forum-project/backend/internal/repository/comments"
 )
 
 func main() {
 	Err := database.InitDB()
 	if Err != nil {
 		fmt.Println(Err)
-	} // 18
+	}
 	mux := http.NewServeMux()
 
 	mux.HandleFunc("/", handlers.Middleware)
@@ -25,7 +23,7 @@ func main() {
 	mux.HandleFunc("/api/login", handlers.LoginHandle)
 
 	mux.Handle("/api/comment", handlers.AuthenticateMiddleware(http.HandlerFunc(handlers.Comment)))
-	mux.Handle("/api/Logout/{id}", handlers.AuthenticateMiddleware(http.HandlerFunc(handlers.HandleLogOut)))
+	mux.Handle("/api/Logout", handlers.AuthenticateMiddleware(http.HandlerFunc(handlers.HandleLogOut)))
 
 	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("../../frontend/static"))))
 	mux.HandleFunc("/login", func(w http.ResponseWriter, r *http.Request) {

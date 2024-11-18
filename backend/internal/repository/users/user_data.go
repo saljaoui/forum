@@ -4,8 +4,6 @@ import (
 	"fmt"
 
 	"forum-project/backend/internal/database"
-
-	"github.com/gofrs/uuid/v5"
 )
 
 func emailExists(email string) bool {
@@ -18,12 +16,10 @@ func emailExists(email string) bool {
 	return exists
 }
 
-func updateUUIDUser(uudi uuid.UUID, userId int64) {
+func updateUUIDUser(uudi string, userId int64) error {
 	stm := "UPDATE user SET UUID=? WHERE id=?"
 	_, err := database.Exec(stm, uudi, userId)
-	if err != nil {
-		fmt.Println("Error To Update User uuid")
-	}
+	return err
 }
 
 func insertUser(users *User, password string) error {

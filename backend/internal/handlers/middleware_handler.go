@@ -34,7 +34,6 @@ func Middleware(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Error encoding JSON", http.StatusInternalServerError)
 		return
 	}
-	w.WriteHeader(200)
 	w.Write(jsonData)
 }
 
@@ -59,7 +58,6 @@ func AuthenticateMiddleware(next http.Handler) http.Handler {
 			http.Error(w, "Unauthorized", http.StatusUnauthorized)
 			return
 		}
-		json.NewEncoder(w).Encode(messages.MessageSucc)
 		next.ServeHTTP(w, r)
 	})
 }
