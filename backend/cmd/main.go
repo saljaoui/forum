@@ -26,7 +26,10 @@ func main() {
 	if Err != nil {
 		fmt.Println(Err)
 	} // 18
+
 	mux := http.NewServeMux()
+	
+	//http.HandleFunc("/",handlers.Middleware)
 	mux.HandleFunc("/", handlers.Middleware)
 	mux.HandleFunc("/api/register", handlers.HandleRegister)
 	mux.HandleFunc("/api/login", handlers.LoginHandle)
