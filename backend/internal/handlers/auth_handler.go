@@ -29,7 +29,7 @@ func HandleRegister(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func LoginHandle(w http.ResponseWriter, r *http.Request) {
+func HandleLogin(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		JsoneResponse(w, "Status Method Not Allowed", http.StatusMethodNotAllowed)
 		return
