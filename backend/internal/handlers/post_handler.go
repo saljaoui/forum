@@ -10,6 +10,11 @@ import (
 )
 
 func HandlePost(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		w.WriteHeader(http.StatusMethodNotAllowed)
+		json.NewEncoder(w).Encode("Status Method Not Allowed")
+		return
+	}
 	post := posts.Post{}
 	err := json.NewDecoder(r.Body).Decode(&post)
 	if err != nil {
@@ -17,8 +22,8 @@ func HandlePost(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	id := post.Add()
-	fmt.Println(post.Name)
-	for _,name := range post.Name {
+	fmt.Println(post.Name_Category)
+	for _,name := range post.Name_Category {
 		category.AddCategory(id, name)
 	}
 	fmt.Println(post)

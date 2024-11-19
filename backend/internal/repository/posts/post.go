@@ -9,7 +9,7 @@ type Post struct {
 	User_Id   int    `json:"user_id"`
 	Title     string `json:"title"`
 	Content   string `json:"content"`
-	Name      []string `json:"name"`
+	Name_Category     []string `json:"name"`
 	CreatedAt string `json:"createdat"`
 	Card_Id   int    `json:"card_id"`
 }
