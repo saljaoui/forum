@@ -41,7 +41,6 @@ func LoginHandle(w http.ResponseWriter, r *http.Request) {
 		JsoneResponse(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	fmt.Println(user.Email)
 	loged, message, uuid := user.Authentication()
 	if message.MessageError != "" {
 		JsoneResponse(w, message.MessageError, http.StatusBadRequest)
@@ -49,7 +48,7 @@ func LoginHandle(w http.ResponseWriter, r *http.Request) {
 	} else {
 		SetCookie(w, "token", uuid.String(), time.Now().Add(10*time.Second))
 		SetCookie(w, "user_id", fmt.Sprint(loged.Id), time.Now().Add(10*time.Second))
-		JsoneResponse(w, "User Login successfully", http.StatusOK)
+		JsoneResponse(w, loged, http.StatusOK)
 	}
 }
 
@@ -94,4 +93,13 @@ func SetCookie(w http.ResponseWriter, name string, value string, time time.Time)
 		Path:    "/",
 	}
 	http.SetCookie(w, &user)
+}
+
+func GetUserId(r *http.Request) int {
+	cookies, err := r.Cookie("user_id")
+	if err != nil {
+		fmt.Println("error", err)
+	}
+	id_user, _ := strconv.Atoi(cookies.Value)
+	return id_user
 }

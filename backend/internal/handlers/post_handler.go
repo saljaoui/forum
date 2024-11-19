@@ -10,6 +10,8 @@ import (
 )
 
 func HandlePost(w http.ResponseWriter, r *http.Request) {
+	id_user := GetUserId(r)
+	fmt.Println(id_user)
 	post := posts.Post{}
 	err := json.NewDecoder(r.Body).Decode(&post)
 	if err != nil {

@@ -11,9 +11,12 @@ func DecodeJson(r *http.Request) *json.Decoder {
 	return decode
 }
 
-func JsoneResponse(w http.ResponseWriter, message string, code int) {
+func JsoneResponse(w http.ResponseWriter, message any, code int) {
 	w.WriteHeader(code)
-	json.NewEncoder(w).Encode(map[string]string{
-		"Message": message,
+	err := json.NewEncoder(w).Encode(map[string]any{
+		"message": message,
 	})
+	if err != nil {
+		http.Error(w, "Failed to encode JSON response", http.StatusInternalServerError)
+	}
 }
