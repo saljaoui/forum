@@ -3,8 +3,10 @@ package handlers
 import (
 	"encoding/json"
 	"fmt"
-	"forum-project/backend/internal/repository/posts"
 	"net/http"
+
+	category "forum-project/backend/internal/repository/categories"
+	"forum-project/backend/internal/repository/posts"
 )
 
 func HandlePost(w http.ResponseWriter, r *http.Request) {
@@ -14,6 +16,10 @@ func HandlePost(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("error decoding JSON:", err)
 		return
 	}
-	post.Add()
+	id := post.Add()
+	fmt.Println(post.Name)
+	for _,name := range post.Name {
+		category.AddCategory(id, name)
+	}
 	fmt.Println(post)
 }
