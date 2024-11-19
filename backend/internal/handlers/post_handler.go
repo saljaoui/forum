@@ -21,6 +21,7 @@ func HandlePost(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("error decoding JSON:", err)
 		return
 	}
+	post.CheckPostErr(w)
 	id := post.Add()
 	fmt.Println(post.Name_Category)
 	for _,name := range post.Name_Category {
