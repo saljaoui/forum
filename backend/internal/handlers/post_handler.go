@@ -18,7 +18,7 @@ func HandlePost(w http.ResponseWriter, r *http.Request) {
 	}
 	id := post.Add()
 	fmt.Println(post.Name)
-	for _,name := range post.Name {
+	for _, name := range post.Name {
 		category.AddCategory(id, name)
 	}
 	fmt.Println(post)
