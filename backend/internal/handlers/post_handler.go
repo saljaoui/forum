@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"net/http"
 
-	category "forum-project/backend/internal/repository/categories"
 	"forum-project/backend/internal/repository/posts"
 )
 
@@ -16,10 +15,10 @@ func HandlePost(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("error decoding JSON:", err)
 		return
 	}
-	id := post.Add()
-	fmt.Println(post.Name)
-	for _, name := range post.Name {
-		category.AddCategory(id, name)
-	}
+	// id := post.Add()
+	// fmt.Println(post.Name)
+	// for _, name := range post.Name {
+	// 	category.AddCategory(id, name)
+	// }
 	fmt.Println(post)
 }
