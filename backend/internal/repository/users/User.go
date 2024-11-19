@@ -49,7 +49,7 @@ func (users *User) Register() messages.Messages {
 		if err != nil {
 			message.MessageError = "Error creating this user."
 		} else {
-			message.MessageSucc = "User created successfully."
+			message.MessageSucc = "User Created Successfully."
 		}
 	}
 	return message
