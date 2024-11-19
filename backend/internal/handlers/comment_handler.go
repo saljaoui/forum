@@ -23,7 +23,9 @@ func Comment_handler(res http.ResponseWriter, req *http.Request) {
 			return 
 		}
 		res.WriteHeader(http.StatusOK)
-		json.NewEncoder(res).Encode(comment)
+		encoder :=  json.NewEncoder(res)
+		encoder.Encode(comment)
+		encoder.Encode(comment)
 	} else if req.Method == "POST" {
 		statusCode := addComment(req)
 		if statusCode == http.StatusOK {
