@@ -16,6 +16,7 @@ type Post struct {
 	Card_Id       int      `json:"card_id"`
 }
 
+
 func (p *Post) Add() int {
 	card := cards.NewCard(p.User_Id, p.Content)
 	card.Add()
