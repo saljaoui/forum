@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"encoding/json"
 	"fmt"
 	"net/http"
 
@@ -13,9 +12,10 @@ func HandlePost(w http.ResponseWriter, r *http.Request) {
 	id_user := GetUserId(r)
 	fmt.Println(id_user)
 	post := posts.Post{}
-	err := json.NewDecoder(r.Body).Decode(&post)
+	decode := DecodeJson(r)
+	err := decode.Decode(&post)
 	if err != nil {
-		fmt.Println("error decoding JSON:", err)
+		JsoneResponse(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 	id := post.Add()
