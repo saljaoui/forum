@@ -19,7 +19,7 @@ func main() {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", handlers.Middleware)
 	mux.HandleFunc("/api/register", handlers.HandleRegister)
-	mux.HandleFunc("/home", handlers.HomeHandle)
+	mux.HandleFunc("/api/home", handlers.HomeHandle)
 	mux.HandleFunc("/api/login", handlers.HandleLogin)
 
 	mux.Handle("/api/post", handlers.AuthenticateMiddleware(http.HandlerFunc(handlers.HandlePost)))
