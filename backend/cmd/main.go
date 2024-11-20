@@ -18,8 +18,8 @@ func main() {
 	if Err != nil {
 		fmt.Println(Err)
 	}
-	
-	mux := http.NewServeMux() 
+	mux := http.NewServeMux()
+
 	mux.HandleFunc("/", handlers.Middleware)
 	mux.HandleFunc("/api/register", handlers.HandleRegister)
 	mux.HandleFunc("/api/login", handlers.LoginHandle)
