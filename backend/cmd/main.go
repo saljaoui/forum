@@ -9,8 +9,6 @@ import (
 
 	"forum-project/backend/internal/database"
 	"forum-project/backend/internal/handlers"
-	//"forum-project/backend/internal/repository/cards"
-	//comment "forum-project/backend/internal/repository/comments"
 )
 
 func main() {
@@ -19,17 +17,16 @@ func main() {
 		fmt.Println(Err)
 	}
 	mux := http.NewServeMux()
-
 	mux.HandleFunc("/", handlers.Middleware)
 	mux.HandleFunc("/api/register", handlers.HandleRegister)
-	mux.HandleFunc("/api/login", handlers.LoginHandle)
 	mux.HandleFunc("/home", handlers.HomeHandle)
+	mux.HandleFunc("/api/login", handlers.HandleLogin)
 
 	mux.Handle("/api/post", handlers.AuthenticateMiddleware(http.HandlerFunc(handlers.HandlePost)))
 	mux.Handle("/api/Logout/{id}", handlers.AuthenticateMiddleware(http.HandlerFunc(handlers.HandleLogOut)))
 
 
-	mux.Handle("/api/comment", handlers.AuthenticateMiddleware(http.HandlerFunc(handlers.Comment)))
+	mux.Handle("/api/comment", handlers.AuthenticateMiddleware(http.HandlerFunc(handlers.Comment_handler)))
 	mux.Handle("/api/Logout", handlers.AuthenticateMiddleware(http.HandlerFunc(handlers.HandleLogOut)))
 
 	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("../../frontend/static"))))

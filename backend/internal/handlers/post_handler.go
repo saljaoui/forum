@@ -15,16 +15,19 @@ func HandlePost(w http.ResponseWriter, r *http.Request) {
 		json.NewEncoder(w).Encode("Status Method Not Allowed")
 		return
 	}
+	id_user := GetUserId(r)
+	fmt.Println(id_user)
 	post := posts.Post{}
-	err := json.NewDecoder(r.Body).Decode(&post)
+	decode := DecodeJson(r)
+	err := decode.Decode(&post)
 	if err != nil {
-		fmt.Println("error decoding JSON:", err)
+		JsoneResponse(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 	post.CheckPostErr(w)
 	id := post.Add()
 	fmt.Println(post.Name_Category)
-	for _,name := range post.Name_Category {
+	for _, name := range post.Name_Category {
 		category.AddCategory(id, name)
 	}
 	fmt.Println(post)

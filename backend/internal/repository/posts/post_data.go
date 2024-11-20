@@ -18,4 +18,3 @@ func inserPost(title string, card_id int) int64 {
 	}
 	return id
 }
-

@@ -23,10 +23,31 @@ func NewComment(user_id int, content string, target int) *Comment {
 
 func (c *Comment) Add() int {
 	card := cards.NewCard(c.User_Id, c.Content)
-	idcard := card.Add()
+	card.Add()
 	if card.Id == -1 {
 		return -1
 	}
 	c.Card_Id = card.Id
-	return insertComment(idcard, c.Target_Id)
+	c.ID = insertComment(c.Card_Id, c.Target_Id)
+	return c.ID
+}
+
+func GetComment(id int) *Comment {
+	data_Row := GetCommentById(id)
+	if data_Row == nil {
+		return nil
+	}
+	card := cards.GetCard(data_Row.Card_Id)
+	if card == nil {
+		return nil
+	}
+	newComment := &Comment{
+		ID:        data_Row.ID,
+		Card_Id:   data_Row.Card_Id,
+		Target_Id: data_Row.Target_Id,
+		Content:   card.Content,
+		User_Id:   card.User_Id,
+		CreatedAt: card.CreatedAt,
+	}
+	return newComment
 }
