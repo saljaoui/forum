@@ -33,12 +33,16 @@ type Login struct {
 	Password string `json:"password"`
 }
 
-func (users *User) Register() messages.Messages {
+func (users *User) Register() (ResponceUser, messages.Messages, uuid.UUID) {
+	uuid, err := uuid.NewV4()
+	if err != nil {
+		fmt.Println("Error to Generate uuid", err)
+	}
 	message := messages.Messages{}
 	if strings.Trim(users.Firstname, " ") == "" || strings.Trim(users.Email, " ") == "" ||
 		strings.Trim(users.Lastname, " ") == "" || strings.Trim(users.Password, " ") == "" {
 		message.MessageError = "All Input is Required"
-		return message
+		return ResponceUser{}, messages.Messages{}, uuid.UUID{}
 	}
 	exists := emailExists(users.Email)
 	if exists {
@@ -49,10 +53,22 @@ func (users *User) Register() messages.Messages {
 		if err != nil {
 			message.MessageError = "Error creating this user."
 		} else {
+
+			loged := ResponceUser{
+				Id:        users.Id,
+				UUID:      uuid,
+				Email:     users.Email,
+				Firstname: users.Firstname,
+				Lastname:  users.Lastname,
+			}
+			err = updateUUIDUser(uuid.String(), users.Id)
+			if err != nil {
+				fmt.Println("Error to Update")
+			}
 			message.MessageSucc = "User Created Successfully."
+			return loged, messages.Messages{}, uuid
 		}
 	}
-	return message
 }
 
 func (log *Login) Authentication() (ResponceUser, messages.Messages, uuid.UUID) {

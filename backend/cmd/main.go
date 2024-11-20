@@ -17,7 +17,7 @@ func main() {
 		fmt.Println(Err)
 	}
 	mux := http.NewServeMux()
-	// mux.HandleFunc("/", handlers.Middleware)
+	//mux.HandleFunc("/", handlers.Middleware)
 	mux.HandleFunc("/api/register", handlers.HandleRegister)
 	mux.HandleFunc("/api/home", handlers.HomeHandle)
 	mux.HandleFunc("/api/login", handlers.HandleLogin)
