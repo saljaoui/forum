@@ -3,7 +3,6 @@ package posts
 import (
 	"fmt"
 
-	messages "forum-project/backend/internal/Messages"
 	"forum-project/backend/internal/database"
 )
 
@@ -18,12 +17,4 @@ func inserPost(title string, card_id int) int64 {
 		fmt.Println("Error to get id ")
 	}
 	return id
-}
-
-func AddPost(post *Post) messages.Messages {
-	message := messages.Messages{}
-	query := "INSERT INTO card (user_id,content) VALUES(?,?)"
-	database.Exec(query, post.User_Id, post.Content)
-
-	return message
 }

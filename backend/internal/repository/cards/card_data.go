@@ -27,9 +27,9 @@ func getCardById(id int) *Card_Row {
 	myCard_Row := &Card_Row{}
 	err := database.SelectOneRow(query, id).Scan(&id, &myCard_Row.User_Id, &myCard_Row.Content, &myCard_Row.CreatedAt)
 
-    if err != nil {
-        return nil
-    } else {
-        return myCard_Row
-    }
+	if err != nil {
+		return nil
+	} else {
+		return myCard_Row
+	}
 }
