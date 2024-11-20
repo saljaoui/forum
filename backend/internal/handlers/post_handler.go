@@ -24,6 +24,7 @@ func HandlePost(w http.ResponseWriter, r *http.Request) {
 		JsoneResponse(w, err.Error(), http.StatusBadRequest)
 		return
 	}
+	post.User_Id = id_user
 	post.CheckPostErr(w)
 	id := post.Add()
 	fmt.Println(post.Name_Category)
