@@ -46,13 +46,12 @@ func SelectOneRow(query string, model ...any) *sql.Row {
 	return DataRow
 }
 
-func SelectRows(query string, model ...any) *sql.Rows {
+func SelectRows(query string) *sql.Rows {
 	db := Config()
-	rows, err := db.Query(query, model...)
+	rows, err := db.Query(query)
 	if err != nil {
 		fmt.Println(err)
 	}
-
 	return rows
 }
 

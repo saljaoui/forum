@@ -90,6 +90,7 @@ func (users *User) Register() (ResponceUser, messages.Messages, string) {
 
 func (log *Login) Authentication() (ResponceUser, messages.Messages, uuid.UUID) {
 	message := messages.Messages{}
+
 	if log.Email == "" || !emailExists(log.Email) {
 		message.MessageError = "Invalid email"
 		return ResponceUser{}, message, uuid.UUID{}
