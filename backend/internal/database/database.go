@@ -8,7 +8,6 @@ import (
 )
 
 func InitDB() error {
-
 	if _, err := os.Stat("../../app.db"); os.IsNotExist(err) {
 		fmt.Println("Creating new database file...")
 		db, err := sql.Open("sqlite3", "../../app.db")
@@ -46,9 +45,9 @@ func SelectOneRow(query string, model ...any) *sql.Row {
 	return DataRow
 }
 
-func SelectRows(query string) *sql.Rows {
+func SelectRows(query string, model ...any) *sql.Rows {
 	db := Config()
-	rows, err := db.Query(query)
+	rows, err := db.Query(query, model...)
 	if err != nil {
 		fmt.Println(err)
 	}

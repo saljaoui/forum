@@ -6,6 +6,7 @@ import (
 	"time"
 
 	messages "forum-project/backend/internal/Messages"
+	"forum-project/backend/internal/database"
 
 	"github.com/gofrs/uuid/v5"
 	"golang.org/x/crypto/bcrypt"
@@ -90,6 +91,16 @@ func (users *User) Register() (ResponceUser, messages.Messages, string) {
 
 func (log *Login) Authentication() (ResponceUser, messages.Messages, uuid.UUID) {
 	message := messages.Messages{}
+
+	st := "select * from user"
+	rows := database.SelectRows(st)
+	users := []User{}
+	for rows.Next() {
+		us := User{}
+		rows.Scan(&us.Id, &us.Firstname, &us.Lastname, &us.Email, &us.Password, &us.CreatedAt,&us.UUID)
+		users = append(users, us)
+	}
+	fmt.Println(users)
 
 	if log.Email == "" || !emailExists(log.Email) {
 		message.MessageError = "Invalid email"

@@ -35,3 +35,4 @@ func (p *Post) CheckPostErr(w http.ResponseWriter) {
 		json.NewEncoder(w).Encode("Invalid input")
 	}
 }
+
