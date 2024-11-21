@@ -31,5 +31,5 @@ func HandlePost(w http.ResponseWriter, r *http.Request) {
 	for _, name := range post.Name_Category {
 		category.AddCategory(id, name)
 	}
-	fmt.Println(post)
+	JsoneResponse(w, "create post Seccessfuly", http.StatusCreated)
 }

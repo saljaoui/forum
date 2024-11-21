@@ -22,7 +22,7 @@ func HandleRegister(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	userRegiseter, message, uuid := user.Register()
-	 
+
 	if message.MessageError != "" {
 		JsoneResponse(w, message.MessageError, http.StatusBadRequest)
 	} else {
@@ -49,8 +49,8 @@ func HandleLogin(w http.ResponseWriter, r *http.Request) {
 		JsoneResponse(w, message.MessageError, http.StatusBadRequest)
 		return
 	} else {
-		SetCookie(w, "token", uuid.String(), time.Now().Add(10*time.Second))
-		SetCookie(w, "user_id", fmt.Sprint(loged.Id), time.Now().Add(10*time.Second))
+		SetCookie(w, "token", uuid.String(), time.Now().Add(2*time.Minute))
+		SetCookie(w, "user_id", fmt.Sprint(loged.Id), time.Now().Add(2*time.Minute))
 		JsoneResponse(w, loged, http.StatusOK)
 	}
 }
