@@ -10,3 +10,4 @@ type Post struct {
 	Category   string    `json:"category"`
 	Created_at time.Time `json:"created_at"`
 }
+

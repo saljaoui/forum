@@ -12,20 +12,21 @@ import (
 
 func Comment_handler(res http.ResponseWriter, req *http.Request) {
 	if req.Method == "GET" {
-		id, err := strconv.Atoi(req.FormValue("id"))
+		id, err := strconv.Atoi(req.FormValue("target_id"))
 		if err != nil {
 			res.WriteHeader(http.StatusBadRequest)
 			return 
 		}
-		comment := comment.GetComment(id)
-		if comment == nil {
+		comments := comment.GetAllCommentsbyTarget(id)
+		if comments == nil {
 			res.WriteHeader(http.StatusNotFound)
 			return 
 		}
 		res.WriteHeader(http.StatusOK)
 		encoder :=  json.NewEncoder(res)
-		encoder.Encode(comment)
-		encoder.Encode(comment)
+		for _, c := range comments {
+			encoder.Encode(c)	
+		}
 	} else if req.Method == "POST" {
 		statusCode := addComment(req)
 		if statusCode == http.StatusOK {

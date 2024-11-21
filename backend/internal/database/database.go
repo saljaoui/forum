@@ -52,7 +52,6 @@ func SelectRows(query string, model ...any) *sql.Rows {
 	if err != nil {
 		fmt.Println(err)
 	}
-
 	return rows
 }
 
