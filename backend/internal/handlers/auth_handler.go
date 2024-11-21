@@ -21,13 +21,14 @@ func HandleRegister(w http.ResponseWriter, r *http.Request) {
 		JsoneResponse(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	message := user.Register()
+	userRegiseter, message, uuid := user.Register()
+	 
 	if message.MessageError != "" {
 		JsoneResponse(w, message.MessageError, http.StatusBadRequest)
 	} else {
-		SetCookie(w, "token", uuid.String(), time.Now().Add(10*time.Second))
-		SetCookie(w, "user_id", fmt.Sprint(loged.Id), time.Now().Add(10*time.Second))
-		JsoneResponse(w, loged, http.StatusOK)
+		SetCookie(w, "token", uuid, time.Now().Add(10*time.Second))
+		SetCookie(w, "user_id", fmt.Sprint(userRegiseter.Id), time.Now().Add(10*time.Second))
+		JsoneResponse(w, userRegiseter, http.StatusOK)
 	}
 }
 

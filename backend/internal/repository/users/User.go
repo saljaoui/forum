@@ -21,11 +21,11 @@ type User struct {
 	UUID      uuid.UUID `json:"uuid"`
 }
 type ResponceUser struct {
-	Id        int64     `json:"id"`
-	Firstname string    `json:"firstname"`
-	Lastname  string    `json:"lastname"`
-	Email     string    `json:"email"`
-	UUID      uuid.UUID `json:"uuid"`
+	Id        int64  `json:"id"`
+	Firstname string `json:"firstname"`
+	Lastname  string `json:"lastname"`
+	Email     string `json:"email"`
+	UUID      string `json:"uuid"`
 }
 type Login struct {
 	Id       int64  `json:"id"`
@@ -33,42 +33,59 @@ type Login struct {
 	Password string `json:"password"`
 }
 
-func (users *User) Register() (ResponceUser, messages.Messages, uuid.UUID) {
+func generatUUID() string {
 	uuid, err := uuid.NewV4()
 	if err != nil {
 		fmt.Println("Error to Generate uuid", err)
 	}
+	return uuid.String()
+}
+
+func checkInputs() {
+}
+
+func (users *User) Register() (ResponceUser, messages.Messages, string) {
 	message := messages.Messages{}
+	uuid := generatUUID()
+	loged := ResponceUser{
+		Id:        users.Id,
+		UUID:      uuid,
+		Email:     users.Email,
+		Firstname: users.Firstname,
+		Lastname:  users.Lastname,
+	}
+
 	if strings.Trim(users.Firstname, " ") == "" || strings.Trim(users.Email, " ") == "" ||
 		strings.Trim(users.Lastname, " ") == "" || strings.Trim(users.Password, " ") == "" {
 		message.MessageError = "All Input is Required"
-		return ResponceUser{}, messages.Messages{}, uuid.UUID{}
+		return ResponceUser{}, message, ""
 	}
 	exists := emailExists(users.Email)
 	if exists {
 		message.MessageError = "Email user already exists"
-	} else {
-		password := hashPassword(users.Password)
-		err := insertUser(users, password)
-		if err != nil {
-			message.MessageError = "Error creating this user."
-		} else {
-
-			loged := ResponceUser{
-				Id:        users.Id,
-				UUID:      uuid,
-				Email:     users.Email,
-				Firstname: users.Firstname,
-				Lastname:  users.Lastname,
-			}
-			err = updateUUIDUser(uuid.String(), users.Id)
-			if err != nil {
-				fmt.Println("Error to Update")
-			}
-			message.MessageSucc = "User Created Successfully."
-			return loged, messages.Messages{}, uuid
-		}
+		return ResponceUser{}, message, ""
 	}
+
+	password := hashPassword(users.Password)
+	rows, err := insertUser(users, password)
+	if err != nil {
+		message.MessageError = "Error creating this user."
+		return loged, message, uuid
+	}
+
+	user_id, err := rows.LastInsertId()
+	if err != nil {
+		message.MessageError = err.Error()
+		return ResponceUser{}, message, ""
+	} else {
+		err = updateUUIDUser(uuid, user_id)
+		if err != nil {
+			fmt.Println("Error to Update")
+		}
+		message.MessageSucc = "User Created Successfully."
+	}
+	loged.Id = user_id
+	return loged, message, uuid
 }
 
 func (log *Login) Authentication() (ResponceUser, messages.Messages, uuid.UUID) {
@@ -85,7 +102,7 @@ func (log *Login) Authentication() (ResponceUser, messages.Messages, uuid.UUID) 
 			}
 			loged := ResponceUser{
 				Id:        user.Id,
-				UUID:      uuid,
+				UUID:      uuid.String(),
 				Email:     user.Email,
 				Firstname: user.Firstname,
 				Lastname:  user.Lastname,

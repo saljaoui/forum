@@ -1,6 +1,7 @@
 package user
 
 import (
+	"database/sql"
 	"fmt"
 
 	"forum-project/backend/internal/database"
@@ -22,10 +23,10 @@ func updateUUIDUser(uudi string, userId int64) error {
 	return err
 }
 
-func insertUser(users *User, password string) error {
+func insertUser(users *User, password string) ( sql.Result,error) {
 	stm := "INSERT INTO user (firstname,lastname,email,password) VALUES(?,?,?,?)"
-	_, err := database.Exec(stm, users.Firstname, users.Lastname, users.Email, password)
-	return err
+	row, err := database.Exec(stm, users.Firstname, users.Lastname, users.Email, password)
+	return row,err 
 }
 
 func selectUser(log *Login) *User {
