@@ -1,12 +1,13 @@
 
 let button =document.querySelector("#form-submit")
 
-button.addEventListener('submit',(e)=>{
+button.addEventListener('submit',async(e)=>{
+   e.preventDefault()
     let firstname=document.getElementById('firstname').value
     let lastname=document.querySelector('#lastname').value
     let email=document.querySelector('#email').value
     let password=document.querySelector('#password').value
-    const response =    fetch("/api/register",{
+    const response = await  fetch("/api/register",{
         method:"POST",
         headers:{
              "Content-Type": "application/json",
@@ -19,20 +20,14 @@ button.addEventListener('submit',(e)=>{
             email:email,
             password:password
         })
-    }) ;
-    
-    response.then(response=>{
-        if (response.ok){
-            let data=response.json
-            console.log(data);
-            
-        }
-    }).catch(err=>{
-        console.log(err);
-        
-    }) 
-    
+    })
+    if (response.ok) {
+        const data = await response.json(); 
+        console.log("Success:", data);
+    } else {
+        const errorData = await response.json(); 
+        console.error("Error:", errorData);
+        alert(`Error: ${errorData.message || "Request failed"}`);
+    }
 
-})
-console.log(firstname,"ddsddd");
-
+}) 
