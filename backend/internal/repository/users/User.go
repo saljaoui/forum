@@ -6,7 +6,6 @@ import (
 	"time"
 
 	messages "forum-project/backend/internal/Messages"
-	"forum-project/backend/internal/database"
 
 	"github.com/gofrs/uuid/v5"
 	"golang.org/x/crypto/bcrypt"
@@ -91,7 +90,6 @@ func (users *User) Register() (ResponceUser, messages.Messages, string) {
 
 func (log *Login) Authentication() (ResponceUser, messages.Messages, uuid.UUID) {
 	message := messages.Messages{}
-
 
 	if log.Email == "" || !emailExists(log.Email) {
 		message.MessageError = "Invalid email"
