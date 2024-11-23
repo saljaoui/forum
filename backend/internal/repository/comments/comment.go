@@ -68,6 +68,9 @@ func GetAllCommentsbyTarget(target int) []comment_View {
 	list_Comments := make([]comment_View, 0)
 	list := getAllCommentsbyTargetId(target)
 	size := len(list)
+	if size == 0 {
+		return nil
+	}
 	for index := 0; index < size; index++ {
 		comment := convert(list[index])
 		list_Comments = append(list_Comments, comment)
