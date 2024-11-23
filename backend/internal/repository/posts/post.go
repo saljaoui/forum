@@ -16,7 +16,6 @@ type Post struct {
 	Card_Id       int      `json:"card_id"`
 }
 
-
 func (p *Post) Add() int {
 	card := cards.NewCard(p.User_Id, p.Content)
 	card.Add()
@@ -25,7 +24,6 @@ func (p *Post) Add() int {
 	}
 	p.Card_Id = card.Id
 	id_posr := inserPost(p.Title, p.Card_Id)
-
 	return int(id_posr)
 }
 

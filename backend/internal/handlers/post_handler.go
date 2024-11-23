@@ -27,9 +27,7 @@ func HandlePost(w http.ResponseWriter, r *http.Request) {
 	post.User_Id = id_user
 	post.CheckPostErr(w)
 	id := post.Add()
-	fmt.Println(post.Name_Category)
 	for _, name := range post.Name_Category {
 		category.AddCategory(id, name)
 	}
-	fmt.Println(post)
 }
