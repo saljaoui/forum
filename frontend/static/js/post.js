@@ -1,4 +1,21 @@
 let form = document.querySelector('#form-submit')
+ if( document.cookie.includes("token")){
+   let tokens=document.cookie.split(";")
+   let token=""
+   let user_id=""
+   tokens.map(elem=>{
+    let t=elem.split("token=")
+    let u=elem.split("user_id=")
+    
+})
+console.log(t[1],u[1]);
+    
+ }else{
+    console.log("no have any token");
+    
+ }
+
+
 form.addEventListener("submit", async (e) => {
     e.preventDefault()
     let title = document.querySelector("#title")
@@ -20,9 +37,10 @@ form.addEventListener("submit", async (e) => {
             name: category
         })
     })
+
     if (response.ok) {
         const data = await response.json(); 
-        console.log(document.cookie);
+         console.log();
         console.log("Success:", data);
        
         } else {

@@ -1,8 +1,6 @@
 package handlers
 
 import (
-	"encoding/json"
-	"fmt"
 	"net/http"
 
 	repository "forum-project/backend/internal/repository/users"
@@ -43,19 +41,20 @@ func AuthenticateMiddleware(next http.Handler) http.Handler {
 		user := repository.User{}
 		if err != nil || cookies == nil {
 			if err == http.ErrNoCookie {
-				http.Error(w, "Unauthorized: Cookie not present", http.StatusUnauthorized)
-				fmt.Println("Unauthorized: Cookie not present")
+
+				JsoneResponse(w, "Unauthorized: Cookie not presen", http.StatusUnauthorized)
 				return
+
 			}
 		}
 		if cookies.Value == "" {
-			http.Error(w, "Unauthorized", http.StatusUnauthorized)
+			JsoneResponse(w, "Unauthorized", http.StatusUnauthorized)
 			return
 		}
 		messages := user.AuthenticatLogin(cookies.Value)
 		if messages.MessageError != "" {
-			json.NewEncoder(w).Encode(messages.MessageError)
-			http.Error(w, "Unauthorized", http.StatusUnauthorized)
+			JsoneResponse(w, messages.MessageError, http.StatusUnauthorized)
+
 			return
 		}
 		next.ServeHTTP(w, r)
