@@ -1,0 +1,135 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+:root {
+  /* --color-light: #4a4b57; */
+  --color-mid: #2b3747;
+  --color-dark: #161e27;
+}
+
+body {
+  background: #262b3c;
+  background: radial-gradient(
+    circle at top,
+    var(--color-mid) 0%,
+    var(--color-dark) 100%
+  );
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease;
+  color: #fff;
+}
+
+section {
+  display: flex;
+  justify-content:space-around;
+  min-height: 100vh;
+  width: 100%;
+}
+
+main {
+    border-left: 1px solid #4a4b57;
+    border-right: 1px solid #4a4b57;
+    width: 100%;
+}
+
+aside {
+    display: flex;
+    width: 100%;
+}
+
+.join {
+  position: relative;
+  width: 250px;
+  margin-top: 10px;
+  right: 0;
+  margin-left: auto;
+}
+
+ button {
+  width: 80px;
+  height: 30px;
+  margin-top: 10px;
+  background: transparent;
+  border: 1px solid #fff;
+  outline: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9em;
+  color: #fff;
+  font-weight: 500;
+  transition: all 0.5s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+button:hover {
+  background: #fff;
+  transform: translateY(-2px);
+  color: #162938; 
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
+}
+
+.post {
+  padding: 12px;
+  border-bottom: 1px solid #38444d;
+}
+
+.post-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  margin-right: 12px;
+}
+
+.user-info {
+  flex-grow: 1;
+}
+
+.display-name {
+  font-weight: bold;
+  margin-bottom: 2px;
+}
+
+.username {
+  color: #8899a6;
+}
+
+.timestamp {
+  color: #8899a6;
+  margin-left: 4px;
+}
+
+.post-content {
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+
+.post-actions {
+  display: flex;
+  justify-content: space-between;
+  max-width: 425px;
+  color: #8899a6;
+}
+
+.action {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.action:hover {
+  color: #1d9bf0;
+  cursor: pointer;
+}
