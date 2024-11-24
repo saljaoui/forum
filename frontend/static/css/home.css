@@ -6,9 +6,10 @@
 }
 
 :root {
-  /* --color-light: #4a4b57; */
+  --color-light: #4a4b57;
   --color-mid: #2b3747;
   --color-dark: #161e27;
+  --cclor-withe: #fff ;
 }
 
 body {
@@ -34,8 +35,8 @@ section {
 }
 
 main {
-    border-left: 1px solid #4a4b57;
-    border-right: 1px solid #4a4b57;
+    border-left: 1px solid var(--color-light);
+    border-right: 1px solid var(--color-light);
     width: 100%;
 }
 
@@ -57,27 +58,27 @@ aside {
   height: 30px;
   margin-top: 10px;
   background: transparent;
-  border: 1px solid #fff;
+  border: 1px solid var(--cclor-withe);
   outline: none;
   border-radius: 6px;
   cursor: pointer;
   font-size: 0.9em;
-  color: #fff;
+  color: var(--cclor-withe);
   font-weight: 500;
   transition: all 0.5s ease;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 button:hover {
-  background: #fff;
+  background: var(--cclor-withe);
   transform: translateY(-2px);
-  color: #162938; 
+  color: var(--color-dark); 
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
 }
 
 .post {
   padding: 12px;
-  border-bottom: 1px solid #38444d;
+  border-bottom: 1px solid var(--color-light);
 }
 
 .post-header {
@@ -132,4 +133,23 @@ button:hover {
 .action:hover {
   color: #1d9bf0;
   cursor: pointer;
+}
+
+.headMian {
+  border-bottom: 1px solid var(--color-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 0px;
+}
+
+.logo {
+  height: 40px;
+}
+
+
+.btnSignUp-popup {
+  /* color: #0285ff ; */
+  background-color: #0285ff;
+  border: none;
 }
