@@ -30,6 +30,7 @@ type ResponceUser struct {
 type Login struct {
 	Id       int64  `json:"id"`
 	Email    string `json:"email"`
+	UUID     string `json:"uuid"`
 	Password string `json:"password"`
 }
 
@@ -39,9 +40,6 @@ func generatUUID() string {
 		fmt.Println("Error to Generate uuid", err)
 	}
 	return uuid.String()
-}
-
-func checkInputs() {
 }
 
 func (users *User) Register() (ResponceUser, messages.Messages, string) {
@@ -119,7 +117,10 @@ func (log *Login) Authentication() (ResponceUser, messages.Messages, uuid.UUID) 
 		}
 	}
 }
-
+func (log *Login) Getuuid(uuid string) {
+	log.UUID = uuid
+	fmt.Println(log.UUID)
+}
 func (Log *Login) LogOut() (m messages.Messages) {
 	err := updateUUIDUser("null", Log.Id)
 	if err != nil {

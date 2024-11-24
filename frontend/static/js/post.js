@@ -22,8 +22,10 @@ form.addEventListener("submit", async (e) => {
     })
     if (response.ok) {
         const data = await response.json(); 
+        console.log(document.cookie);
         console.log("Success:", data);
-    } else {
+       
+        } else {
         const errorData = await response.json();
         console.error("Error:", errorData);
         alert(`Error: ${errorData.message || "Request failed"}`);
