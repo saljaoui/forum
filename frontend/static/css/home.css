@@ -76,6 +76,11 @@ button:hover {
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
 }
 
+.join h2 {
+  font-size: 1.8em;
+  font-weight: 900;
+}
+
 .post {
   padding: 12px;
   border-bottom: 1px solid var(--color-light);
@@ -134,6 +139,8 @@ button:hover {
   color: #1d9bf0;
   cursor: pointer;
 }
+
+
 
 .headMian {
   border-bottom: 1px solid var(--color-light);
