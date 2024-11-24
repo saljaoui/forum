@@ -24,6 +24,8 @@ register.addEventListener('submit',async(e)=>{
     if (response.ok) {
         const data = await response.json(); 
         console.log("Success:", data);
+        
+        
     } else {
         const errorData = await response.json(); 
         console.error("Error:", errorData);

@@ -10,34 +10,42 @@ import (
 	"net/http"
 )
 
-func Comment_handler(res http.ResponseWriter, req *http.Request) {
+func Handel_GetCommet(res http.ResponseWriter, req *http.Request) {
 	if req.Method == "GET" {
 		id, err := strconv.Atoi(req.FormValue("target_id"))
 		if err != nil {
-			res.WriteHeader(http.StatusBadRequest)
-			return 
+			JsoneResponse(res, "Status Bad Request", http.StatusBadRequest)
+			return
 		}
 		comments := comment.GetAllCommentsbyTarget(id)
 		if comments == nil {
-			res.WriteHeader(http.StatusNotFound)
-			return 
+			JsoneResponse(res, "Status Not Found", http.StatusNotFound)
+			return
 		}
 		res.WriteHeader(http.StatusOK)
-		encoder :=  json.NewEncoder(res)
+		encoder := json.NewEncoder(res)
 		for _, c := range comments {
-			encoder.Encode(c)	
+			encoder.Encode(c)
 		}
-	} else if req.Method == "POST" {
+	} else {
+		JsoneResponse(res, "Method Not Allowed", http.StatusMethodNotAllowed)
+		return
+	}
+}
+func Comment_handler(res http.ResponseWriter, req *http.Request) {
+	if req.Method == "POST" {
 		statusCode := addComment(req)
 		if statusCode == http.StatusOK {
-			res.Write([]byte("comment added succesfuly"))
-			return 
+			JsoneResponse(res, "comment added succesfuly", http.StatusCreated)
+			return
 		}
 		if statusCode == http.StatusBadRequest {
-			res.Write([]byte("comment Infos are wrongs!! "))
-			return 
+			JsoneResponse(res, "comment Infos are wrongs!! ", http.StatusBadRequest)
+			return
 		}
-		res.WriteHeader(statusCode)
+	} else {
+		JsoneResponse(res, "Method Not Allowed", http.StatusMethodNotAllowed)
+		return
 	}
 }
 

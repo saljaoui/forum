@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"encoding/json"
 	"fmt"
 	"net/http"
 
@@ -11,12 +10,11 @@ import (
 
 func HandlePost(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
-		w.WriteHeader(http.StatusMethodNotAllowed)
-		json.NewEncoder(w).Encode("Status Method Not Allowed")
+
+		JsoneResponse(w, "Status Method Not Allowed", http.StatusMethodNotAllowed)
 		return
 	}
 	id_user := GetUserId(r)
-	fmt.Println(id_user)
 	post := posts.Post{}
 	decode := DecodeJson(r)
 	err := decode.Decode(&post)
