@@ -7,7 +7,7 @@
 }
 
 :root {
-  --color-light: #4a4b57;
+  --color-light: #3f4f5f;
   --color-mid: #2b3747;
   --color-dark: #161e27;
   --color-white: #fff;
@@ -16,6 +16,7 @@
   --color-muted: #8899a6;
   --color-logo: #0285ff;
   --color-action-hover: #1d9bf0;
+  --color-search: #1e2936 ;
 }
 
 body {
@@ -141,7 +142,7 @@ main {
 }
 
 .input-box input:focus~label, 
-.input-box input:valid~label {
+.input-box input:valid~label{
   top: -5px;
 }
 
@@ -386,3 +387,22 @@ button:hover {
 .remember-forgot label input {
   accent-color:var(--color-action-hover);
 }
+.search {
+  height: 40px;
+  width: 90%;
+  margin: auto;
+  margin-top: 20px;
+  outline: none;
+  border: none;
+  border-radius: 7px;
+  padding: 10px;
+  color: var(--color-white);
+  background-color: var(--color-light);
+}
+.search::placeholder {
+  color: var(--color-muted);
+}
+
+
+
+
