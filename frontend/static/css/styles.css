@@ -4,6 +4,24 @@
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
 }
+h1{
+  color: #fff;
+}
+form#form-submit {
+  padding: 10px;
+  margin-top: 154px;
+}
+div#post {
+  margin-top: 141px;
+}
+.card {
+  margin: 10px;
+  padding: 14px;
+  border: 9px solid;
+  background: transparent;
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+}
 
 body {
   display: flex;

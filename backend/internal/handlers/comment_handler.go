@@ -25,11 +25,15 @@ func Handel_GetCommet(res http.ResponseWriter, req *http.Request) {
 		JsoneResponse(res, "Status Not Found", http.StatusNotFound)
 		return
 	}
-	encoder := json.NewEncoder(res)
+	encoder := NewEncoderJsone(res)
+
 	for _, c := range comments {
-		encoder.Encode(c)
+		err := encoder.Encode(c)
+		if err != nil {
+			JsoneResponse(res, "Error Encoding Comment", http.StatusInternalServerError)
+			return
+		}
 	}
-	JsoneResponse(res, "", http.StatusOK)
 }
 
 func Handler_AddComment(res http.ResponseWriter, req *http.Request) {

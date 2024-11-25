@@ -6,11 +6,12 @@
     <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Frontend Example</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.1.0/dist/css/multi-select-tag.css">
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.1.0/dist/css/multi-select-tag.css">
     <link rel="stylesheet" href="../static/css/styles.css" />
     <style>
-        .wrapper{
-            height: 49px !important ;
+        .wrapper {
+            height: 49px !important;
         }
     </style>
 </head>
@@ -26,13 +27,43 @@
         </nav>
     </header>
 
-    <div class="form-box register">
-      
+    <div class="containr">
+        <div class="form">
+            <form action="" id="form-submit">
+
+                <div class="form-box register">
+                    <h1>Add New Post</h1>
+                </div>
+    
+                <div class="input-box">
+                    <input type="text" required id="title" />
+                    <label>title</label>
+                </div>
+                <div class="input-box">
+                    <input type="text" required id="content" />
+                    <label>content</label>
+                </div>
+                <div class="input-box">
+                    <select name="countries" id="countries" multiple>
+                        <option value="Technology">Technology</option>
+                        <option value="Gaming">Gaming</option>
+                        <option value="Arts & Entertainment">Arts & Entertainment</option>
+                        <option value="General Discussion">General Discussion</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn">Create Post</button>
+            </form>
+        </div>
+        
+        <div id="post">
+            
+        </div>
     </div>
 
 
 
-    <script src="../static/js/script.js"></script>
+    <!-- <script  src="../static/js/post.js"></script> -->
+    <script  type="module" src="../static/js/forum.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 

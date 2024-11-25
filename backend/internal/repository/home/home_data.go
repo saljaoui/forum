@@ -1,13 +1,38 @@
 package home
 
 import (
+	"strings"
+
 	"forum-project/backend/internal/database"
 )
 
 func GetPosts(quantity int) []PostResponde {
-	query := `SELECT p.id, u.id AS 'user_id', u.firstname, u.lastname, p.title, c.content, cat.name, c.created_at  
-	FROM post p, card c, user u, post_category pc, category cat WHERE p.card_id=c.id 
-	AND c.user_id=u.id AND p.id = pc.post_id AND pc.category_id=cat.id`
+	query := `
+SELECT
+    p.id,
+    u.id AS 'UserID',
+    u.firstname,
+    u.lastname,
+    p.title,
+    c.content,
+    GROUP_CONCAT(cat.name),
+    c.created_at
+FROM
+    post p
+    JOIN card c ON p.card_id = c.id
+    JOIN user u ON c.user_id = u.id
+    JOIN post_category pc ON p.id = pc.post_id
+    JOIN category cat ON pc.category_id = cat.id
+GROUP BY
+    p.id,
+    u.id,
+    u.firstname,
+    u.lastname,
+    p.title,
+    c.content,
+    c.created_at
+	ORDER BY
+    c.created_at DESC;`
 	db := database.Config()
 	rows, err := db.Query(query)
 	if err != nil {
@@ -16,6 +41,7 @@ func GetPosts(quantity int) []PostResponde {
 	defer rows.Close()
 	var posts []PostResponde
 	for rows.Next() {
+		var categoryNames string
 		var post PostResponde
 		err := rows.Scan(
 			&post.ID,
@@ -24,12 +50,13 @@ func GetPosts(quantity int) []PostResponde {
 			&post.LastName,
 			&post.Title,
 			&post.Content,
-			&post.CategoryName,
+			&categoryNames,
 			&post.CreatedAt,
 		)
 		if err != nil {
 			return nil
 		}
+		post.CategoryName = strings.Split(categoryNames, ",")
 		posts = append(posts, post)
 	}
 	return posts

@@ -28,8 +28,8 @@ func HandleRegister(w http.ResponseWriter, r *http.Request) {
 		JsoneResponse(w, message.MessageError, http.StatusBadRequest)
 		return
 	} else {
-		SetCookie(w, "token", uuid, time.Now().Add(10*time.Second))
-		SetCookie(w, "user_id", fmt.Sprint(userRegiseter.Id), time.Now().Add(10*time.Second))
+		SetCookie(w, "token", uuid, time.Now().Add(2*time.Minute))
+		SetCookie(w, "user_id", fmt.Sprint(userRegiseter.Id), time.Now().Add(2*time.Minute))
 		JsoneResponse(w, userRegiseter, http.StatusOK)
 	}
 }
@@ -53,8 +53,8 @@ func HandleLogin(w http.ResponseWriter, r *http.Request) {
 		JsoneResponse(w, message.MessageError, http.StatusBadRequest)
 		return
 	} else {
-		SetCookie(w, "token", uuid.String(), time.Now().Add(2*time.Minute))
-		SetCookie(w, "user_id", fmt.Sprint(loged.Id), time.Now().Add(2*time.Minute))
+		SetCookie(w, "token", uuid.String(), time.Now().Add(1*time.Minute))
+		SetCookie(w, "user_id", fmt.Sprint(loged.Id), time.Now().Add(1*time.Minute))
 		JsoneResponse(w, loged, http.StatusOK)
 	}
 }
