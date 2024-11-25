@@ -36,8 +36,8 @@ func main() {
 		http.ServeFile(w, r, "../../frontend/templates/login.html")
 	})
 
-	mux.HandleFunc("/about", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, "../../frontend/templates/about.html")
+	mux.HandleFunc("/home", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "../../frontend/templates/home.html")
 	})
 
 	mux.HandleFunc("/post", func(w http.ResponseWriter, r *http.Request) {
