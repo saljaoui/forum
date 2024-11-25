@@ -1,3 +1,4 @@
+
 * {
   margin: 0;
   padding: 0;
@@ -9,11 +10,18 @@
   --color-light: #4a4b57;
   --color-mid: #2b3747;
   --color-dark: #161e27;
-  --cclor-withe: #fff ;
+  --color-white: #fff;
+  --color-background: #262b3c;
+  --color-button-border: #fff;
+  --color-button-hover-bg: #fff;
+  --color-button-hover-text: #161e27;
+  --color-muted: #8899a6;
+  --color-logo: #0285ff;
+  --color-action-hover: #1d9bf0;
 }
 
 body {
-  background: #262b3c;
+  background: var(--color-background);
   background: radial-gradient(
     circle at top,
     var(--color-mid) 0%,
@@ -24,55 +32,56 @@ body {
   justify-content: center;
   align-items: center;
   transition: all 0.3s ease;
-  color: #fff;
+  color: var(--color-white);
 }
 
 section {
   display: flex;
-  justify-content:space-around;
+  justify-content: space-around;
   min-height: 100vh;
   width: 100%;
 }
 
 main {
-    border-left: 1px solid var(--color-light);
-    border-right: 1px solid var(--color-light);
-    width: 100%;
+  border-left: 1px solid var(--color-light);
+  border-right: 1px solid var(--color-light);
+  width: 100%;
 }
 
 aside {
-    display: flex;
-    width: 100%;
+  display: flex;
+  width: 100%;
 }
 
 .join {
   position: relative;
   width: 250px;
-  margin-top: 10px;
+  margin-top: 25px;
   right: 0;
   margin-left: auto;
+  height: max-content;
 }
 
- button {
+button {
   width: 80px;
   height: 30px;
   margin-top: 10px;
   background: transparent;
-  border: 1px solid var(--cclor-withe);
+  border: 1px solid var(--color-button-border);
   outline: none;
   border-radius: 6px;
   cursor: pointer;
   font-size: 0.9em;
-  color: var(--cclor-withe);
+  color: var(--color-button-border);
   font-weight: 500;
   transition: all 0.5s ease;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 button:hover {
-  background: var(--cclor-withe);
+  background: var(--color-button-hover-bg);
   transform: translateY(-2px);
-  color: var(--color-dark); 
+  color: var(--color-button-hover-text);
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
 }
 
@@ -81,9 +90,18 @@ button:hover {
   font-weight: 900;
 }
 
+.headMian {
+  border-bottom: 1px solid var(--color-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 0px;
+}
+
 .post {
   padding: 12px;
   border-bottom: 1px solid var(--color-light);
+  min-width: 550px;
 }
 
 .post-header {
@@ -95,6 +113,7 @@ button:hover {
 .avatar {
   width: 48px;
   height: 48px;
+  background-color: aqua;
   border-radius: 50%;
   margin-right: 12px;
 }
@@ -109,24 +128,26 @@ button:hover {
 }
 
 .username {
-  color: #8899a6;
+  color: var(--color-muted);
 }
 
 .timestamp {
-  color: #8899a6;
+  color: var(--color-muted);
   margin-left: 4px;
 }
 
 .post-content {
   margin-bottom: 12px;
   line-height: 1.4;
+  margin-left: 60px;
 }
 
 .post-actions {
   display: flex;
   justify-content: space-between;
-  max-width: 425px;
-  color: #8899a6;
+  max-width: 130px;
+  color: var(--color-muted);
+  margin-left: 60px;
 }
 
 .action {
@@ -136,13 +157,11 @@ button:hover {
 }
 
 .action:hover {
-  color: #1d9bf0;
+  color: var(--color-action-hover);
   cursor: pointer;
 }
 
-
-
-.headMian {
+.headMain {
   border-bottom: 1px solid var(--color-light);
   display: flex;
   align-items: center;
@@ -154,9 +173,7 @@ button:hover {
   height: 40px;
 }
 
-
 .btnSignUp-popup {
-  /* color: #0285ff ; */
-  background-color: #0285ff;
+  background-color: var(--color-logo);
   border: none;
 }
