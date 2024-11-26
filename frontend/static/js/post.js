@@ -27,8 +27,7 @@ export default function addpost() {
             fetchData()
             const data = await response.json();
             console.log("Success:", data);
-            document.addEventListener("DOMContentLoaded", () => {
-            })
+             
 
         } else {
             const errorData = await response.json();
