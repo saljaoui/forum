@@ -40,6 +40,10 @@ func main() {
 		http.ServeFile(w, r, "../../frontend/templates/home.html")
 	})
 
+	mux.HandleFunc("/profile", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "../../frontend/templates/profile.html")
+	})
+
 	mux.HandleFunc("/post", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "../../frontend/templates/post.html")
 	})
