@@ -3,7 +3,7 @@ package home
 import "time"
 
 type PostResponde struct {
-	Card_Id           int
+	Card_Id      int
 	Post_Id      int
 	UserID       int
 	FirstName    string
@@ -12,6 +12,6 @@ type PostResponde struct {
 	Content      string
 	CategoryName string
 	Likes        int
+	Dislikes     int
 	CreatedAt    time.Time
 }
-

@@ -34,22 +34,29 @@ func GetPosts(quantity int) []PostResponde {
 		if err != nil {
 			return nil
 		}
-		likes := getLikes(post.Post_Id)
+		likes, dislikes := getLikes(post.Post_Id)
 		post.Likes = likes
+		post.Dislikes = dislikes
 		fmt.Println(likes)
 		posts = append(posts, post)
 	}
 	return posts
 }
 
-func getLikes(post_id int) int {
-	query := `SELECT sum(is_like) FROM post p, likes l WHERE p.card_id = l.card_id AND p.id = ` + strconv.Itoa(post_id)
-	likes := 0
-	err := database.SelectOneRow(query).Scan(&likes)
+func getLikes(post_id int) (int, int) {
+	querylike := `SELECT sum(is_like) FROM post p, likes l WHERE p.card_id = l.card_id AND l.is_like = 1 AND p.id = ` + strconv.Itoa(post_id)
+	like := 0
+	err := database.SelectOneRow(querylike).Scan(&like)
 	if err != nil {
-		return 0
+		like = 0
 	}
-	return likes
+	querydislike := `SELECT sum(is_like) FROM post p, likes l WHERE p.card_id = l.card_id AND l.is_like = -1 AND p.id = ` + strconv.Itoa(post_id)
+	dislike := 0
+	err = database.SelectOneRow(querydislike).Scan(&dislike)
+	if err != nil {
+		dislike = 0
+	}
+	return like, dislike*-1
 }
 
 // func canPurchase(id int, quantity int) (bool, error) {
