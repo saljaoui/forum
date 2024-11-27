@@ -7,11 +7,13 @@ async function fetchdata(){
     });
     
     if(response.ok){
-        const data =await response.json();       
-        data.forEach(element => {
-            console.log(element);
-            
-        });
+        const data =await response.json();      
+        if (Array.isArray(data)) {
+
+            data.forEach(element => {
+                console.log("Comment:", element);                
+            });
+        } 
         let div = document.createElement("div")
         let title = document.createElement("h2")
         let content = document.createElement("p")
