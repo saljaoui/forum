@@ -573,6 +573,15 @@ gap: 5px;
  }
  #choice-categories h1 {
   font-weight: 100;
+  color: var(--color-white);
+ }
+ #choice-categories:hover {
+  background-color: var(--color-mid);
+ }
+
+ #categories-popup .newPost {
+  margin-top: 150px;
+  height: 350px ;
  }
 
 #creatPost-popup , #categories-popup {
