@@ -39,6 +39,21 @@ function openCategories() {
 
 function closeCategories() {
     openCategorie.style.display = "none"
+    categoriesList.forEach(category => {
+        if (category.classList.contains('selected')) {
+            category.classList = "category-item"
+        }
+    });
+}
+
+const categoriesList = Array.from(document.getElementsByClassName('category-item'))
+function doneCategories() {
+    openCategorie.style.display = "none"
+    categoriesList.forEach(category => {
+        if (category.classList.contains('selected')) {
+            console.log('Category is selected:', category.textContent);
+        }
+    });
 }
 
 const categoryItems = document.querySelectorAll('.category-item');
