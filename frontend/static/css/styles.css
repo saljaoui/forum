@@ -108,6 +108,10 @@ header {
 }
 
 
+
+
+
+
 .wrapper {
   position: relative;
   width: 400px;
@@ -400,6 +404,14 @@ header {
   animation:  fromTO 1s ease-in-out;
 }
 
+@keyframes fromTO {
+  0% {
+      opacity: 0;
+  }
+  100% {
+      opacity: 1;
+  }
+}
 @keyframes slideRight {
   0% {
       transform: translateX(-80%);
@@ -411,14 +423,6 @@ header {
   }
 }
 
-@keyframes fromTO {
-  0% {
-      opacity: 0;
-  }
-  100% {
-      opacity: 1;
-  }
-}
 
 @keyframes slideLeft {
   0% {
