@@ -1,7 +1,9 @@
 const navItems = document.querySelectorAll('.nav-item');
-
+const categoryItems = document.querySelectorAll('.category-item');
 const creatPostPopup = document.getElementById('creatPost-popup')
 const openCategorie = document.getElementById('categories-popup')
+const categoriesList = Array.from(document.getElementsByClassName('category-item'))
+let categoriesSelected = []
 
 function activeByDefault() {
     navItems.forEach(navItem => {
@@ -33,12 +35,26 @@ function closeCreatPost() {
     creatPostPopup.style.display = "none"
 }
 
+function SeccesCreatPost() {
+
+
+    console.log(categoriesSelected);
+    
+    if (categoriesList.length > 0) {
+        creatPostPopup.style.display = "none"
+        closeCategories()
+    } else {
+        openCategories()
+    }
+    
+}
+
 function openCategories() {
     openCategorie.style.display = "flex"
 }
 
 function closeCategories() {
-    openCategorie.style.display = "none"
+    defaultCategories()
     categoriesList.forEach(category => {
         if (category.classList.contains('selected')) {
             category.classList = "category-item"
@@ -46,17 +62,20 @@ function closeCategories() {
     });
 }
 
-const categoriesList = Array.from(document.getElementsByClassName('category-item'))
-function doneCategories() {
+function defaultCategories() {
+    categoriesSelected = []
     openCategorie.style.display = "none"
+}
+
+function doneCategories() {
+    defaultCategories()
     categoriesList.forEach(category => {
         if (category.classList.contains('selected')) {
-            console.log('Category is selected:', category.textContent);
+            categoriesSelected.push(category.textContent)
         }
     });
 }
 
-const categoryItems = document.querySelectorAll('.category-item');
 categoryItems.forEach(item => {
   item.addEventListener('click', () => {
     item.classList.toggle('selected');
