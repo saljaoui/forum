@@ -36,17 +36,12 @@ function closeCreatPost() {
 }
 
 function SeccesCreatPost() {
-
-
-    console.log(categoriesSelected);
-    
-    if (categoriesList.length > 0) {
+    if (categoriesSelected.length > 0) {
         creatPostPopup.style.display = "none"
         closeCategories()
     } else {
         openCategories()
     }
-    
 }
 
 function openCategories() {
