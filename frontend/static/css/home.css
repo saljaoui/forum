@@ -80,7 +80,6 @@ button {
 
 button:hover {
   background: var(--color-white);
-  transform: translateY(-2px);
   color: var(--color-logo);
   font-weight: 700;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
@@ -526,7 +525,7 @@ gap: 5px;
 }
 
 .newPost-header {
-  margin-top: 10px;
+  margin-top: 5px;
   display: flex;
   justify-content: space-between;
   background-color: var(--color-new-post);
@@ -538,7 +537,7 @@ gap: 5px;
   display: flex;
   padding: 10px;
   gap: 12px;
-  /* margin-bottom: 20px; */
+
 }
 
 .newPost-content textarea {
@@ -563,9 +562,21 @@ gap: 5px;
   border: 1px solid var(--color-white);
  }
 
-#creatPost-popup {
+ #choice-categories {
+  cursor: pointer;
+  background-color: var(--color-light);
+  width: max-content;
+  padding: 7px 10px;
+  border-radius: 7px;
+  margin-bottom: 10px;
+  margin-left: 10px;
+ }
+ #choice-categories h1 {
+  font-weight: 100;
+ }
+
+#creatPost-popup , #categories-popup {
   position:fixed;
-  z-index: 1;
   background: transparent;
   backdrop-filter: blur(3px);
   background-color: rgba(0, 0, 0, 0.5);

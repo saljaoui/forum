@@ -1,6 +1,7 @@
 const navItems = document.querySelectorAll('.nav-item');
 
 const creatPostPopup = document.getElementById('creatPost-popup')
+const openCategorie = document.getElementById('categories-popup')
 
 function activeByDefault() {
     navItems.forEach(navItem => {
@@ -30,4 +31,12 @@ function openCreatPost() {
 }
 function closeCreatPost() {
     creatPostPopup.style.display = "none"
+}
+
+function openCategories() {
+    openCategorie.style.display = "flex"
+}
+
+function closeCategories() {
+    openCategorie.style.display = "none"
 }
