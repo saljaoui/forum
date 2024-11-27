@@ -1,5 +1,7 @@
 const navItems = document.querySelectorAll('.nav-item');
 
+const creatPostPopup = document.getElementById('creatPost-popup')
+
 function activeByDefault() {
     navItems.forEach(navItem => {
         const outlineIcon = navItem.querySelector('ion-icon[name$="-outline"], ion-icon[name$="-sharp"]');
@@ -22,3 +24,10 @@ navItems.forEach(navItem => {
         }
     });
 });
+
+function openCreatPost() {
+    creatPostPopup.style.display = "flex"
+}
+function closeCreatPost() {
+    creatPostPopup.style.display = "none"
+}
