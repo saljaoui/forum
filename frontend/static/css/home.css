@@ -581,7 +581,7 @@ gap: 5px;
 
  #categories-popup .newPost {
   margin-top: 150px;
-  height: 350px ;
+  min-height: 280px ;
  }
 
 #creatPost-popup , #categories-popup {
@@ -599,9 +599,35 @@ gap: 5px;
   animation: fromTO 0.5s ease-in-out;
 }
 
+.categories-content {
+  padding: 15px;
+}
 
+.categories-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  max-height: 300px;
+  overflow-y: auto;
+}
 
+.category-item {
+  padding: 8px 16px;
+  background: var(--color-white);
+  color: #161e27;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
 
+.category-item.selected {
+  background: var(--color-action-hover);
+  color: white;
+}
+
+.newPost-header h1 {
+  margin-top: 8px;
+}
 
 
 

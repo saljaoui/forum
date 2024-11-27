@@ -40,3 +40,10 @@ function openCategories() {
 function closeCategories() {
     openCategorie.style.display = "none"
 }
+
+const categoryItems = document.querySelectorAll('.category-item');
+categoryItems.forEach(item => {
+  item.addEventListener('click', () => {
+    item.classList.toggle('selected');
+  });
+});

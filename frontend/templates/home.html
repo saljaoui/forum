@@ -64,7 +64,7 @@
             <div class="newPost">
               <div class="newPost-header">
                 <button onclick="closeCreatPost()" class="cancel-btn">Cancel</button>
-                <button class="post-btn">Post</button>
+                <button onclick="closeCreatPost()" class="post-btn">Post</button>
               </div>
               <div class="newPost-content">
                 <img src="../static/imgs/profilePic.png" class="avatar" alt="Profile picture" />
@@ -79,7 +79,23 @@
             <div class="newPost">
               <div class="newPost-header">
                 <button onclick="closeCategories()" class="cancel-btn">Cancel</button>
-                <button class="post-btn">Done</button>
+                <h1>Choice you are categories:</h1>
+                <button onclick="closeCategories()" class="post-btn">Done</button>
+              </div>
+              <div class="categories-content">
+                <div class="categories-list">
+                  <div class="category-item">General</div>
+                  <div class="category-item">Technology</div>
+                  <div class="category-item">Sports</div>
+                  <div class="category-item">Entertainment</div>
+                  <div class="category-item">Science</div>
+                  <div class="category-item">Health</div>
+                  <div class="category-item">Food</div>
+                  <div class="category-item">Travel</div>
+                  <div class="category-item">Fashion</div>
+                  <div class="category-item">Art</div>
+                  <div class="category-item">Music</div>
+                </div>
               </div>
             </div>
           </div>
