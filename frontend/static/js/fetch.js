@@ -1,7 +1,7 @@
 
 let register = document.querySelector("#form-submit")
-
-register.addEventListener('submit', async (e) => {
+ 
+  register.addEventListener('submit', async (e) => {
     e.preventDefault()
     let firstname = document.getElementById('firstname').value
     let lastname = document.querySelector('#lastname').value
@@ -60,8 +60,9 @@ login.addEventListener('submit', async (e) => {
     if (response.ok) {
         const data = await response.json();
         localStorage.setItem("token",data.message.uuid)
-         console.log(data.message.uuid);
-        console.log("Success:", data);
+        window.history.pushState({user:data},"","/home")
+          location.href="/home"
+         console.log("Success:", data);
      } else {
         const errorData = await response.json();
         console.error("Error:", errorData);
@@ -69,3 +70,4 @@ login.addEventListener('submit', async (e) => {
     }
 
 }) 
+ 
