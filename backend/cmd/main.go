@@ -23,6 +23,7 @@ func main() {
 	mux.HandleFunc("/api/login", handlers.HandleLogin)
 
 	mux.Handle("/api/post", handlers.AuthenticateMiddleware(http.HandlerFunc(handlers.HandlePost)))
+	mux.Handle("/api/like", handlers.AuthenticateMiddleware(http.HandlerFunc(handlers.HandelLike)))
 	mux.Handle("/api/Logout/{id}", handlers.AuthenticateMiddleware(http.HandlerFunc(handlers.HandleLogOut)))
 
 
