@@ -15,7 +15,7 @@ func Comment_handler(res http.ResponseWriter, req *http.Request) {
 		id, err := strconv.Atoi(req.FormValue("target_id"))
 		if err != nil {
 			res.WriteHeader(http.StatusBadRequest)
-			return 
+			return
 		}
 		comments := comment.GetAllCommentsbyTarget(id)
 		if comments == nil {
