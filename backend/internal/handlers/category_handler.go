@@ -5,17 +5,17 @@ import (
 	"net/http"
 
 	category "forum-project/backend/internal/repository/categories"
-	"forum-project/backend/internal/repository/home"
+
 )
 
 func HandelCategory(w http.ResponseWriter, r *http.Request) {
-	category := category.Category{}
+	categoryStruct := category.Category{}
 	decode := DecodeJson(r)
-	err := decode.Decode(&category)
+	err := decode.Decode(&categoryStruct)
 	if err != nil {
 		JsoneResponse(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	posts := home.GetPosts(category.Id)
+	posts := category.GetPostsByCategoryId(categoryStruct.Id)
 	json.NewEncoder(w).Encode(posts)
 }

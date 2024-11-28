@@ -2,8 +2,10 @@ package posts
 
 import (
 	"encoding/json"
-	"forum-project/backend/internal/repository/cards"
 	"net/http"
+	"time"
+
+	"forum-project/backend/internal/repository/cards"
 )
 
 type Post struct {
@@ -14,6 +16,19 @@ type Post struct {
 	Name_Category []string `json:"name"`
 	CreatedAt     string   `json:"createdat"`
 	Card_Id       int      `json:"card_id"`
+}
+
+type PostResponde struct {
+	Card_Id   int
+	Post_Id   int
+	UserID    int
+	FirstName string
+	LastName  string
+	Title     string
+	Content   string
+	Likes     int
+	Dislikes  int
+	CreatedAt time.Time
 }
 
 func (p *Post) Add() int {
