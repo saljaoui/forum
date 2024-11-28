@@ -24,3 +24,8 @@ func getCategoryId(category string) int {
 	}
 	return categoryId
 }
+
+// func getPostsByCategoryId(category int) {
+// 	query := "SELECT * FROM post_category pc, post p WHERE pc.post_id = p.id AND pc.category_id = 3"
+
+// }
