@@ -23,9 +23,10 @@ func main() {
 	mux.HandleFunc("/api/login", handlers.HandleLogin)
 	mux.HandleFunc("/api/comment", handlers.Handel_GetCommet)
 
+	mux.Handle("/api/Logout", handlers.AuthenticateMiddleware(http.HandlerFunc(handlers.HandleLogOut)))
 	mux.Handle("/api/post", handlers.AuthenticateMiddleware(http.HandlerFunc(handlers.HandlePost)))
-	mux.Handle("/api/logout/{id}", handlers.AuthenticateMiddleware(http.HandlerFunc(handlers.HandleLogOut)))
 	mux.Handle("/api/addcomment", handlers.AuthenticateMiddleware(http.HandlerFunc(handlers.Handler_AddComment)))
+	mux.Handle("/api/like", handlers.AuthenticateMiddleware(http.HandlerFunc(handlers.HandelLike)))
 
 	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("../../frontend/static"))))
 	mux.HandleFunc("/login", func(w http.ResponseWriter, r *http.Request) {

@@ -1,12 +1,17 @@
 package home
 
+import "time"
+
 type PostResponde struct {
-	ID           int      `json:"ID"`
-	UserID       int      `json:"UserID"`
-	FirstName    string   `json:"FirstName"`
-	LastName     string   `json:"LastName"`
-	Title        string   `json:"Title"`
-	Content      string   `json:"Content"`
-	CategoryName []string `json:"CategoryName"`
-	CreatedAt    string   `json:"CreatedAt"`
+	Card_Id      int
+	Post_Id      int
+	UserID       int
+	FirstName    string
+	LastName     string
+	Title        string
+	Content      string
+	CategoryName string
+	Likes        int
+	Dislikes     int
+	CreatedAt    time.Time
 }

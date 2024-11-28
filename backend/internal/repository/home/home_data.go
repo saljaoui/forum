@@ -1,38 +1,16 @@
 package home
 
 import (
-	"strings"
+	"fmt"
+	"strconv"
 
 	"forum-project/backend/internal/database"
 )
 
 func GetPosts(quantity int) []PostResponde {
-	query := `
-SELECT
-    p.id,
-    u.id AS 'UserID',
-    u.firstname,
-    u.lastname,
-    p.title,
-    c.content,
-    GROUP_CONCAT(cat.name),
-    c.created_at
-FROM
-    post p
-    JOIN card c ON p.card_id = c.id
-    JOIN user u ON c.user_id = u.id
-    JOIN post_category pc ON p.id = pc.post_id
-    JOIN category cat ON pc.category_id = cat.id
-GROUP BY
-    p.id,
-    u.id,
-    u.firstname,
-    u.lastname,
-    p.title,
-    c.content,
-    c.created_at
-	ORDER BY
-    c.created_at DESC;`
+	query := `SELECT p.card_id AS 'card_id', p.id, u.id AS 'user_id', u.firstname, u.lastname, p.title, c.content, cat.name, c.created_at  
+	FROM post p, card c, user u, post_category pc, category cat WHERE p.card_id=c.id 
+	AND c.user_id=u.id AND p.id = pc.post_id AND pc.category_id=cat.id`
 	db := database.Config()
 	rows, err := db.Query(query)
 	if err != nil {
@@ -44,7 +22,8 @@ GROUP BY
 		var categoryNames string
 		var post PostResponde
 		err := rows.Scan(
-			&post.ID,
+			&post.Card_Id,
+			&post.Post_Id,
 			&post.UserID,
 			&post.FirstName,
 			&post.LastName,
@@ -56,10 +35,29 @@ GROUP BY
 		if err != nil {
 			return nil
 		}
-		post.CategoryName = strings.Split(categoryNames, ",")
+		likes, dislikes := getLikes(post.Post_Id)
+		post.Likes = likes
+		post.Dislikes = dislikes
+		fmt.Println(likes)
 		posts = append(posts, post)
 	}
 	return posts
+}
+
+func getLikes(post_id int) (int, int) {
+	querylike := `SELECT sum(is_like) FROM post p, likes l WHERE p.card_id = l.card_id AND l.is_like = 1 AND p.id = ` + strconv.Itoa(post_id)
+	like := 0
+	err := database.SelectOneRow(querylike).Scan(&like)
+	if err != nil {
+		like = 0
+	}
+	querydislike := `SELECT sum(is_like) FROM post p, likes l WHERE p.card_id = l.card_id AND l.is_like = -1 AND p.id = ` + strconv.Itoa(post_id)
+	dislike := 0
+	err = database.SelectOneRow(querydislike).Scan(&dislike)
+	if err != nil {
+		dislike = 0
+	}
+	return like, dislike * -1
 }
 
 // func canPurchase(id int, quantity int) (bool, error) {
