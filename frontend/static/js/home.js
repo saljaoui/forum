@@ -1,4 +1,5 @@
-const navItems = document.querySelectorAll('.nav-item');
+// import div from './asideRight.js';
+ const navItems = document.querySelectorAll('.nav-item');
 
 const creatPostPopup = document.getElementById('creatPost-popup')
 
@@ -31,3 +32,8 @@ function openCreatPost() {
 function closeCreatPost() {
     creatPostPopup.style.display = "none"
 }
+
+
+// let side =document.querySelector("#side-right")
+
+// console.log(div());

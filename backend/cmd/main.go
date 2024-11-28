@@ -17,7 +17,7 @@ func main() {
 		fmt.Println(Err)
 	}
 	mux := http.NewServeMux()
-	// mux.HandleFunc("/", handlers.Middleware)
+	http.Handle("/", http.FileServer(http.Dir("../../frontend/static")))
 	mux.HandleFunc("/api/register", handlers.HandleRegister)
 	mux.HandleFunc("/api/home", handlers.HomeHandle)
 	mux.HandleFunc("/api/login", handlers.HandleLogin)
@@ -31,10 +31,13 @@ func main() {
 	mux.HandleFunc("/login", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "../../frontend/templates/login.html")
 	})
+	mux.HandleFunc("/aside-right", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "../../frontend/templates/aside-right.html")
+	})
+
 	mux.HandleFunc("/about", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "../../frontend/templates/about.html")
 	})
-
 	mux.HandleFunc("/home", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "../../frontend/templates/home.html")
 	})

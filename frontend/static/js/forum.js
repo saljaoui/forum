@@ -1,28 +1,19 @@
-// import addpost from './post.js';
-let containr = document.querySelector(".containr")
-async function fetchData() {
+ 
+
+ async function fetchData() {
     const responce = await fetch("http://localhost:3333/api/home", { method: "GET" });
     if (responce.ok) {
         const user_data = history.state
 
         let data = await responce.json();
         let user_info = document.querySelector(".content_post");
-        // let post_content = document.querySelector(".post-content");
-        data.map(ele => {
-            let contents = document.createElement("div")
-            //     let username = document.createElement("span")
-            //     let created = document.createElement("span")
-            //     let content = document.createElement("div")
-            //     let a = document.createElement("a") 
-            //     full_name.className="display-name"
-            //     username.className="username"
-            //     created.className="timestamp"
-            //     full_name.textContent=ele.FirstName+" "+ele.LastName
-            //     username.textContent="omrharbi"
-            //     created.textContent=".11"
-            //     content.textContent=ele.Content
-            //     user_info.append(full_name,user_data,created)
-            //     post_content.appendChild(content)
+        console.log(user_info.innerHTML);
+        
+         data.map(ele => {
+          let date=new Date(ele.CreatedAt)
+            console.log(date.getHours());
+            
+            let contents = document.createElement("div") 
             contents.innerHTML = `
               <div class="post">
          <div class="post-header">
@@ -30,7 +21,7 @@ async function fetchData() {
           <div class="user-info">
             <div class="display-name">${ele.FirstName + " " + ele.LastName}</div>
             <span class="username">@aoc.bsky.social</span>
-            <span class="timestamp">· 11h</span>
+            <span class="timestamp">· ${date.getHours()}h</span>
           </div>
         </div>
         <div class="post-content">
