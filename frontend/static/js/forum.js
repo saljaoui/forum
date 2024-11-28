@@ -5,7 +5,7 @@ async function fetchData() {
   if (responce.ok) {
     const user_data = history.state
     let data = await responce.json();
-    let user_info = document.querySelector(".content_post");
+    let user_info = document.querySelector(".main");
 
     data.map(ele => {
       let date = new Date(ele.CreatedAt)
