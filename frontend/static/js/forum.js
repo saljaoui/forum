@@ -1,20 +1,18 @@
- 
 
- async function fetchData() {
-    const responce = await fetch("http://localhost:3333/api/home", { method: "GET" });
-    if (responce.ok) {
-        const user_data = history.state
 
-        let data = await responce.json();
-        let user_info = document.querySelector(".content_post");
-        console.log(user_info.innerHTML);
-        
-         data.map(ele => {
-          let date=new Date(ele.CreatedAt)
-            console.log(date.getHours());
-            
-            let contents = document.createElement("div") 
-            contents.innerHTML = `
+async function fetchData() {
+  const responce = await fetch("http://localhost:3333/api/home", { method: "GET" });
+  if (responce.ok) {
+    const user_data = history.state
+    let data = await responce.json();
+    let user_info = document.querySelector(".content_post");
+
+    data.map(ele => {
+      let date = new Date(ele.CreatedAt)
+    //  console.log(date.getHours());
+
+      let contents = document.createElement("div")
+      contents.innerHTML = `
               <div class="post">
          <div class="post-header">
           <img src="../static/imgs/profilePic.png" class="avatar" alt="Profile picture" />
@@ -45,45 +43,54 @@
         </div>
          </div>
         `
-            user_info.appendChild(contents)
-        })
+      user_info.appendChild(contents)
+    })
+   // console.log(data);
 
+  } else {
+    let data = responce.json()
+   // console.log(data);
 
-        console.log(data);
-
-
-    } else {
-        let data = responce.json()
-        console.log(data);
-
-    }
+  }
 }
 document.addEventListener("DOMContentLoaded", fetchData);
 
 if (document.cookie) {
-    let tokens = document.cookie.split("; ")
-    let token = null;
-    let userId = null;
-    tokens.forEach(ele => {
-        let [key, value] = ele.split("=")
-        if (key === 'token') {
-            token = value
-        }
-        else if (key === "user_id") {
-            userId = value
-        }
-    })
-    console.log(token, userId);
+  let join = document.querySelector(".join")
+  join.style.display = "none"
+  let aside_nav = document.querySelector(".aside-nav")
+  aside_nav.style.display = "block"
+  while (join.firstChild) {
+    join.removeChild(join.firstChild)
+  }
+ // location.href="/home"
+  let tokens = document.cookie.split("; ")
+  let token = null;
+  let userId = null;
+  tokens.forEach(ele => {
+    let [key, value] = ele.split("=")
+    if (key === 'token') {
+      token = value
+    }
+    else if (key === "user_id") {
+      userId = value
+    }
+  })
+ // console.log(token, userId);
 
 } else {
-    // const container = document.querySelector(".form");
-    // while (container.firstChild) {
-    //     container.removeChild(container.firstChild)
-    // }
+  let join = document.querySelector(".join")
+  join.style.display = "block"
+  let aside_nav = document.querySelector(".aside-nav")
+  aside_nav.style.display = "none"
+  while (aside_nav.firstChild) {
+    aside_nav.removeChild(aside_nav.firstChild)
+  }
+
 }
 
 
 
 export {
-    fetchData
+  fetchData
 }

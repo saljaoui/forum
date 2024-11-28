@@ -1,7 +1,4 @@
- 
-
 let register = document.querySelector("#form-submit")
- 
   register.addEventListener('submit', async (e) => {
     e.preventDefault()
     let firstname = document.getElementById('firstname').value
@@ -22,16 +19,14 @@ let register = document.querySelector("#form-submit")
             password: password
         })
     })
-    if (response.status === 401) {
-        const data = await response.json();
-        localStorage.setItem("token",data.token)
-        console.log("Success:", data);
-    }
+    // if (response.status === 401) {
+    //     const data = await response.json();
+    //     localStorage.setItem("token",data.token)
+    //     console.log("Success:", data);
+    // }
     if (response.ok) {
         const data = await response.json();
         console.log("Success:", data);
-
-
     } else {
         const errorData = await response.json();
         console.error("Error:", errorData);
