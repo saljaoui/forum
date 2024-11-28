@@ -694,6 +694,7 @@ filterCategories-popup {
 
 .signOut h1 {
 padding: 11px 7px;
+padding-left: 18px;
 margin-top: 5px;
 font-size: 15px;
 color: var(--color-red);
