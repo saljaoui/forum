@@ -23,9 +23,12 @@ func main() {
 	mux.HandleFunc("/category", handlers.HandelCategory)
 	mux.HandleFunc("/api/login", handlers.HandleLogin)
 
+	mux.Handle("/profile/posts", handlers.AuthenticateMiddleware((http.HandlerFunc(handlers.HandleProfilePosts))))
+	mux.Handle("/profile/likes", handlers.AuthenticateMiddleware((http.HandlerFunc(handlers.HandleProfileLikes))))
 	mux.Handle("/api/post", handlers.AuthenticateMiddleware(http.HandlerFunc(handlers.HandlePost)))
 	mux.Handle("/api/like", handlers.AuthenticateMiddleware(http.HandlerFunc(handlers.HandelLike)))
 	mux.Handle("/api/Logout/{id}", handlers.AuthenticateMiddleware(http.HandlerFunc(handlers.HandleLogOut)))
+
 
 
 	mux.Handle("/api/comment", handlers.AuthenticateMiddleware(http.HandlerFunc(handlers.Comment_handler)))
