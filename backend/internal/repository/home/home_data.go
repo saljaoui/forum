@@ -1,16 +1,15 @@
 package home
 
 import (
-	"fmt"
 	"strconv"
 
 	"forum-project/backend/internal/database"
 )
 
 func GetPosts(quantity int) []PostResponde {
-	query := `SELECT p.card_id AS  'card_id', p.id, u.id AS 'user_id', u.firstname, u.lastname, p.title, c.content, cat.name, c.created_at  
-	FROM post p, card c, user u, post_category pc, category cat WHERE p.card_id=c.id 
-	AND c.user_id=u.id AND p.id = pc.post_id AND pc.category_id=cat.id`
+	query := `SELECT DISTINCT p.card_id AS 'card_id', p.id, u.id AS 'user_id', u.firstname, u.lastname, p.title, c.content,  c.created_at  
+	FROM post p, card c, user u, post_category pc WHERE p.card_id=c.id 
+	AND c.user_id=u.id AND p.id = pc.post_id   ORDER BY   c.created_at DESC`
 
 	db := database.Config()
 	rows, err := db.Query(query)
@@ -20,7 +19,7 @@ func GetPosts(quantity int) []PostResponde {
 	defer rows.Close()
 	var posts []PostResponde
 	for rows.Next() {
-		var categoryNames string
+		//var categoryNames string
 		var post PostResponde
 		err := rows.Scan(
 			&post.Card_Id,
@@ -30,7 +29,6 @@ func GetPosts(quantity int) []PostResponde {
 			&post.LastName,
 			&post.Title,
 			&post.Content,
-			&categoryNames,
 			&post.CreatedAt,
 		)
 		if err != nil {
@@ -39,7 +37,6 @@ func GetPosts(quantity int) []PostResponde {
 		likes, dislikes := getLikes(post.Post_Id)
 		post.Likes = likes
 		post.Dislikes = dislikes
-		fmt.Println(likes)
 		posts = append(posts, post)
 	}
 	return posts

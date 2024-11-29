@@ -24,6 +24,7 @@ func (p *Post) Add() int {
 	}
 	p.Card_Id = card.Id
 	id_posr := inserPost(p.Title, p.Card_Id)
+
 	return int(id_posr)
 }
 
@@ -33,4 +34,3 @@ func (p *Post) CheckPostErr(w http.ResponseWriter) {
 		json.NewEncoder(w).Encode("Invalid input")
 	}
 }
-

@@ -1,19 +1,22 @@
 
+export default async function fetchData() {
 
-async function fetchData() {
   const responce = await fetch("http://localhost:3333/api/home", { method: "GET" });
   if (responce.ok) {
+   // SeccesCreatPost()
     const user_data = history.state
     let data = await responce.json();
     let user_info = document.querySelector(".main");
-
+    user_info.innerHTML=""
+     
     data.map(ele => {
       let date = new Date(ele.CreatedAt)
     //  console.log(date.getHours());
-
+    // Dislikes     int
+    // Likes        int
       let contents = document.createElement("div")
       contents.innerHTML = `
-              <div class="post">
+        <div class="post">
          <div class="post-header">
           <img src="../static/imgs/profilePic.png" class="avatar" alt="Profile picture" />
           <div class="user-info">
@@ -31,7 +34,14 @@ async function fetchData() {
               <path
                 d="M12 21.638h-.014C9.403 21.59 1.95 14.856 1.95 8.478c0-3.064 2.525-5.754 5.403-5.754 2.29 0 3.83 1.58 4.646 2.73.814-1.148 2.354-2.73 4.645-2.73 2.88 0 5.404 2.69 5.404 5.755 0 6.376-7.454 13.11-10.037 13.157H12z" />
             </svg>
-            <span>862</span>
+            <span>${ele.Likes} liked </span>
+          </div>
+           <div class="action">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 21.638h-.014C9.403 21.59 1.95 14.856 1.95 8.478c0-3.064 2.525-5.754 5.403-5.754 2.29 0 3.83 1.58 4.646 2.73.814-1.148 2.354-2.73 4.645-2.73 2.88 0 5.404 2.69 5.404 5.755 0 6.376-7.454 13.11-10.037 13.157H12z" />
+            </svg>
+            <span>${ele.Dislikes} disliked</span>
           </div>
           <div class="action">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
@@ -46,15 +56,13 @@ async function fetchData() {
       user_info.appendChild(contents)
     })
    // console.log(data);
-
   } else {
     let data = responce.json()
-   // console.log(data);
+     console.log(data);
 
   }
 }
-document.addEventListener("DOMContentLoaded", fetchData);
-
+fetchData()
 if (document.cookie) {
   let join = document.querySelector(".join")
   join.style.display = "none"
@@ -87,10 +95,4 @@ if (document.cookie) {
     aside_nav.removeChild(aside_nav.firstChild)
   }
 
-}
-
-
-
-export {
-  fetchData
 }

@@ -24,10 +24,9 @@ export default function addpost() {
         })
 
         if (response.ok) {
-            fetchData()
+            //fetchData()
             const data = await response.json();
-            console.log("Success:", data);
-             
+            console.log("Success:", data)
 
         } else {
             const errorData = await response.json();

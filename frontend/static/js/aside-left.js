@@ -1,9 +1,13 @@
-//import { addpost } from './post.js';
+import fetchData  from './forum.js';
 const navItems = document.querySelectorAll('.nav-item');
 const categoryItems = document.querySelectorAll('.category-item');
 const creatPostPopup = document.getElementById('creatPost-popup')
 const openCategorie = document.getElementById('categories-popup')
-let content = document.querySelector("#content")
+const newPost = document.querySelector('.newPost-popup')
+const cancel_btn = document.querySelector('.cancel-btn')
+const openCategories = document.querySelector('.openCategories')
+const create_btn = document.querySelector('.create-post')
+const done_btn = document.querySelector('.done-post')
 const categoriesList = Array.from(document.getElementsByClassName('category-item'))
 let categoriesSelected = []
 
@@ -29,41 +33,49 @@ navItems.forEach(navItem => {
         }
     });
 });
+newPost.addEventListener("click",()=>{
 
-function openCreatPost() {
     creatPostPopup.style.display = "flex"
-}
-function closeCreatPost() {
+})
+// function openCreatPost() {
+// }
+cancel_btn.addEventListener("click",()=>{
     creatPostPopup.style.display = "none"
-}
 
-function doneCategories() {
+})
+// function closeCreatPost() {
+// }
+done_btn.addEventListener("click",()=>{
     defaultCategories()
     categoriesList.forEach(category => {
         if (category.classList.contains('selected')) {
             categoriesSelected.push(category.textContent)
         }
     });
-}
+})
+// function doneCategories() {
+  
+// }
 
-function SeccesCreatPost() {
-     if (categoriesSelected.length > 0 && content.value.length > 0) {
-        creatPost(categoriesSelected)
-
-        creatPostPopup.style.display = "none"
-        closeCategories()
-
-        content.value = ""
+create_btn.addEventListener("click",()=>{
+    if (categoriesSelected.length > 0 && content.value.length > 0) {
+       creatPost()
+       creatPostPopup.style.display = "none"
+       closeCategories()
+       content.value = ""
+      // fetchData()
     } else {
-        openCategories()
+       openCategories()
     }
-    console.log(doneCategories());
-
-}
-
-function openCategories() {
+})
+// function SeccesCreatPost() {
+// }
+openCategories.addEventListener('click',()=>{
     openCategorie.style.display = "flex"
-}
+
+})
+// function openCategories() {
+// }
 
 function closeCategories() {
     defaultCategories()
@@ -79,16 +91,14 @@ function defaultCategories() {
     openCategorie.style.display = "none"
 }
 
-
-
-
 categoryItems.forEach(item => {
     item.addEventListener('click', () => {
         item.classList.toggle('selected');
     });
 });
 
-async function creatPost(categories) {
+async function creatPost() {
+    let content = document.querySelector("#content")
     console.log(content.value, categoriesSelected);
     const response = await fetch("/api/post", {
         method: "POST",
@@ -97,20 +107,24 @@ async function creatPost(categories) {
             'Accept': 'application/json',
         },
         body: JSON.stringify({
-            title: "t",
-            content: "testtt",
-            name: [
-                "hrlo",'frefrr'
-            ]
+            title: "title 2",
+            content: content.value,
+            name: categoriesSelected
         })
     })
 
     if (response.ok) {
+      await  fetchData()
         const data = await response.json();
         console.log("Success:", data);
+      
     } else {
         const errorData = response.json();
         console.error("Error:", errorData);
         alert(`Error: ${errorData.message || "Request failed"}`);
     }
 }
+
+// export {
+//     creatPost
+// }
