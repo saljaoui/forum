@@ -2,9 +2,16 @@ let register = document.querySelector("#form-submit")
   register.addEventListener('submit', async (e) => {
     e.preventDefault()
     let firstname = document.getElementById('firstname').value
-    let lastname = document.querySelector('#lastname').value
-    let email = document.querySelector('#email').value
-    let password = document.querySelector('#password').value
+    let lastname = document.getElementById('lastname').value
+    let emailRegister = document.getElementById('emailRegister').value
+    let passwordRegister = document.getElementById('passwordRegister').value
+
+    console.log(firstname);
+    console.log(lastname);
+    console.log(emailRegister);
+    console.log(passwordRegister);
+    
+
     const response = await fetch("/api/register", {
         method: "POST",
         headers: {
@@ -15,8 +22,8 @@ let register = document.querySelector("#form-submit")
         body: JSON.stringify({
             firstname: firstname,
             lastname: lastname,
-            email: email,
-            password: password
+            email: emailRegister,
+            password: passwordRegister
         })
     })
     // if (response.status === 401) {
