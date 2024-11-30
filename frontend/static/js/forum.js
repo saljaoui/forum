@@ -52,17 +52,15 @@ export default async function fetchData() {
         </div>
         `
       user_info.appendChild(contents)
-     //  console.log(ele);
-       
-    })
-    
-    let like=document.querySelector("#likes")
-    let dilike=document.querySelector("#dilike")//is_liked
-    let is_liked=document.querySelector("#is_liked")//is_liked
-     
 
-    likes(like,dilike,is_liked.textContent)
+    })
+
+    let like = document.querySelectorAll("#likes")
+    let dilike = document.querySelector("#dilike")//is_liked
+    let is_liked = document.querySelector("#is_liked")//is_liked
+  
     // console.log(data);
+    likes(like, dilike, is_liked.textContent)
   } else {
     let data = responce.json()
     console.log(data);

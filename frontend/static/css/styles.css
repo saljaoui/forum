@@ -436,7 +436,9 @@ button:hover {
   align-items: center;
   gap: 6px;
 }
-
+.clicked{
+  color:var(--color-action-hover) ;
+}
 .active:hover {
   color: var(--color-action-hover) !important;
   cursor: pointer;
