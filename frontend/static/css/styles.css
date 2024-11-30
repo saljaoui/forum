@@ -2,6 +2,7 @@
   0% {
     opacity: 0;
   }
+
   100% {
     opacity: 1;
   }
@@ -33,11 +34,9 @@
 
 body {
   background: var(--color-background);
-  background: radial-gradient(
-    circle at top,
-    var(--color-mid) 0%,
-    var(--color-dark) 100%
-  );
+  background: radial-gradient(circle at top,
+      var(--color-mid) 0%,
+      var(--color-dark) 100%);
   min-height: 100vh;
   display: flex;
   justify-content: center;
@@ -45,17 +44,22 @@ body {
   transition: all 0.3s ease;
   color: var(--color-white);
 }
+
 .content_post {
   position: relative;
   overflow-y: scroll;
   max-height: 93.2vh;
-  scrollbar-width: none;  /* For Firefox */
-  -ms-overflow-style: none;  /* For IE and Edge */
+  scrollbar-width: none;
+  /* For Firefox */
+  -ms-overflow-style: none;
+  /* For IE and Edge */
 
 }
-.content_post::-webkit-scrollbar{
+
+.content_post::-webkit-scrollbar {
   display: none;
 }
+
 section {
   display: flex;
   justify-content: space-around;
@@ -109,8 +113,8 @@ button:hover {
   transition: 0.5s;
 }
 
-.input-box input:focus ~ label,
-.input-box input:valid ~ label {
+.input-box input:focus~label,
+.input-box input:valid~label {
   top: -5px;
 }
 
@@ -174,6 +178,7 @@ button:hover {
   text-decoration: none;
   color: var(--color-action-hover);
 }
+
 .link-list a:hover {
   color: var(--color-logo);
 }
@@ -432,6 +437,11 @@ button:hover {
   gap: 6px;
 }
 
+.active:hover {
+  color: var(--color-action-hover) !important;
+  cursor: pointer;
+}
+
 .action:hover {
   color: var(--color-action-hover);
   cursor: pointer;
@@ -580,10 +590,12 @@ button:hover {
   margin-bottom: 10px;
   margin-left: 10px;
 }
+
 #choice-categories h1 {
   font-weight: 100;
   color: var(--color-white);
 }
+
 #choice-categories:hover {
   background-color: var(--color-mid);
 }
@@ -594,8 +606,7 @@ button:hover {
 }
 
 #creatPost-popup,
-#categories-popup,
-filterCategories-popup {
+#categories-popup {
   position: fixed;
   background: transparent;
   backdrop-filter: blur(3px);
@@ -607,6 +618,7 @@ filterCategories-popup {
   left: 0;
   right: 0;
   bottom: 0;
+  z-index: 1;
   animation: fromTO 0.5s ease-in-out;
 }
 
@@ -704,12 +716,12 @@ filterCategories-popup {
 }
 
 .signOut h1 {
-padding: 11px 7px;
-padding-left: 18px;
-margin-top: 5px;
-font-size: 15px;
-color: var(--color-red);
-font-size: 100;
+  padding: 11px 7px;
+  padding-left: 18px;
+  margin-top: 5px;
+  font-size: 15px;
+  color: var(--color-red);
+  font-size: 100;
 }
 
 .signOut {
@@ -726,11 +738,13 @@ font-size: 100;
   flex-direction: column;
   border-top: 1px solid var(--color-light);
 }
+
 .header-nav {
   margin-top: 10px;
   margin-bottom: 5px;
   padding: 10px;
 }
+
 .header-nav h1 {
   margin-bottom: 5px;
 }

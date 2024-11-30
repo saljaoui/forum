@@ -14,7 +14,7 @@ export default async function fetchData() {
       let date = new Date(ele.CreatedAt)
       let contents = document.createElement("div")
       contents.innerHTML = `
-        <div class="post">
+        <div class="post" >
          <div class="post-header">
           <img src="../static/imgs/profilePic.png" class="avatar" alt="Profile picture" />
           <div class="user-info">
@@ -27,19 +27,19 @@ export default async function fetchData() {
             ${ele.Content}
         </div>
         <div class="post-actions">
-          <div class="action" id="likes">
+          <div class="action active" id="likes" data-id_card="${ele.Card_Id}" >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
               <path
                 d="M12 21.638h-.014C9.403 21.59 1.95 14.856 1.95 8.478c0-3.064 2.525-5.754 5.403-5.754 2.29 0 3.83 1.58 4.646 2.73.814-1.148 2.354-2.73 4.645-2.73 2.88 0 5.404 2.69 5.404 5.755 0 6.376-7.454 13.11-10.037 13.157H12z" />
             </svg>
-            <span>${ele.Likes} liked </span>
+            <span id="is_liked">${ele.Likes} liked </span>
           </div>
            <div class="action" id="dilike">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
               <path
                 d="M12 21.638h-.014C9.403 21.59 1.95 14.856 1.95 8.478c0-3.064 2.525-5.754 5.403-5.754 2.29 0 3.83 1.58 4.646 2.73.814-1.148 2.354-2.73 4.645-2.73 2.88 0 5.404 2.69 5.404 5.755 0 6.376-7.454 13.11-10.037 13.157H12z" />
             </svg>
-            <span>${ele.Dislikes} disliked</span>
+            <span id="is_liked">${ele.Dislikes} disliked</span>
           </div>
           <div class="action">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
@@ -49,14 +49,19 @@ export default async function fetchData() {
             <span>27.1K</span>
           </div>
         </div>
-         </div>
+        </div>
         `
       user_info.appendChild(contents)
+     //  console.log(ele);
+       
     })
+    
     let like=document.querySelector("#likes")
-    let dilike=document.querySelector("#dilike")
+    let dilike=document.querySelector("#dilike")//is_liked
+    let is_liked=document.querySelector("#is_liked")//is_liked
+     
 
-    likes(like,dilike)
+    likes(like,dilike,is_liked.textContent)
     // console.log(data);
   } else {
     let data = responce.json()

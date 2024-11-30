@@ -13,3 +13,11 @@ func inserLike(user_id, card_id, is_liked int) {
 		fmt.Println(err.Error())
 	}
 }
+
+func deletLike( user_id,card_id int) {
+	query := "DELETE FROM likes WHERE user_id=? AND card_id=?"
+	_, err := database.Exec(query, user_id, card_id)
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+}

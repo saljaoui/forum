@@ -2,6 +2,7 @@ let nav_items = document.querySelector("#home")//search
 let search = document.querySelector("#search")//search
 let categories = document.querySelector("#categories")//search
 let profile = document.querySelector("#profile")//search
+let settings = document.querySelector("#settings")
 
  function navigate(){
 
@@ -31,6 +32,16 @@ let profile = document.querySelector("#profile")//search
         const currentUrl = window.location.pathname;
         if (currentUrl !== "/categories") {
             location.href = "/categories";
+        } else {
+            console.log("Already on the profile page, no need to reload.");
+        }
+    })
+
+    settings.addEventListener("click", (e) => {
+        e.preventDefault()
+        const currentUrl = window.location.pathname;
+        if (currentUrl !== "/settings") {
+            location.href = "/settings";
         } else {
             console.log("Already on the profile page, no need to reload.");
         }
