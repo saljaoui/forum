@@ -594,8 +594,7 @@ button:hover {
 }
 
 #creatPost-popup,
-#categories-popup,
-filterCategories-popup {
+#categories-popup {
   position: fixed;
   background: transparent;
   backdrop-filter: blur(3px);
@@ -607,6 +606,7 @@ filterCategories-popup {
   left: 0;
   right: 0;
   bottom: 0;
+  z-index: 1;
   animation: fromTO 0.5s ease-in-out;
 }
 
