@@ -25,6 +25,26 @@ let profile = document.querySelector("#profile")//search
             console.log("Already on the profile page, no need to reload.");
         }
     })
+
+    categories.addEventListener("click", (e) => {
+        e.preventDefault()
+        const currentUrl = window.location.pathname;
+        if (currentUrl !== "/categories") {
+            location.href = "/categories";
+        } else {
+            console.log("Already on the profile page, no need to reload.");
+        }
+    })
+
+    search.addEventListener("click", (e) => {
+        e.preventDefault()
+        const currentUrl = window.location.pathname;
+        if (currentUrl !== "/search") {
+            location.href = "/search";
+        } else {
+            console.log("Already on the profile page, no need to reload.");
+        }
+    })
 }
 navigate()
 export {

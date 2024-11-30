@@ -28,30 +28,30 @@
           <img src="../static/imgs/profilePic.png" class="avatar" alt="Profile picture" />
         </div>
         <nav>
-          <a href="/home" class="nav-item">
+          <a href="#" class="nav-item" id="home">
             <ion-icon class="active" name="home-outline"></ion-icon>
             <ion-icon name="home"></ion-icon>
             <h1>Home</h1>
           </a>
 
-          <a href="#" class="nav-item">
+          <a href="#" class="nav-item" id="search">
             <ion-icon class="active" name="search-outline"></ion-icon>
             <ion-icon name="search"></ion-icon>
             <h1>Search</h1>
           </a>
 
-          <a href="#" class="nav-item">
+          <a href="#" class="nav-item active" id="categories">
             <ion-icon class="active" name="filter-circle-outline"></ion-icon>
             <ion-icon name="filter-circle"></ion-icon>
             <h1>categories</h1>
           </a>
-          <a href="/profile" class="nav-item">
+          <a href="#" class="nav-item" id="profile">
             <ion-icon class="active" name="person-circle-outline"></ion-icon>
-            <ion-icon  name="person-circle"></ion-icon>
+            <ion-icon name="person-circle"></ion-icon>
             <h1>Profile</h1>
           </a>
-          <a href="/" class="nav-item">
-            <ion-icon  name="settings-outline"></ion-icon>
+          <a href="#" class="nav-item active" id="settings">
+            <ion-icon name="settings-outline"></ion-icon>
             <ion-icon class="active" name="settings"></ion-icon>
             <h1>settings</h1>
           </a>
@@ -70,7 +70,7 @@
                 <img src="../static/imgs/profilePic.png" class="avatar" alt="Profile picture" />
                 <textarea placeholder="What's up?"></textarea>
               </div>
-              <div onclick="openCategories()" id="choice-categories" >
+              <div onclick="openCategories()" id="choice-categories">
                 <h1>Categories</h1>
               </div>
             </div>
@@ -104,23 +104,23 @@
       </div>
     </aside>
     <main>
-        <div class="settings-container">
-            <h1 class="settings-title">Settings</h1>
-            
-            <div class="profile-section">
-              <div class="profile-avatar">
-                <img src="../static/imgs/profilePic.png" class="avatar" alt="Profile picture" />
-              </div>
-              
-              <div class="profile-info">
-                <h2 class="profile-name">saljaoui.bsky.social</h2>
-                <p class="profile-handle">🌟 @saljaoui.bsky.social</p>
-              </div>
-            </div>
+      <div class="settings-container">
+        <h1 class="settings-title">Settings</h1>
+
+        <div class="profile-section">
+          <div class="profile-avatar">
+            <img src="../static/imgs/profilePic.png" class="avatar" alt="Profile picture" />
           </div>
-          <a class="signOut" href="">
-            <h1 >Sign out</h1>
-          </a>
+
+          <div class="profile-info">
+            <h2 class="profile-name">saljaoui.bsky.social</h2>
+            <p class="profile-handle">🌟 @saljaoui.bsky.social</p>
+          </div>
+        </div>
+      </div>
+      <a class="signOut" href="">
+        <h1>Sign out</h1>
+      </a>
     </main>
     <aside class="aside-right">
       <input class="search" type="text" placeholder="Search.." />
@@ -131,7 +131,8 @@
   </section>
 
   <script src="../static/js/aside-left.js"></script>
-  <script src="../static/js/profile.js" ></script>
+  <script src="../static/js/profile.js"></script>
+  <script type="module" src="../static/js/home.js"></script>
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
