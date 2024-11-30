@@ -17,7 +17,6 @@ func HandleRegister(w http.ResponseWriter, r *http.Request) {
 	user := repository.User{}
 	decode := DecodeJson(r)
 	err := decode.Decode(&user)
-	fmt.Println(user.Email)
 	if err != nil {
 		JsoneResponse(w, err.Error(), http.StatusBadRequest)
 		return
