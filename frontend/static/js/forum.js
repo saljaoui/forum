@@ -1,19 +1,17 @@
 
 export default async function fetchData() {
-
   const responce = await fetch("http://localhost:3333/api/home", { method: "GET" });
   if (responce.ok) {
-   // SeccesCreatPost()
+    // SeccesCreatPost()
     const user_data = history.state
+    // console.log(user_data);
+
     let data = await responce.json();
     let user_info = document.querySelector(".main");
-    user_info.innerHTML=""
-     
+    user_info.innerHTML = ""
+
     data.map(ele => {
       let date = new Date(ele.CreatedAt)
-    //  console.log(date.getHours());
-    // Dislikes     int
-    // Likes        int
       let contents = document.createElement("div")
       contents.innerHTML = `
         <div class="post">
@@ -55,10 +53,10 @@ export default async function fetchData() {
         `
       user_info.appendChild(contents)
     })
-   // console.log(data);
+    // console.log(data);
   } else {
     let data = responce.json()
-     console.log(data);
+    console.log(data);
 
   }
 }
@@ -71,7 +69,7 @@ if (document.cookie) {
   while (join.firstChild) {
     join.removeChild(join.firstChild)
   }
- // location.href="/home"
+  // location.href="/home"
   let tokens = document.cookie.split("; ")
   let token = null;
   let userId = null;
@@ -84,7 +82,7 @@ if (document.cookie) {
       userId = value
     }
   })
- // console.log(token, userId);
+  // console.log(token, userId);
 
 } else {
   let join = document.querySelector(".join")

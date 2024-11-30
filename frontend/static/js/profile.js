@@ -1,4 +1,6 @@
+import {navigate} from "./home.js"
 const profileNav = document.querySelectorAll(".profile-nav a");
+navigate()
 
 profileNav.forEach((navItem) => {
   navItem.addEventListener("click", () => {
@@ -10,3 +12,4 @@ profileNav.forEach((navItem) => {
     });
   });
 });
+

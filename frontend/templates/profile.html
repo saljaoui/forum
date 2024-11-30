@@ -28,24 +28,24 @@
           <img src="../static/imgs/profilePic.png" class="avatar" alt="Profile picture" />
         </div>
         <nav>
-          <a href="/home" class="nav-item">
+          <a href="#" class="nav-item" id="home">
             <ion-icon class="active" name="home-outline"></ion-icon>
             <ion-icon name="home"></ion-icon>
             <h1>Home</h1>
           </a>
 
-          <a href="#" class="nav-item">
+          <a href="#" class="nav-item" id="search">
             <ion-icon class="active" name="search-outline"></ion-icon>
             <ion-icon name="search"></ion-icon>
             <h1>Search</h1>
           </a>
 
-          <a href="#" class="nav-item">
+          <a href="#" class="nav-item"  id="categories">
             <ion-icon class="active" name="filter-circle-outline"></ion-icon>
             <ion-icon name="filter-circle"></ion-icon>
             <h1>categories</h1>
           </a>
-          <a href="/profile" class="nav-item">
+          <a href="#" class="nav-item" id="profile">
             <ion-icon name="person-circle-outline"></ion-icon>
             <ion-icon class="active" name="person-circle"></ion-icon>
             <h1>Profile</h1>
@@ -130,8 +130,9 @@
     </aside>
   </section>
 
-  <script src="../static/js/aside-left.js"></script>
-  <script src="../static/js/profile.js" ></script>
+  <!-- <script  src="../static/js/aside-left.js"></script> -->
+  <script type="module"  src="../static/js/profile.js" ></script>
+  <script  type="module" src="../static/js/home.js" ></script>
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>

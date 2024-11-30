@@ -53,9 +53,9 @@ done_btn.addEventListener("click",()=>{
         }
     });
 })
-// function doneCategories() {
+function doneCategories() {
   
-// }
+}
 
 create_btn.addEventListener("click",()=>{
     if (categoriesSelected.length > 0 && content.value.length > 0) {
@@ -124,7 +124,3 @@ async function creatPost() {
         alert(`Error: ${errorData.message || "Request failed"}`);
     }
 }
-
-// export {
-//     creatPost
-// }
