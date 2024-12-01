@@ -61,7 +61,7 @@ func main() {
 	})
 
 	fmt.Println("Server running at :3333")
-	fmt.Println("http://localhost:3333")
+	fmt.Println("http://localhost:3333/home")
 	err := http.ListenAndServe(":3333", mux)
 	if err != nil {
 		log.Fatal("ListenAndServe Error: ", err)
