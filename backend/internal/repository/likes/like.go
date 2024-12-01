@@ -1,23 +1,24 @@
 package like
 
-import "errors"
+import (
+	"errors"
+)
 
 type Like struct {
-	ID      int `json:"id"`
-	User_Id int `json:"user_id"`
-	Card_Id int `json:"card_id"`
+	ID       int `json:"id"`
+	User_Id  int `json:"user_id"`
+	Card_Id  int `json:"card_id"`
 	Is_Liked int `json:"is_liked"`
 }
 
 func NewLike(user_id, card_id int) *Like {
 	return &Like{
-		ID:      -1,
-		User_Id: user_id,
-		Card_Id: card_id,
+		ID:       -1,
+		User_Id:  user_id,
+		Card_Id:  card_id,
 		Is_Liked: -1,
 	}
 }
-
 
 func (l *Like) SetIsLike(val int) error {
 	if val < -1 || val > 1 {
@@ -33,4 +34,8 @@ func (l *Like) GetIsLike() int {
 
 func (p *Like) Add() {
 	inserLike(p.User_Id, p.Card_Id, p.Is_Liked)
+}
+
+func (p *Like) DeletLike() {
+	deletLike(p.User_Id, p.Card_Id)
 }

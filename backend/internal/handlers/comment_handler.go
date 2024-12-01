@@ -3,38 +3,53 @@ package handlers
 import (
 	//"encoding/json"
 	"encoding/json"
+	"net/http"
 	"strconv"
 
 	//"fmt"
 	comment "forum-project/backend/internal/repository/comments"
-	"net/http"
 )
 
-func Comment_handler(res http.ResponseWriter, req *http.Request) {
-	if req.Method == "GET" {
-		id, err := strconv.Atoi(req.FormValue("id"))
-		if err != nil {
-			res.WriteHeader(http.StatusBadRequest)
-			return 
-		}
-		comment := comment.GetComment(id)
-		if comment == nil {
-			res.WriteHeader(http.StatusNotFound)
-			return 
-		}
-		res.WriteHeader(http.StatusOK)
-		json.NewEncoder(res).Encode(comment)
-	} else if req.Method == "POST" {
-		statusCode := addComment(req)
-		if statusCode == http.StatusOK {
-			res.Write([]byte("comment added succesfuly"))
-			return 
-		}
-		if statusCode == http.StatusBadRequest {
-			res.Write([]byte("comment Infos are wrongs!! "))
-			return 
-		}
-		res.WriteHeader(statusCode)
+func Handel_GetCommet(res http.ResponseWriter, req *http.Request) {
+	if req.Method != http.MethodGet {
+		JsoneResponse(res, "Method Not Allowed", http.StatusMethodNotAllowed)
+		return
+	}
+	id, err := strconv.Atoi(req.FormValue("target_id"))
+	if err != nil {
+		JsoneResponse(res, "Status Bad Request", http.StatusBadRequest)
+		return
+	}
+	comments := comment.GetAllCommentsbyTarget(id)
+	if comments == nil {
+		JsoneResponse(res, "Status Not Found", http.StatusNotFound)
+		return
+	}
+	// encoder := NewEncoderJsone(res)
+	// for _, c := range comments {
+	// 	err := encoder.Encode(c)
+	// 	if err != nil {
+	// 		JsoneResponse(res, "Error Encoding Comment", http.StatusInternalServerError)
+	// 		return
+	// 	}
+	// }
+
+	JsoneResponse(res, comments, http.StatusOK)
+}
+
+func Handler_AddComment(res http.ResponseWriter, req *http.Request) {
+	if req.Method != http.MethodPost {
+		JsoneResponse(res, "Method Not Allowed", http.StatusMethodNotAllowed)
+		return
+	}
+	statusCode := addComment(req)
+	if statusCode == http.StatusBadRequest {
+		JsoneResponse(res, "comment Infos are wrongs!! ", http.StatusBadRequest)
+		return
+	}
+	if statusCode == http.StatusOK {
+		JsoneResponse(res, "comment added succesfuly", http.StatusCreated)
+		return
 	}
 }
 

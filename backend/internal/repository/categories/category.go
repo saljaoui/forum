@@ -10,8 +10,12 @@ type Category struct {
 	Id int
 }
 
-func AddCategory(post_id int, category string) {
-	postCategory(post_id, category)
+func AddCategory(post_id int, category string) error {
+	err := postCategory(post_id, category)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 func GetPostsByCategoryId(categoryId int) []post.PostResponde {

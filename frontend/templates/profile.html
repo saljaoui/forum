@@ -28,9 +28,9 @@
           <img src="../static/imgs/profilePic.png" class="avatar" alt="Profile picture" />
         </div>
         <nav>
-          <a href="#" class="nav-item active" id="home">
-            <ion-icon name="home-outline"></ion-icon>
-            <ion-icon class="active" name="home"></ion-icon>
+          <a href="#" class="nav-item" id="home">
+            <ion-icon class="active" name="home-outline"></ion-icon>
+            <ion-icon name="home"></ion-icon>
             <h1>Home</h1>
           </a>
 
@@ -45,10 +45,9 @@
             <ion-icon name="filter-circle"></ion-icon>
             <h1>categories</h1>
           </a>
-          <a href="#" class="nav-item" id="profile">
-            <ion-icon class="active" name="person-circle-outline"></ion-icon>
-            <ion-icon name="person-circle"></ion-icon>
-
+          <a href="#" class="nav-item active" id="profile">
+            <ion-icon name="person-circle-outline"></ion-icon>
+            <ion-icon class="active" name="person-circle"></ion-icon>
             <h1>Profile</h1>
           </a>
           <a href="#" class="nav-item" id="settings">
@@ -56,7 +55,7 @@
             <ion-icon name="settings"></ion-icon>
             <h1>settings</h1>
           </a>
-          <button class="newPost-popup">
+          <button onclick="openCreatPost()" class="newPost-popup" onclick="window.location.href='/login'">
             <ion-icon name="duplicate"></ion-icon>
             <h1>New Post</h1>
           </button>
@@ -64,14 +63,18 @@
           <div id="creatPost-popup">
             <div class="newPost">
               <div class="newPost-header">
-                <button class="cancel-btn">Cancel</button>
-                <button class="post-btn create-post">Post</button>
+                <button onclick="closeCreatPost()" class="cancel-btn">
+                  Cancel
+                </button>
+                <button onclick=" SeccesCreatPost()" class="post-btn">
+                  Post
+                </button>
               </div>
               <div class="newPost-content">
                 <img src="../static/imgs/profilePic.png" class="avatar" alt="Profile picture" />
-                <textarea placeholder="What's up?" id="content" required></textarea>
+                <textarea placeholder="What's up?"></textarea>
               </div>
-              <div class="openCategories" id="choice-categories">
+              <div onclick="openCategories()" id="choice-categories">
                 <h1>Categories</h1>
               </div>
             </div>
@@ -79,9 +82,13 @@
           <div id="categories-popup">
             <div class="newPost">
               <div class="newPost-header">
-                <button class="cancel-btn">Cancel</button>
+                <button onclick="closeCategories()" class="cancel-btn">
+                  Cancel
+                </button>
                 <h1>Choice you are categories:</h1>
-                <button class="post-btn done-post">Done</button>
+                <button onclick="doneCategories()" class="post-btn">
+                  Done
+                </button>
               </div>
               <div class="categories-content">
                 <div class="categories-list">
@@ -103,14 +110,24 @@
         </nav>
       </div>
     </aside>
-
     <main>
-      <div class="headMian">
-        <img class="logo" src="../static/imgs/logo.png" alt="logo" />
+      <header class="profile-header"></header>
+      <div class="profile-content">
+        <div class="profile-avatar">
+          <img src="../static/imgs/profilePic.png" class="avatar" alt="Profile picture" />
+        </div>
+
+        <div class="profile-info">
+          <h1 class="profile-name">saljaoui.bsky.social</h1>
+          <p class="profile-handle">@saljaoui.bsky.social</p>
+        </div>
+
+        <nav class="profile-nav">
+          <a href="#" class="active">Posts</a>
+          <a href="#">Likes</a>
+        </nav>
       </div>
-      <article class="main content_post"></article>
     </main>
-    <div id="side-right"></div>
     <aside class="aside-right">
       <input class="search" type="text" placeholder="Search.." />
       <div class="link-list">
@@ -118,13 +135,12 @@
       </div>
     </aside>
   </section>
-  <!-- Import the JavaScript module -->
+  
+  <script type="module" src="../static/js/profile.js"></script>
   <script type="module" src="../static/js/home.js"></script>
-  <script type="module" src="../static/js/forum.js"></script>
   <script type="module" src="../static/js/aside-left.js"></script>
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-  <!-- <script src="../static/js/likes.js"></script> -->
 </body>
 
 </html>

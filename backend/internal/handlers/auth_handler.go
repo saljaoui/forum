@@ -16,16 +16,22 @@ func HandleRegister(w http.ResponseWriter, r *http.Request) {
 	}
 	user := repository.User{}
 	decode := DecodeJson(r)
+	decode.DisallowUnknownFields()
 	err := decode.Decode(&user)
 	if err != nil {
 		JsoneResponse(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	message := user.Register()
+
+	userRegiseter, message, uuid := user.Register()
+
 	if message.MessageError != "" {
 		JsoneResponse(w, message.MessageError, http.StatusBadRequest)
+		return
 	} else {
-		JsoneResponse(w, message.MessageSucc, http.StatusCreated)
+		SetCookie(w, "token", uuid, time.Now().Add(2*time.Minute))
+		SetCookie(w, "user_id", fmt.Sprint(userRegiseter.Id), time.Now().Add(2*time.Minute))
+		JsoneResponse(w, userRegiseter, http.StatusOK)
 	}
 }
 
@@ -42,12 +48,14 @@ func HandleLogin(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	loged, message, uuid := user.Authentication()
+	user.Getuuid(uuid.String())
+
 	if message.MessageError != "" {
 		JsoneResponse(w, message.MessageError, http.StatusBadRequest)
 		return
 	} else {
-		SetCookie(w, "token", uuid.String(), time.Now().Add(10*time.Second))
-		SetCookie(w, "user_id", fmt.Sprint(loged.Id), time.Now().Add(10*time.Second))
+		SetCookie(w, "token", uuid.String(), time.Now().Add(1*time.Hour))
+		SetCookie(w, "user_id", fmt.Sprint(loged.Id), time.Now().Add(1*time.Hour))
 		JsoneResponse(w, loged, http.StatusOK)
 	}
 }
