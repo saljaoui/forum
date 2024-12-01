@@ -1,27 +1,40 @@
 import fetchData from './forum.js';
-function likes(likes, dislikes, post_liked) {
+function likes(likes) {
     let is_liked = false
     likes.forEach(click => {
         click.addEventListener("click", () => {
             likes.forEach(btn => btn.classList.remove("clicked"));
-            click.classList.add("clicked")
-            let clickd = click.classList.contains("clicked")
-            if (clickd) {
-                if (post_liked === "1 liked " && is_liked==false) {
-                    is_liked = true
-                    click.style.color = "var(--color-action-hover)"
-                    let card_id = click.dataset.id_card
-                    console.log(card_id);
+            let islike = click.querySelector("#is_liked");
+            let card_id = click.getAttribute("data-id_card");
 
-                    addLikes(card_id, 1)
-                } else if (post_liked === "0 liked " && is_liked===true) {
-                    is_liked=false
-                    console.log("hello");
-                }
-                // click.style.color = "var(--color-action-hover)"
-                // click.classList.remove("active")
-              
+            let check = islike.setAttribute("data-liked", "true");
+            if (check) {
+                console.log("is already liked");
+
+            } else {
+                console.log("liked");
+
             }
+            console.log(islike.textContent, card_id);
+
+
+            // click.classList.add("clicked")
+            // let clickd = click.classList.contains("clicked")     
+            // if (clickd) {
+            // if (post_liked === "0 liked " ) {
+            //     is_liked = true
+            //     click.style.color = "var(--color-action-hover)"
+            //     let card_id = click.dataset.id_card
+            //     console.log(card_id);
+            //     addLikes(card_id, 1)
+            // } else if (post_liked === "1 liked " ) {
+            //     is_liked=false
+            //     console.log(post_liked);
+            // }
+            // click.style.color = "var(--color-action-hover)"
+            // click.classList.remove("active")
+
+            //}
 
         })
     })
