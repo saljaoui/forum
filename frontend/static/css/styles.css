@@ -437,10 +437,10 @@ button:hover {
   gap: 6px;
 }
 .clicked{
-  color:var(--color-action-hover) ;
+  color:var(--color-action-hover);
 }
 .active:hover {
-  color: var(--color-action-hover) !important;
+  color: var(--color-action-hover);
   cursor: pointer;
 }
 
