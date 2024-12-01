@@ -429,6 +429,7 @@ button:hover {
   max-width: 130px;
   color: var(--color-muted);
   margin-left: 60px;
+  gap: 10px;
 }
 
 .action {
