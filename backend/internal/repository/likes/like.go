@@ -2,6 +2,8 @@ package like
 
 import (
 	"errors"
+
+	messages "forum-project/backend/internal/Messages"
 )
 
 type Like struct {
@@ -32,8 +34,9 @@ func (l *Like) GetIsLike() int {
 	return l.Is_Liked
 }
 
-func (p *Like) Add() {
-	inserLike(p.User_Id, p.Card_Id, p.Is_Liked)
+func (p *Like) Add() messages.Messages {
+	m := inserLike(p.User_Id, p.Card_Id, p.Is_Liked)
+	return m
 }
 
 func (p *Like) DeletLike() {

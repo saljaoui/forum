@@ -22,8 +22,12 @@ func HandelLike(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	like.User_Id = id_user
-	like.Add()
-	JsoneResponse(w, "Liked", http.StatusCreated)
+	m := like.Add()
+	if m.MessageError != "" {
+		JsoneResponse(w, m.MessageError, http.StatusNotFound)
+		return
+	}
+	JsoneResponse(w, m.MessageSucc, http.StatusCreated)
 }
 
 func HandelDeletLike(w http.ResponseWriter, r *http.Request) {
