@@ -23,6 +23,7 @@
   --color-new-post: #272e39;
   --color-name-user-secand: #8b949e;
   --color-red: #f52958;
+  --color-hover-dislike: #cc3700;
 }
 
 * {
@@ -601,6 +602,10 @@ button:hover {
 
 #choice-categories:hover {
   background-color: var(--color-mid);
+}
+
+#dilike:hover {
+color: var(--color-hover-dislike);
 }
 
 #categories-popup .newPost {
