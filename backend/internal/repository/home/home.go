@@ -10,7 +10,6 @@ type PostResponde struct {
 	LastName     string
 	Title        string
 	Content      string
-	CategoryName string
 	Likes        int
 	Dislikes     int
 	CreatedAt    time.Time
