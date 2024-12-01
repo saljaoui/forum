@@ -429,6 +429,7 @@ button:hover {
   max-width: 130px;
   color: var(--color-muted);
   margin-left: 60px;
+  gap: 10px;
 }
 
 .action {
@@ -437,10 +438,10 @@ button:hover {
   gap: 6px;
 }
 .clicked{
-  color:var(--color-action-hover) ;
+  color:var(--color-action-hover);
 }
 .active:hover {
-  color: var(--color-action-hover) !important;
+  color: var(--color-action-hover);
   cursor: pointer;
 }
 

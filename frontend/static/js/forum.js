@@ -1,24 +1,28 @@
 import { likes } from "./likes.js";
 export default async function fetchData() {
-  const responce = await fetch("http://localhost:3333/api/home", { method: "GET" });
+  const responce = await fetch("http://localhost:3333/api/home", {
+    method: "GET",
+  });
   if (responce.ok) {
     // SeccesCreatPost()
-    const user_data = history.state
+    const user_data = history.state;
     // console.log(user_data);
 
     let data = await responce.json();
     let user_info = document.querySelector(".main");
-    user_info.innerHTML = ""
+    user_info.innerHTML = "";
 
-    data.map(ele => {
-      let date = new Date(ele.CreatedAt)
-      let contents = document.createElement("div")
+    data.map((ele) => {
+      let date = new Date(ele.CreatedAt);
+      let contents = document.createElement("div");
       contents.innerHTML = `
         <div class="post" >
          <div class="post-header">
           <img src="../static/imgs/profilePic.png" class="avatar" alt="Profile picture" />
           <div class="user-info">
-            <div class="display-name">${ele.FirstName + " " + ele.LastName}</div>
+            <div class="display-name">${
+              ele.FirstName + " " + ele.LastName
+            }</div>
             <span class="username">@aoc.bsky.social</span>
             <span class="timestamp">· ${date.getHours()}h</span>
           </div>
@@ -28,76 +32,77 @@ export default async function fetchData() {
         </div>
         <div class="post-actions">
           <div class="action active" id="likes" data-id_card="${ele.Card_Id}" >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-              <path
-                d="M12 21.638h-.014C9.403 21.59 1.95 14.856 1.95 8.478c0-3.064 2.525-5.754 5.403-5.754 2.29 0 3.83 1.58 4.646 2.73.814-1.148 2.354-2.73 4.645-2.73 2.88 0 5.404 2.69 5.404 5.755 0 6.376-7.454 13.11-10.037 13.157H12z" />
-            </svg>
-            <span id="is_liked" data-liked="false" >${ele.Likes} liked </span>
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M10 19c-.072 0-.145 0-.218-.006A4.1 4.1 0 0 1 6 14.816V11H2.862a1.751 1.751 0 0 1-1.234-2.993L9.41.28a.836.836 0 0 1 1.18 0l7.782 7.727A1.751 1.751 0 0 1 17.139 11H14v3.882a4.134 4.134 0 0 1-.854 2.592A3.99 3.99 0 0 1 10 19Zm0-17.193L2.685 9.071a.251.251 0 0 0 .177.429H7.5v5.316A2.63 2.63 0 0 0 9.864 17.5a2.441 2.441 0 0 0 1.856-.682A2.478 2.478 0 0 0 12.5 15V9.5h4.639a.25.25 0 0 0 .176-.429L10 1.807Z"></path>
+                </svg>
+            <span id="is_liked" data-liked="false">${ele.Likes}</span>
           </div>
            <div class="action" id="dilike">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-              <path
-                d="M12 21.638h-.014C9.403 21.59 1.95 14.856 1.95 8.478c0-3.064 2.525-5.754 5.403-5.754 2.29 0 3.83 1.58 4.646 2.73.814-1.148 2.354-2.73 4.645-2.73 2.88 0 5.404 2.69 5.404 5.755 0 6.376-7.454 13.11-10.037 13.157H12z" />
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M10 1c.072 0 .145 0 .218.006A4.1 4.1 0 0 1 14 5.184V9h3.138a1.751 1.751 0 0 1 1.234 2.993L10.59 19.72a.836.836 0 0 1-1.18 0l-7.782-7.727A1.751 1.751 0 0 1 2.861 9H6V5.118a4.134 4.134 0 0 1 .854-2.592A3.99 3.99 0 0 1 10 1Zm0 17.193 7.315-7.264a.251.251 0 0 0-.177-.429H12.5V5.184A2.631 2.631 0 0 0 10.136 2.5a2.441 2.441 0 0 0-1.856.682A2.478 2.478 0 0 0 7.5 5v5.5H2.861a.251.251 0 0 0-.176.429L10 18.193Z"></path>
             </svg>
-            <span id="is_liked">${ele.Dislikes} disliked</span>
+            <span id="is_liked">${ele.Dislikes}</span>
           </div>
           <div class="action">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-              <path
-                d="M14.046 2.242l-4.148-.01h-.002c-4.374 0-7.8 3.427-7.8 7.802 0 4.098 3.186 7.206 7.465 7.37v3.828c0 .108.044.286.12.403.142.225.384.347.632.347.138 0 .277-.038.402-.118.264-.168 6.473-4.14 8.088-5.506 1.902-1.61 3.04-3.97 3.043-6.312v-.017c-.006-4.367-3.43-7.787-7.8-7.788zm3.787 12.972c-1.134.96-4.862 3.405-6.772 4.643V16.67c0-.414-.335-.75-.75-.75h-.396c-3.66 0-6.318-2.476-6.318-5.886 0-3.534 2.768-6.302 6.3-6.302l4.147.01h.002c3.532 0 6.3 2.766 6.302 6.296-.003 1.91-.942 3.844-2.514 5.176z" />
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M10 19H1.871a.886.886 0 0 1-.798-.52.886.886 0 0 1 .158-.941L3.1 15.771A9 9 0 1 1 10 19Zm-6.549-1.5H10a7.5 7.5 0 1 0-5.323-2.219l.54.545L3.451 17.5Z"></path>
             </svg>
             <span>27.1K</span>
           </div>
         </div>
         </div>
-        `
-      user_info.appendChild(contents)
+        `;
+      user_info.appendChild(contents);
+    });
 
-    })
+    let like = document.querySelectorAll("#likes");
+    let dilike = document.querySelector("#dilike"); //is_liked
+    let is_liked = document.querySelector("#is_liked"); //is_liked
 
+<<<<<<< HEAD
     let like = document.querySelectorAll("#likes")
     // like.forEach(click => {
     //   console.log(click.getAttribute("span"));
     // })
     // // console.log(data);
     likes(like)
+=======
+    // console.log(data);
+    likes(like, dilike, is_liked.textContent);
+>>>>>>> 84d012ee97fea6a9a9c26cb80acef90b141c487b
   } else {
-    let data = responce.json()
+    let data = responce.json();
     console.log(data);
-
   }
 }
-fetchData()
+fetchData();
 if (document.cookie) {
-  let join = document.querySelector(".join")
-  join.style.display = "none"
-  let aside_nav = document.querySelector(".aside-nav")
-  aside_nav.style.display = "block"
+  let join = document.querySelector(".join");
+  join.style.display = "none";
+  let aside_nav = document.querySelector(".aside-nav");
+  aside_nav.style.display = "block";
   while (join.firstChild) {
-    join.removeChild(join.firstChild)
+    join.removeChild(join.firstChild);
   }
   // location.href="/home"
-  let tokens = document.cookie.split("; ")
+  let tokens = document.cookie.split("; ");
   let token = null;
   let userId = null;
-  tokens.forEach(ele => {
-    let [key, value] = ele.split("=")
-    if (key === 'token') {
-      token = value
+  tokens.forEach((ele) => {
+    let [key, value] = ele.split("=");
+    if (key === "token") {
+      token = value;
+    } else if (key === "user_id") {
+      userId = value;
     }
-    else if (key === "user_id") {
-      userId = value
-    }
-  })
+  });
   // console.log(token, userId);
-
 } else {
-  let join = document.querySelector(".join")
-  join.style.display = "block"
-  let aside_nav = document.querySelector(".aside-nav")
-  aside_nav.style.display = "none"
+  let join = document.querySelector(".join");
+  join.style.display = "block";
+  let aside_nav = document.querySelector(".aside-nav");
+  aside_nav.style.display = "none";
   while (aside_nav.firstChild) {
-    aside_nav.removeChild(aside_nav.firstChild)
+    aside_nav.removeChild(aside_nav.firstChild);
   }
-
 }
