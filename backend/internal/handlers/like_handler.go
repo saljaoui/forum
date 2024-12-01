@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 
 	like "forum-project/backend/internal/repository/likes"
@@ -23,6 +22,5 @@ func HandelLike(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	like.User_Id = id_user
-	fmt.Println(like)
 	like.Add()
 }
