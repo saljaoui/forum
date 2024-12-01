@@ -1,4 +1,4 @@
-
+import {navigate} from "./home.js"
 const profileNav = document.querySelectorAll(".profile-nav a");
 navigate()
 
