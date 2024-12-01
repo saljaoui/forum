@@ -4,7 +4,8 @@ const categoryItems = document.querySelectorAll('.category-item');
 const creatPostPopup = document.getElementById('creatPost-popup')
 const openCategorie = document.getElementById('categories-popup')
 const newPost = document.querySelector('.newPost-popup')
-const cancel_btn = document.querySelector('.cancel-btn')
+const cancel_btn = document.querySelector('.category')
+const post_close = document.querySelector('.post-close')
 const openCategories = document.querySelector('.openCategories')
 const create_btn = document.querySelector('.create-post')
 const done_btn = document.querySelector('.done-post')
@@ -40,8 +41,11 @@ newPost.addEventListener("click",()=>{
 // function openCreatPost() {
 // }
 cancel_btn.addEventListener("click",()=>{
-    creatPostPopup.style.display = "none"
-
+    defaultCategories()
+   // creatPostPopup.style.display = "none"
+})
+post_close.addEventListener("click",()=>{
+   creatPostPopup.style.display = "none"
 })
 // function closeCreatPost() {
 // }
