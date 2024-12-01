@@ -6,12 +6,6 @@ let register = document.querySelector("#form-submit")
     let emailRegister = document.getElementById('emailRegister').value
     let passwordRegister = document.getElementById('passwordRegister').value
 
-    console.log(firstname);
-    console.log(lastname);
-    console.log(emailRegister);
-    console.log(passwordRegister);
-    
-
     const response = await fetch("/api/register", {
         method: "POST",
         headers: {
