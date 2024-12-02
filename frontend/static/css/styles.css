@@ -23,6 +23,7 @@
   --color-new-post: #272e39;
   --color-name-user-secand: #8b949e;
   --color-red: #f52958;
+  --color-hover-dislike: #cc3700;
 }
 
 * {
@@ -380,7 +381,8 @@ button:hover {
   padding: 10px 0px;
 }
 
-.post {
+.post,
+.commentFromPost {
   padding: 12px;
   border-bottom: 1px solid var(--color-light);
   min-width: 600px;
@@ -429,6 +431,7 @@ button:hover {
   max-width: 130px;
   color: var(--color-muted);
   margin-left: 60px;
+  gap: 10px;
 }
 
 .action {
@@ -437,10 +440,10 @@ button:hover {
   gap: 6px;
 }
 .clicked{
-  color:var(--color-action-hover) ;
+  color:var(--color-action-hover);
 }
 .active:hover {
-  color: var(--color-action-hover) !important;
+  color: var(--color-action-hover);
   cursor: pointer;
 }
 
@@ -602,6 +605,10 @@ button:hover {
   background-color: var(--color-mid);
 }
 
+#dilike:hover {
+color: var(--color-hover-dislike);
+}
+
 #categories-popup .newPost {
   margin-top: 150px;
   min-height: 280px;
@@ -750,6 +757,48 @@ button:hover {
 .header-nav h1 {
   margin-bottom: 5px;
 }
+
+.commentFromPost .user-info {
+display: flex;
+gap: 7px;
+margin-top: -20px;
+}
+
+.commentFromPost .post-content {
+  margin-top: -30px;
+}
+
+.commentFromPost{
+  font-size: 14px;
+}
+
+.postReply {
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+  padding: 7px;
+  border-radius: 50px;
+  cursor: pointer;
+  color: rgb(174, 187, 201);
+  font-weight: 500;
+}
+
+.postReply img {
+  height: 25px;
+  width: 25px;
+}
+
+.postReply:hover {
+  background-color: var(--color-light);
+}
+
+
+
+
+
+
+
+
 
 
 

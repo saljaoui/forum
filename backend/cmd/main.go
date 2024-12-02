@@ -60,6 +60,10 @@ func main() {
 		http.ServeFile(w, r, "../../frontend/templates/categories.html")
 	})
 
+	mux.HandleFunc("/comment", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "../../frontend/templates/comment.html")
+	})
+
 	mux.HandleFunc("/post", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "../../frontend/templates/post.html")
 	})
