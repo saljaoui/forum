@@ -1,5 +1,6 @@
 import { likes } from "./likes.js";
-const user_data = history.state;
+const user_data = localStorage.getItem("user_id");
+console.log(user_data);
 
 
 export default async function fetchData() {
@@ -7,23 +8,24 @@ export default async function fetchData() {
     method: "GET",
   });
   if (responce.ok) {
-   // console.log(user_data.user.message.id);
-    
+    // console.log(user_data.user.message.id);
+
     let data = await responce.json();
-    
+
     let user_info = document.querySelector(".main");
     user_info.innerHTML = "";
-    
-    data.map((ele) => {
-      console.log(ele);
-     // console.log(ele.UserLiked );
-      
-     // let isLikedByUser= ele.UserLiked && ele.UserID===user_data.user.message.id;
-       
-       // console.log(ele.UserLiked,isLikedByUser, user_data.user.message.id,ele.UserID);
 
+    data.map((ele) => {
+     
+      // console.log(ele.UserLiked );
+
+       let isLikedByUser = ele.UserLiked && ele.UserID === +user_data;
+    //  console.log(ele.UserID  +user_data);
       
-      
+      // console.log(ele.UserLiked, isLikedByUser, user_data.user.message.id, ele.UserID);
+
+
+
       let date = new Date(ele.CreatedAt);
       let contents = document.createElement("div");
       contents.innerHTML = `
@@ -56,7 +58,10 @@ export default async function fetchData() {
             <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
               <path d="M10 19H1.871a.886.886 0 0 1-.798-.52.886.886 0 0 1 .158-.941L3.1 15.771A9 9 0 1 1 10 19Zm-6.549-1.5H10a7.5 7.5 0 1 0-5.323-2.219l.54.545L3.451 17.5Z"></path>
             </svg>
-            <span>27.1K</span>
+            <span>
+            <a href="/comment">27.1K</>
+            
+            </span>
           </div>
         </div>
         </div>
@@ -64,12 +69,12 @@ export default async function fetchData() {
       user_info.appendChild(contents);
     });
     let like = document.querySelectorAll("#likes");
-    
-    likes(like, data, user_data.user.message.id)
+
+ //  likes(like, data, user_data.user.message.id)
 
   } else {
     let data = responce.json();
-    console.log(data);
+   // console.log(data);
   }
 }
 fetchData();
@@ -93,7 +98,7 @@ if (document.cookie) {
       userId = value;
     }
   });
-  console.log(token, userId);
+ // console.log(token, userId);
 } else {
   let join = document.querySelector(".join");
   join.style.display = "block";

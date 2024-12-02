@@ -77,7 +77,6 @@ func GetPosts(query string) []PostResponde {
 			return nil
 		}
 		likes, dislikes, userliked := like.GetLikes(post.Post_Id)
-
 		post.Likes = likes
 		post.Dislikes = dislikes
 		post.UserLiked = userliked
