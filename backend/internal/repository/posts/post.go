@@ -30,6 +30,7 @@ type PostResponde struct {
 	Content   string
 	Likes     int
 	Dislikes  int
+	UserLiked int
 	CreatedAt time.Time
 }
 
@@ -75,9 +76,11 @@ func GetPosts(query string) []PostResponde {
 		if err != nil {
 			return nil
 		}
-		likes, dislikes := like.GetLikes(post.Post_Id)
+		likes, dislikes, userliked := like.GetLikes(post.Post_Id)
+
 		post.Likes = likes
 		post.Dislikes = dislikes
+		post.UserLiked = userliked
 		posts = append(posts, post)
 	}
 	return posts

@@ -2,13 +2,16 @@ package like
 
 import (
 	"errors"
+
+	messages "forum-project/backend/internal/Messages"
 )
 
 type Like struct {
-	ID       int `json:"id"`
-	User_Id  int `json:"user_id"`
-	Card_Id  int `json:"card_id"`
-	Is_Liked int `json:"is_liked"`
+	ID        int  `json:"id"`
+	User_Id   int  `json:"user_id"`
+	Card_Id   int  `json:"card_id"`
+	Is_Liked  int  `json:"is_liked"`
+	UserLiked bool `json:"userliked"`
 }
 
 func NewLike(user_id, card_id int) *Like {
@@ -32,8 +35,9 @@ func (l *Like) GetIsLike() int {
 	return l.Is_Liked
 }
 
-func (p *Like) Add() {
-	inserLike(p.User_Id, p.Card_Id, p.Is_Liked)
+func (p *Like) Add() messages.Messages {
+	m := inserLike(p.User_Id, p.Card_Id, p.Is_Liked, p.UserLiked)
+	return m
 }
 
 func (p *Like) DeletLike() {

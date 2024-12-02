@@ -1,18 +1,29 @@
 import { likes } from "./likes.js";
+const user_data = history.state;
+
+
 export default async function fetchData() {
   const responce = await fetch("http://localhost:3333/api/home", {
     method: "GET",
   });
   if (responce.ok) {
-    // SeccesCreatPost()
-    const user_data = history.state;
-    // console.log(user_data);
-
+   // console.log(user_data.user.message.id);
+    
     let data = await responce.json();
+    
     let user_info = document.querySelector(".main");
     user_info.innerHTML = "";
-
+    
     data.map((ele) => {
+      console.log(ele);
+     // console.log(ele.UserLiked );
+      
+     // let isLikedByUser= ele.UserLiked && ele.UserID===user_data.user.message.id;
+       
+       // console.log(ele.UserLiked,isLikedByUser, user_data.user.message.id,ele.UserID);
+
+      
+      
       let date = new Date(ele.CreatedAt);
       let contents = document.createElement("div");
       contents.innerHTML = `
@@ -20,9 +31,7 @@ export default async function fetchData() {
          <div class="post-header">
           <img src="../static/imgs/profilePic.png" class="avatar" alt="Profile picture" />
           <div class="user-info">
-            <div class="display-name">${
-              ele.FirstName + " " + ele.LastName
-            }</div>
+            <div class="display-name">${ele.FirstName + " " + ele.LastName}</div>
             <span class="username">@aoc.bsky.social</span>
             <span class="timestamp">· ${date.getHours()}h</span>
           </div>
@@ -31,17 +40,17 @@ export default async function fetchData() {
             ${ele.Content}
         </div>
         <div class="post-actions">
-          <div class="action active" id="likes" data-id_card="${ele.Card_Id}" >
+          <div class="action active  "  id="likes" data-id_card="${ele.Card_Id}" >
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
                     <path d="M10 19c-.072 0-.145 0-.218-.006A4.1 4.1 0 0 1 6 14.816V11H2.862a1.751 1.751 0 0 1-1.234-2.993L9.41.28a.836.836 0 0 1 1.18 0l7.782 7.727A1.751 1.751 0 0 1 17.139 11H14v3.882a4.134 4.134 0 0 1-.854 2.592A3.99 3.99 0 0 1 10 19Zm0-17.193L2.685 9.071a.251.251 0 0 0 .177.429H7.5v5.316A2.63 2.63 0 0 0 9.864 17.5a2.441 2.441 0 0 0 1.856-.682A2.478 2.478 0 0 0 12.5 15V9.5h4.639a.25.25 0 0 0 .176-.429L10 1.807Z"></path>
                 </svg>
-            <span id="is_liked" data-liked="false">${ele.Likes}</span>
+            <span id="is_liked" >${ele.Likes}</span>
           </div>
-           <div class="action" id="dilike">
+           <div class="action" id="disliked">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
               <path d="M10 1c.072 0 .145 0 .218.006A4.1 4.1 0 0 1 14 5.184V9h3.138a1.751 1.751 0 0 1 1.234 2.993L10.59 19.72a.836.836 0 0 1-1.18 0l-7.782-7.727A1.751 1.751 0 0 1 2.861 9H6V5.118a4.134 4.134 0 0 1 .854-2.592A3.99 3.99 0 0 1 10 1Zm0 17.193 7.315-7.264a.251.251 0 0 0-.177-.429H12.5V5.184A2.631 2.631 0 0 0 10.136 2.5a2.441 2.441 0 0 0-1.856.682A2.478 2.478 0 0 0 7.5 5v5.5H2.861a.251.251 0 0 0-.176.429L10 18.193Z"></path>
             </svg>
-            <span id="is_liked">${ele.Dislikes}</span>
+            <span id="is_Dislikes" data-disliked="disliked">${ele.Dislikes}</span>
           </div>
           <div class="action">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
@@ -54,22 +63,10 @@ export default async function fetchData() {
         `;
       user_info.appendChild(contents);
     });
-
     let like = document.querySelectorAll("#likes");
-    let dilike = document.querySelector("#dilike"); //is_liked
-    let is_liked = document.querySelector("#is_liked"); //is_liked
+    
+    likes(like, data, user_data.user.message.id)
 
-<<<<<<< HEAD
-    let like = document.querySelectorAll("#likes")
-    // like.forEach(click => {
-    //   console.log(click.getAttribute("span"));
-    // })
-    // // console.log(data);
-    likes(like)
-=======
-    // console.log(data);
-    likes(like, dilike, is_liked.textContent);
->>>>>>> 84d012ee97fea6a9a9c26cb80acef90b141c487b
   } else {
     let data = responce.json();
     console.log(data);
@@ -96,7 +93,7 @@ if (document.cookie) {
       userId = value;
     }
   });
-  // console.log(token, userId);
+  console.log(token, userId);
 } else {
   let join = document.querySelector(".join");
   join.style.display = "block";
