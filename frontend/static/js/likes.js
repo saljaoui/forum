@@ -1,5 +1,6 @@
 import fetchData from './forum.js';
-function likes(likes, UserID, user_login) {
+function likes(likes, data, user_login) {
+
     // let is_liked = false
     // UserID.forEach(el=>{
     //     let card_id = click.getAttribute("data-id_card");
@@ -10,27 +11,28 @@ function likes(likes, UserID, user_login) {
     //     }
         
     // })
-    // likes.forEach(click => {
-    //     click.addEventListener("click", async (e) => {
-    //         e.preventDefault()
-           
-    //         let islike = click.querySelector("#is_liked");
-    //         let card_id = click.getAttribute("data-id_card");
-    //         if (click.classList.contains("clicked")) {
+    likes.forEach(click => {
+        click.addEventListener("click", async (e) => {
+            e.preventDefault()
+            //console.log(click,data.);
+            
+            // let islike = click.querySelector("#is_liked");
+            // let card_id = click.getAttribute("data-id_card");
+            // if (click.classList.contains("clicked")) {
                
-    //             click.classList.remove("clicked");
-    //             deletLikes(card_id)
-    //             islike.textContent = parseInt(islike.textContent) - 1;
-    //             islike.setAttribute('data-liked', 'false');
-    //         } else {
-    //             console.log("add");
-    //             click.classList.add("clicked");
-    //             islike.textContent = parseInt(islike.textContent) + 1;
-    //             islike.setAttribute('data-liked', 'true');
-    //             addLikes(card_id, 1)
-    //         }
-    //     })
-    // })
+            //     click.classList.remove("clicked");
+            //     deletLikes(card_id)
+            //     islike.textContent = parseInt(islike.textContent) - 1;
+            //     islike.setAttribute('data-liked', 'false');
+            // } else {
+            //     console.log("add");
+            //     click.classList.add("clicked");
+            //     islike.textContent = parseInt(islike.textContent) + 1;
+            //     islike.setAttribute('data-liked', 'true');
+            //     addLikes(card_id, 1)
+            // }
+        })
+    })
 }
 async function addLikes(card_id, liked) {
     try {
