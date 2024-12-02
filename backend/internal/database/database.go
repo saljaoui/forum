@@ -8,7 +8,6 @@ import (
 )
 
 func InitDB() error {
-
 	if _, err := os.Stat("../../app.db"); os.IsNotExist(err) {
 		fmt.Println("Creating new database file...")
 		db, err := sql.Open("sqlite3", "../../app.db")
@@ -58,9 +57,5 @@ func SelectRows(query string, model ...any) *sql.Rows {
 func Exec(query string, model ...any) (sql.Result, error) {
 	db := Config()
 	res, err := db.Exec(query, model...)
-	// if err != nil {
-	// 	fmt.Println(err)
-	// }
-	// id,_ := res.LastInsertId()
 	return res, err
 }

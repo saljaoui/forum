@@ -1,8 +1,6 @@
 package comment
 
-import (
-	"forum-project/backend/internal/database"
-)
+import "forum-project/backend/internal/database"
 
 type comment_Row struct {
 	ID        int
@@ -14,23 +12,23 @@ type comment_Row struct {
 }
 
 type comment_Row_View struct {
-	comment_ID        int
-	User_Id   int
-	firstname   string
+	comment_ID int
+	User_Id    int
+	firstname  string
 	lastname   string
-	Content   string
-	CreatedAt string
-	Card_Id   int
+	Content    string
+	CreatedAt  string
+	Card_Id    int
 }
 
-func insertComment(card_id,target_id int) int {
-    query := "INSERT INTO comment(card_id,target_id) VALUES(?,?);"
-    resl,_:= database.Exec(query,card_id,target_id)
-    id,err := resl.LastInsertId()
-    if err != nil {
-        return -1
-    }
-    return int(id)
+func insertComment(card_id, target_id int) int {
+	query := "INSERT INTO comment(card_id,target_id) VALUES(?,?);"
+	resl, _ := database.Exec(query, card_id, target_id)
+	id, err := resl.LastInsertId()
+	if err != nil {
+		return -1
+	}
+	return int(id)
 }
 
 func getCommentById(id int) *comment_Row {

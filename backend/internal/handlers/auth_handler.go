@@ -1,75 +1,113 @@
 package handlers
 
 import (
-	"encoding/json"
 	"fmt"
 	"net/http"
+	"strconv"
 	"time"
 
 	repository "forum-project/backend/internal/repository/users"
 )
 
 func HandleRegister(w http.ResponseWriter, r *http.Request) {
-	user := repository.User{}
-	err := json.NewDecoder(r.Body).Decode(&user)
-	if err != nil {
-		fmt.Println("error decoding JSON:", err)
+	if r.Method != http.MethodPost {
+		JsoneResponse(w, "Status Method Not Allowed", http.StatusMethodNotAllowed)
 		return
 	}
-	message := user.Register()
-	if message.MessageError != "" {
-		w.WriteHeader(400)
-		json.NewEncoder(w).Encode(string(message.MessageError))
-	} else {
-		json.NewEncoder(w).Encode(string(message.MessageSucc))
+	user := repository.User{}
+	decode := DecodeJson(r)
+	decode.DisallowUnknownFields()
+	err := decode.Decode(&user)
+	if err != nil {
+		JsoneResponse(w, err.Error(), http.StatusBadRequest)
+		return
 	}
-	w.Header().Set("Content-Type", "application/json")
+
+	userRegiseter, message, uuid := user.Register()
+
+	if message.MessageError != "" {
+		JsoneResponse(w, message.MessageError, http.StatusBadRequest)
+		return
+	} else {
+		SetCookie(w, "token", uuid, time.Now().Add(2*time.Minute))
+		SetCookie(w, "user_id", fmt.Sprint(userRegiseter.Id), time.Now().Add(2*time.Minute))
+		JsoneResponse(w, userRegiseter, http.StatusOK)
+	}
 }
 
-func LoginHandle(w http.ResponseWriter, r *http.Request) {
+func HandleLogin(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
-		w.WriteHeader(http.StatusMethodNotAllowed)
-		json.NewEncoder(w).Encode("Status Method Not Allowed")
+		JsoneResponse(w, "Status Method Not Allowed", http.StatusMethodNotAllowed)
 		return
 	}
 	user := repository.Login{}
-	err := json.NewDecoder(r.Body).Decode(&user)
+	decode := DecodeJson(r)
+	err := decode.Decode(&user)
 	if err != nil {
-		fmt.Println("error to login")
+		JsoneResponse(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 	loged, message, uuid := user.Authentication()
-	if message.MessageError != "" {
-		w.WriteHeader(http.StatusBadRequest)
-		json.NewEncoder(w).Encode(message.MessageError)
-		return
+	user.Getuuid(uuid.String())
 
+	if message.MessageError != "" {
+		JsoneResponse(w, message.MessageError, http.StatusBadRequest)
+		return
 	} else {
-		user := http.Cookie{
-			Name:    "token",
-			Value:   uuid.String(),
-			Expires: time.Now().Add(30 * time.Second),
-			Path:    "/",
-		}
-		http.SetCookie(w, &user)
-		w.WriteHeader(http.StatusOK)
-		json.NewEncoder(w).Encode(loged)
+		SetCookie(w, "token", uuid.String(), time.Now().Add(1*time.Hour))
+		SetCookie(w, "user_id", fmt.Sprint(loged.Id), time.Now().Add(1*time.Hour))
+		JsoneResponse(w, loged, http.StatusOK)
 	}
 }
 
 func HandleLogOut(w http.ResponseWriter, r *http.Request) {
-	id := r.URL.RawQuery
-	fmt.Print(id)
-	// logout := repository.Login{}
-	// iduser, err := strconv.Atoi(id)
-	// if err != nil {
-	// 	fmt.Println("error to get id user")
-	// }
-	// logout.Id = int64(iduser)
-	// logout.LogOut()
+	logout := repository.Login{}
+	decode := DecodeJson(r)
+	err := decode.Decode(&logout)
+	if err != nil {
+		JsoneResponse(w, "Invalid request format", http.StatusBadRequest)
+		return
+	}
+
+	jsonValue, err := r.Cookie("user_id")
+	if err != nil {
+		JsoneResponse(w, "Missing or invalid user_id cookie", http.StatusBadRequest)
+		return
+	}
+	user_id, err := strconv.Atoi(jsonValue.Value)
+	if err != nil {
+		JsoneResponse(w, "Invalid user_id value", http.StatusBadRequest)
+		return
+	}
+	if int64(user_id) != logout.Id {
+		JsoneResponse(w, "Unauthorized user", http.StatusUnauthorized)
+		return
+	}
+
+	message := logout.LogOut()
+	if message.MessageError != "" {
+		JsoneResponse(w, message.MessageError, http.StatusBadRequest)
+		return
+	}
+	SetCookie(w, "token", "", time.Now())
+	SetCookie(w, "user_id", "", time.Now())
 }
 
-func DisplyPost(w http.ResponseWriter, r *http.Request) {
-	json.NewEncoder(w).Encode("Welcom to Page Home")
-	fmt.Fprintln(w, "welcom")
+func SetCookie(w http.ResponseWriter, name string, value string, time time.Time) {
+	user := http.Cookie{
+		Name:    name,
+		Value:   value,
+		Expires: time,
+		Path:    "/",
+	}
+	http.SetCookie(w, &user)
+}
+
+func GetUserId(r *http.Request) int {
+	cookies, err := r.Cookie("user_id")
+	if err != nil {
+		fmt.Println("error", err)
+	}
+	id_user, _ := strconv.Atoi(cookies.Value)
+	return id_user
 }

@@ -1,19 +1,26 @@
-package categorie
+package category
 
 import (
-    "forum-project/backend/internal/database"
+	"strconv"
+
+	post "forum-project/backend/internal/repository/posts"
 )
 
-func PostCategory(postId int64, category string) {
-    categoryId := GetCategoryId(category)
-    query := "INSERT INTO post_category (post_id, category_id) VALUES(?,?)"
-    database.Exec(query, postId, categoryId)
+type Category struct {
+	Id int
 }
 
-func GetCategoryId(category string) int {
-    query := "SELECT id FROM category WHERE name = ?"
-    db := database.Config()
-    categoryId := 0
-    db.QueryRow(query, category).Scan(&categoryId)
-    return categoryId
+func AddCategory(post_id int, category string) error {
+	err := postCategory(post_id, category)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func GetPostsByCategoryId(categoryId int) []post.PostResponde {
+	query := `SELECT p.card_id AS 'card_id', p.id, u.id AS 'user_id', u.firstname, u.lastname, p.title, c.content, c.created_at
+	FROM post p, card c, user u, post_category pc, category cat WHERE p.card_id=c.id
+	AND c.user_id=u.id AND p.id = pc.post_id AND pc.category_id=cat.id AND cat.id =` + strconv.Itoa(categoryId)
+	return post.GetPosts(query)
 }

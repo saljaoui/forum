@@ -1,17 +1,15 @@
 package user
 
 import (
+	"database/sql"
 	"fmt"
 
 	"forum-project/backend/internal/database"
-
-	"github.com/gofrs/uuid/v5"
 )
 
 func emailExists(email string) bool {
 	var exists bool
 	query := "SELECT EXISTS (select email from user where email=?)"
-
 	err := database.SelectOneRow(query, email).Scan(&exists)
 	if err != nil {
 		fmt.Println("Error to EXISTS this Email", err)
@@ -19,18 +17,16 @@ func emailExists(email string) bool {
 	return exists
 }
 
-func updateUUIDUser(uudi uuid.UUID, userId int64) {
+func updateUUIDUser(uudi string, userId int64) error {
 	stm := "UPDATE user SET UUID=? WHERE id=?"
 	_, err := database.Exec(stm, uudi, userId)
-	if err != nil {
-		fmt.Println("Error To Update User uuid")
-	}
+	return err
 }
 
-func insertUser(users *User, password string) error {
+func insertUser(users *User, password string) ( sql.Result,error) {
 	stm := "INSERT INTO user (firstname,lastname,email,password) VALUES(?,?,?,?)"
-	_, err := database.Exec(stm, users.Firstname, users.Lastname, users.Email, password)
-	return err
+	row, err := database.Exec(stm, users.Firstname, users.Lastname, users.Email, password)
+	return row,err 
 }
 
 func selectUser(log *Login) *User {
