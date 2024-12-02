@@ -14,13 +14,13 @@ type Comment struct {
 }
 
 type comment_View struct {
-	Comment_ID int 		`json:"commentid"`
-	User_Id    int 		`json:"userid"`
-	Firstname  string	`json:"first_name"`
-	Lastname   string	`json:"last_name"`
-	Content    string	`json:"content"`
-	CreatedAt  string	`json:"createdat"`
-	Card_Id    int		`json:"cardid"`
+	Comment_ID int    `json:"commentid"`
+	User_Id    int    `json:"userid"`
+	Firstname  string `json:"first_name"`
+	Lastname   string `json:"last_name"`
+	Content    string `json:"content"`
+	CreatedAt  string `json:"createdat"`
+	Card_Id    int    `json:"cardid"`
 }
 
 func NewComment(user_id int, content string, target int) *Comment {

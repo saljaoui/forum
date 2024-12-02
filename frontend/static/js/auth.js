@@ -1,5 +1,5 @@
 let register = document.querySelector("#form-submit")
-  register.addEventListener('submit', async (e) => {
+register.addEventListener('submit', async (e) => {
     e.preventDefault()
     let firstname = document.getElementById('firstname').value
     let lastname = document.getElementById('lastname').value
@@ -28,6 +28,7 @@ let register = document.querySelector("#form-submit")
     if (response.ok) {
         const data = await response.json();
         console.log("Success:", data);
+        localStorage.setItem("user_id",data)
     } else {
         const errorData = await response.json();
         console.error("Error:", errorData);
@@ -56,15 +57,17 @@ login.addEventListener('submit', async (e) => {
     })
     if (response.ok) {
         const data = await response.json();
-        localStorage.setItem("token",data.message.uuid)
-        window.history.pushState({user:data},"","/home")
-          location.href="/home"
-         console.log("Success:", data);
-     } else {
+        localStorage.setItem("user_id", data.message.id)
+
+        console.log(data.message.id);
+
+        // window.history.pushState({user:data},"","/home")
+        location.href = "/home"
+        //console.log("Success:", data);
+    } else {
         const errorData = await response.json();
         console.error("Error:", errorData);
         alert(`Error: ${errorData.message || "Request failed"}`);
     }
 
-}) 
- 
+})
