@@ -2,8 +2,12 @@ import {navigate} from "./home.js"
 const profileNav = document.querySelectorAll(".profile-nav a");
 navigate()
 
+fetchData('posts')
 profileNav.forEach((navItem) => {
-  navItem.addEventListener("click", () => {
+  navItem.addEventListener("click", (e) => {
+   const navId = navItem.getAttribute("id");
+    fetchData(navId)
+   
     navItem.className = "active";
     profileNav.forEach((item) => {
       if (item != navItem) {
@@ -14,10 +18,12 @@ profileNav.forEach((navItem) => {
 });
 
 //--------------------------------------
-
 import { likes } from "./likes.js";
-export default async function fetchData() {
-  const responce = await fetch("http://localhost:3333/api/profile/posts", {
+
+
+
+export default async function fetchData(id) {
+  const responce = await fetch("http://localhost:3333/api/profile/"+id, {
     method: "GET",
   });
   if (responce.ok) {
