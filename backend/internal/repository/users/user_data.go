@@ -45,3 +45,10 @@ func checkAuthenticat(id string) bool {
 	err := database.SelectOneRow(stm, id, id).Scan(&exists)
 	return err == nil
 }
+
+func CheckUser(id int) bool {
+	stm := `SELECT EXISTS (SELECT 1 FROM user WHERE id =  ?)  `
+	var exists bool
+	err := database.SelectOneRow(stm, id, id).Scan(&exists)
+	return err == nil
+}
