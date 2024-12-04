@@ -8,14 +8,16 @@ import (
 	"forum-project/backend/internal/database"
 )
 
-func inserLike(user_id, card_id, is_liked int, UserLiked bool) (m messages.Messages) {
+func inserLike(user_id, card_id, is_liked int, UserLiked, Userdisliked bool) (m messages.Messages) {
 	if likeExists(user_id, card_id) {
-		m.MessageError = "user already liked or desliked this"
-		fmt.Println("user already liked or desliked this")
-		return m
+		query := `DELETE FROM likes WHERE user_id = ? AND card_id = ?`
+		_, err := database.Exec(query, user_id, card_id)
+		if err != nil {
+			fmt.Println(err.Error())
+		}
 	}
-	query := "INSERT INTO likes(user_id, card_id, is_like, UserLiked) VALUES(?,?,?,?);"
-	_, err := database.Exec(query, user_id, card_id, is_liked, UserLiked)
+	query := "INSERT INTO likes(user_id, card_id, is_like, UserLiked, Userdisliked) VALUES(?,?,?,?,?);"
+	_, err := database.Exec(query, user_id, card_id, is_liked, UserLiked, Userdisliked)
 	if err != nil {
 		fmt.Println(err.Error())
 	}
@@ -31,25 +33,21 @@ func deletLike(user_id, card_id int) {
 	}
 }
 
-func GetuserLiked(card_id, user_id, like, disliked int) (int, int) {
-	querylike := `SELECT UserLiked ,Userdisliked FROM post
-	p, likes l WHERE p.card_id = l.card_id AND  p.id = ? and l.user_id=? `
-	if like == 1 {
-		querylike = querylike + ` AND l.is_like =` + strconv.Itoa(like)
-	} else if disliked == -1 {
-		querylike = querylike + ` AND l.is_like =` + strconv.Itoa(disliked)
-	}
-	UserLiked := 0
-	UserDisLiked := 0
-	err := database.SelectOneRow(querylike, card_id, user_id).Scan(&UserLiked, &UserDisLiked)
+func GetuserLiked(user_id, card_id int) ResponseUserLikeds {
+	querylike := `SELECT UserLiked ,Userdisliked ,l.user_id FROM likes l JOIN card c
+    on l.card_id=c.id WHERE  l.card_id =? and l.is_like=1`
+
+	likes := ResponseUserLikeds{}
+	err := database.SelectOneRow(querylike, user_id, card_id).Scan(&likes.UserLiked, &likes.UserDisliked)
 	if err != nil {
 		fmt.Println(err)
 	}
-	return UserLiked, UserDisLiked
+
+	return likes
 }
 
 func GetLikes(post_id int) (int, int, int, int) {
-	querylike := `SELECT   COALESCE(UserLiked,0), COALESCE(Userdisliked,0) , COALESCE(SUM(l.is_like), 0)  FROM post
+	querylike := `SELECT  COALESCE(UserLiked,0), COALESCE(Userdisliked,0) , COALESCE(SUM(l.is_like), 0)  FROM post
 	 p, likes l WHERE p.card_id = l.card_id AND l.is_like = 1 AND p.id = ` + strconv.Itoa(post_id)
 	like := 0
 	UserLiked := 0
@@ -84,3 +82,6 @@ func likeExists(user_id, card_id int) bool {
 	}
 	return exists
 }
+
+// SELECT UserLiked ,Userdisliked ,l.user_id FROM likes l JOIN card c
+//     on l.card_id=c.id WHERE  l.card_id =4 and l.is_like=1

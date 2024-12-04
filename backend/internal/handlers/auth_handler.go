@@ -62,12 +62,12 @@ func HandleLogin(w http.ResponseWriter, r *http.Request) {
 
 func HandleLogOut(w http.ResponseWriter, r *http.Request) {
 	logout := repository.Login{}
-	decode := DecodeJson(r)
-	err := decode.Decode(&logout)
-	if err != nil {
-		JsoneResponse(w, "Invalid request format", http.StatusBadRequest)
-		return
-	}
+	// decode := DecodeJson(r)
+	// err := decode.Decode(&logout)
+	// if err != nil {
+	// 	JsoneResponse(w, "Invalid request format", http.StatusBadRequest)
+	// 	return
+	// }
 
 	jsonValue, err := r.Cookie("user_id")
 	if err != nil {
@@ -106,7 +106,7 @@ func SetCookie(w http.ResponseWriter, name string, value string, time time.Time)
 func GetUserId(r *http.Request) int {
 	cookies, err := r.Cookie("user_id")
 	if err != nil {
-		fmt.Println("error", err)
+		return 0
 	}
 	id_user, _ := strconv.Atoi(cookies.Value)
 	return id_user

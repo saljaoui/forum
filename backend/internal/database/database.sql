@@ -52,5 +52,7 @@ CREATE TABLE likes (
     user_id INTEGER,
     card_id INTEGER,
     is_like BOOLEAN,
+    UserLiked BOOLEAN,
+    Userdisliked BOOLEAN,
     FOREIGN KEY (card_id) REFERENCES card(id)
 );

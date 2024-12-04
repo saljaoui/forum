@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 
 	"forum-project/backend/internal/repository/home"
@@ -19,15 +18,17 @@ func HomeHandle(w http.ResponseWriter, r *http.Request) {
 }
 
 func LikesHandle(w http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodGet {
+	if r.Method != http.MethodPost {
 		JsoneResponse(w, "Method Not Allowd", http.StatusMethodNotAllowed)
+		return
 	}
 	liked := like.Like{}
 	decode := DecodeJson(r)
 	err := decode.Decode(&liked)
 	if err != nil {
-		JsoneResponse(w, err.Error(), http.StatusMethodNotAllowed)
+		JsoneResponse(w, err.Error(), http.StatusBadRequest)
+		return
 	}
-	lik, dislike := liked.ChecklikesUser(1, -1)
-	fmt.Println(lik, dislike)
+	dislike := liked.ChecklikesUser()
+	JsoneResponse(w, dislike, http.StatusOK)
 }

@@ -7,11 +7,16 @@ import (
 )
 
 type Like struct {
-	ID        int  `json:"id"`
-	User_Id   int  `json:"user_id"`
-	Card_Id   int  `json:"card_id"`
-	Is_Liked  int  `json:"is_liked"`
-	UserLiked bool `json:"userliked"`
+	ID           int  `json:"id"`
+	User_Id      int  `json:"user_id"`
+	Card_Id      int  `json:"card_id"`
+	Is_Liked     int  `json:"is_liked"`
+	UserLiked    bool `json:"userliked"`
+	Userdisliked bool `json:"userdisliked"`
+}
+type ResponseUserLikeds struct {
+	UserLiked    bool
+	UserDisliked bool
 }
 
 func NewLike(user_id, card_id int) *Like {
@@ -36,7 +41,7 @@ func (l *Like) GetIsLike() int {
 }
 
 func (p *Like) Add() messages.Messages {
-	m := inserLike(p.User_Id, p.Card_Id, p.Is_Liked, p.UserLiked)
+	m := inserLike(p.User_Id, p.Card_Id, p.Is_Liked, p.UserLiked, p.Userdisliked)
 	return m
 }
 
@@ -44,7 +49,7 @@ func (p *Like) DeletLike() {
 	deletLike(p.User_Id, p.Card_Id)
 }
 
-func (post *Like) ChecklikesUser(likes, disliked int) (int, int) {
-	liked, dislike := GetuserLiked(post.ID, post.User_Id, likes, disliked)
-	return liked, dislike
+func (like *Like) ChecklikesUser() ResponseUserLikeds {
+	likes := GetuserLiked(like.User_Id, like.Card_Id)
+	return likes
 }

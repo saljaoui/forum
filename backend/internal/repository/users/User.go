@@ -154,3 +154,4 @@ func (us *User) AuthenticatLogin(UUID string) (m messages.Messages) {
 	}
 	return
 }
+
