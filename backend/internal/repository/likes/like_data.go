@@ -31,30 +31,32 @@ func deletLike(user_id, card_id int) {
 	}
 }
 
-func GetLikes(post_id int) (int, int, int) {
-	querylike := `SELECT   COALESCE(UserLiked,0) , COALESCE(SUM(l.is_like), 0) FROM post
+func GetLikes(post_id int) (int, int, int,int) {
+	//Userdisliked
+	querylike := `SELECT   COALESCE(UserLiked,0), COALESCE(Userdisliked,0) , COALESCE(SUM(l.is_like), 0)  FROM post
 	 p, likes l WHERE p.card_id = l.card_id AND l.is_like = 1 AND p.id = ` + strconv.Itoa(post_id)
 	like := 0
 	UserLiked := 0
 	UserdiLiked := 0
+	Userdisliked := 0
 	db:=database.Config()
-	err := db.QueryRow(querylike).Scan( &UserLiked,&like)
+	err := db.QueryRow(querylike).Scan( &UserLiked,&Userdisliked,&like)
 	if err != nil {
 		fmt.Println(err)
 		like = 0
 		//UserLiked = 0
 	}
-	querydislike := `SELECT COALESCE(UserLiked,0) , COALESCE(SUM(l.is_like), 0) FROM 
+	querydislike := `SELECT COALESCE(UserLiked,0) ,COALESCE(Userdisliked,0) , COALESCE(SUM(l.is_like), 0) FROM 
 	post p, likes l WHERE p.card_id = l.card_id AND l.is_like = -1 AND p.id = ` + strconv.Itoa(post_id)
 	dislike := 0
 
-	err = db.QueryRow(querydislike).Scan(&UserdiLiked,&dislike)
+	err = db.QueryRow(querydislike).Scan(&UserdiLiked,&Userdisliked,&dislike)
 	if err != nil {
 		dislike = 0
 		//UserLiked = 0
 	}
 	fmt.Println(like, UserLiked==1)
-	return like, dislike * -1, UserLiked
+	return like, dislike * -1, UserLiked,Userdisliked
 }
 
 func likeExists(user_id, card_id int) bool {
