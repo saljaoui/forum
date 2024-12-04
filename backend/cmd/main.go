@@ -20,6 +20,7 @@ func main() {
 	http.Handle("/", http.FileServer(http.Dir("../../frontend/static")))
 	mux.HandleFunc("/api/register", handlers.HandleRegister)
 	mux.HandleFunc("/api/home", handlers.HomeHandle)
+	mux.HandleFunc("/api/likes", handlers.LikesHandle)
 	mux.HandleFunc("/api/category", handlers.HandelCategory)
 	mux.HandleFunc("/api/login", handlers.HandleLogin)
 	mux.HandleFunc("/api/comment", handlers.Handel_GetCommet)

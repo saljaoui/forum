@@ -86,3 +86,4 @@ func GetPosts(query string) []PostResponde {
 	}
 	return posts
 }
+

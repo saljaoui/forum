@@ -43,3 +43,8 @@ func (p *Like) Add() messages.Messages {
 func (p *Like) DeletLike() {
 	deletLike(p.User_Id, p.Card_Id)
 }
+
+func (post *Like) ChecklikesUser(likes, disliked int) (int, int) {
+	liked, dislike := GetuserLiked(post.ID, post.User_Id, likes, disliked)
+	return liked, dislike
+}

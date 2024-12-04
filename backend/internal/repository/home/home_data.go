@@ -10,3 +10,4 @@ func GetPostsHome() []post.PostResponde {
 	AND c.user_id=u.id ORDER BY c.created_at DESC`
 	return post.GetPosts(query)
 }
+
