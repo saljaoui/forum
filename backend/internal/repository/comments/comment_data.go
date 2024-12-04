@@ -43,9 +43,10 @@ func getCommentById(id int) *comment_Row {
 
 func getAllCommentsbyTargetId(target int) []comment_Row_View {
 	list_Comments := make([]comment_Row_View, 0)
+	//list_Comments := []comment_Row_View{}
 	query := `SELECT cm.id,u.id,u.firstname,u.lastname,c.content,c.created_at,c.id from comment cm JOIN card c
               ON c.id = cm.card_id JOIN user u on c.user_id = u.id 
-              WHERE cm.target_id =?;`
+              WHERE cm.target_id =?  ORDER BY c.created_at DESC;`
 	data_Rows := database.SelectRows(query,target)
     for data_Rows.Next(){
         Row := comment_Row_View{}

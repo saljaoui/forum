@@ -16,6 +16,7 @@ func main() {
 	if Err != nil {
 		fmt.Println(Err)
 	}
+	
 	mux := http.NewServeMux()
 	http.Handle("/", http.FileServer(http.Dir("../../frontend/static")))
 	mux.HandleFunc("/api/register", handlers.HandleRegister)
@@ -23,6 +24,7 @@ func main() {
 	mux.HandleFunc("/api/category", handlers.HandelCategory)
 	mux.HandleFunc("/api/login", handlers.HandleLogin)
 	mux.HandleFunc("/api/comment", handlers.Handel_GetCommet)
+	mux.HandleFunc("/api/card", handlers.GetCard_handler)
 
 	mux.Handle("/api/profile/posts", handlers.AuthenticateMiddleware((http.HandlerFunc(handlers.HandleProfilePosts))))
 	mux.Handle("/api/profile/likes", handlers.AuthenticateMiddleware((http.HandlerFunc(handlers.HandleProfileLikes))))

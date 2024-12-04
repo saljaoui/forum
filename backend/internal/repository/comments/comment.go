@@ -15,12 +15,12 @@ type Comment struct {
 
 type comment_View struct {
 	Comment_ID int    `json:"commentid"`
-	User_Id    int    `json:"userid"`
-	Firstname  string `json:"first_name"`
-	Lastname   string `json:"last_name"`
+	UserId    int    `json:"userID"`
+	FirstName  string `json:"firstName"`
+	LastName   string `json:"laststName"`
 	Content    string `json:"content"`
 	CreatedAt  string `json:"createdat"`
-	Card_Id    int    `json:"cardid"`
+	Card_Id    int    `json:"card_Id"`
 }
 
 func NewComment(user_id int, content string, target int) *Comment {
@@ -81,9 +81,9 @@ func GetAllCommentsbyTarget(target int) []comment_View {
 func convert(cmrv comment_Row_View) comment_View {
 	comment := comment_View{}
 	comment.Comment_ID = cmrv.comment_ID
-	comment.User_Id = cmrv.User_Id
-	comment.Firstname = cmrv.firstname
-	comment.Lastname = cmrv.lastname
+	comment.UserId = cmrv.User_Id
+	comment.FirstName = cmrv.firstname
+	comment.LastName = cmrv.lastname
 	comment.Content = cmrv.Content
 	comment.CreatedAt = cmrv.CreatedAt
 	comment.Card_Id = cmrv.Card_Id
