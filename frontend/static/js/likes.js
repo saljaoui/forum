@@ -8,8 +8,13 @@ function likes(likes, disliked) {
             let card_id = click.getAttribute("data-id_card");
             let check_likes = click.getAttribute("data-like");
             if (check_likes === "like") {
-                console.log("liked");
-            } else if (check_likes === "dislike") {
+                let data_liked = click.getAttribute("data-liked");
+                if (data_liked === "true") {
+                    await deletLikes(card_id)
+                } else {
+                    await addLikes(card_id, 1)
+                }
+            } else if (check_likes === "Dislikes") {
                 console.log("dislike");
 
             }

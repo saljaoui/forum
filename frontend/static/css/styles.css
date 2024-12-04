@@ -605,8 +605,11 @@ button:hover {
   background-color: var(--color-mid);
 }
 
-#dilike:hover {
+.disliked:hover {
 color: var(--color-hover-dislike);
+}
+.clicked_disliked{
+  color: var(--color-hover-dislike);
 }
 
 #categories-popup .newPost {
