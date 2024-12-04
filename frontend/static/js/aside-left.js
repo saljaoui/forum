@@ -1,4 +1,4 @@
-import fetchData  from './forum.js';
+import {creatPost}  from './post.js';
 const navItems = document.querySelectorAll('.nav-item');
 const categoryItems = document.querySelectorAll('.category-item');
 const creatPostPopup = document.getElementById('creatPost-popup')
@@ -11,6 +11,7 @@ const create_btn = document.querySelector('.create-post')
 const done_btn = document.querySelector('.done-post')
 const categoriesList = Array.from(document.getElementsByClassName('category-item'))
 let categoriesSelected = []
+
 
 function activeByDefault() {
     navItems.forEach(navItem => {
@@ -35,11 +36,14 @@ navItems.forEach(navItem => {
     });
 });
 newPost.addEventListener("click",()=>{
-
     creatPostPopup.style.display = "flex"
 })
-// function openCreatPost() {
-// }
+
+// creategategory.addEventListener("click",()=>{
+//  creatPostPopup.style.display = "flex"
+//  openCategories.style.display="none"
+// })
+ 
 cancel_btn.addEventListener("click",()=>{
     defaultCategories()
    // creatPostPopup.style.display = "none"
@@ -47,8 +51,7 @@ cancel_btn.addEventListener("click",()=>{
 post_close.addEventListener("click",()=>{
    creatPostPopup.style.display = "none"
 })
-// function closeCreatPost() {
-// }
+ 
 done_btn.addEventListener("click",()=>{
     defaultCategories()
     categoriesList.forEach(category => {
@@ -57,29 +60,22 @@ done_btn.addEventListener("click",()=>{
         }
     });
 })
-function doneCategories() {
-  
-}
-
+ 
 create_btn.addEventListener("click",()=>{
     if (categoriesSelected.length > 0 && content.value.length > 0) {
-       creatPost()
+       creatPost(categoriesSelected)
        creatPostPopup.style.display = "none"
        closeCategories()
        content.value = ""
       // fetchData()
-    } else {
-       openCategories()
-    }
+    }  
 })
-// function SeccesCreatPost() {
-// }
+ 
 openCategories.addEventListener('click',()=>{
     openCategorie.style.display = "flex"
 
 })
-// function openCategories() {
-// }
+ 
 
 function closeCategories() {
     defaultCategories()
@@ -101,30 +97,3 @@ categoryItems.forEach(item => {
     });
 });
 
-async function creatPost() {
-    let content = document.querySelector("#content")
-    console.log(content.value, categoriesSelected);
-    const response = await fetch("/api/post", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            'Accept': 'application/json',
-        },
-        body: JSON.stringify({
-            title: "title 2",
-            content: content.value,
-            name: categoriesSelected
-        })
-    })
-
-    if (response.ok) {
-      await  fetchData()
-        const data = await response.json();
-        console.log("Success:", data);
-      
-    } else {
-        const errorData = response.json();
-        console.error("Error:", errorData);
-        alert(`Error: ${errorData.message || "Request failed"}`);
-    }
-}

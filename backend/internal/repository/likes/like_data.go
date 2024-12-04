@@ -8,14 +8,14 @@ import (
 	"forum-project/backend/internal/database"
 )
 
-func inserLike(user_id, card_id, is_liked int) (m messages.Messages) {
+func inserLike(user_id, card_id, is_liked int, UserLiked bool) (m messages.Messages) {
 	if likeExists(user_id, card_id) {
 		m.MessageError = "user already liked or desliked this"
 		fmt.Println("user already liked or desliked this")
 		return m
 	}
-	query := "INSERT INTO likes(user_id, card_id, is_like) VALUES(?,?,?);"
-	_, err := database.Exec(query, user_id, card_id, is_liked)
+	query := "INSERT INTO likes(user_id, card_id, is_like, UserLiked) VALUES(?,?,?,?);"
+	_, err := database.Exec(query, user_id, card_id, is_liked, UserLiked)
 	if err != nil {
 		fmt.Println(err.Error())
 	}
@@ -31,20 +31,30 @@ func deletLike(user_id, card_id int) {
 	}
 }
 
-func GetLikes(post_id int) (int, int) {
-	querylike := `SELECT sum(is_like) FROM post p, likes l WHERE p.card_id = l.card_id AND l.is_like = 1 AND p.id = ` + strconv.Itoa(post_id)
+func GetLikes(post_id int) (int, int, int) {
+	querylike := `SELECT   COALESCE(UserLiked,0) , COALESCE(SUM(l.is_like), 0) FROM post
+	 p, likes l WHERE p.card_id = l.card_id AND l.is_like = 1 AND p.id = ` + strconv.Itoa(post_id)
 	like := 0
-	err := database.SelectOneRow(querylike).Scan(&like)
+	UserLiked := 0
+	UserdiLiked := 0
+	db:=database.Config()
+	err := db.QueryRow(querylike).Scan( &UserLiked,&like)
 	if err != nil {
+		fmt.Println(err)
 		like = 0
+		//UserLiked = 0
 	}
-	querydislike := `SELECT sum(is_like) FROM post p, likes l WHERE p.card_id = l.card_id AND l.is_like = -1 AND p.id = ` + strconv.Itoa(post_id)
+	querydislike := `SELECT COALESCE(UserLiked,0) , COALESCE(SUM(l.is_like), 0) FROM 
+	post p, likes l WHERE p.card_id = l.card_id AND l.is_like = -1 AND p.id = ` + strconv.Itoa(post_id)
 	dislike := 0
-	err = database.SelectOneRow(querydislike).Scan(&dislike)
+
+	err = db.QueryRow(querydislike).Scan(&UserdiLiked,&dislike)
 	if err != nil {
 		dislike = 0
+		//UserLiked = 0
 	}
-	return like, dislike * -1
+	fmt.Println(like, UserLiked==1)
+	return like, dislike * -1, UserLiked
 }
 
 func likeExists(user_id, card_id int) bool {

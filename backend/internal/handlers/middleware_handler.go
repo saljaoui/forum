@@ -41,10 +41,8 @@ func AuthenticateMiddleware(next http.Handler) http.Handler {
 		user := repository.User{}
 		if err != nil || cookies == nil {
 			if err == http.ErrNoCookie {
-
 				JsoneResponse(w, "Unauthorized: Cookie not presen", http.StatusUnauthorized)
 				return
-
 			}
 		}
 		if cookies.Value == "" {

@@ -24,7 +24,7 @@ func HandelLike(w http.ResponseWriter, r *http.Request) {
 	like.User_Id = id_user
 	m := like.Add()
 	if m.MessageError != "" {
-		JsoneResponse(w, m.MessageError, http.StatusNotFound)
+		JsoneResponse(w, m.MessageError, http.StatusBadRequest)
 		return
 	}
 	JsoneResponse(w, m.MessageSucc, http.StatusCreated)
