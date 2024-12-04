@@ -14,7 +14,7 @@ func inserLike(user_id, card_id, is_liked int, UserLiked bool) (m messages.Messa
 		fmt.Println("user already liked or desliked this")
 		return m
 	}
-	query := "INSERT INTO likes(user_id, card_id, is_like, UserLiked) VALUES(?,?,?,?);"
+	query := "INSERT INTO likes(user_id, card_id, is_like, UserLiked,) VALUES(?,?,?,?);"
 	_, err := database.Exec(query, user_id, card_id, is_liked, UserLiked)
 	if err != nil {
 		fmt.Println(err.Error())
