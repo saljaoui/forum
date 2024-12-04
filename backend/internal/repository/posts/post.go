@@ -21,16 +21,18 @@ type Post struct {
 }
 
 type PostResponde struct {
-	Card_Id   int
-	Post_Id   int
-	UserID    int
-	FirstName string
-	LastName  string
-	Title     string
-	Content   string
-	Likes     int
-	Dislikes  int
-	CreatedAt time.Time
+	Card_Id      int
+	Post_Id      int
+	UserID       int
+	FirstName    string
+	LastName     string
+	Title        string
+	Content      string
+	Likes        int
+	Dislikes     int
+	UserLiked    int
+	Userdisliked int
+	CreatedAt    time.Time
 }
 
 func (p *Post) Add() int {
@@ -75,9 +77,11 @@ func GetPosts(query string) []PostResponde {
 		if err != nil {
 			return nil
 		}
-		likes, dislikes := like.GetLikes(post.Post_Id)
+		likes, dislikes, userliked, Userdisliked := like.GetLikes(post.Post_Id)
 		post.Likes = likes
 		post.Dislikes = dislikes
+		post.UserLiked = userliked
+		post.Userdisliked = Userdisliked
 		posts = append(posts, post)
 	}
 	return posts
