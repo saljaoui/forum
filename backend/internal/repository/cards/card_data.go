@@ -60,3 +60,21 @@ func getCard(targetID  int) card_View_Data {
     }
 	return Row
 }
+
+func getAllCards() []card_View_Data {
+	list_Cards := make([]card_View_Data, 0)
+	query := `SELECT c.id,c.user_id,c.content,c.created_at,u.firstname,u.lastname, count(cm.id) comments,(SELECT count(*) FROM likes l WHERE l.card_id = c.id and l.is_like = 1) likes , (SELECT count(*) FROM likes l WHERE l.card_id = c.id and l.is_like = 0) dislikes
+			FROM card c JOIN post p on c.id = p.card_id LEFT JOIN comment cm
+			ON c.id = cm.target_id JOIN user u ON c.user_id = u.id
+			GROUP BY c.id`
+	data_Rows := database.SelectRows(query)
+	for data_Rows.Next(){
+		Row := card_View_Data{}
+		err := data_Rows.Scan(&Row.Id,&Row.User_Id,&Row.Content,&Row.CreatedAt,&Row.FirstName,&Row.LastName,&Row.Comments,&Row.Likes,&Row.DisLikes)
+		if err != nil {
+			return nil
+		}    
+		list_Cards = append(list_Cards, Row)
+	}
+	return list_Cards
+}
