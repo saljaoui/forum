@@ -55,7 +55,7 @@
             <ion-icon name="settings"></ion-icon>
             <h1>settings</h1>
           </a>
-          <button onclick="openCreatPost()" class="newPost-popup" onclick="window.location.href='/login'">
+          <button class="newPost-popup">
             <ion-icon name="duplicate"></ion-icon>
             <h1>New Post</h1>
           </button>
@@ -63,18 +63,14 @@
           <div id="creatPost-popup">
             <div class="newPost">
               <div class="newPost-header">
-                <button onclick="closeCreatPost()" class="cancel-btn">
-                  Cancel
-                </button>
-                <button onclick=" SeccesCreatPost()" class="post-btn">
-                  Post
-                </button>
+                <button class="cancel-btn post-close">Cancel</button>
+                <button class="post-btn create-post">Post</button>
               </div>
               <div class="newPost-content">
                 <img src="../static/imgs/profilePic.png" class="avatar" alt="Profile picture" />
-                <textarea placeholder="What's up?"></textarea>
+                <textarea placeholder="What's up?" id="content" required></textarea>
               </div>
-              <div onclick="openCategories()" id="choice-categories">
+              <div class="openCategories" id="choice-categories">
                 <h1>Categories</h1>
               </div>
             </div>
@@ -82,13 +78,9 @@
           <div id="categories-popup">
             <div class="newPost">
               <div class="newPost-header">
-                <button onclick="closeCategories()" class="cancel-btn">
-                  Cancel
-                </button>
+                <button class="cancel-btn category">Cancel</button>
                 <h1>Choice you are categories:</h1>
-                <button onclick="doneCategories()" class="post-btn">
-                  Done
-                </button>
+                <button class="post-btn done-post">Done</button>
               </div>
               <div class="categories-content">
                 <div class="categories-list">
@@ -105,7 +97,6 @@
                   <div class="category-item">Music</div>
                 </div>
               </div>
-            </div>
           </div>
         </nav>
       </div>
