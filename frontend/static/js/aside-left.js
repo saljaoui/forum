@@ -1,5 +1,4 @@
 import {creatPost}  from './post.js';
-const navItems = document.querySelectorAll('.nav-item');
 const categoryItems = document.querySelectorAll('.category-item');
 const creatPostPopup = document.getElementById('creatPost-popup')
 const openCategorie = document.getElementById('categories-popup')
@@ -13,28 +12,6 @@ const categoriesList = Array.from(document.getElementsByClassName('category-item
 let categoriesSelected = []
 
 
-function activeByDefault() {
-    navItems.forEach(navItem => {
-        const outlineIcon = navItem.querySelector('ion-icon[name$="-outline"], ion-icon[name$="-sharp"]');
-        const filledIcon = navItem.querySelector('ion-icon:not([name$="-outline"]):not([name$="-sharp"])');
-        filledIcon.classList.remove('active');
-        outlineIcon.classList.add('active');
-        navItem.classList.remove('active')
-    });
-}
-
-navItems.forEach(navItem => {
-    navItem.addEventListener('click', function () {
-        activeByDefault();
-        navItem.classList.add('active')
-        const outlineIcon = this.querySelector('ion-icon[name$="-outline"], ion-icon[name$="-sharp"]');
-        const filledIcon = this.querySelector('ion-icon:not([name$="-outline"]):not([name$="-sharp"])');
-        if (outlineIcon.classList.contains('active')) {
-            outlineIcon.classList.remove('active');
-            filledIcon.classList.add('active');
-        }
-    });
-});
 newPost.addEventListener("click",()=>{
     creatPostPopup.style.display = "flex"
 })
@@ -45,9 +22,10 @@ newPost.addEventListener("click",()=>{
 // })
  
 cancel_btn.addEventListener("click",()=>{
-    defaultCategories()
+    closeCategories()
    // creatPostPopup.style.display = "none"
 })
+
 post_close.addEventListener("click",()=>{
    creatPostPopup.style.display = "none"
 })
@@ -61,13 +39,19 @@ done_btn.addEventListener("click",()=>{
     });
 })
  
-create_btn.addEventListener("click",()=>{
+create_btn.addEventListener("click",() => {
+console.log(categoriesSelected.length);
+console.log(content.value.length);
+
+
     if (categoriesSelected.length > 0 && content.value.length > 0) {
        creatPost(categoriesSelected)
        creatPostPopup.style.display = "none"
        closeCategories()
        content.value = ""
       // fetchData()
+    } else if (categoriesSelected.length === 0) {
+        openCategorie.style.display = "flex"
     }  
 })
  

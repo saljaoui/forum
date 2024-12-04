@@ -64,10 +64,6 @@ func main() {
 		http.ServeFile(w, r, "../../frontend/templates/comment.html")
 	})
 
-	mux.HandleFunc("/post", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, "../../frontend/templates/post.html")
-	})
-
 	fmt.Println("Server running at :3333")
 	fmt.Println("http://localhost:3333/home")
 	err := http.ListenAndServe(":3333", mux)
