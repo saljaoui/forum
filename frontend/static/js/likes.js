@@ -26,23 +26,24 @@ function likes(likes, disliked) {
                 }
             })
         }
+        else if (responce.status === 401) {
+            location.href = "/login"
+        }
         click.addEventListener("click", async (e) => {
             e.preventDefault()
             let card_id = click.getAttribute("data-id_card");
             let like = click.getAttribute("data-like")
             let data_liked = click.getAttribute("data-liked");
             if (like === "like") {
-               
-                
                 if (data_liked === "true") {
                     await deletLikes(user_data, card_id)
-                }else{
+                } else {
                     await addLikes(card_id, 1, true, false)
                 }
             } else if (like === "Dislikes") {
                 if (data_liked === "true") {
                     await deletLikes(user_data, card_id)
-                }else{
+                } else {
 
                     await addLikes(card_id, -1, false, true)
                 }
@@ -66,7 +67,7 @@ async function addLikes(card_id, liked, lik, dislk) {
             })
         })
         if (response.ok) {
-            fetchData()
+            //fetchData()
             let data = await response.json()
             console.log(data);
         }
@@ -93,7 +94,7 @@ async function deletLikes(user_id, card_id) {
         })
     })
     if (response.ok) {
-         fetchData()
+        //fetchData()
         let data = await response.json()
         console.log(data);
 

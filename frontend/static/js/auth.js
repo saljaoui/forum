@@ -59,11 +59,9 @@ login.addEventListener('submit', async (e) => {
     if (response.ok) {
         const data = await response.json();
         localStorage.setItem("user_id", data.message.id)
-        console.log(data.message.id);
-
-        // window.history.pushState({user:data},"","/home")
+  
         location.href = "/home"
-        alert(data)
+        //alert(data)
         //console.log("Success:", data);
     } else {
         const errorData = await response.json();
