@@ -748,6 +748,7 @@ button:hover {
 .profile-content {
   padding: 20px;
   margin-top: -60px;
+  padding-bottom: 0px;
 }
 
 .profile-name {
@@ -888,6 +889,10 @@ button:hover {
   margin-bottom: 15px;
 }
 
+.profile.content_post {
+height: 65vh;
+overflow: scroll;
+}
 
 
 
