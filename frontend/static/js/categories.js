@@ -5,6 +5,7 @@ navigate()
 profileNav.forEach((navItem) => {
   navItem.addEventListener("click", () => {
     navItem.className = "active";
+    fetchData(navItem.textContent)
     profileNav.forEach((item) => {
       if (item != navItem) {
         item.className = "";
@@ -16,9 +17,13 @@ profileNav.forEach((navItem) => {
 //--------------------------------------
 
 import { likes } from "./likes.js";
-export default async function fetchData() {
-  const responce = await fetch("http://localhost:3333/api/profile/posts", {
-    method: "GET",
+export default async function fetchData(categoryName) {
+  const responce = await fetch("http://localhost:3333/api/category", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ category: categoryName }),
   });
   if (responce.ok) {
     // SeccesCreatPost()
@@ -26,7 +31,7 @@ export default async function fetchData() {
     // console.log(user_data);
 
     let data = await responce.json();       
-    let user_info = document.querySelector(".profile");
+    let user_info = document.querySelector(".main");
     user_info.innerHTML = "";
 
     data.map((ele) => {

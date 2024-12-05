@@ -338,6 +338,10 @@ button:hover {
   color: var(--color-name-user-secand);
 }
 
+.header-nav .profile-nav a {
+  margin-left: 10px;
+}
+
 .wrapper {
   position: relative;
   width: 400px;
