@@ -1,6 +1,18 @@
 import { likes } from "./likes.js";
-const user_data = localStorage.getItem("user_id");
 
+let content = []
+const searchInput = document.querySelector("[data-search]")
+searchInput.addEventListener("input", (e) => {
+  const value = e.target.value.toLowerCase()
+  content.forEach(data => {
+    const isVisible = data.data.toLowerCase().includes(value)
+    if (!isVisible) {
+      data.element.style.display = "none"
+    } else {
+      data.element.style.display = "block"
+    }
+  })
+})
 export default async function fetchData() {
   const responce = await fetch("/api/home", {
     method: "GET",
@@ -11,15 +23,7 @@ export default async function fetchData() {
     let user_info = document.querySelector(".main");
     user_info.innerHTML = "";
 
-    data.map((ele) => {
-     // console.log(ele)
-      // liked.push(ele.UserLiked ,ele.UserID === +user_data)
-      // if (ele.UserID === +user_data && ele.UserLiked) {
-       
-      // }
-      let isLikedByUser =    ele.UserID === +user_data  && ele.UserLiked;
-      let isdisLikedByUser = ele.Userdisliked && ele.UserID === +user_data;
-
+    content = data.map((ele) => {
       let date = new Date(ele.CreatedAt);
       let contents = document.createElement("div");
       contents.innerHTML = `
@@ -60,13 +64,13 @@ export default async function fetchData() {
         </div>
         `;
       user_info.appendChild(contents);
-
+      let elem = document.getElementsByClassName("post");
+      return { data: ele.Content, element: contents }
 
     });
 
     let like = document.querySelectorAll("#likes");
     likes(like)
-  
   }
   else {
     let data = responce.json();
@@ -76,7 +80,7 @@ export default async function fetchData() {
 fetchData();
 if (document.cookie) {
   let join = document.querySelector(".join");
-  
+
   join.style.display = "none";
   let aside_nav = document.querySelector(".aside-nav");
   aside_nav.style.display = "block";

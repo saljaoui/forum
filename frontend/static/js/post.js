@@ -1,4 +1,6 @@
 
+import fetchData  from './forum.js';
+
 async function creatPost(categoriesSelected) {
     let content = document.querySelector("#content")
     console.log(content.value, categoriesSelected);

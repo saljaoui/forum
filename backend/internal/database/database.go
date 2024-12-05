@@ -28,11 +28,11 @@ func InitDB() error {
 }
 
 func Config() *sql.DB {
-	db, err := sql.Open("sqlite3", "file:../../app.db?cache=shared&_busy_timeout=5000")
+	db, err := sql.Open("sqlite3", "../../app.db")
 	if err != nil {
 		log.Fatal("error opening database: ", err)
 	}
-	// Set database to Write-Ahead Logging mode for better concurrency
+	//Set database to Write-Ahead Logging mode for better concurrency
 	_, err = db.Exec("PRAGMA journal_mode=WAL;")
 	if err != nil {
 		log.Fatal("error setting WAL mode: ", err)
