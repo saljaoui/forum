@@ -16,6 +16,6 @@ func HandelCategory(w http.ResponseWriter, r *http.Request) {
 		JsoneResponse(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	posts := category.GetPostsByCategoryId(categoryStruct.Id)
+	posts := category.GetPostsByCategoryId(categoryStruct.Category)
 	json.NewEncoder(w).Encode(posts)
 }

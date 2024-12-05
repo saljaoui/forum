@@ -71,6 +71,7 @@ func GetLikes(post_id int) (int, int, int, int) {
 	err = db.QueryRow(querydislike).Scan(&UserdiLiked, &Userdisliked, &dislike)
 	if err != nil {
 		dislike = 0
+		//UserLiked = 0
 	}
 	return like, dislike * -1, UserLiked, Userdisliked
 }

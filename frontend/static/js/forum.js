@@ -27,9 +27,9 @@ export default async function fetchData() {
       let date = new Date(ele.CreatedAt);
       let contents = document.createElement("div");
       contents.innerHTML = `
-        <div class="post" >
-         <div class="post-header">
-          <img src="../static/imgs/profilePic.png" class="avatar" alt="Profile picture" />
+      <div class="post">
+        <div class="post-header">
+          <img src="../static/imgs/profilePic.png" class="avatar" alt="${ele.FirstName}'s profile picture" />
           <div class="user-info">
             <div class="display-name">${ele.FirstName + " " + ele.LastName}</div>
             <span class="username">@aoc.bsky.social</span>
@@ -37,7 +37,7 @@ export default async function fetchData() {
           </div>
         </div>
         <div class="post-content">
-            ${ele.Content}
+          ${ele.Content}
         </div>
         <div class="post-actions">
           <div class="action active is_liked"  id="likes" data-liked="false" data-like="like" data-id_card="${ele.Card_Id}" >
@@ -61,8 +61,8 @@ export default async function fetchData() {
           </div>
           </a>
         </div>
-        </div>
-        `;
+      </div>
+    `;
       user_info.appendChild(contents);
       let elem = document.getElementsByClassName("post");
       return { data: ele.Content, element: contents }

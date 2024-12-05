@@ -1,5 +1,4 @@
 let nav_items = document.querySelector("#home")//search
-let search = document.querySelector("#search")//search
 let categories = document.querySelector("#categories")//search
 let profile = document.querySelector("#profile")//search
 let settings = document.querySelector("#settings")
@@ -47,15 +46,6 @@ let settings = document.querySelector("#settings")
         }
     })
 
-    search.addEventListener("click", (e) => {
-        e.preventDefault()
-        const currentUrl = window.location.pathname;
-        if (currentUrl !== "/search") {
-            location.href = "/search";
-        } else {
-            console.log("Already on the profile page, no need to reload.");
-        }
-    })
 }
 navigate()
 export {

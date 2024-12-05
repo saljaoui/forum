@@ -31,9 +31,9 @@ export default async function fetchData(id) {
     const user_data = history.state;
     // console.log(user_data);
 
-    let data = await responce.json();           
+    let data = await responce.json();       
     let user_info = document.querySelector(".profile");
-    user_info.innerHTML = "";    
+    user_info.innerHTML = "";
 
     data.map((ele) => {
       let date = new Date(ele.CreatedAt);

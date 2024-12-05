@@ -34,12 +34,6 @@
                         <h1>Home</h1>
                     </a>
 
-                    <a href="#" class="nav-item" id="search">
-                        <ion-icon class="active" name="search-outline"></ion-icon>
-                        <ion-icon name="search"></ion-icon>
-                        <h1>Search</h1>
-                    </a>
-
                     <a href="#" class="nav-item active" id="categories">
                         <ion-icon name="filter-circle-outline"></ion-icon>
                         <ion-icon class="active" name="filter-circle"></ion-icon>
@@ -55,99 +49,58 @@
                         <ion-icon name="settings"></ion-icon>
                         <h1>settings</h1>
                     </a>
-                    <button onclick="openCreatPost()" class="newPost-popup" onclick="window.location.href='/login'">
+                    <button class="newPost-popup">
                         <ion-icon name="duplicate"></ion-icon>
                         <h1>New Post</h1>
-                    </button>
-
-                    <div id="creatPost-popup">
+                      </button>
+            
+                      <div id="creatPost-popup">
                         <div class="newPost">
-                            <div class="newPost-header">
-                                <button onclick="closeCreatPost()" class="cancel-btn">
-                                    Cancel
-                                </button>
-                                <button onclick=" SeccesCreatPost()" class="post-btn">
-                                    Post
-                                </button>
-                            </div>
-                            <div class="newPost-content">
-                                <img src="../static/imgs/profilePic.png" class="avatar" alt="Profile picture" />
-                                <textarea placeholder="What's up?"></textarea>
-                            </div>
-                            <div onclick="openCategories()" id="choice-categories">
-                                <h1>Categories</h1>
-                            </div>
+                          <div class="newPost-header">
+                            <button class="cancel-btn post-close">Cancel</button>
+                            <button class="post-btn create-post">Post</button>
+                          </div>
+                          <div class="newPost-content">
+                            <img src="../static/imgs/profilePic.png" class="avatar" alt="Profile picture" />
+                            <textarea placeholder="What's up?" id="content" required></textarea>
+                          </div>
+                          <div class="openCategories" id="choice-categories">
+                            <h1>Categories</h1>
+                          </div>
                         </div>
-                    </div>
-                    <div id="categories-popup">
+                      </div>
+                      <div id="categories-popup">
                         <div class="newPost">
-                            <div class="newPost-header">
-                                <button onclick="closeCategories()" class="cancel-btn">
-                                    Cancel
-                                </button>
-                                <h1>Choice you are categories:</h1>
-                                <button onclick="doneCategories()" class="post-btn">
-                                    Done
-                                </button>
+                          <div class="newPost-header">
+                            <button class="cancel-btn category">Cancel</button>
+                            <h1>Choice you are categories:</h1>
+                            <button class="post-btn done-post">Done</button>
+                          </div>
+                          <div class="categories-content">
+                            <div class="categories-list">
+                              <div class="category-item">General</div>
+                              <div class="category-item">Technology</div>
+                              <div class="category-item">Sports</div>
+                              <div class="category-item">Entertainment</div>
+                              <div class="category-item">Science</div>
+                              <div class="category-item">Health</div>
+                              <div class="category-item">Food</div>
+                              <div class="category-item">Travel</div>
+                              <div class="category-item">Fashion</div>
+                              <div class="category-item">Art</div>
+                              <div class="category-item">Music</div>
                             </div>
-                            <div class="categories-content">
-                                <div class="categories-list">
-                                    <div class="category-item">General</div>
-                                    <div class="category-item">Technology</div>
-                                    <div class="category-item">Sports</div>
-                                    <div class="category-item">Entertainment</div>
-                                    <div class="category-item">Science</div>
-                                    <div class="category-item">Health</div>
-                                    <div class="category-item">Food</div>
-                                    <div class="category-item">Travel</div>
-                                    <div class="category-item">Fashion</div>
-                                    <div class="category-item">Art</div>
-                                    <div class="category-item">Music</div>
-                                </div>
-                            </div>
-                        </div>
+                          </div>
+                      </div>
+                    </nav>
+                  </div>
+                </aside>
+                <main>
+                    <div class="headMian">
+                      <img class="logo" src="../static/imgs/logo.png" alt="logo" />
                     </div>
-                </nav>
-            </div>
-        </aside>
-        <main>
-            <div class="headMian">
-                <img class="logo" src="../static/imgs/logo.png" alt="logo" />
-            </div>
-            <div class="post">
-                <div class="post-header">
-                    <img src="../static/imgs/profilePic.png" class="avatar" alt="Profile picture" />
-                    <div class="user-info">
-                        <div class="display-name">Alexandria Ocasio-Cortez</div>
-                        <span class="username">@aoc.bsky.social</span>
-                        <span class="timestamp">· 11h</span>
-                    </div>
-                </div>
-                <div class="post-content">
-                    Really excited to listen to the new Kendrick album.
-                    <br /><br />
-                    I'm waiting until I have the space and attention to listen to it all
-                    the way through uninterrupted, and give it the respect it deserves.
-                    Hopefully tomorrow
-                </div>
-                <div class="post-actions">
-                    <div class="action">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                            <path
-                                d="M12 21.638h-.014C9.403 21.59 1.95 14.856 1.95 8.478c0-3.064 2.525-5.754 5.403-5.754 2.29 0 3.83 1.58 4.646 2.73.814-1.148 2.354-2.73 4.645-2.73 2.88 0 5.404 2.69 5.404 5.755 0 6.376-7.454 13.11-10.037 13.157H12z" />
-                        </svg>
-                        <span>862</span>
-                    </div>
-                    <div class="action">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                            <path
-                                d="M14.046 2.242l-4.148-.01h-.002c-4.374 0-7.8 3.427-7.8 7.802 0 4.098 3.186 7.206 7.465 7.37v3.828c0 .108.044.286.12.403.142.225.384.347.632.347.138 0 .277-.038.402-.118.264-.168 6.473-4.14 8.088-5.506 1.902-1.61 3.04-3.97 3.043-6.312v-.017c-.006-4.367-3.43-7.787-7.8-7.788zm3.787 12.972c-1.134.96-4.862 3.405-6.772 4.643V16.67c0-.414-.335-.75-.75-.75h-.396c-3.66 0-6.318-2.476-6.318-5.886 0-3.534 2.768-6.302 6.3-6.302l4.147.01h.002c3.532 0 6.3 2.766 6.302 6.296-.003 1.91-.942 3.844-2.514 5.176z" />
-                        </svg>
-                        <span>27.1K</span>
-                    </div>
-                </div>
-            </div>
-        </main>
+                    <article class="main content_post"></article>
+                  </main>
         <aside class="aside-right">
             <input class="search" type="text" placeholder="Search.." />
             <div class="header-nav">
@@ -171,7 +124,8 @@
             </div>
         </aside>
     </section>
-    <script type="module" src="../static/js/profile.js"></script>
+    <script type="module" src="../static/js/categories.js"></script>
+    <script type="module" src="../static/js/home.js"></script>
     <script type="module" src="../static/js/aside-left.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
