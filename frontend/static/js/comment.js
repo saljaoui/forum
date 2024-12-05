@@ -24,9 +24,9 @@ export async function GetComments(cardid) {
         console.log("rani ndkhel ")
         let comments = document.querySelector(".comment")
         comments.innerHTML = ""
-        datacomment.map(ele => {
-            InitialComment(ele)
-       })
+        InitialComment(datacomment)
+    //     datacomment.map(ele => {
+    //    })
     }
     else {
         console.log("err");

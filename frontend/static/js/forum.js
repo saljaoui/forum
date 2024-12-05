@@ -34,8 +34,7 @@ export function NewPost(postInfo,parent) {
                         ${postInfo.content}
                     </div>
                     <div class="post-actions">
-                        <div class="action active" id="likes"
-                            data-id_card="${postInfo.id}">
+                         <div class="action active is_liked"  id="likes" data-liked="false" data-like="like" data-id_card="${postInfo.id}" >
                               <svg width="20" height="20" viewBox="0 0 20 20"
                                   fill="currentColor">
                                    <path
@@ -43,13 +42,13 @@ export function NewPost(postInfo,parent) {
                                 </svg>
                                 <span id="is_liked">${postInfo.likes}</span>
                             </div>
-                            <div class="action" id="dilike">
+                            <div class="action " id="dilike">
                                 <svg width="20" height="20" viewBox="0 0 20 20"
                                     fill="currentColor">
                                     <path
                                         d="M10 1c.072 0 .145 0 .218.006A4.1 4.1 0 0 1 14 5.184V9h3.138a1.751 1.751 0 0 1 1.234 2.993L10.59 19.72a.836.836 0 0 1-1.18 0l-7.782-7.727A1.751 1.751 0 0 1 2.861 9H6V5.118a4.134 4.134 0 0 1 .854-2.592A3.99 3.99 0 0 1 10 1Zm0 17.193 7.315-7.264a.251.251 0 0 0-.177-.429H12.5V5.184A2.631 2.631 0 0 0 10.136 2.5a2.441 2.441 0 0 0-1.856.682A2.478 2.478 0 0 0 7.5 5v5.5H2.861a.251.251 0 0 0-.176.429L10 18.193Z"></path>
                                 </svg>
-                                <span id="is_liked">${postInfo.dislikes}</span>
+                                <span id="is_Dislikes" data-disliked="disliked">${postInfo.dislikes}</span>
                             </div>
                             <div class="action">
                       <svg width="20" height="20" viewBox="0 0 20 20"
@@ -84,9 +83,8 @@ export   async function fetchData() {
  
     let data = await responce.json();
     let user_info = document.querySelector(".main");
-
-    user_info.innerHTML = "";
-    content = cards(data)
+    
+    content = cards(data,user_info)
     let like = document.querySelectorAll("#likes");
     likes(like)
   } else if (responce.status === 401) {
