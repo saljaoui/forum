@@ -23,7 +23,9 @@ import { likes } from "./likes.js";
 
 
 export default async function fetchData(id) {
-  const responce = await fetch("/api/profile/"+id, {
+  console.log(id);
+  
+  const responce = await fetch(`/api/profile/${id}`, {
     method: "GET",
   });
   if (responce.ok) {
