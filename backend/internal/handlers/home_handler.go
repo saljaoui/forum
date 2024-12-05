@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"forum-project/backend/internal/repository/home"
+	"forum-project/backend/internal/repository/cards"
 	like "forum-project/backend/internal/repository/likes"
 )
 
@@ -13,7 +13,7 @@ func HomeHandle(w http.ResponseWriter, r *http.Request) {
 		JsoneResponse(w, "Method Not Allowd", http.StatusMethodNotAllowed)
 		return
 	}
-	posts := home.GetPostsHome()
+	posts := cards.GetAllCards()
 	json.NewEncoder(w).Encode(posts)
 	// SELECT p.id, u.id, u.firstname, u.lastname, p.title, c.content, cat.name, c.created_at  FROM post p, card c, user u, post_category pc, category cat WHERE p.card_id=c.id AND c.user_id=u.id AND p.id = pc.post_id AND pc.category_id=cat.id
 }

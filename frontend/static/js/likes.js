@@ -1,4 +1,4 @@
-import fetchData from './forum.js';
+import {fetchData} from './forum.js';
 function likes(likes, disliked) {
     const user_data = localStorage.getItem("user_id");
 
@@ -34,6 +34,8 @@ function likes(likes, disliked) {
             let card_id = click.getAttribute("data-id_card");
             let like = click.getAttribute("data-like")
             let data_liked = click.getAttribute("data-liked");
+            console.log(data_liked);
+            
             if (like === "like") {
                 if (data_liked === "true") {
                     await deletLikes(user_data, card_id)

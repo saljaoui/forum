@@ -33,8 +33,8 @@ func Handel_GetCommet(res http.ResponseWriter, req *http.Request) {
 	// 		return
 	// 	}
 	// }
-
-	JsoneResponse(res, comments, http.StatusOK)
+	json.NewEncoder(res).Encode(comments)
+	//JsoneResponse(res, comments, http.StatusOK)
 }
 
 func Handler_AddComment(res http.ResponseWriter, req *http.Request) {

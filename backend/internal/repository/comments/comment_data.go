@@ -12,13 +12,15 @@ type comment_Row struct {
 }
 
 type comment_Row_View struct {
-	comment_ID int
-	User_Id    int
-	firstname  string
-	lastname   string
-	Content    string
-	CreatedAt  string
-	Card_Id    int
+	Id  int				
+	User_Id  int		
+	Content   string	
+	CreatedAt string
+	FirstName string	
+	LastName  string	
+	Likes 	  int
+	DisLikes  int
+	Comments  int
 }
 
 func insertComment(card_id, target_id int) int {
@@ -43,13 +45,14 @@ func getCommentById(id int) *comment_Row {
 
 func getAllCommentsbyTargetId(target int) []comment_Row_View {
 	list_Comments := make([]comment_Row_View, 0)
-	query := `SELECT cm.id,u.id,u.firstname,u.lastname,c.content,c.created_at,c.id from comment cm JOIN card c
-              ON c.id = cm.card_id JOIN user u on c.user_id = u.id 
-              WHERE cm.target_id =?;`
+	query := `SELECT c.id,c.user_id,c.content,c.created_at,u.firstname,u.lastname, (SELECT count(*) FROM comment cm WHERE cm.target_id = c.id) comments,(SELECT count(*) FROM likes l WHERE l.card_id = c.id and l.is_like = 1) likes , (SELECT count(*) FROM likes l WHERE l.card_id = c.id and l.is_like = 0) dislikes
+			FROM card c  JOIN comment cm ON c.id = cm.card_id JOIN user u ON c.user_id = u.id
+			WHERE cm.target_id = ? 
+			GROUP BY c.id ORDER BY c.id DESC;`
 	data_Rows := database.SelectRows(query,target)
     for data_Rows.Next(){
         Row := comment_Row_View{}
-        err := data_Rows.Scan(&Row.comment_ID,&Row.User_Id,&Row.firstname,&Row.lastname,&Row.Content,&Row.CreatedAt,&Row.Card_Id)
+        err := data_Rows.Scan(&Row.Id,&Row.User_Id,&Row.Content,&Row.CreatedAt,&Row.FirstName,&Row.LastName,&Row.Comments,&Row.Likes,&Row.DisLikes)
         if err != nil {
             return nil
         }    

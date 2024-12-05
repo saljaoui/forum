@@ -28,8 +28,7 @@ register.addEventListener('submit', async (e) => {
     if (response.ok) {
         const data = await response.json();
         console.log("Success:", data);
-        alert(data)
-        //localStorage.setItem("user_id",data)
+        localStorage.setItem("user_id",data)
     } else {
         const errorData = await response.json();
         console.error("Error:", errorData);
