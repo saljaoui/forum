@@ -1,33 +1,56 @@
 import fetchData from './forum.js';
 function likes(likes, disliked) {
+    const user_data = localStorage.getItem("user_id");
 
-    likes.forEach(click => {
+    likes.forEach(async click => {
+        let card_id = click.getAttribute("data-id_card");
+
+        let like = click.getAttribute("data-like")
+        const responce = await fetch("api/likes", {
+            method: "POST",
+            body: JSON.stringify({
+                "card_id": +card_id
+            })
+        });
+        if (responce.ok) {
+            let data = await responce.json()
+            data.forEach(el => {
+                if (el.User_id === +user_data) {
+                    if (el.UserLiked && like === "like") {
+                        click.classList.add("clicked")
+                        click.setAttribute("data-liked", "true")
+                    } else if (el.UserDisliked && like === "Dislikes") {
+                        click.classList.add("clicked_disliked")
+                        click.setAttribute("data-liked", "true")
+                    }
+                }
+            })
+        }
         click.addEventListener("click", async (e) => {
             e.preventDefault()
-
             let card_id = click.getAttribute("data-id_card");
-            let check_likes = click.getAttribute("data-like");
-            if (check_likes === "like") {
-                let data_liked = click.getAttribute("data-liked");
+            let like = click.getAttribute("data-like")
+            let data_liked = click.getAttribute("data-liked");
+            if (like === "like") {
+               
+                
                 if (data_liked === "true") {
-                    await deletLikes(card_id)
-                } else {
-                    await addLikes(card_id, 1)
+                    await deletLikes(user_data, card_id)
+                }else{
+                    await addLikes(card_id, 1, true, false)
                 }
-            } else if (check_likes === "Dislikes") {
-                console.log("dislike");
+            } else if (like === "Dislikes") {
+                if (data_liked === "true") {
+                    await deletLikes(user_data, card_id)
+                }else{
 
+                    await addLikes(card_id, -1, false, true)
+                }
             }
-            // let data_liked = click.getAttribute("data-liked");
-            // if (data_liked === "true") {
-            //     await deletLikes(card_id)
-            // } else {
-            //     await addLikes(card_id, 1)
-            // }
         })
     })
 }
-async function addLikes(card_id, liked) {
+async function addLikes(card_id, liked, lik, dislk) {
     try {
         let response = await fetch("/api/like", {
             method: "POST",
@@ -38,7 +61,8 @@ async function addLikes(card_id, liked) {
             body: JSON.stringify({
                 is_liked: +liked,
                 card_id: +card_id,
-                UserLiked: true
+                UserLiked: lik,
+                Userdisliked: dislk
             })
         })
         if (response.ok) {
@@ -56,7 +80,7 @@ async function addLikes(card_id, liked) {
     }
 
 }
-async function deletLikes(card_id) {
+async function deletLikes(user_id, card_id) {
     let response = await fetch("/api/deleted", {
         method: "DELETE",
         headers: {
@@ -64,11 +88,12 @@ async function deletLikes(card_id) {
             'Accept': 'application/json',
         },
         body: JSON.stringify({
+            user_id: +user_id,
             card_id: +card_id
         })
     })
     if (response.ok) {
-        fetchData()
+         fetchData()
         let data = await response.json()
         console.log(data);
 

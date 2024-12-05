@@ -29,13 +29,29 @@ func deletLike(user_id, card_id int) {
 	query := "DELETE FROM likes WHERE user_id=? AND card_id=?"
 	_, err := database.Exec(query, user_id, card_id)
 	if err != nil {
-		fmt.Println(err.Error())
+		fmt.Println(err.Error(), "test")
 	}
 }
 
+func GetuserLiked(card_id int) []ResponseUserLikeds {
+	querylike := `SELECT l.UserLiked , l.Userdisliked , l.user_id FROM likes l JOIN card c
+    on l.card_id=c.id WHERE  l.card_id =? `
+
+	likesusers := []ResponseUserLikeds{}
+	rows := database.SelectRows(querylike, card_id)
+	for rows.Next() {
+		likes := ResponseUserLikeds{}
+		err := rows.Scan(&likes.UserLiked, &likes.UserDisliked, &likes.User_id)
+		if err != nil {
+			fmt.Println(err)
+		}
+		likesusers = append(likesusers, likes)
+	}
+	return likesusers
+}
+
 func GetLikes(post_id int) (int, int, int, int) {
-	// Userdisliked
-	querylike := `SELECT   COALESCE(UserLiked,0), COALESCE(Userdisliked,0) , COALESCE(SUM(l.is_like), 0)  FROM post
+	querylike := `SELECT  COALESCE(UserLiked,0), COALESCE(Userdisliked,0) , COALESCE(SUM(l.is_like), 0)  FROM post
 	 p, likes l WHERE p.card_id = l.card_id AND l.is_like = 1 AND p.id = ` + strconv.Itoa(post_id)
 	like := 0
 	UserLiked := 0
@@ -55,9 +71,7 @@ func GetLikes(post_id int) (int, int, int, int) {
 	err = db.QueryRow(querydislike).Scan(&UserdiLiked, &Userdisliked, &dislike)
 	if err != nil {
 		dislike = 0
-		// UserLiked = 0
 	}
-	fmt.Println(like, UserLiked == 1)
 	return like, dislike * -1, UserLiked, Userdisliked
 }
 
