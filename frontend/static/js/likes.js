@@ -3,48 +3,50 @@ function likes(likes, disliked) {
     const user_data = localStorage.getItem("user_id");
     likes.forEach(async click => {
         let card_id = click.getAttribute("data-id_card");
-       /// console.log(card_id);
-        
-        // const responce = await fetch("http://localhost:3333/api/likes", {
-        //     method: "POST",
-        //     body: JSON.stringify({
-        //         "user_id": +user_data,
-        //         "card_id": +card_id
-        //     })
-        // });
-        // if (responce.ok) {
-        //     console.log(likes);
-        //     let data =await responce.json()
-        //     if(data.message.UserLiked){
-        //         console.log("liked");
+        let is_liked=click.getAttribute("svg")
+       console.log(click);
+        const responce = await fetch("http://localhost:3333/api/likes", {
+            method: "POST",
+            body: JSON.stringify({
+                "card_id": +card_id
+            })
+        });
+        if (responce.ok) {
+            let data =await responce.json()
+            data.forEach(el=>{
+               // console.log(el.User_id,+user_data);
                 
-        //     }
-        //     if(data.message.UserDisliked){
-        //         console.log("Disliked");
-                
-        //     }
+                if(el.User_id===+user_data &&el.UserLiked){
+                   click.classList.add("clicked")
+                }else if (el.User_id===+user_data && el.UserDisliked){
+                    click.classList.add("clicked_disliked")
+                }
+               // console.log(el.UserLiked,el.UserDisliked,el.User_id,+card_id);
+            })
+            }
            // console.log(data.message);
+            console.log();
             
              
         //}
         //clicked_disliked
-        //  let check_likes = click.getAttribute("data-like");
+         let check_likes = click.getAttribute("data-like");
 
-        // click.addEventListener("click", async (e) => {
-        //     e.preventDefault()
-        //     let card_id = click.getAttribute("data-id_card");
-        //     if (check_likes === "like") {
-        //         let data_liked = click.getAttribute("data-liked");
-        //         if (data_liked === "true") {
-        //             await deletLikes(card_id)
-        //         } else {
-        //             await addLikes(card_id, 1)
-        //         }
-        //     } else if (check_likes === "Dislikes") {
-        //         console.log("dislike");
+        click.addEventListener("click", async (e) => {
+            e.preventDefault()
+            let card_id = click.getAttribute("data-id_card");
+            if (check_likes === "like") {
+                let data_liked = click.getAttribute("data-liked");
+                if (data_liked === "true") {
+                    await deletLikes(card_id)
+                } else {
+                    await addLikes(card_id, 1)
+                }
+            } else if (check_likes === "Dislikes") {
+                console.log("dislike");
 
-        //     }
-        // })
+            }
+        })
     })
 }
 async function addLikes(card_id, liked) {

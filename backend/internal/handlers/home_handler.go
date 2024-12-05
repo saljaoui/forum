@@ -30,5 +30,7 @@ func LikesHandle(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	dislike := liked.ChecklikesUser()
-	JsoneResponse(w, dislike, http.StatusOK)
+	//fmt.Println(dislike)
+	json.NewEncoder(w).Encode(dislike)
+	//JsoneResponse(w, dislike, http.StatusOK)
 }

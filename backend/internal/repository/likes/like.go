@@ -17,6 +17,7 @@ type Like struct {
 type ResponseUserLikeds struct {
 	UserLiked    bool
 	UserDisliked bool
+	User_id      int
 }
 
 func NewLike(user_id, card_id int) *Like {
@@ -49,7 +50,8 @@ func (p *Like) DeletLike() {
 	deletLike(p.User_Id, p.Card_Id)
 }
 
-func (like *Like) ChecklikesUser() ResponseUserLikeds {
-	likes := GetuserLiked(like.User_Id, like.Card_Id)
+func (like *Like) ChecklikesUser() []ResponseUserLikeds {
+	likes := GetuserLiked(like.Card_Id )
+	//fmt.Println(likes)
 	return likes
 }

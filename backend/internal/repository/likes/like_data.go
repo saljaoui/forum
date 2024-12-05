@@ -33,17 +33,22 @@ func deletLike(user_id, card_id int) {
 	}
 }
 
-func GetuserLiked(user_id, card_id int) ResponseUserLikeds {
-	querylike := `SELECT UserLiked ,Userdisliked ,l.user_id FROM likes l JOIN card c
-    on l.card_id=c.id WHERE  l.card_id =? and l.is_like=1`
+func GetuserLiked(card_id int) []ResponseUserLikeds {
+	querylike := `SELECT l.UserLiked , l.Userdisliked , l.user_id FROM likes l JOIN card c
+    on l.card_id=c.id WHERE  l.card_id =? `
 
-	likes := ResponseUserLikeds{}
-	err := database.SelectOneRow(querylike, user_id, card_id).Scan(&likes.UserLiked, &likes.UserDisliked)
-	if err != nil {
-		fmt.Println(err)
+	likesusers := []ResponseUserLikeds{}
+	rows := database.SelectRows(querylike, card_id)
+	for rows.Next() {
+		likes := ResponseUserLikeds{}
+		err := rows.Scan(&likes.UserLiked, &likes.UserDisliked, &likes.User_id)
+		if err != nil {
+			fmt.Println(err)
+		}
+		likesusers = append(likesusers, likes)
 	}
-
-	return likes
+	//fmt.Println(likesusers)
+	return likesusers
 }
 
 func GetLikes(post_id int) (int, int, int, int) {
@@ -82,6 +87,3 @@ func likeExists(user_id, card_id int) bool {
 	}
 	return exists
 }
-
-// SELECT UserLiked ,Userdisliked ,l.user_id FROM likes l JOIN card c
-//     on l.card_id=c.id WHERE  l.card_id =4 and l.is_like=1
