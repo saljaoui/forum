@@ -35,9 +35,11 @@
 
 body {
   background: var(--color-background);
-  background: radial-gradient(circle at top,
-      var(--color-mid) 0%,
-      var(--color-dark) 100%);
+  background: radial-gradient(
+    circle at top,
+    var(--color-mid) 0%,
+    var(--color-dark) 100%
+  );
   min-height: 100vh;
   display: flex;
   justify-content: center;
@@ -54,7 +56,6 @@ body {
   /* For Firefox */
   -ms-overflow-style: none;
   /* For IE and Edge */
-
 }
 
 .content_post::-webkit-scrollbar {
@@ -114,8 +115,8 @@ button:hover {
   transition: 0.5s;
 }
 
-.input-box input:focus~label,
-.input-box input:valid~label {
+.input-box input:focus ~ label,
+.input-box input:valid ~ label {
   top: -5px;
 }
 
@@ -231,6 +232,114 @@ button:hover {
 
 .aside-nav button:hover {
   background-color: var(--color-white);
+}
+
+.newPost-header button {
+  width: 70px;
+  height: 35px;
+  justify-content: center;
+  margin-top: auto;
+  margin-bottom: 10px;
+}
+
+.newPost-content textarea {
+  flex-grow: 1;
+  background: var(--color-new-post);
+  padding: 5px;
+  border: none;
+  color: white;
+  font-size: 1.2rem;
+  resize: none;
+  outline: none;
+  min-height: 200px;
+  margin-left: -15px;
+}
+
+.newPost-content img {
+  margin-top: -5px;
+}
+
+#choice-categories h1 {
+  font-weight: 100;
+  color: var(--color-white);
+}
+
+.newPost-header h1 {
+  margin-top: 8px;
+}
+
+.profile-avatar img {
+  width: 95px;
+  z-index: 5;
+  border: 4px solid var(--color-mid);
+  height: 95px;
+  margin-bottom: 15px;
+}
+
+.profile-nav a {
+  color: var(--color-name-user-secand);
+  text-decoration: none;
+  padding: 5px 0;
+  white-space: nowrap;
+}
+
+.profile-nav a.active {
+  color: white;
+  border-bottom: 2px solid var(--color-action-hover);
+}
+
+.signOut h1 {
+  padding: 11px 7px;
+  padding-left: 18px;
+  margin-top: 5px;
+  font-size: 15px;
+  color: var(--color-red);
+  font-size: 100;
+}
+
+.signOut:hover h1 {
+  background-color: var(--color-hover-nav);
+}
+
+.header-nav h1 {
+  margin-bottom: 5px;
+}
+
+.postReply img {
+  height: 25px;
+  width: 25px;
+}
+
+.about-card h3 {
+  color: var(--color-white);
+  margin-bottom: 15px;
+  font-size: 1.5em;
+}
+
+.about-card p {
+  color: var(--color-name-user-secand);
+  line-height: 1.6;
+}
+
+.team-member h3 {
+  color: var(--color-white);
+  margin-bottom: 10px;
+  font-size: 1.2em;
+}
+
+.team-member p {
+  color: var(--color-name-user-secand);
+  font-size: 0.9em;
+  line-height: 1.5;
+}
+
+.post-actions a {
+  text-decoration: none;
+  color: var(--color-name-user-secand);
+}
+
+.header-nav .profile-nav a {
+  margin-left: 10px;
 }
 
 .wrapper {
@@ -423,6 +532,10 @@ button:hover {
   margin-bottom: 12px;
   line-height: 1.4;
   margin-left: 60px;
+  overflow: hidden;
+  word-wrap: break-word;
+  white-space: normal;
+  height: max-content;
 }
 
 .post-actions {
@@ -439,9 +552,11 @@ button:hover {
   align-items: center;
   gap: 6px;
 }
-.clicked{
-  color:var(--color-action-hover);
+
+.clicked {
+  color: var(--color-action-hover);
 }
+
 .active:hover {
   color: var(--color-action-hover);
   cursor: pointer;
@@ -541,14 +656,6 @@ button:hover {
   margin-top: 50px;
 }
 
-.newPost-header button {
-  width: 70px;
-  height: 35px;
-  justify-content: center;
-  margin-top: auto;
-  margin-bottom: 10px;
-}
-
 .newPost-header {
   margin-top: 5px;
   display: flex;
@@ -562,23 +669,6 @@ button:hover {
   display: flex;
   padding: 10px;
   gap: 12px;
-}
-
-.newPost-content textarea {
-  flex-grow: 1;
-  background: var(--color-new-post);
-  padding: 5px;
-  border: none;
-  color: white;
-  font-size: 1.2rem;
-  resize: none;
-  outline: none;
-  min-height: 200px;
-  margin-left: -15px;
-}
-
-.newPost-content img {
-  margin-top: -5px;
 }
 
 .newPost-header .cancel-btn {
@@ -596,19 +686,15 @@ button:hover {
   margin-left: 10px;
 }
 
-#choice-categories h1 {
-  font-weight: 100;
-  color: var(--color-white);
-}
-
 #choice-categories:hover {
   background-color: var(--color-mid);
 }
 
 .disliked:hover {
-color: var(--color-hover-dislike);
+  color: var(--color-hover-dislike);
 }
-.clicked_disliked{
+
+.clicked_disliked {
   color: var(--color-hover-dislike);
 }
 
@@ -660,10 +746,6 @@ color: var(--color-hover-dislike);
   color: white;
 }
 
-.newPost-header h1 {
-  margin-top: 8px;
-}
-
 .profile-header {
   width: 100%;
   z-index: -10;
@@ -674,14 +756,7 @@ color: var(--color-hover-dislike);
 .profile-content {
   padding: 20px;
   margin-top: -60px;
-}
-
-.profile-avatar img {
-  width: 95px;
-  z-index: 5;
-  border: 4px solid var(--color-mid);
-  height: 95px;
-  margin-bottom: 15px;
+  padding-bottom: 0px;
 }
 
 .profile-name {
@@ -701,18 +776,6 @@ color: var(--color-hover-dislike);
   border-bottom: 1px solid var(--color-light);
 }
 
-.profile-nav a {
-  color: var(--color-name-user-secand);
-  text-decoration: none;
-  padding: 5px 0;
-  white-space: nowrap;
-}
-
-.profile-nav a.active {
-  color: white;
-  border-bottom: 2px solid var(--color-action-hover);
-}
-
 .settings-title {
   text-align: center;
   padding: 15px;
@@ -727,21 +790,8 @@ color: var(--color-hover-dislike);
   border-bottom: 1px solid var(--color-light);
 }
 
-.signOut h1 {
-  padding: 11px 7px;
-  padding-left: 18px;
-  margin-top: 5px;
-  font-size: 15px;
-  color: var(--color-red);
-  font-size: 100;
-}
-
 .signOut {
   text-decoration: none;
-}
-
-.signOut:hover h1 {
-  background-color: var(--color-hover-nav);
 }
 
 .header-nav .profile-nav {
@@ -757,21 +807,17 @@ color: var(--color-hover-dislike);
   padding: 10px;
 }
 
-.header-nav h1 {
-  margin-bottom: 5px;
-}
-
 .commentFromPost .user-info {
-display: flex;
-gap: 7px;
-margin-top: -20px;
+  display: flex;
+  gap: 7px;
+  margin-top: -20px;
 }
 
 .commentFromPost .post-content {
   margin-top: -30px;
 }
 
-.commentFromPost{
+.commentFromPost {
   font-size: 14px;
 }
 
@@ -786,15 +832,9 @@ margin-top: -20px;
   font-weight: 500;
 }
 
-.postReply img {
-  height: 25px;
-  width: 25px;
-}
-
 .postReply:hover {
   background-color: var(--color-light);
 }
-
 
 .about-container {
   position: fixed;
@@ -831,17 +871,6 @@ margin-top: -20px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.about-card h3 {
-  color: var(--color-white);
-  margin-bottom: 15px;
-  font-size: 1.5em;
-}
-
-.about-card p {
-  color: var(--color-name-user-secand);
-  line-height: 1.6;
-}
-
 .team-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -868,17 +897,28 @@ margin-top: -20px;
   margin-bottom: 15px;
 }
 
-.team-member h3 {
-  color: var(--color-white);
-  margin-bottom: 10px;
-  font-size: 1.2em;
+.profile.content_post {
+height: 65vh;
+overflow: scroll;
 }
 
-.team-member p {
-  color: var(--color-name-user-secand);
-  font-size: 0.9em;
-  line-height: 1.5;
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

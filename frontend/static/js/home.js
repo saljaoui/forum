@@ -61,25 +61,4 @@ navigate()
 export {
     navigate
 }
-// search.addEventListener("click", (e) => {
-//     const currentUrl = window.location.pathname;
-
-//     if (currentUrl !== "/search") {
-//         location.href = "/search";
-//     } else {
-//         e.preventDefault()
-
-//         console.log("Already on the search page, no need to reload.");
-//     }
-// })
-
-// categories.addEventListener("click", (e) => {
-//     e.preventDefault()
-//     const currentUrl = window.location.pathname;
-//     if (currentUrl !== "/categories") {
-//         location.href = "/categories";
-//     } else {
-//         e.preventDefault()
-//         console.log("Already on the categories page, no need to reload.");
-//     }
-// })
+ 
