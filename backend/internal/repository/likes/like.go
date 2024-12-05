@@ -7,11 +7,12 @@ import (
 )
 
 type Like struct {
-	ID        int  `json:"id"`
-	User_Id   int  `json:"user_id"`
-	Card_Id   int  `json:"card_id"`
-	Is_Liked  int  `json:"is_liked"`
-	UserLiked bool `json:"userliked"`
+	ID          int  `json:"id"`
+	User_Id     int  `json:"user_id"`
+	Card_Id     int  `json:"card_id"`
+	Is_Liked    int  `json:"is_liked"`
+	UserLiked   bool `json:"userliked"`
+	Userisliked bool `json:"userdisliked`
 }
 
 func NewLike(user_id, card_id int) *Like {
@@ -36,7 +37,7 @@ func (l *Like) GetIsLike() int {
 }
 
 func (p *Like) Add() messages.Messages {
-	m := inserLike(p.User_Id, p.Card_Id, p.Is_Liked, p.UserLiked)
+	m := inserLike(p.User_Id, p.Card_Id, p.Is_Liked, p.UserLiked, p.Userisliked)
 	return m
 }
 
