@@ -1,6 +1,19 @@
 import { likes } from "./likes.js";
 const user_data = localStorage.getItem("user_id");
  
+let content = []
+const searchInput = document.querySelector("[data-search]")
+searchInput.addEventListener("input", (e) => {
+  const value = e.target.value.toLowerCase()
+  content.forEach(data => {
+    const isVisible = data.data.toLowerCase().includes(value)
+    if (!isVisible) {
+      data.element.style.display = "none"
+    } else {
+      data.element.style.display = "block"
+    }
+  })
+} )
 let liked = []
 export default async function fetchData() {
   const responce = await fetch("http://localhost:3333/api/home", {
@@ -12,7 +25,7 @@ export default async function fetchData() {
     let user_info = document.querySelector(".main");
     user_info.innerHTML = "";
 
-    data.map((ele) => {
+    content = data.map((ele) => {
       liked.push(ele.UserLiked)
       let isLikedByUser = ele.UserLiked && ele.UserID === +user_data;
       let isdisLikedByUser = ele.Userdisliked && ele.UserID === +user_data;
@@ -44,7 +57,7 @@ export default async function fetchData() {
             <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
               <path d="M10 1c.072 0 .145 0 .218.006A4.1 4.1 0 0 1 14 5.184V9h3.138a1.751 1.751 0 0 1 1.234 2.993L10.59 19.72a.836.836 0 0 1-1.18 0l-7.782-7.727A1.751 1.751 0 0 1 2.861 9H6V5.118a4.134 4.134 0 0 1 .854-2.592A3.99 3.99 0 0 1 10 1Zm0 17.193 7.315-7.264a.251.251 0 0 0-.177-.429H12.5V5.184A2.631 2.631 0 0 0 10.136 2.5a2.441 2.441 0 0 0-1.856.682A2.478 2.478 0 0 0 7.5 5v5.5H2.861a.251.251 0 0 0-.176.429L10 18.193Z"></path>
             </svg>    
-            <span id="is_Dislikes" data-disliked="disliked">${ele.Dislikes}</span>
+            <span id="is_Dislikes" daContentta-disliked="disliked">${ele.Dislikes}</span>
           </div>
           <div class="action">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
@@ -58,8 +71,9 @@ export default async function fetchData() {
         </div>
         </div>
         `;
-      user_info.appendChild(contents);
-
+        user_info.appendChild(contents);
+        let elem = document.getElementsByClassName("post");
+        return {data : ele.Content, element : contents}
 
     });
 
