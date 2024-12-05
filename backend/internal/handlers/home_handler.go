@@ -11,6 +11,7 @@ import (
 func HomeHandle(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
 		JsoneResponse(w, "Method Not Allowd", http.StatusMethodNotAllowed)
+		return
 	}
 	posts := home.GetPostsHome()
 	json.NewEncoder(w).Encode(posts)
@@ -30,7 +31,7 @@ func LikesHandle(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	dislike := liked.ChecklikesUser()
-	//fmt.Println(dislike)
+	// fmt.Println(dislike)
 	json.NewEncoder(w).Encode(dislike)
-	//JsoneResponse(w, dislike, http.StatusOK)
+	// JsoneResponse(w, dislike, http.StatusOK)
 }

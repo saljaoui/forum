@@ -28,20 +28,27 @@ func InitDB() error {
 }
 
 func Config() *sql.DB {
-	db, err := sql.Open("sqlite3", "../../app.db")
+	db, err := sql.Open("sqlite3", "file:../../app.db?cache=shared&_busy_timeout=5000")
 	if err != nil {
-		log.Fatal("error connecting to database: ", err)
+		log.Fatal("error opening database: ", err)
+	}
+	// Set database to Write-Ahead Logging mode for better concurrency
+	_, err = db.Exec("PRAGMA journal_mode=WAL;")
+	if err != nil {
+		log.Fatal("error setting WAL mode: ", err)
 	}
 	err = db.Ping()
 	if err != nil {
 		log.Fatal("error connecting to database:", err)
 	}
+
 	return db
 }
 
 func SelectOneRow(query string, model ...any) *sql.Row {
 	db := Config()
 	DataRow := db.QueryRow(query, model...)
+	defer db.Close()
 	return DataRow
 }
 
@@ -51,11 +58,13 @@ func SelectRows(query string, model ...any) *sql.Rows {
 	if err != nil {
 		fmt.Println(err)
 	}
+	defer db.Close()
 	return rows
 }
 
 func Exec(query string, model ...any) (sql.Result, error) {
 	db := Config()
 	res, err := db.Exec(query, model...)
+	defer db.Close()
 	return res, err
 }

@@ -36,15 +36,16 @@ func HandelDeletLike(w http.ResponseWriter, r *http.Request) {
 		json.NewEncoder(w).Encode("Status Method Not Allowed")
 		return
 	}
-	id_user := GetUserId(r)
-	like := like.Like{}
+	like := like.DeletLikes{}
 	decode := DecodeJson(r)
 	err := decode.Decode(&like)
 	if err != nil {
 		JsoneResponse(w, "err.Error()", http.StatusBadRequest)
 		return
 	}
-	like.User_Id = id_user
+	//  var wg sync.WaitGroup
+	//  wg.Add(1)
 	like.DeletLike()
+	// wg.Wait()
 	JsoneResponse(w, "DELETED Like", http.StatusCreated)
 }

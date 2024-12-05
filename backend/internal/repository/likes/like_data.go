@@ -29,7 +29,7 @@ func deletLike(user_id, card_id int) {
 	query := "DELETE FROM likes WHERE user_id=? AND card_id=?"
 	_, err := database.Exec(query, user_id, card_id)
 	if err != nil {
-		fmt.Println(err.Error())
+		fmt.Println(err.Error(), "test")
 	}
 }
 
@@ -47,7 +47,6 @@ func GetuserLiked(card_id int) []ResponseUserLikeds {
 		}
 		likesusers = append(likesusers, likes)
 	}
-	//fmt.Println(likesusers)
 	return likesusers
 }
 
@@ -72,9 +71,7 @@ func GetLikes(post_id int) (int, int, int, int) {
 	err = db.QueryRow(querydislike).Scan(&UserdiLiked, &Userdisliked, &dislike)
 	if err != nil {
 		dislike = 0
-		// UserLiked = 0
 	}
-	fmt.Println(like, UserLiked == 1)
 	return like, dislike * -1, UserLiked, Userdisliked
 }
 
