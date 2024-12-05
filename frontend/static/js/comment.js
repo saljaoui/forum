@@ -1,18 +1,21 @@
-import { InitialComment } from "./createcomment.js"
-
+import { InitialComment,LoadPage } from "./createcomment.js"
 const urlParams = new URLSearchParams(window.location.search);
 const cardData = urlParams.get("card_id");
 console.log("card data : ",cardData)
 
-function NewComment() {
+
+//await LoadPage(+cardData)
+
+export function NewComment() {
     let comment = document.createElement("div")
     comment.className = "comment"
     let main = document.querySelector("main")
     main.appendChild(comment)
 }
-NewComment()
-export async function GetComments() {
-    const response = await fetch(`/api/comment?target_id=${+cardData}`, {
+//NewComment()
+export async function GetComments(cardid) {
+    
+    const response = await fetch(`/api/comment?target_id=${cardid}`, {
         method: "GET",
     });
     if (response.ok) {
@@ -29,5 +32,3 @@ export async function GetComments() {
         console.log("err");
     }
 }
-
-await GetComments()

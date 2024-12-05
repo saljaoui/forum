@@ -14,13 +14,15 @@ type Comment struct {
 }
 
 type comment_View struct {
-	Comment_ID int    `json:"commentid"`
-	UserId    int    `json:"userID"`
-	FirstName  string `json:"firstName"`
-	LastName   string `json:"laststName"`
-	Content    string `json:"content"`
-	CreatedAt  string `json:"createdat"`
-	Card_Id    int    `json:"card_Id"`
+	Id  int				`json:"id"`
+	User_Id  int		`json:"userid"`
+	Content   string	`json:"content"`
+	CreatedAt string	`json:"date"`
+	FirstName string	`json:"firstName"`
+	LastName  string	`json:"lastName"`
+	Likes 	  int		`json:"likes"`
+	DisLikes  int		`json:"dislikes"`
+	Comments  int		`json:"comments"`
 }
 
 func NewComment(user_id int, content string, target int) *Comment {
@@ -78,14 +80,16 @@ func GetAllCommentsbyTarget(target int) []comment_View {
 	return list_Comments
 }
 
-func convert(cmrv comment_Row_View) comment_View {
+func convert(data_Row comment_Row_View) comment_View {
 	comment := comment_View{}
-	comment.Comment_ID = cmrv.comment_ID
-	comment.UserId = cmrv.User_Id
-	comment.FirstName = cmrv.firstname
-	comment.LastName = cmrv.lastname
-	comment.Content = cmrv.Content
-	comment.CreatedAt = cmrv.CreatedAt
-	comment.Card_Id = cmrv.Card_Id
+	comment.Id = data_Row.Id
+	comment.User_Id = data_Row.User_Id
+	comment.Content = data_Row.Content
+	comment.CreatedAt = data_Row.CreatedAt
+	comment.FirstName = data_Row.FirstName
+	comment.LastName = data_Row.LastName
+	comment.Likes = data_Row.Likes
+	comment.DisLikes = data_Row.DisLikes
+	comment.Comments = data_Row.Comments
 	return comment
 }

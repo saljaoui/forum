@@ -48,11 +48,8 @@ func getCardById(id int) *Card_Row {
 
 
 func getCard(targetID  int) card_View_Data {
-	query := `SELECT c.id,c.user_id,c.content,c.created_at,u.firstname,u.lastname, count(cm.id) comments,(SELECT count(*) FROM likes l WHERE l.card_id = c.id and l.is_like = 1) likes , (SELECT count(*) FROM likes l WHERE l.card_id = c.id and l.is_like = 0) dislikes
-			FROM card c JOIN post p on c.id = p.card_id LEFT JOIN comment cm
-			ON c.id = cm.target_id JOIN user u ON c.user_id = u.id
-			WHERE c.id = ?
-			GROUP BY c.id`
+	query := `SELECT c.id,c.user_id,c.content,c.created_at,u.firstname,u.lastname, (SELECT count(*) FROM comment cm WHERE cm.target_id = c.id) comments,(SELECT count(*) FROM likes l WHERE l.card_id = c.id and l.is_like = 1) likes , (SELECT count(*) FROM likes l WHERE l.card_id = c.id and l.is_like = 0) dislikes
+			FROM card c  JOIN user u ON c.user_id = u.id WHERE c.id = ?;`
 	Row := card_View_Data{}
 	err := database.SelectOneRow(query,targetID).Scan(&Row.Id,&Row.User_Id,&Row.Content,&Row.CreatedAt,&Row.FirstName,&Row.LastName,&Row.Comments,&Row.Likes,&Row.DisLikes)
 	if err != nil{

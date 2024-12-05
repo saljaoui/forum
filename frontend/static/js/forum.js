@@ -2,6 +2,7 @@ import { likes } from "./likes.js";
 const user_data = localStorage.getItem("user_id");
 
 export function NewPost(postInfo,parent) {
+  let parentElem = document.querySelector(parent)
   let post = document.createElement("div");
   post.className = "post"
   post.innerHTML = `
@@ -53,7 +54,6 @@ export function NewPost(postInfo,parent) {
                                 class="avatar" alt="Profile picture" />
                               <div class="writeReply" >Write your reply</div>`
     anotherPost.appendChild(postReply)
-    let parentElem = document.querySelector(parent)
     console.log("parent is : ",parentElem);
     
     parentElem.appendChild(post)
@@ -84,7 +84,7 @@ export default async function fetchData() {
           <div class="user-info">
             <div class="display-name">${ele.firstName + " " + ele.lastName}</div>
             <span class="username">@${ele.firstName + "." + ele.lastName}</span>
-            <span class="timestamp">· ${date.getHours() - new Date(ele.date).getHours()}h</span>
+            <span class="timestamp"> ${date.getHours() - new Date(ele.date).getHours()}h</span>
           </div>
         </div>
         <div class="post-content">
