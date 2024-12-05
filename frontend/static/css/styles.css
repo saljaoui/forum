@@ -528,6 +528,10 @@ button:hover {
   margin-bottom: 12px;
   line-height: 1.4;
   margin-left: 60px;
+  overflow: hidden;
+  word-wrap: break-word;
+  white-space: normal;
+  height: max-content;
 }
 
 .post-actions {
