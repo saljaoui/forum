@@ -1,8 +1,6 @@
 package handlers
 
 import (
-	"encoding/json"
-	"fmt"
 	"net/http"
 
 	category "forum-project/backend/internal/repository/categories"
@@ -10,18 +8,28 @@ import (
 )
 
 func HandlePost(w http.ResponseWriter, r *http.Request) {
-	id_user := GetUserId(r)
-	fmt.Println(id_user)
-	post := posts.Post{}
-	err := json.NewDecoder(r.Body).Decode(&post)
-	if err != nil {
-		fmt.Println("error decoding JSON:", err)
+	if r.Method != http.MethodPost {
+		JsoneResponse(w, "Status Method Not Allowed", http.StatusMethodNotAllowed)
 		return
 	}
-	id := post.Add()
-	fmt.Println(post.Category)
-	for _, name := range post.Category {
-		category.AddCategory(id, name)
+	id_user := GetUserId(r)
+	post := posts.Post{}
+	decode := DecodeJson(r)
+	err := decode.Decode(&post)
+	if err != nil {
+		JsoneResponse(w, err.Error(), http.StatusBadRequest)
+		return
 	}
-	fmt.Println(post)
+	post.User_Id = id_user
+	post.CheckPostErr(w)
+	id := post.Add()
+
+	for _, name := range post.Name_Category {
+		err := category.AddCategory(id, name)
+		if err != nil {
+			JsoneResponse(w, err.Error(), http.StatusBadRequest)
+			return
+		}
+	}
+	JsoneResponse(w, "create post Seccessfuly", http.StatusCreated)
 }

@@ -16,20 +16,26 @@ func HandleRegister(w http.ResponseWriter, r *http.Request) {
 	}
 	user := repository.User{}
 	decode := DecodeJson(r)
+	decode.DisallowUnknownFields()
 	err := decode.Decode(&user)
 	if err != nil {
 		JsoneResponse(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	message := user.Register()
+
+	userRegiseter, message, uuid := user.Register()
+
 	if message.MessageError != "" {
 		JsoneResponse(w, message.MessageError, http.StatusBadRequest)
+		return
 	} else {
-		JsoneResponse(w, message.MessageSucc, http.StatusCreated)
+		SetCookie(w, "token", uuid, time.Now().Add(2*time.Minute))
+		SetCookie(w, "user_id", fmt.Sprint(userRegiseter.Id), time.Now().Add(2*time.Minute))
+		JsoneResponse(w, userRegiseter, http.StatusOK)
 	}
 }
 
-func LoginHandle(w http.ResponseWriter, r *http.Request) {
+func HandleLogin(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		JsoneResponse(w, "Status Method Not Allowed", http.StatusMethodNotAllowed)
 		return
@@ -42,24 +48,26 @@ func LoginHandle(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	loged, message, uuid := user.Authentication()
+	user.Getuuid(uuid.String())
+
 	if message.MessageError != "" {
 		JsoneResponse(w, message.MessageError, http.StatusBadRequest)
 		return
 	} else {
-		SetCookie(w, "token", uuid.String(), time.Now().Add(10*time.Second))
-		SetCookie(w, "user_id", fmt.Sprint(loged.Id), time.Now().Add(10*time.Second))
+		SetCookie(w, "token", uuid.String(), time.Now().Add(1*time.Hour))
+		SetCookie(w, "user_id", fmt.Sprint(loged.Id), time.Now().Add(1*time.Hour))
 		JsoneResponse(w, loged, http.StatusOK)
 	}
 }
 
 func HandleLogOut(w http.ResponseWriter, r *http.Request) {
 	logout := repository.Login{}
-	decode := DecodeJson(r)
-	err := decode.Decode(&logout)
-	if err != nil {
-		JsoneResponse(w, "Invalid request format", http.StatusBadRequest)
-		return
-	}
+	// decode := DecodeJson(r)
+	// err := decode.Decode(&logout)
+	// if err != nil {
+	// 	JsoneResponse(w, "Invalid request format", http.StatusBadRequest)
+	// 	return
+	// }
 
 	jsonValue, err := r.Cookie("user_id")
 	if err != nil {
@@ -98,7 +106,7 @@ func SetCookie(w http.ResponseWriter, name string, value string, time time.Time)
 func GetUserId(r *http.Request) int {
 	cookies, err := r.Cookie("user_id")
 	if err != nil {
-		fmt.Println("error", err)
+		return 0
 	}
 	id_user, _ := strconv.Atoi(cookies.Value)
 	return id_user
