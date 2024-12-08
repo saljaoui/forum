@@ -29,9 +29,9 @@ async function fetchdata() {
             is_Dislikes.textContent=data.dislikes
 console.log(data.dislikes);
 
-            card.setAttribute("data-id_card", data.id)
-           // cardid.dataset.id_card = data.id;
-            console.log("data is : ", data);
+        //     card.setAttribute("data-id_card", data.id)
+        //    // cardid.dataset.id_card = data.id;
+        //     console.log("data is : ", data);
         } else {
             const errorData = response.json();
             console.error("Error:", errorData);
