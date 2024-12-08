@@ -1,4 +1,4 @@
-import { InitialComment, fetchCard } from "./createcomment.js"
+import { InitialComment } from "./createcomment.js"
 import { checklogin } from "./checklogin.js";
 checklogin()
 const urlParams = new URLSearchParams(window.location.search);
@@ -20,7 +20,7 @@ export async function fetchdata() {
         })
         if (response.ok) {
 
-              data = await response.json();
+            data = await response.json();
             fullname.textContent = data.lastName + " " + data.firstName
             content.textContent = data.content
             username.textContent = data.lastName
