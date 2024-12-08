@@ -1,5 +1,4 @@
-import { InitialComment } from "./createcomment.js"
-import { likes } from "./likescomment.js";
+import { InitialComment, fetchCard } from "./createcomment.js"
 import { checklogin } from "./checklogin.js";
 checklogin()
 const urlParams = new URLSearchParams(window.location.search);
@@ -13,28 +12,28 @@ export async function fetchdata() {
     let cards = document.querySelectorAll("#likes")
     let is_liked = document.querySelector("#is_liked")
     let is_Dislikes = document.querySelector("#is_Dislikes")
-    let comments=document.querySelector(".comments")
-     cards.forEach(async (card) => {
-        let card_liked = card.getAttribute("data-like")
-        console.log(card_liked);
-        const response = await fetch(`/api/card?id=${cardData}`, {
+    let comments = document.querySelector(".comments")
+    let data=""
+    
+    const response = await fetch(`/api/card?id=${cardData}`, {
             method: "GET",
         })
         if (response.ok) {
-            likes(cards)
-            const data = await response.json();
+
+              data = await response.json();
             fullname.textContent = data.lastName + " " + data.firstName
             content.textContent = data.content
             username.textContent = data.lastName
             is_liked.textContent = data.likes
             is_Dislikes.textContent = data.dislikes
-            comments.textContent=data.comments
-            card.setAttribute("data-id_card", data.id) 
+            comments.textContent = data.comments
         } else {
             const errorData = response.json();
             console.error("Error:", errorData);
             alert(`Error: ${errorData.message || "Request failed"}`);
         }
+    cards.forEach(async (card) => {
+         card.setAttribute("data-id_card", data.id)
     })
 }
 fetchdata()
