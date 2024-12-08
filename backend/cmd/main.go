@@ -78,6 +78,10 @@ func main() {
 		http.ServeFile(w, r, "../../frontend/templates/categories.html")
 	})
 
+	mux.HandleFunc("/contact", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "../../frontend/templates/contact.html")
+	})
+
 	mux.HandleFunc("/comment", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "../../frontend/templates/comment.html")
 	})
