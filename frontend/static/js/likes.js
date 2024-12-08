@@ -23,9 +23,10 @@ import { fetchData } from "./forum.js";
                     }
                 }
             });
-        } else if (response.status === 401) {
-            location.href = "/login";
         }
+        //  else if (response.status === 401) {
+        //     location.href = "/login";
+        // }
         // Add click event listener
         click.addEventListener("click", async (e) => {
             e.preventDefault();
@@ -75,9 +76,10 @@ async function addLikes(card_id, liked, lik, dislk, context) {
         if (response.ok) {
             let data = await response.json();
             fetchData()
-        } else if (response.status === 401) {
-            location.href = "/login";
-        }
+        } 
+        // else if (response.status === 401) {
+        //     //location.href = "/login";
+        // }
     } catch (error) {
         console.log(error);
     }
@@ -96,7 +98,8 @@ async function deletLikes(user_id, card_id, context) {
     if (response.ok) {
         let data = await response.json();
         fetchData()
-    } else if (response.status === 401) {
-        location.href = "/login";
-    }
+    } 
+    // else if (response.status === 401) {
+    //     //location.href = "/login";
+    // }
 }

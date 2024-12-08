@@ -29,13 +29,16 @@ export default async function fetchData(categoryName) {
   if (responce.ok) {
     let data = await responce.json();
     let user_info = document.querySelector(".main");
-    user_info.innerHTML = "";
-    content = cards(data)
+    console.log(data);
+    
+    //user_info.innerHTML = "";
+    content = cards(data,user_info)
     let like = document.querySelectorAll("#likes");
     likes(like)
-  } else if(responce.status===401) {
-   // location.href="/login"
-  }
+  } 
+  // else if(responce.status===401) {
+  //  // location.href="/login"
+  // }
 }
 
 

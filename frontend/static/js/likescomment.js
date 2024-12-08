@@ -22,9 +22,10 @@ export function likes(likeElements) {
                     }
                 }
             });
-        } else if (response.status === 401) {
-            location.href = "/login";
         }
+        //  else if (response.status === 401) {
+        //     location.href = "/login";
+        // }
     });
 }
 
@@ -47,10 +48,10 @@ export async function addLikes(card_id, liked, lik, dislk, click) {
 
         if (response.ok) {
             let data = await response.json();
-        //fetchCard(card_id,click)
-        } else if (response.status === 401) {
-            location.href = "/login";
-        }
+        } 
+        // else if (response.status === 401) {
+        //     //location.href = "/login";
+        // }
     } catch (error) {
         console.log(error);
     }
@@ -77,7 +78,8 @@ export async function deletLikes(user_id, card_id, click) {
         // //       // Reload only the comment section
         // //      fetchCard(card_id)
         // //  }
-    } else if (response.status === 401) {
-        location.href = "/login";
     }
+    //  else if (response.status === 401) {
+    //     //location.href = "/login";
+    // }
 }

@@ -21,19 +21,20 @@ type Post struct {
 }
 
 type PostResponde struct {
-	Card_Id      int
-	Post_Id      int
-	UserID       int
-	FirstName    string
-	LastName     string
-	Title        string
-	Content      string
-	Likes        int
-	Dislikes     int
-	UserLiked    int
-	Userdisliked int
-	CreatedAt    time.Time
+	Card_Id      int       `json:"id"`
+	Post_Id      int       `json:"post_id"`
+	UserID       int       `json:"user_id"`
+	FirstName    string    `json:"firstName"`
+	LastName     string    `json:"lastName"`
+	Title        string    `json:"title"`
+	Content      string    `json:"content"`
+	Likes        int       `json:"likes"`
+	Dislikes     int       `json:"dislikes"`
+	UserLiked    int       `json:"userliked"`
+	Userdisliked int       `json:"userdisliked"`
+	CreatedAt    time.Time `json:"createdat"`
 }
+
 
 func (p *Post) Add() int {
 	card := cards.NewCard(p.User_Id, p.Content)
