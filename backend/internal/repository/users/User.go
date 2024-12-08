@@ -33,6 +33,9 @@ type Login struct {
 	UUID     string `json:"uuid"`
 	Password string `json:"password"`
 }
+type Logout struct {
+	Id       int64  `json:"id"`
+}
 
 func generatUUID() string {
 	uuid, err := uuid.NewV4()
@@ -123,7 +126,7 @@ func (log *Login) Getuuid(uuid string) {
 	// fmt.Println(log.UUID)
 }
 
-func (Log *Login) LogOut() (m messages.Messages) {
+func (Log *Logout) LogOut() (m messages.Messages) {
 	err := updateUUIDUser("null", Log.Id)
 	if err != nil {
 		m.MessageError = "Error To Update user"
