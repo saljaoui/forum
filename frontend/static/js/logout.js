@@ -9,9 +9,6 @@ export default async function logout() {
         },
         body: JSON.stringify({ id: +userId }),
     });
-    console.log(response.status);
-    let data=response.json()
-    console.log(data);
     
     if (response.ok) {
         console.log("Logout successful");
