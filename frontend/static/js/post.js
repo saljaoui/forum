@@ -22,13 +22,14 @@ async function creatPost(categoriesSelected) {
         const data = await response.json();
         console.log("Success:", data);
       
-    } else if (response.status === 401) {
-        location.href = "/login"
-    }else {
-        const errorData = response.json();
-        console.error("Error:", errorData);
-        alert(`Error: ${errorData.message || "Request failed"}`);
-    }
+    } 
+    // else if (response.status === 401) {
+    //     location.href = "/login"
+    // }else {
+    //     const errorData = response.json();
+    //     console.error("Error:", errorData);
+    //     alert(`Error: ${errorData.message || "Request failed"}`);
+    // }
 }
 export {
     creatPost

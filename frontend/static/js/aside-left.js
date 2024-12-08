@@ -40,16 +40,13 @@ done_btn.addEventListener("click",()=>{
 })
  
 create_btn.addEventListener("click",() => {
-console.log(categoriesSelected.length);
-console.log(content.value.length);
-
-
+// console.log(categoriesSelected.length);
+// console.log(content.value.length);
     if (categoriesSelected.length > 0 && content.value.length > 0) {
        creatPost(categoriesSelected)
        creatPostPopup.style.display = "none"
        closeCategories()
        content.value = ""
-      // fetchData()
     } else if (categoriesSelected.length === 0) {
         openCategorie.style.display = "flex"
     }  

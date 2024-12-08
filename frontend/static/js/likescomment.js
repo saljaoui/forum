@@ -1,7 +1,7 @@
-import { fetchData } from "./forum.js";
- export function likes(likeElements) {
+// import { fetchData } from "./forum.js";
+ //import  {fetchCard,addLike_card}  from "./createcomment.js";
+export function likes(likeElements) {
     const user_data = localStorage.getItem("user_id");
-
     likeElements.forEach(async (click) => {
         let card_id = click.getAttribute("data-id_card");
         let like = click.getAttribute("data-like");
@@ -9,7 +9,6 @@ import { fetchData } from "./forum.js";
             method: "POST",
             body: JSON.stringify({ card_id: +card_id }),
         });
-
         if (response.ok) {
             let data = await response.json();
             data.forEach((el) => {
@@ -27,37 +26,11 @@ import { fetchData } from "./forum.js";
         //  else if (response.status === 401) {
         //     location.href = "/login";
         // }
-        // Add click event listener
-        click.addEventListener("click", async (e) => {
-            e.preventDefault();
-            let card_id = click.getAttribute("data-id_card");
-            let like = click.getAttribute("data-like");
-            let data_liked = click.getAttribute("data-liked");
-            let context = click.getAttribute("data-context"); // Capture context again
-            // Handle like and dislike actions
-             if (like === "like") {
-                if (data_liked === "true") {
-                    await deletLikes(user_data, card_id, context);
-                    console.log("Removed like");
-                } else if (data_liked === "false") {
-                    await addLikes(card_id, 1, true, false, context);
-                    console.log("Added like");
-                }
-            } else if (like === "Dislikes") {
-                if (data_liked === "true") {
-                    await deletLikes(user_data, card_id, context);
-                    console.log("Removed dislike");
-                } else if (data_liked === "false") {
-                    await addLikes(card_id, -1, false, true, context);
-                    console.log("Added dislike");
-                }
-            }
-        });
     });
 }
 
 
-async function addLikes(card_id, liked, lik, dislk, context) {
+export async function addLikes(card_id, liked, lik, dislk, click) {
     try {
         let response = await fetch("/api/like", {
             method: "POST",
@@ -75,7 +48,6 @@ async function addLikes(card_id, liked, lik, dislk, context) {
 
         if (response.ok) {
             let data = await response.json();
-            fetchData()
         } 
         // else if (response.status === 401) {
         //     //location.href = "/login";
@@ -85,7 +57,7 @@ async function addLikes(card_id, liked, lik, dislk, context) {
     }
 }
 
-async function deletLikes(user_id, card_id, context) {
+export async function deletLikes(user_id, card_id, click) {
     let response = await fetch("/api/deleted", {
         method: "DELETE",
         headers: {
@@ -97,9 +69,17 @@ async function deletLikes(user_id, card_id, context) {
 
     if (response.ok) {
         let data = await response.json();
-        fetchData()
-    } 
-    // else if (response.status === 401) {
+        // fetchCard(card_id,click)
+        // //console.log(data);
+        // // if (context === "post") {
+        // //     fetchData(); // Refresh post section
+        // //     return
+        // //  } else if (context === "comment") {
+        // //       // Reload only the comment section
+        // //      fetchCard(card_id)
+        // //  }
+    }
+    //  else if (response.status === 401) {
     //     //location.href = "/login";
     // }
 }
