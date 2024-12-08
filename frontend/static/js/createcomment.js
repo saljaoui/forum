@@ -58,7 +58,7 @@ export function InitialComment(data) {
 
     let comments = document.querySelector(".comment")
 
-     cards(data,comments)
+    cards(data,comments)
     let like = document.querySelectorAll("#likes");
     likes(like)
     // let div = document.createElement("div")
