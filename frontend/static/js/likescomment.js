@@ -1,6 +1,5 @@
-// import { fetchData } from "./forum.js";
- //import  {fetchCard,addLike_card}  from "./createcomment.js";
-export function likes(likeElements) {
+
+export async function likes(likeElements) {
     const user_data = localStorage.getItem("user_id");
     likeElements.forEach(async (click) => {
         let card_id = click.getAttribute("data-id_card");
@@ -13,6 +12,7 @@ export function likes(likeElements) {
             let data = await response.json();
             data.forEach((el) => {
                 if (el.User_id === +user_data) {
+                    localStorage.setItem("user_login", el.User_id);
                     if (el.UserLiked && like === "like") {
                         click.classList.add("clicked");
                         click.setAttribute("data-liked", "true");
@@ -23,9 +23,6 @@ export function likes(likeElements) {
                 }
             });
         }
-        //  else if (response.status === 401) {
-        //     location.href = "/login";
-        // }
     });
 }
 

@@ -1,6 +1,5 @@
-import { GetComments } from "./comment.js";
-//import { NewPost } from "./forum.js";
-import { likes,addLikes ,deletLikes} from "./likescomment.js";
+import { GetComments,fetchdata } from "./comment.js";
+ import { likes, addLikes, deletLikes } from "./likescomment.js";
 const urlParams = new URLSearchParams(window.location.search);
 const cardData = urlParams.get("card_id");
 let user_id = localStorage.getItem("user_id")
@@ -26,21 +25,21 @@ comment.addEventListener("click", () => {
 })
 
 
-function NewPost(postInfo, parent) {
-    console.log(postInfo);
-    
-}
+// function NewPost(postInfo, parent) {
+//     console.log(postInfo);
 
-export async function LoadPage(cardid) {
-    let main = document.querySelector(".allcomment")
-    /// console.log(main, cardData);
-    await GetComments(cardid)
-}
+// }
 
-//await LoadPage(+cardData)
+// export async function LoadPage(cardid) {
+//     let main = document.querySelector(".allcomment")
+//     /// console.log(main, cardData);
+//     await GetComments(cardid)
+// }
+
+// //await LoadPage(+cardData)
 
 
-export function InitialComment(ele, comments) {
+export async function InitialComment(ele, comments) {
     ele.map((data) => {
         let div = document.createElement("div")
         div.className = "commens-card"
@@ -91,11 +90,10 @@ export function InitialComment(ele, comments) {
         comments.appendChild(div)
     })
     let like = document.querySelectorAll("#likes");
-    likes(like)
+    await likes(like)
 }
 export async function fetchCard(card) {
     try {
-        NewPost(card,"main")
         let cardId = card.getAttribute("data-id_card");
         const response = await fetch(`/api/card?id=${cardId}`, {
             method: "GET",
@@ -111,7 +109,7 @@ export async function fetchCard(card) {
         console.log("Fetched card data:", cardData);
         let cardElement = card.closest(".commens-card");
         if (cardElement) {
-            updateCard(cardElement, cardData, card); // Update only necessary parts of the card
+            await updateCard(cardElement, cardData, card);  
         }
     } catch (error) {
         console.error("Fetch Error:", error);
@@ -119,17 +117,20 @@ export async function fetchCard(card) {
     }
 }
 
-function updateCard(cardElement, cardData, cardClicked) {
-    const postActions = cardElement.querySelector(".post-actions");
+async function updateCard(cardElement, cardData) {
+    let user_login = localStorage.getItem("user_login")
+    let user_id = localStorage.getItem("user_id")
+    console.log("user", user_login, user_id);
+     const postActions = cardElement.querySelector(".post-actions");
     if (postActions) {
         postActions.innerHTML = `
-                <div class="action active is_liked ${cardData.likes===1?"clicked":""}" id="likes" data-liked="false" data-like="like" data-id_card="${cardData.id}">
+                <div class="action active is_liked " id="likes" data-liked="false" data-like="like" data-id_card="${cardData.id}">
                     <svg width="17" height="17" viewBox="0 0 20 20" fill="currentColor">
                         <path d="M10 19c-.072 0-.145 0-.218-.006A4.1 4.1 0 0 1 6 14.816V11H2.862a1.751 1.751 0 0 1-1.234-2.993L9.41.28a.836.836 0 0 1 1.18 0l7.782 7.727A1.751 1.751 0 0 1 17.139 11H14v3.882a4.134 4.134 0 0 1-.854 2.592A3.99 3.99 0 0 1 10 19Zm0-17.193L2.685 9.071a.251.251 0 0 0 .177.429H7.5v5.316A2.63 2.63 0 0 0 9.864 17.5a2.441 2.441 0 0 0 1.856-.682A2.478 2.478 0 0 0 12.5 15V9.5h4.639a.25.25 0 0 0 .176-.429L10 1.807Z"></path>
                     </svg>
                     <span id="is_liked">${cardData.likes}</span>
                 </div>
-                <div class="action disliked ${cardData.dislikes===1?"clicked_disliked":""} " id="likes" data-liked="false" data-like="Dislikes" data-id_card="${cardData.id}">
+                <div class="action disliked " id="likes" data-liked="false" data-like="Dislikes" data-id_card="${cardData.id}">
                     <svg width="17" height="17" viewBox="0 0 20 20" fill="currentColor">
                         <path d="M10 1c.072 0 .145 0 .218.006A4.1 4.1 0 0 1 14 5.184V9h3.138a1.751 1.751 0 0 1 1.234 2.993L10.59 19.72a.836.836 0 0 1-1.18 0l-7.782-7.727A1.751 1.751 0 0 1 2.861 9H6V5.118a4.134 4.134 0 0 1 .854-2.592A3.99 3.99 0 0 1 10 1Zm0 17.193 7.315-7.264a.251.251 0 0 0-.177-.429H12.5V5.184A2.631 2.631 0 0 0 10.136 2.5a2.441 2.441 0 0 0-1.856.682A2.478 2.478 0 0 0 7.5 5v5.5H2.861a.251.251 0 0 0-.176.429L10 18.193Z"></path>
                     </svg>
@@ -145,7 +146,10 @@ function updateCard(cardElement, cardData, cardClicked) {
                 </div>
     ` ;
     }
-    console.log("Updated card actions:", postActions);
+    let allLikes = document.querySelectorAll("#likes")
+    fetchdata()
+    await likes(allLikes)
+
 }
 
 
@@ -178,9 +182,8 @@ async function createComment(content) {
 document.body.addEventListener("click", async (e) => {
     const click = e.target.closest(".action"); // Ensure the clicked element is an action button
     if (!click || !click.matches(".is_liked, .disliked")) return; // Ignore unrelated clicks
-
     e.preventDefault();
-
+    let allLikes = document.querySelectorAll("#likes")
     const user_data = localStorage.getItem("user_id");
     const card_id = click.getAttribute("data-id_card");
     const like = click.getAttribute("data-like");
@@ -205,6 +208,7 @@ document.body.addEventListener("click", async (e) => {
             }
         }
 
+
         await fetchCard(click); // Update the card data after liking/disliking
     } catch (error) {
         console.error("Error handling like/dislike:", error);
@@ -214,7 +218,7 @@ document.body.addEventListener("click", async (e) => {
 // export function addLike_card(){
 //     const user_data = localStorage.getItem("user_id");
 //     document.body.addEventListener("click", async (e) => {
-//         const click = e.target.closest(".action"); 
+//         const click = e.target.closest(".action");
 //         if (!click || !click.matches(".is_liked, .disliked")) return;
 //         e.preventDefault();
 //          let card_id = click.getAttribute("data-id_card");

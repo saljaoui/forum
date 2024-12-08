@@ -1,5 +1,7 @@
 import { likes } from "./likes.js";
 import { cards } from "./card.js";
+import { checklogin } from "./checklogin.js";
+checklogin()
 const user_data = localStorage.getItem("user_id");
 let content = []
 const searchInput = document.querySelector("[data-search]")
