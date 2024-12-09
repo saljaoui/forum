@@ -17,7 +17,7 @@ func main() {
 		fmt.Println(Err)
 	}
 	mux := http.NewServeMux()
-	http.Handle("/", http.FileServer(http.Dir("../../frontend/static")))
+	// http.Handle("/", http.FileServer(http.Dir("../../frontend/static")))
 	mux.HandleFunc("/api/register", handlers.HandleRegister)
 	mux.HandleFunc("/api/home", handlers.HomeHandle)
 
@@ -84,6 +84,10 @@ func main() {
 
 	mux.HandleFunc("/comment", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "../../frontend/templates/comment.html")
+	})
+	
+	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "../../frontend/templates/err.html")
 	})
 
 	fmt.Println("Server running at :3333")
