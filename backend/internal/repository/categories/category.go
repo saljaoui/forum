@@ -17,8 +17,18 @@ func AddCategory(post_id int, category string) error {
 }
 
 func GetPostsByCategoryId(categoryName string) []post.PostResponde {
-	query := `SELECT p.card_id AS 'card_id', p.id, u.id AS 'user_id', u.firstname, u.lastname, p.title, c.content, c.created_at
-	FROM post p, card c, user u, post_category pc, category cat WHERE p.card_id=c.id
-	AND c.user_id=u.id AND p.id = pc.post_id AND pc.category_id=cat.id AND cat.name = "` + categoryName + "\""
+	query := `
+	SELECT c.id,
+    c.user_id,
+    p.id,
+    c.content,
+    c.created_at,
+    u.firstname,
+    u.lastname,count(cm.id) comments
+			FROM card c JOIN post p on c.id = p.card_id LEFT JOIN comment cm
+			ON c.id = cm.target_id JOIN user u ON c.user_id = u.id
+            JOIN post_category pc on pc.post_id=p.id 
+            JOIN category cat on cat.id=pc.category_id
+            WHERE cat.name = "` + categoryName + "\" GROUP BY c.id  ORDER BY c.id DESC"
 	return post.GetPosts(query)
 }

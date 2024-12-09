@@ -2,12 +2,12 @@ package posts
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"time"
 
 	"forum-project/backend/internal/database"
 	"forum-project/backend/internal/repository/cards"
-	like "forum-project/backend/internal/repository/likes"
 )
 
 type Post struct {
@@ -31,10 +31,10 @@ type PostResponde struct {
 	Likes        int       `json:"likes"`
 	Dislikes     int       `json:"dislikes"`
 	UserLiked    int       `json:"userliked"`
-	Userdisliked int       `json:"userdisliked"`
+	//Userdisliked int       `json:"userdisliked"`
+	Comments     string    `json:"comments"`
 	CreatedAt    time.Time `json:"createdat"`
 }
-
 
 func (p *Post) Add() int {
 	card := cards.NewCard(p.User_Id, p.Content)
@@ -67,24 +67,24 @@ func GetPosts(query string) []PostResponde {
 		var post PostResponde
 		err := rows.Scan(
 			&post.Card_Id,
-			&post.Post_Id,
 			&post.UserID,
-			&post.FirstName,
-			&post.LastName,
-			&post.Title,
+			&post.Post_Id,
 			&post.Content,
 			&post.CreatedAt,
+			&post.FirstName,
+			&post.LastName,
+			&post.Comments,
 		)
 		if err != nil {
+			fmt.Println("er", err)
 			return nil
 		}
-		likes, dislikes, userliked, Userdisliked := like.GetLikes(post.Post_Id)
-		post.Likes = likes
-		post.Dislikes = dislikes
-		post.UserLiked = userliked
-		post.Userdisliked = Userdisliked
+		// likes, dislikes, userliked, Userdisliked := like.GetLikes(post.Post_Id)
+		// post.Likes = likes
+		// post.Dislikes = dislikes
+		// post.UserLiked = userliked
+		// post.Userdisliked = Userdisliked
 		posts = append(posts, post)
 	}
 	return posts
 }
-

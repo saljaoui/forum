@@ -16,7 +16,7 @@ export async function fetchdata() {
     let data = ""
     let path = window.location.pathname
     if (path !== "/comment") {
-        return
+        return ""
     } else {
         const response = await fetch(`/api/card?id=${cardData}`, {
             method: "GET",
@@ -43,11 +43,14 @@ fetchdata()
 export async function GetComments() {
     let path = window.location.pathname
     if (path !== "/comment") {
-        return
+        return ""
     }else{
     const response = await fetch(`/api/comment?target_id=${cardData}`, {
         method: "GET",
     });
+   if(response===null){
+    return ""
+   }
     if (response.ok) {
         let datacomment = await response.json()
         let comments = document.querySelector(".allcomment")

@@ -1,5 +1,5 @@
 import { navigate } from "./home.js";
-import { likes } from "./likes.js";
+import { likes } from "./likescomment.js";
 const profileNav = document.querySelectorAll(".profile-nav a");
 navigate();
 
@@ -30,10 +30,9 @@ export default async function fetchData(navIdName) {
     method: "GET",
   });
   if (responce.ok) {
-    // SeccesCreatPost()
-    const user_data = history.state;
-    // console.log(user_data);
-
+ 
+    console.log(data);
+    
     let data = await responce.json();
     let user_info = document.querySelector(".profile");
     user_info.innerHTML = "";
