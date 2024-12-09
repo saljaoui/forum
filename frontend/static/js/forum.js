@@ -3,7 +3,6 @@ import { likes } from "./likescomment.js";
 import { cards } from "./card.js";
 import { checklogin } from "./checklogin.js";
 checklogin()
-const user_data = localStorage.getItem("user_id");
 let content = []
 const searchInput = document.querySelector("[data-search]")
 searchInput.addEventListener("input", (e) => {
@@ -27,7 +26,6 @@ export   async function fetchData() {
     let user_info = document.querySelector(".main");
     content = cards(data,user_info)
      let like = document.querySelectorAll("#likes");
-      
      likes(like)
   } 
   // else if (responce.status === 401) {

@@ -13,13 +13,15 @@ export async function fetchdata() {
     let is_liked = document.querySelector("#is_liked")
     let is_Dislikes = document.querySelector("#is_Dislikes")
     let comments = document.querySelector(".comments")
-    let data=""
-    
-    const response = await fetch(`/api/card?id=${cardData}`, {
+    let data = ""
+    let path = window.location.pathname
+    if (path !== "/comment") {
+        return
+    } else {
+        const response = await fetch(`/api/card?id=${cardData}`, {
             method: "GET",
         })
         if (response.ok) {
-
             data = await response.json();
             fullname.textContent = data.lastName + " " + data.firstName
             content.textContent = data.content
@@ -32,12 +34,17 @@ export async function fetchdata() {
             console.error("Error:", errorData);
             alert(`Error: ${errorData.message || "Request failed"}`);
         }
-    cards.forEach(async (card) => {
-         card.setAttribute("data-id_card", data.id)
-    })
+        cards.forEach(async (card) => {
+            card.setAttribute("data-id_card", data.id)
+        })
+    }
 }
 fetchdata()
 export async function GetComments() {
+    let path = window.location.pathname
+    if (path !== "/comment") {
+        return
+    }else{
     const response = await fetch(`/api/comment?target_id=${cardData}`, {
         method: "GET",
     });
@@ -50,5 +57,6 @@ export async function GetComments() {
     else {
         console.log("err");
     }
+}
 }
 GetComments()

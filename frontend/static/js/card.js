@@ -8,7 +8,7 @@ export   function cards(data,user_info) {
         let date = new Date(ele.CreatedAt);
         let contents = document.createElement("div");
         contents.innerHTML = `
-        <div class="post">
+        <div class="post commens-card">
           <div class="post-header">
             <img src="../static/imgs/profilePic.png" class="avatar" alt="${ele.firstName}'s profile picture" />
             <div class="user-info">
