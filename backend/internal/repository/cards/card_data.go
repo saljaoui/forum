@@ -69,7 +69,7 @@ func getAllCards() []card_View_Data {
 	  likes , (SELECT count(*) FROM likes l WHERE l.card_id = c.id and l.is_like = -1) dislikes
 			FROM card c JOIN post p on c.id = p.card_id LEFT JOIN comment cm
 			ON c.id = cm.target_id JOIN user u ON c.user_id = u.id
-			GROUP BY c.id`
+			GROUP BY c.id  ORDER BY c.id DESC  `
 	data_Rows := database.SelectRows(query)
 	for data_Rows.Next(){
 		Row := card_View_Data{}

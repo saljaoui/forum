@@ -4,12 +4,12 @@ import { likes } from "./likes.js";
 
 const profileNav = document.querySelectorAll(".profile-nav a");
 navigate()
-let content = []
+let content = ""
 profileNav.forEach((navItem) => {
   navItem.addEventListener("click", () => {
     navItem.className = "active";
     fetchData(navItem.textContent)
-    console.log(content);
+    content = navItem.textContent
     profileNav.forEach((item) => {
       if (item != navItem) {
         item.className = "";
@@ -35,6 +35,7 @@ export default async function fetchData(categoryName) {
     content = cards(data,user_info)
     let like = document.querySelectorAll("#likes");
     likes(like)
+    
   } 
   // else if(responce.status===401) {
   //  // location.href="/login"
