@@ -11,7 +11,7 @@ import (
 
 func HandleRegister(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
-		JsoneResponse(w, "Status Method Not Allowed", http.StatusMethodNotAllowed)
+		HandleError(w, "Status Method Not Allowed", http.StatusMethodNotAllowed)
 		return
 	}
 	user := repository.User{}
@@ -19,14 +19,14 @@ func HandleRegister(w http.ResponseWriter, r *http.Request) {
 	decode.DisallowUnknownFields()
 	err := decode.Decode(&user)
 	if err != nil {
-		JsoneResponse(w, err.Error(), http.StatusBadRequest)
+		HandleError(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
 	userRegiseter, message, uuid := user.Register()
 
 	if message.MessageError != "" {
-		JsoneResponse(w, message.MessageError, http.StatusBadRequest)
+		HandleError(w, message.MessageError, http.StatusBadRequest)
 		return
 	} else {
 		SetCookie(w, "token", uuid, time.Now().Add(2*time.Minute))
@@ -37,21 +37,21 @@ func HandleRegister(w http.ResponseWriter, r *http.Request) {
 
 func HandleLogin(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
-		JsoneResponse(w, "Status Method Not Allowed", http.StatusMethodNotAllowed)
+		HandleError(w, "Status Method Not Allowed", http.StatusMethodNotAllowed)
 		return
 	}
 	user := repository.Login{}
 	decode := DecodeJson(r)
 	err := decode.Decode(&user)
 	if err != nil {
-		JsoneResponse(w, err.Error(), http.StatusBadRequest)
+		HandleError(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 	loged, message, uuid := user.Authentication()
 	user.Getuuid(uuid.String())
 
 	if message.MessageError != "" {
-		JsoneResponse(w, message.MessageError, http.StatusBadRequest)
+		HandleError(w, message.MessageError, http.StatusBadRequest)
 		return
 	} else {
 		SetCookie(w, "token", uuid.String(), time.Now().Add(1*time.Hour))
@@ -66,28 +66,28 @@ func HandleLogOut(w http.ResponseWriter, r *http.Request) {
 	decode := DecodeJson(r)
 	err := decode.Decode(&logout)
 	if err != nil {
-		JsoneResponse(w, "Invalid request format", http.StatusBadRequest)
+		HandleError(w, "Invalid request format", http.StatusBadRequest)
 		return
 	}
 
 	jsonValue, err := r.Cookie("user_id")
 	if err != nil {
-		JsoneResponse(w, "Missing or invalid user_id cookie", http.StatusBadRequest)
+		HandleError(w, "Missing or invalid user_id cookie", http.StatusBadRequest)
 		return
 	}
 	user_id, err := strconv.Atoi(jsonValue.Value)
 	if err != nil {
-		JsoneResponse(w, "Invalid user_id value", http.StatusBadRequest)
+		HandleError(w, "Invalid user_id value", http.StatusBadRequest)
 		return
 	}
 	if int64(user_id) != logout.Id {
-		JsoneResponse(w, "Unauthorized user", http.StatusUnauthorized)
+		HandleError(w, "Unauthorized user", http.StatusUnauthorized)
 		return
 	}
 
 	message := logout.LogOut()
 	if message.MessageError != "" {
-		JsoneResponse(w, message.MessageError, http.StatusBadRequest)
+		HandleError(w, message.MessageError, http.StatusBadRequest)
 		return
 	}
 	SetCookie(w, "token", "", time.Now())

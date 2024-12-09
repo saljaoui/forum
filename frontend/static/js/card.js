@@ -45,9 +45,9 @@ export   function cards(data,user_info) {
           </div>
         </div>
         `;
-        
-        user_info.appendChild(contents);
-        return { data: ele.content, element: contents }
-    });
-    return content
+
+    user_info.appendChild(contents);
+    return { data: ele.content, element: contents }
+  });
+  return content
 }
