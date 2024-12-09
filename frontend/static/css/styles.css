@@ -935,6 +935,11 @@ button:hover {
   overflow: scroll;
 }
 
+.allcomment {
+  max-height: 78.8vh;
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
 
 
 

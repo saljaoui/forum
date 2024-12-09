@@ -1,5 +1,8 @@
-import { likes } from "./likes.js";
+import { checkandAdd } from "./addlikes.js";
+import { likes } from "./likescomment.js";
 import { cards } from "./card.js";
+import { checklogin } from "./checklogin.js";
+checklogin()
 const user_data = localStorage.getItem("user_id");
 let content = []
 const searchInput = document.querySelector("[data-search]")
@@ -24,6 +27,7 @@ export   async function fetchData() {
     let user_info = document.querySelector(".main");
     content = cards(data,user_info)
      let like = document.querySelectorAll("#likes");
+      
      likes(like)
   } 
   // else if (responce.status === 401) {
@@ -33,7 +37,9 @@ export   async function fetchData() {
   // }
 }
 fetchData()
-
+document.addEventListener("DOMContentLoaded", () => {
+  checkandAdd();
+});
 
 if (document.cookie) {
   let join = document.querySelector(".join");
