@@ -61,7 +61,8 @@ func HandleLogin(w http.ResponseWriter, r *http.Request) {
 }
 
 func HandleLogOut(w http.ResponseWriter, r *http.Request) {
-	logout := repository.Login{}
+	logout := repository.Logout{}
+
 	decode := DecodeJson(r)
 	err := decode.Decode(&logout)
 	if err != nil {
