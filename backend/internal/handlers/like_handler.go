@@ -18,13 +18,13 @@ func HandelLike(w http.ResponseWriter, r *http.Request) {
 	decode := DecodeJson(r)
 	err := decode.Decode(&like)
 	if err != nil {
-		JsoneResponse(w, err.Error(), http.StatusBadRequest)
+		HandleError(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 	like.User_Id = id_user
 	m := like.Add()
 	if m.MessageError != "" {
-		JsoneResponse(w, m.MessageError, http.StatusBadRequest)
+		HandleError(w, m.MessageError, http.StatusBadRequest)
 		return
 	}
 	JsoneResponse(w, m.MessageSucc, http.StatusCreated)
@@ -40,7 +40,7 @@ func HandelDeletLike(w http.ResponseWriter, r *http.Request) {
 	decode := DecodeJson(r)
 	err := decode.Decode(&like)
 	if err != nil {
-		JsoneResponse(w, "err.Error()", http.StatusBadRequest)
+		HandleError(w, "err.Error()", http.StatusBadRequest)
 		return
 	}
 	//  var wg sync.WaitGroup

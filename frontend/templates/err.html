@@ -11,9 +11,12 @@
 
 <body>
     <div class="container">
-        <h1 class="status-code">404</h1>
-        <p class="message">Page not found</p>
-        <a href="/home"><button class="back-button">Back to Home</button></a>
+        <img class="img" src="../static/imgs/logoerr.gif" alt="" />
+        <h1 class="status-code">{{.Code}}</h1>
+        <p class="message">{{.Msg}}</p>
+        <a href="/home">
+        <button class="back-button" >Back to Home</button>
+    </a>
     </div>
 </body>
 

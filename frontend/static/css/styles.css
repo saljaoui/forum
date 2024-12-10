@@ -972,8 +972,94 @@ button:hover {
   font-weight: 200;
 }
 
+@media (max-width: 1300px) {
+
+  .nav-item h1 {
+    display: none;
+    
+  }
+
+  .aside-left nav {
+    width: max-content;
+
+  }
+
+  .logo-user {
+    width: max-content;
+  }
+
+  .logo-user img {
+    height: 42px;
+    width: 42px;
+    margin: 5px 8px 5px 8px;
+  }
+
+  ion-icon {
+    margin: auto;
+    margin: 7px;
+  }
+
+  .aside-nav {
+    position: absolute;
+    margin: 0;
+    padding: 10px;
+    width: max-content;
+    left: 0;
+    bottom: 0;
+    top: 0;
+    border-right: 1px solid var(--color-light) ;
+  }
+
+  .nav-item {
+    width: max-content;
+  }
+
+  .newPost-popup {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    margin: 40px;
+  }
 
 
+
+  .search {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    margin-top: 10px;
+    width: 500px;
+  }
+
+}
+
+@media (max-width: 950px) {
+  .link-list {
+    display: none;
+  }
+  .newPost-popup {
+    position: relative;
+    margin: auto;
+  }
+  .aside-nav button {
+    padding: 0 0 0 1px;
+    width: 40px;
+  }
+  .newPost-popup h1 {
+    display: none;
+  }
+
+}
+
+
+
+@media (max-width: 850px) {
+  .aside-right {
+    display: none;
+  }
+}
 
 
 

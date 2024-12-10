@@ -1,6 +1,6 @@
 import { navigate } from "./home.js";
-import { likes } from "./likes.js";
 import { cards } from "./card.js";
+import { likes } from "./likescomment.js";
 const profileNav = document.querySelectorAll(".profile-nav a");
 navigate();
 

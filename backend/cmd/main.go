@@ -87,7 +87,7 @@ func main() {
 	})
 	
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, "../../frontend/templates/err.html")
+		handlers.HandleError(w, http.StatusText(404) , 404)
 	})
 
 	fmt.Println("Server running at :3333")
