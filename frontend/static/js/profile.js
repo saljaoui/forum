@@ -1,4 +1,5 @@
 import { navigate } from "./home.js";
+import { cards } from "./card.js";
 import { likes } from "./likescomment.js";
  import { cards } from "./card.js";
 
@@ -27,19 +28,16 @@ profileNav.forEach((navItem) => {
     method: "GET",
   });
   if (responce.ok) {
-    // SeccesCreatPost()
-    //const user_data = history.state;
-    // console.log(user_data);
-
-    let data = await responce.json();           
-    let user_info = document.querySelector(".main");
-    content = cards(data, user_info)
-
-    let like = document.querySelectorAll("#likes"); 
-    // console.log(data);
-    likes(like );
-  } else {
-    let data = responce.json();
-    console.log(data);
-  }
+    let user_info = document.querySelector(".profile");
+    let data = await responce.json();
+    cards(data, user_info)
+    let like = document.querySelectorAll("#likes");
+    likes(like)
+  } 
+  // else if (responce.status === 401) {
+  //  // location.href = "/login";
+  // } else {
+  //   let data = responce.json();
+  //   console.log(data);
+  // }
 }

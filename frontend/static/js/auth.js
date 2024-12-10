@@ -29,6 +29,7 @@ register.addEventListener('submit', async (e) => {
         const data = await response.json();
         console.log("Success:", data);
         localStorage.setItem("user_id",data)
+        location.href = "/login"
     } else {
         const errorData = await response.json();
         console.error("Error:", errorData);
@@ -58,7 +59,6 @@ login.addEventListener('submit', async (e) => {
     if (response.ok) {
         const data = await response.json();
         localStorage.setItem("user_id", data.message.id)
-  
         location.href = "/home"
         //alert(data)
         //console.log("Success:", data);
