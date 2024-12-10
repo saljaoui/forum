@@ -53,9 +53,7 @@ body {
   overflow-y: scroll;
   max-height: 93.2vh;
   scrollbar-width: none;
-  /* For Firefox */
   -ms-overflow-style: none;
-  /* For IE and Edge */
 }
 
 .content_post::-webkit-scrollbar {
