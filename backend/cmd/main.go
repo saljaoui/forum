@@ -38,12 +38,12 @@ func main() {
 
 	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("../../frontend/static"))))
 	mux.HandleFunc("/login", func(w http.ResponseWriter, r *http.Request) {
-		// cookies, err := r.Cookie("token")
-		// if err != nil || cookies == nil {
+		cookies, err := r.Cookie("token")
+		if err != nil || cookies == nil {
 		http.ServeFile(w, r, "../../frontend/templates/login.html")
-		// } else {
-		// 	http.Redirect(w, r, "/home", http.StatusSeeOther)
-		// }
+		} else {
+			http.Redirect(w, r, "/home", http.StatusSeeOther)
+		}
 	})
 	mux.HandleFunc("/aside-right", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "../../frontend/templates/aside-right.html")
@@ -57,21 +57,21 @@ func main() {
 	})
 
 	mux.HandleFunc("/profile", func(w http.ResponseWriter, r *http.Request) {
-		// cookies, err := r.Cookie("token")
-		// if err != nil || cookies == nil {
-		// 	http.Redirect(w, r, "/login", http.StatusSeeOther)
-		// } else {
+		cookies, err := r.Cookie("token")
+		if err != nil || cookies == nil {
+			http.Redirect(w, r, "/login", http.StatusSeeOther)
+		} else {
 			http.ServeFile(w, r, "../../frontend/templates/profile.html")
-		//}
+		}
 	})
 
 	mux.HandleFunc("/settings", func(w http.ResponseWriter, r *http.Request) {
-		// cookies, err := r.Cookie("token")
-		// if err != nil || cookies == nil {
-		// 	http.Redirect(w, r, "/login", http.StatusSeeOther)
-		// } else {
+		cookies, err := r.Cookie("token")
+		if err != nil || cookies == nil {
+			http.Redirect(w, r, "/login", http.StatusSeeOther)
+		} else {
 			http.ServeFile(w, r, "../../frontend/templates/settings.html")
-		//}
+		}
 	})
 
 	mux.HandleFunc("/categories", func(w http.ResponseWriter, r *http.Request) {
