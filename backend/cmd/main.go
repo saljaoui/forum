@@ -103,8 +103,6 @@ func setupPageRoutes(mux *http.ServeMux) {
 		}
 	})
 
-	
-
 	mux.HandleFunc("/settings", func(w http.ResponseWriter, r *http.Request) {
 		cookies, err := r.Cookie("token")
 		if err != nil || cookies == nil {

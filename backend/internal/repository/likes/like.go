@@ -21,7 +21,7 @@ type DeletLikes struct {
 type ResponseUserLikeds struct {
 	UserLiked    bool
 	UserDisliked bool
-	User_id      int
+	Uuid         string
 }
 
 func NewLike(user_id, card_id int) *Like {

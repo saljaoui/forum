@@ -3,6 +3,8 @@ import { checkandAdd } from "./addlikes.js";
 import { GetComments } from "./comment.js";
 
 import { search } from "./search.js";
+import { isLogged } from "./isStillLogged.js";
+
 
 const urlParams = new URLSearchParams(window.location.search);
 const cardData = urlParams.get("card_id");
@@ -78,8 +80,7 @@ async function fetchCard(card) {
             return;
         }
         const cardData = await response.json();
-        console.log("Fetched card data:", cardData);
-        let cardElement = card.closest(".commens-card");
+         let cardElement = card.closest(".commens-card");
         if (cardElement) {
             await updateCard(cardElement, cardData, card);
         }
@@ -120,16 +121,7 @@ async function updateCard(cardElement, cardData) {
 }
 
 async function createComment(content) {
-    const data = await fetch("/api/isLogged", {
-        method: "GET",
-    })
-
-    if (data.ok) {
-        let re = await data.json()
-        if (!re.message) {
-            window.location.href = "/api/logout"
-        }
-    }
+    isLogged()
     const response = await fetch("/api/addcomment", {
         method: "POST",
         headers: {
@@ -137,7 +129,6 @@ async function createComment(content) {
             'Accept': 'application/json',
         },
         body: JSON.stringify({
-            user_id: +user_id,
             content: content,
             target_id: +cardData
         })

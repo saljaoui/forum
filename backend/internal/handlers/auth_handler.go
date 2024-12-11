@@ -54,7 +54,8 @@ func HandleLogin(w http.ResponseWriter, r *http.Request) {
 	loged, message, uuid := user.Authentication()
 	user.Getuuid(uuid.String())
 	if message.MessageError != "" {
-		HandleError(w, message.MessageError, http.StatusBadRequest)
+		JsoneResponse(w,message.MessageError, http.StatusBadRequest)
+		//HandleError(w, message.MessageError, http.StatusBadRequest)
 		return
 	}
 
