@@ -41,7 +41,7 @@ func HandleLogin(w http.ResponseWriter, r *http.Request) {
 		HandleError(w, "Method Not Allowed", http.StatusMethodNotAllowed)
 		return
 	}
-	
+
 	var user repository.Login
 	decode := DecodeJson(r)
 	err := decode.Decode(&user)
@@ -49,6 +49,7 @@ func HandleLogin(w http.ResponseWriter, r *http.Request) {
 		HandleError(w, err.Error(), http.StatusBadRequest)
 		return
 	}
+	GetUserId(r)
 
 	loged, message, uuid := user.Authentication()
 	user.Getuuid(uuid.String())
@@ -110,23 +111,24 @@ func SetCookie(w http.ResponseWriter, name string, value string, time time.Time)
 		Value:   value,
 		Expires: time,
 		Path:    "/",
-		HttpOnly: true,
+		// HttpOnly: true,
 	}
 	http.SetCookie(w, &user)
 }
 
 func GetUserId(r *http.Request) int {
-    cookie, err := r.Cookie("user_id")
-    if err != nil {
-        return 0
-    }
+	cookie, err := r.Cookie("token")
+	if err != nil {
+		return 0
+	}
+	uuid := repository.UUID{}
+	m := uuid.UUiduser(cookie.Value)
+	if m.MessageError != "" {
+		fmt.Println(m.MessageError)
+	}
+ 	 
 
-    userID, err := strconv.Atoi(cookie.Value)
-    if err != nil {
-        return 0
-    }
-
-    return userID
+	return uuid.Iduser
 }
 
 func clearCookies(w http.ResponseWriter) {

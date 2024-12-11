@@ -23,10 +23,10 @@ func updateUUIDUser(uudi string, userId int64) error {
 	return err
 }
 
-func insertUser(users *User, password string) ( sql.Result,error) {
+func insertUser(users *User, password string) (sql.Result, error) {
 	stm := "INSERT INTO user (firstname,lastname,email,password) VALUES(?,?,?,?)"
 	row, err := database.Exec(stm, users.Firstname, users.Lastname, users.Email, password)
-	return row,err 
+	return row, err
 }
 
 func selectUser(log *Login) *User {
@@ -51,4 +51,15 @@ func CheckUser(id int) bool {
 	var exists bool
 	err := database.SelectOneRow(stm, id, id).Scan(&exists)
 	return err == nil
+}
+
+func getUserIdWithUUID(uuid string) (string, error) {
+	stm := `SELECT id FROM user WHERE UUID=? `
+	var uuiduser string
+	err := database.SelectOneRow(stm, uuid).Scan(&uuiduser)
+	if err != nil {
+		return "", err
+	}
+	fmt.Println(uuiduser)
+	return uuiduser, nil
 }

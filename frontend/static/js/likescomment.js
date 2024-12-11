@@ -55,13 +55,15 @@ export async function addLikes(card_id, liked, lik, dislk, click) {
 }
 
 export async function deletLikes(user_id, card_id, click) {
+    console.log(user_id);
+    
     let response = await fetch("/api/deleted", {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",
             Accept: "application/json",
         },
-        body: JSON.stringify({ user_id: +user_id, card_id: +card_id }),
+        body: JSON.stringify({ uuid: +user_id, card_id: +card_id }),
     });
 
     if (response.ok) {

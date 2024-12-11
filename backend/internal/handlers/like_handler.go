@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 
 	like "forum-project/backend/internal/repository/likes"
@@ -21,6 +22,7 @@ func HandelLike(w http.ResponseWriter, r *http.Request) {
 		HandleError(w, err.Error(), http.StatusBadRequest)
 		return
 	}
+	
 	like.User_Id = id_user
 	m := like.Add()
 	if m.MessageError != "" {
@@ -36,16 +38,15 @@ func HandelDeletLike(w http.ResponseWriter, r *http.Request) {
 		json.NewEncoder(w).Encode("Status Method Not Allowed")
 		return
 	}
-	like := like.DeletLikes{}
+ 	like := like.DeletLikes{}
 	decode := DecodeJson(r)
 	err := decode.Decode(&like)
 	if err != nil {
+		fmt.Println(err)
 		HandleError(w, "err.Error()", http.StatusBadRequest)
 		return
 	}
-	//  var wg sync.WaitGroup
-	//  wg.Add(1)
-	like.DeletLike()
-	// wg.Wait()
-	JsoneResponse(w, "DELETED Like", http.StatusCreated)
+  
+ 	like.DeletLike()
+ 	JsoneResponse(w, "DELETED Like", http.StatusCreated)
 }
