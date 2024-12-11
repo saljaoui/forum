@@ -22,6 +22,19 @@ CREATE TABLE category (
     name text not NULL
 );
 
+INSERT INTO category (name) 
+VALUES 
+('General'),
+('Technology'),
+('Sports'),
+('Entertainment'),
+('Science'),
+('Health'),
+('Food'),
+('Travel'),
+('Fashion'),
+('Art'),
+('Music');
 
 CREATE TABLE post_category (
     post_id INTEGER,
