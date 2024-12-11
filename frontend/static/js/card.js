@@ -1,4 +1,4 @@
-export   function cards(data,user_info) {
+export function cards(data,user_info) {
     let content = []
     if(user_info===null){
       return

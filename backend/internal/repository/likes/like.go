@@ -15,7 +15,7 @@ type Like struct {
 	Userdisliked bool `json:"userdisliked"`
 }
 type DeletLikes struct {
-	User_Id int `json:"user_id"`
+	Uuid int `json:"uuid"`
 	Card_Id int `json:"card_id"`
 }
 type ResponseUserLikeds struct {
@@ -51,7 +51,7 @@ func (p *Like) Add() messages.Messages {
 }
 
 func (p *DeletLikes) DeletLike() {
-	deletLike(p.User_Id, p.Card_Id)
+	deletLike(p.Uuid, p.Card_Id)
 }
 
 func (like *Like) ChecklikesUser() []ResponseUserLikeds {
