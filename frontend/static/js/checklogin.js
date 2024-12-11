@@ -30,8 +30,6 @@ export function checklogin() {
 }
 
 function getcookies() {
-    
-    
     let tokens = document.cookie.split("; ");
     let token = null;
     let userId = null;

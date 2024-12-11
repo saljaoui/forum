@@ -35,14 +35,14 @@ func deletLike(user_id, card_id int) {
 }
 
 func GetuserLiked(card_id int) []ResponseUserLikeds {
-	querylike := `SELECT l.UserLiked , l.Userdisliked , l.user_id FROM likes l JOIN card c
-    on l.card_id=c.id WHERE  l.card_id =? `
+	querylike := `SELECT l.UserLiked , l.Userdisliked , u.UUID FROM likes l JOIN card c 
+    on l.card_id=c.id JOIN user u ON u.id=l.user_id  WHERE  l.card_id =? `
 
 	likesusers := []ResponseUserLikeds{}
 	rows := database.SelectRows(querylike, card_id)
 	for rows.Next() {
 		likes := ResponseUserLikeds{}
-		err := rows.Scan(&likes.UserLiked, &likes.UserDisliked, &likes.User_id)
+		err := rows.Scan(&likes.UserLiked, &likes.UserDisliked, &likes.Uuid)
 		if err != nil {
 			fmt.Println(err)
 		}

@@ -21,7 +21,6 @@ func HandelLike(w http.ResponseWriter, r *http.Request) {
 		HandleError(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-
 	like.User_Id = id_user
 	m := like.Add()
 	if m.MessageError != "" {

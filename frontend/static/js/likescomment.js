@@ -1,5 +1,6 @@
 
 export async function likes(likeElements) {
+    
     const user_data = localStorage.getItem("user_id");
     likeElements.forEach(async (click) => {
         let card_id = click.getAttribute("data-id_card");
@@ -11,7 +12,9 @@ export async function likes(likeElements) {
         if (response.ok) {
             let data = await response.json();
             data.forEach((el) => {
-                if (el.User_id === +user_data) {
+                 let tokens = document.cookie.split("token=")
+                console.log(tokens[1]===el.Uuid);
+                if (el.Uuid ===tokens[1]) {
                     localStorage.setItem("user_login", el.User_id);
                     if (el.UserLiked && like === "like") {
                         click.classList.add("clicked");
