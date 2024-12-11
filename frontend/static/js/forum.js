@@ -6,19 +6,19 @@ import { search } from "./search.js";
 let content = []
 checklogin()
 const searchInput = document.querySelector("[data-search]")
-searchInput.addEventListener("input", (e) => {
-  const value = e.target.value.toLowerCase()
-  content.forEach(data => {
-    const isVisible = data.data.toLowerCase().includes(value)
-    if (!isVisible) {
-      data.element.style.display = "none"
-    } else {
-      data.element.style.display = "block"
-    }
+if (searchInput) {
+  searchInput.addEventListener("input", (e) => {
+    const value = e.target.value.toLowerCase()
+    content.forEach(data => {
+      const isVisible = data.data.toLowerCase().includes(value)
+      if (!isVisible) {
+        data.element.style.display = "none"
+      } else {
+        data.element.style.display = "block"
+      }
+    })
   })
-})
-
-
+}
 
 export async function fetchData() {
   const responce = await fetch("/api/home", {
