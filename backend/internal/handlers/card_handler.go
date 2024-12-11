@@ -1,11 +1,11 @@
 package handlers
 
-
-import(
+import (
 	"encoding/json"
-	"forum-project/backend/internal/repository/cards"
 	"net/http"
 	"strconv"
+
+	"forum-project/backend/internal/repository/cards"
 )
 
 func GetCard_handler(res http.ResponseWriter, req *http.Request) {
@@ -14,10 +14,12 @@ func GetCard_handler(res http.ResponseWriter, req *http.Request) {
 		HandleError(res, "Status Bad Request", http.StatusBadRequest)
 		return
 	}
+
 	card := cards.GetOneCard(id)
-	if card.Id == -1  {
+	if card.Id == -1 {
 		HandleError(res, "Status Not Found", http.StatusNotFound)
 		return
 	}
+
 	json.NewEncoder(res).Encode(card)
 }

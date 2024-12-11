@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"encoding/json"
 	"net/http"
 
 	like "forum-project/backend/internal/repository/likes"
@@ -9,43 +8,50 @@ import (
 
 func HandelLike(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
-		w.WriteHeader(http.StatusMethodNotAllowed)
-		json.NewEncoder(w).Encode("Status Method Not Allowed")
+		HandleError(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
-	id_user := GetUserId(r)
-	like := like.Like{}
+
+	userID := GetUserId(r)
+	if userID == 0 {
+		HandleError(w, "User not authenticated", http.StatusUnauthorized)
+		return
+	}
+
+	var likeData like.Like
 	decode := DecodeJson(r)
-	err := decode.Decode(&like)
+
+	err := decode.Decode(&likeData)
 	if err != nil {
-		HandleError(w, err.Error(), http.StatusBadRequest)
+		HandleError(w, "Invalid request format: "+err.Error(), http.StatusBadRequest)
 		return
 	}
-	like.User_Id = id_user
-	m := like.Add()
-	if m.MessageError != "" {
-		HandleError(w, m.MessageError, http.StatusBadRequest)
+
+	likeData.User_Id = userID
+	message := likeData.Add()
+	if message.MessageError != "" {
+		HandleError(w, message.MessageError, http.StatusBadRequest)
 		return
 	}
-	JsoneResponse(w, m.MessageSucc, http.StatusCreated)
+
+	JsoneResponse(w, message.MessageSucc, http.StatusCreated)
 }
 
 func HandelDeletLike(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodDelete {
-		w.WriteHeader(http.StatusMethodNotAllowed)
-		json.NewEncoder(w).Encode("Status Method Not Allowed")
+		HandleError(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
-	like := like.DeletLikes{}
+
+	var like like.DeletLikes
 	decode := DecodeJson(r)
+
 	err := decode.Decode(&like)
 	if err != nil {
-		HandleError(w, "err.Error()", http.StatusBadRequest)
+		HandleError(w, "Failed to delete like", http.StatusBadRequest)
 		return
 	}
-	//  var wg sync.WaitGroup
-	//  wg.Add(1)
+
 	like.DeletLike()
-	// wg.Wait()
 	JsoneResponse(w, "DELETED Like", http.StatusCreated)
 }

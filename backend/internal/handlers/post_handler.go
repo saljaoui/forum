@@ -12,14 +12,17 @@ func HandlePost(w http.ResponseWriter, r *http.Request) {
 		HandleError(w, "Status Method Not Allowed", http.StatusMethodNotAllowed)
 		return
 	}
+
 	id_user := GetUserId(r)
-	post := posts.Post{}
+	var post posts.Post
+
 	decode := DecodeJson(r)
 	err := decode.Decode(&post)
 	if err != nil {
 		HandleError(w, err.Error(), http.StatusBadRequest)
 		return
 	}
+
 	post.User_Id = id_user
 	post.CheckPostErr(w)
 	id := post.Add()
@@ -31,5 +34,6 @@ func HandlePost(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
+
 	JsoneResponse(w, "create post Seccessfuly", http.StatusCreated)
 }

@@ -5,17 +5,30 @@ import (
 	"net/http"
 
 	category "forum-project/backend/internal/repository/categories"
-
 )
 
 func HandelCategory(w http.ResponseWriter, r *http.Request) {
-	categoryStruct := category.Category{}
+	if r.Method != http.MethodGet {
+		HandleError(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	var categoryStruct category.Category
 	decode := DecodeJson(r)
+
 	err := decode.Decode(&categoryStruct)
 	if err != nil {
 		HandleError(w, err.Error(), http.StatusBadRequest)
 		return
 	}
+
 	posts := category.GetPostsByCategoryId(categoryStruct.Category)
-	json.NewEncoder(w).Encode(posts)
+
+	w.Header().Set("Content-Type", "application/json")
+
+	err = json.NewEncoder(w).Encode(posts)
+	if err != nil {
+		HandleError(w, "Failed to encode response", http.StatusInternalServerError)
+		return
+	}
 }
