@@ -32,7 +32,7 @@ func HandleRegister(w http.ResponseWriter, r *http.Request) {
 	}
 
 	SetCookie(w, "token", uuid, time.Now().Add(2*time.Minute))
-	SetCookie(w, "user_id", fmt.Sprint(userRegiseter.Id), time.Now().Add(2*time.Minute))
+	// SetCookie(w, "user_id", fmt.Sprint(userRegiseter.Id), time.Now().Add(2*time.Minute))
 	JsoneResponse(w, userRegiseter, http.StatusOK)
 }
 
@@ -59,7 +59,7 @@ func HandleLogin(w http.ResponseWriter, r *http.Request) {
 	}
 
 	SetCookie(w, "token", uuid.String(), time.Now().Add(1*time.Hour))
-	SetCookie(w, "user_id", fmt.Sprint(loged.Id), time.Now().Add(1*time.Hour))
+	//SetCookie(w, "user_id", fmt.Sprint(loged.Id), time.Now().Add(1*time.Hour))
 	JsoneResponse(w, loged, http.StatusOK)
 }
 
@@ -126,7 +126,6 @@ func GetUserId(r *http.Request) int {
 	if m.MessageError != "" {
 		fmt.Println(m.MessageError)
 	}
- 	 
 
 	return uuid.Iduser
 }

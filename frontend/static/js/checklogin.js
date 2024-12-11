@@ -4,7 +4,7 @@ export function checklogin() {
     const token = value[0]
     const userId = value[1]
     //console.log(userId);
-    if (token != null && userId != null) {
+    if (token != null ) {
         let aside_nav = document.querySelector(".aside-nav");
         aside_nav.style.display = "block";
         
@@ -39,9 +39,10 @@ function getcookies() {
         let [key, value] = ele.split("=");
         if (key === "token") {
             token = value;
-        } else if (key === "user_id") {
-            userId = value;
-        }
+        } 
+        // else if (key === "user_id") {
+        //     userId = value;
+        // }
     });
     console.log(token,userId);
     

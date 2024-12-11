@@ -63,7 +63,7 @@ export async function deletLikes(user_id, card_id, click) {
             "Content-Type": "application/json",
             Accept: "application/json",
         },
-        body: JSON.stringify({ uuid: +user_id, card_id: +card_id }),
+        body: JSON.stringify({ card_id: +card_id }),
     });
 
     if (response.ok) {
