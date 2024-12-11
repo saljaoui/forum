@@ -78,8 +78,7 @@ async function fetchCard(card) {
             return;
         }
         const cardData = await response.json();
-        console.log("Fetched card data:", cardData);
-        let cardElement = card.closest(".commens-card");
+         let cardElement = card.closest(".commens-card");
         if (cardElement) {
             await updateCard(cardElement, cardData, card);
         }
@@ -127,7 +126,6 @@ async function createComment(content) {
             'Accept': 'application/json',
         },
         body: JSON.stringify({
-            user_id: +user_id,
             content: content,
             target_id: +cardData
         })

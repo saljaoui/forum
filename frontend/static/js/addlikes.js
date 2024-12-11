@@ -24,7 +24,7 @@ export function checkandAdd() {
                 }
             } else if (like === "Dislikes") {
                 if (data_liked === "true") {
-                    await deletLikes( card_id, click);
+                    await deletLikes(card_id);
                     console.log("Removed dislike");
                 } else {
                     await addLikes(card_id, -1, false, true, click);

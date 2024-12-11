@@ -1,8 +1,7 @@
 
 export async function likes(likeElements) {
     
-    const user_data = localStorage.getItem("user_id");
-    likeElements.forEach(async (click) => {
+     likeElements.forEach(async (click) => {
         let card_id = click.getAttribute("data-id_card");
         let like = click.getAttribute("data-like");
          const response = await fetch("api/likes", {
@@ -57,8 +56,8 @@ export async function addLikes(card_id, liked, lik, dislk, click) {
     }
 }
 
-export async function deletLikes(user_id, card_id, click) {
-    console.log(user_id);
+export async function deletLikes(card_id) {
+    console.log(card_id);
     
     let response = await fetch("/api/deleted", {
         method: "DELETE",
@@ -81,7 +80,9 @@ export async function deletLikes(user_id, card_id, click) {
         // //      fetchCard(card_id)
         // //  }
     }
-    //  else if (response.status === 401) {
-    //     //location.href = "/login";
-    // }
+     else  {
+        let data = await response.json();
+        console.log(data);
+         
+    }
 }

@@ -41,6 +41,8 @@ export async function fetchdata() {
 }
 fetchdata()
 export async function GetComments() {
+    console.log(cardData);
+    
     let path = window.location.pathname
     if (path !== "/comment") {
         return ""
