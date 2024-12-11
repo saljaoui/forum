@@ -38,7 +38,7 @@
                     <div class="login-register">
                         <p>
                             Don't have an account?
-                            <a href="#" class="register-link">Register</a>
+                            <a href="#" class="register-link" onclick="window.location.href='/register'">Register</a>
                         </p>
                         <p>
                             Do you want to go back?
@@ -48,51 +48,8 @@
                 </form>
             </div>
 
-            <div class="form-box register">
-                <h2>Registration</h2>
-                <form action="" id="form-submit">
-                    <div class="input-box">
-                        <span class="icon"><ion-icon name="person-circle"></ion-icon></span>
-                        <input type="text" required id="firstname" />
-                        <label>Firstname</label>
-                    </div>
-                    <div class="input-box">
-                        <span class="icon"><ion-icon name="person-circle"></ion-icon></span>
-                        <input type="text" required id="lastname" />
-                        <label>Lastname</label>
-                    </div>
-                    <div class="input-box">
-                        <span class="icon"><ion-icon name="mail"></ion-icon></span>
-                        <input type="text" required id="emailRegister" />
-                        <label>Email</label>
-                    </div>
-                    <div class="input-box">
-                        <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
-                        <input type="password" required id="passwordRegister" />
-                        <label>Password</label>
-                    </div>
-                    <div class="remember-forgot">
-                        <label><input class="checkbox" type="checkbox" /> I agree to the terms
-                            & conditions</label>
-                    </div>
-                    <button type="submit" class="btn">register</button>
-                    <div class="login-register">
-                        <p>
-                            Already have an account?
-                            <a href="#" class="login-link">Login</a>
-                        </p>
-                        <p>
-                            Do you want to go back?
-                            <a class="home-link" href="/home">Home</a>
-                        </p>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </section>
 
     <script type="module" src="../static/js/login.js"></script>
-    <script type="module" src="../static/js/auth.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
