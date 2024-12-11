@@ -2,6 +2,7 @@ let nav_items = document.querySelector("#home")//search
 let categories = document.querySelector("#categories")//search
 let profile = document.querySelector("#profile")//search
 let settings = document.querySelector("#settings")
+
 import { checklogin } from "./checklogin.js";
 checklogin()
  function navigate(){
