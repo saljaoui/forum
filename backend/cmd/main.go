@@ -37,6 +37,14 @@ func main() {
 	mux.Handle("/api/logout", handlers.AuthenticateMiddleware(http.HandlerFunc(handlers.HandleLogOut)))
 
 	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("../../frontend/static"))))
+	mux.HandleFunc("/register", func(w http.ResponseWriter, r *http.Request) {
+		cookies, err := r.Cookie("token")
+		if err != nil || cookies == nil {
+		http.ServeFile(w, r, "../../frontend/templates/register.html")
+		} else {
+			http.Redirect(w, r, "/home", http.StatusSeeOther)
+		}
+	})
 	mux.HandleFunc("/login", func(w http.ResponseWriter, r *http.Request) {
 		cookies, err := r.Cookie("token")
 		if err != nil || cookies == nil {
