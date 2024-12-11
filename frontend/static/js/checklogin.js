@@ -3,7 +3,6 @@ export function checklogin() {
     const token = value[0]
     const userId = value[1]
     console.log(userId);
-
     if (token != null && userId != null) {
         let join = document.querySelector(".join");
         join.style.display = "none";

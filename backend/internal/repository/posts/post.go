@@ -4,10 +4,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"time"
 
 	"forum-project/backend/internal/database"
 	"forum-project/backend/internal/repository/cards"
+	like "forum-project/backend/internal/repository/likes"
 )
 
 type Post struct {
@@ -21,19 +21,19 @@ type Post struct {
 }
 
 type PostResponde struct {
-	Card_Id      int       `json:"id"`
-	Post_Id      int       `json:"post_id"`
-	UserID       int       `json:"user_id"`
-	FirstName    string    `json:"firstName"`
-	LastName     string    `json:"lastName"`
-	Title        string    `json:"title"`
-	Content      string    `json:"content"`
-	Likes        int       `json:"likes"`
-	Dislikes     int       `json:"dislikes"`
-	UserLiked    int       `json:"userliked"`
-	//Userdisliked int       `json:"userdisliked"`
-	Comments     string    `json:"comments"`
-	CreatedAt    time.Time `json:"createdat"`
+	Card_Id      int    `json:"id"`
+	Post_Id      int    `json:"post_id"`
+	UserID       int    `json:"user_id"`
+	FirstName    string `json:"firstName"`
+	LastName     string `json:"lastName"`
+	Title        string `json:"title"`
+	Content      string `json:"content"`
+	Likes        int    `json:"likes"`
+	Dislikes     int    `json:"dislikes"`
+	UserLiked    int    `json:"userliked"`
+	Userdisliked int    `json:"userdisliked"`
+	Comments     string `json:"comments"`
+	CreatedAt    string `json:"createdat"`
 }
 
 func (p *Post) Add() int {
@@ -79,11 +79,11 @@ func GetPosts(query string) []PostResponde {
 			fmt.Println("er", err)
 			return nil
 		}
-		// likes, dislikes, userliked, Userdisliked := like.GetLikes(post.Post_Id)
-		// post.Likes = likes
-		// post.Dislikes = dislikes
-		// post.UserLiked = userliked
-		// post.Userdisliked = Userdisliked
+		likes, dislikes, userliked, Userdisliked := like.GetLikes(post.Post_Id)
+		post.Likes = likes
+		post.Dislikes = dislikes
+		post.UserLiked = userliked
+		post.Userdisliked = Userdisliked
 		posts = append(posts, post)
 	}
 	return posts

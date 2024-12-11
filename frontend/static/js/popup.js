@@ -2,8 +2,6 @@ import { createComment } from "./createcomment.js"
 import {creatPost}  from './post.js';
 function classes() {
     let path = window.location.pathname
-
-
     const creategategory = document.querySelector(".postReply")
     const creatPostPopup = document.getElementById('creatPost-popup')//categories-popup
      const post_close = document.querySelector('.post-close')
@@ -17,7 +15,7 @@ function classes() {
     const done_btn = document.querySelector('.done-post')
     const categoriesList = Array.from(document.getElementsByClassName('category-item'))
     let categoriesSelected = []
-    console.log(path);
+   
     if (path === "/comment") {
         while (categories_popup.firstChild) {
             categories_popup.removeChild(categories_popup.firstChild)
@@ -35,6 +33,7 @@ function classes() {
             creatPostPopup.style.display = "none"
         })
     }else{
+        console.log(path);
         newPost.addEventListener("click", () => {
             creatPostPopup.style.display = "flex"
         })
@@ -45,8 +44,6 @@ function classes() {
         cancel_btn.addEventListener("click", () => {
             closeCategories()
         })
-    
-       
     
         done_btn.addEventListener("click", () => {
             defaultCategories()
@@ -63,7 +60,8 @@ function classes() {
                 creatPostPopup.style.display = "none"
                 closeCategories()
                 content.value = ""
-                if(path!=='/home')return location.href
+                
+                location.href="/home"
             } else if (categoriesSelected.length === 0) {
                 categories_popup.style.display = "flex"
             }
