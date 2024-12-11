@@ -135,11 +135,11 @@ async function createComment(content) {
         const data = await response.json();
         console.log("Success:", data);
 
-    // } else {
-    //     const errorData = response.json();
-    //     console.error("Error:", errorData);
-    //     alert(`Error: ${errorData.message || "Request failed"}`);
-    // }
+    } else {
+        const errorData = response.json();
+        console.error("Error:", errorData);
+        alert(`Error: ${errorData.message || "Request failed"}`);
+    }
 }
 
 
