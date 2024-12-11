@@ -2,6 +2,7 @@ package user
 
 import (
 	"fmt"
+	"strconv"
 	"strings"
 	"time"
 
@@ -33,8 +34,15 @@ type Login struct {
 	UUID     string `json:"uuid"`
 	Password string `json:"password"`
 }
+type UUID struct {
+	Iduser int
+}
 type Logout struct {
-	Id       int64  `json:"id"`
+	Id int64 `json:"id"`
+}
+
+type IsItLogged struct {
+	IsItLogged bool `json:"islogged"` 
 }
 
 func generatUUID() string {
@@ -44,6 +52,7 @@ func generatUUID() string {
 	}
 	return uuid.String()
 }
+
 
 func (users *User) Register() (ResponceUser, messages.Messages, string) {
 	message := messages.Messages{}
@@ -158,3 +167,15 @@ func (us *User) AuthenticatLogin(UUID string) (m messages.Messages) {
 	return
 }
 
+func (u *UUID) UUiduser(uuid string) (m messages.Messages) {
+ 	id, err := getUserIdWithUUID(uuid)
+	if err != nil {
+		m.MessageError = "Unauthorized token"
+	}
+ 	id_user,err :=strconv.Atoi(id)
+	if err!=nil {
+			fmt.Println(err,"here this error")
+	}
+	u.Iduser = id_user
+	return m
+}

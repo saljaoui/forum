@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../static/css/styles.css" />
-
+    <link rel="icon" href="../static/imgs/logo.png" type="image/x-icon">
     <title>Error Page</title>
 </head>
 
@@ -14,7 +14,9 @@
         <img class="img" src="../static/imgs/logoerr.gif" alt="" />
         <h1 class="status-code">{{.Code}}</h1>
         <p class="message">{{.Msg}}</p>
-        <button class="back-button" onclick="goBack()">Back to Home</button>
+        <a href="/home">
+        <button class="back-button" >Back to Home</button>
+    </a>
     </div>
 </body>
 

@@ -29,7 +29,7 @@ register.addEventListener('submit', async (e) => {
         const data = await response.json();
         console.log("Success:", data);
         window.alert("You have register successfuly")
-        localStorage.setItem("user_id",data)
+      //  localStorage.setItem("user_id",data)
     } else {
         const errorData = await response.json();
         console.error("Error:", errorData);

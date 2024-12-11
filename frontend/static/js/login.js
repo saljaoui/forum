@@ -29,11 +29,8 @@ login.addEventListener('submit', async (e) => {
     })
     if (response.ok) {
         const data = await response.json();
-        localStorage.setItem("user_id", data.message.id)
-  
+        console.log(data);
         location.href = "/home"
-        //alert(data)
-        //console.log("Success:", data);
     } else {
         const errorData = await response.json();
         console.error("Error:", errorData);

@@ -8,6 +8,8 @@ export function checkandAdd() {
         if (!click || !click.matches(".is_liked, .disliked")) return; // Ignore unrelated clicks
         e.preventDefault();
         const user_data = localStorage.getItem("user_id");
+        console.log(user_data);
+        
         const card_id = click.getAttribute("data-id_card");
         const like = click.getAttribute("data-like");
         const data_liked = click.getAttribute("data-liked");

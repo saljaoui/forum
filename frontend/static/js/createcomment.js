@@ -120,6 +120,16 @@ async function updateCard(cardElement, cardData) {
 }
 
 async function createComment(content) {
+    const data = await fetch("/api/isLogged", {
+        method: "GET",
+    })
+
+    if (data.ok) {
+        let re = await data.json()
+        if (!re.message) {
+            window.location.href = "/api/logout"
+        }
+    }
     const response = await fetch("/api/addcomment", {
         method: "POST",
         headers: {
