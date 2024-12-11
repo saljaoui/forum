@@ -12,16 +12,18 @@ func InitDB() error {
 		fmt.Println("Creating new database file...")
 		db, err := sql.Open("sqlite3", "../../app.db")
 		if err != nil {
-			return err
+			return fmt.Errorf("failed to open database: %v", err)
 		}
 		defer db.Close()
+
 		sqlFile, err := os.ReadFile("../internal/database/database.sql")
 		if err != nil {
-			return err
+			return fmt.Errorf("failed to read SQL file: %v", err)
 		}
+
 		_, err = db.Exec(string(sqlFile))
 		if err != nil {
-			return err
+			return fmt.Errorf("failed to execute SQL: %v", err)
 		}
 	}
 	return nil
@@ -32,16 +34,17 @@ func Config() *sql.DB {
 	if err != nil {
 		log.Fatal("error opening database: ", err)
 	}
-	//Set database to Write-Ahead Logging mode for better concurrency
+
+	// Set database to Write-Ahead Logging mode for better concurrency
 	_, err = db.Exec("PRAGMA journal_mode=WAL;")
 	if err != nil {
 		log.Fatal("error setting WAL mode: ", err)
 	}
+
 	err = db.Ping()
 	if err != nil {
 		log.Fatal("error connecting to database:", err)
 	}
-
 	return db
 }
 
@@ -56,7 +59,9 @@ func SelectRows(query string, model ...any) *sql.Rows {
 	db := Config()
 	rows, err := db.Query(query, model...)
 	if err != nil {
-		fmt.Println(err)
+		fmt.Printf("query error: %v\n", err)
+		db.Close()
+		return nil
 	}
 	defer db.Close()
 	return rows
@@ -64,7 +69,10 @@ func SelectRows(query string, model ...any) *sql.Rows {
 
 func Exec(query string, model ...any) (sql.Result, error) {
 	db := Config()
-	res, err := db.Exec(query, model...)
 	defer db.Close()
-	return res, err
+	res, err := db.Exec(query, model...)
+	if err != nil {
+        return nil, fmt.Errorf("exec error: %v", err)
+    }
+	return res, nil
 }
