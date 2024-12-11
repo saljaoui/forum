@@ -58,8 +58,7 @@ func Handler_AddComment(res http.ResponseWriter, req *http.Request) {
 func addComment(req *http.Request) int {
 	iduser := GetUserId(req)
 	comment := comment.Comment{}
-	fmt.Println(iduser)
-	comment.User_Id = iduser
+ 	comment.User_Id = iduser
 	if comment.User_Id == 0 {
 		fmt.Println("error")
 		return -1
