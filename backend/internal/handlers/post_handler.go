@@ -9,7 +9,7 @@ import (
 
 func HandlePost(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
-		HandleError(w, "Status Method Not Allowed", http.StatusMethodNotAllowed)
+		HandleError(w,r, "Status Method Not Allowed", http.StatusMethodNotAllowed)
 		return
 	}
 	id_user := GetUserId(r)
@@ -17,7 +17,7 @@ func HandlePost(w http.ResponseWriter, r *http.Request) {
 	decode := DecodeJson(r)
 	err := decode.Decode(&post)
 	if err != nil {
-		HandleError(w, err.Error(), http.StatusBadRequest)
+		HandleError(w,r, err.Error(), http.StatusBadRequest)
 		return
 	}
 	post.User_Id = id_user
@@ -27,7 +27,7 @@ func HandlePost(w http.ResponseWriter, r *http.Request) {
 	for _, name := range post.Name_Category {
 		err := category.AddCategory(id, name)
 		if err != nil {
-			HandleError(w, err.Error(), http.StatusBadRequest)
+			HandleError(w,r, err.Error(), http.StatusBadRequest)
 			return
 		}
 	}

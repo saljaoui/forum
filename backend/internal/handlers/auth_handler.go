@@ -11,7 +11,7 @@ import (
 
 func HandleRegister(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
-		HandleError(w, "Method Not Allowed", http.StatusMethodNotAllowed)
+		HandleError(w,r, "Method Not Allowed", http.StatusMethodNotAllowed)
 		return
 	}
 
@@ -21,13 +21,13 @@ func HandleRegister(w http.ResponseWriter, r *http.Request) {
 
 	err := decode.Decode(&user)
 	if err != nil {
-		HandleError(w, err.Error(), http.StatusBadRequest)
+		HandleError(w,r, err.Error(), http.StatusBadRequest)
 		return
 	}
 
 	userRegiseter, message, uuid := user.Register()
 	if message.MessageError != "" {
-		HandleError(w, message.MessageError, http.StatusBadRequest)
+		HandleError(w,r, message.MessageError, http.StatusBadRequest)
 		return
 	}
 
@@ -38,7 +38,7 @@ func HandleRegister(w http.ResponseWriter, r *http.Request) {
 
 func HandleLogin(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
-		HandleError(w, "Method Not Allowed", http.StatusMethodNotAllowed)
+		HandleError(w,r, "Method Not Allowed", http.StatusMethodNotAllowed)
 		return
 	}
 
@@ -46,7 +46,7 @@ func HandleLogin(w http.ResponseWriter, r *http.Request) {
 	decode := DecodeJson(r)
 	err := decode.Decode(&user)
 	if err != nil {
-		HandleError(w, err.Error(), http.StatusBadRequest)
+		HandleError(w,r, err.Error(), http.StatusBadRequest)
 		return
 	}
 	loged, message, uuid := user.Authentication()
@@ -64,7 +64,7 @@ func HandleLogin(w http.ResponseWriter, r *http.Request) {
 
 func HandleLogOut(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
-		HandleError(w, "Method Not Allowed", http.StatusMethodNotAllowed)
+		HandleError(w,r, "Method Not Allowed", http.StatusMethodNotAllowed)
 		return
 	}
 
@@ -73,30 +73,30 @@ func HandleLogOut(w http.ResponseWriter, r *http.Request) {
 
 	err := decode.Decode(&logout)
 	if err != nil {
-		HandleError(w, "Invalid request format", http.StatusBadRequest)
+		HandleError(w,r, "Invalid request format", http.StatusBadRequest)
 		return
 	}
 
 	jsonValue, err := r.Cookie("user_id")
 	if err != nil {
-		HandleError(w, "Missing or invalid user_id cookie", http.StatusBadRequest)
+		HandleError(w,r, "Missing or invalid user_id cookie", http.StatusBadRequest)
 		return
 	}
 
 	user_id, err := strconv.Atoi(jsonValue.Value)
 	if err != nil {
-		HandleError(w, "Invalid user_id value", http.StatusBadRequest)
+		HandleError(w,r, "Invalid user_id value", http.StatusBadRequest)
 		return
 	}
 
 	if int64(user_id) != logout.Id {
-		HandleError(w, "Unauthorized access", http.StatusUnauthorized)
+		HandleError(w,r, "Unauthorized access", http.StatusUnauthorized)
 		return
 	}
 
 	message := logout.LogOut()
 	if message.MessageError != "" {
-		HandleError(w, message.MessageError, http.StatusBadRequest)
+		HandleError(w,r, message.MessageError, http.StatusBadRequest)
 		return
 	}
 

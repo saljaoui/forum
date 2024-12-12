@@ -88,7 +88,7 @@ func setupPageRoutes(mux *http.ServeMux) {
 		http.ServeFile(w, r, "../../frontend/templates/comment.html")
 	})
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		handlers.HandleError(w, http.StatusText(404), 404)
+		handlers.HandleError(w, r,http.StatusText(404), 404)
 	})
 
 	mux.HandleFunc("/profile", func(w http.ResponseWriter, r *http.Request) {

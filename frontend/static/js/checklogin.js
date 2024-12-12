@@ -1,7 +1,8 @@
+
 export function checklogin() {
-    console.log("error here 2");
     const value = getcookies()
-    const token = value[0] 
+    const token = value[0]
+    let is_logout=null 
     if (token != null ) {
         let aside_nav = document.querySelector(".aside-nav");
         aside_nav.style.display = "block";
@@ -11,6 +12,7 @@ export function checklogin() {
         while (join.firstChild) {
             join.removeChild(join.firstChild);
         }
+        is_logout =false
     } else {
          let join = document.querySelector(".join");
         join.style.display = "block";
@@ -23,13 +25,14 @@ export function checklogin() {
         if (post_comment) {
             post_comment.remove()
         }
+        is_logout =true 
     }
+    return is_logout
 }
 
 function getcookies() {
     let tokens = document.cookie.split("; ");
     let token = null;
-    let userId = null;
     tokens.forEach((ele) => {
         let [key, value] = ele.split("=");
         if (key === "token") {
@@ -37,5 +40,5 @@ function getcookies() {
         }  
     }); 
     
-    return [token, userId]
+    return [token]
 }

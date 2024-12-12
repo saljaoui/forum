@@ -17,7 +17,7 @@ func JsoneResponse(w http.ResponseWriter, message any, code int) {
 		"message": message,
 	})
 	if err != nil {
-		HandleError(w, "Failed to encode JSON response", http.StatusInternalServerError)
+		//HandleError(w, r,"Failed to encode JSON response", http.StatusInternalServerError)
 		return
 	}
 }

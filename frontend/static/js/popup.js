@@ -1,7 +1,11 @@
 import { createComment } from "./createcomment.js"
 import {creatPost}  from './post.js';
+import { checklogin } from "./checklogin.js";
 function classes() {
-    let path = window.location.pathname
+    let login=checklogin()
+
+    if(!login){
+     let path = window.location.pathname
     const creategategory = document.querySelector(".postReply")
     const creatPostPopup = document.getElementById('creatPost-popup')//categories-popup
      const post_close = document.querySelector('.post-close')
@@ -33,8 +37,7 @@ function classes() {
             creatPostPopup.style.display = "none"
         })
     }else{
-        console.log(path);
-        newPost.addEventListener("click", () => {
+         newPost.addEventListener("click", () => {
             creatPostPopup.style.display = "flex"
         })
         openCategories.addEventListener('click', () => {
@@ -91,6 +94,10 @@ function classes() {
     post_close.addEventListener("click", () => {
         creatPostPopup.style.display = "none"
     })
+    }else{
+        console.log();
+        
+    }
 
 
 

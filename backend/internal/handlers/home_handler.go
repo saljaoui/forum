@@ -10,7 +10,7 @@ import (
 
 func HomeHandle(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
-		HandleError(w, "Method Not Allowd", http.StatusMethodNotAllowed)
+		HandleError(w,r, "Method Not Allowd", http.StatusMethodNotAllowed)
 		//JsoneResponse(w, "Method Not Allowd", http.StatusMethodNotAllowed)
 		return
 	}
@@ -21,14 +21,14 @@ func HomeHandle(w http.ResponseWriter, r *http.Request) {
 
 func LikesHandle(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
-		HandleError(w, "Method Not Allowd", http.StatusMethodNotAllowed)
+		HandleError(w,r, "Method Not Allowd", http.StatusMethodNotAllowed)
 		return
 	}
 	liked := like.Like{}
 	decode := DecodeJson(r)
 	err := decode.Decode(&liked)
 	if err != nil {
-		HandleError(w, err.Error(), http.StatusBadRequest)
+		HandleError(w,r, err.Error(), http.StatusBadRequest)
 		return
 	}
 	dislike := liked.ChecklikesUser()

@@ -5,18 +5,46 @@ import (
 	"text/template"
 )
 
-func HandleError(w http.ResponseWriter, msg string, code int) {
-	w.WriteHeader(code)
+// func HandleError(w http.ResponseWriter, r *http.Request, msg string, code int) {
+// 	w.WriteHeader(code)
+// 	tmpl, err := template.ParseFiles("../../frontend/templates/err.html")
+// 	if err != nil {
+// 		http.Error(w, err.Error(), http.StatusInternalServerError)
+// 		return
+// 	}
+// 	tmpl.Execute(w, struct {
+// 		Msg  string
+// 		Code int
+// 	}{
+// 		Msg:  msg,
+// 		Code: code,
+// 	})
+// 	fmt.Println("i'm here")
+// 	//http.RedirectHandler("https://freshman.tech", http.StatusSeeOther)
+// 	// http.Redirect(w, r, "../../frontend/templates/err.html", code)
+// }
+
+func HandleError(w http.ResponseWriter, r *http.Request, mes string, codes int) {
+	// w.WriteHeader(codes)
+	// JsoneResponse(w,mes,codes)
+	w.WriteHeader(codes)
+
+	// Parse the error template
 	tmpl, err := template.ParseFiles("../../frontend/templates/err.html")
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		http.Error(w, "Error loading error page", http.StatusInternalServerError)
 		return
 	}
-	tmpl.Execute(w, struct {
+
+	// Pass the error message and status code to the template
+	err = tmpl.Execute(w, struct {
 		Msg  string
 		Code int
 	}{
-		Msg:  msg,
-		Code: code,
+		Msg:  mes,
+		Code: codes,
 	})
+	if err != nil {
+		http.Error(w, "Error rendering template", http.StatusInternalServerError)
+	}
 }
