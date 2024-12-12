@@ -7,14 +7,16 @@ export function checkandAdd() {
 
         if (!click || !click.matches(".is_liked, .disliked")) return; // Ignore unrelated clicks
         e.preventDefault();
-        const user_data = localStorage.getItem("user_id");
+     
+        
+        
         const card_id = click.getAttribute("data-id_card");
         const like = click.getAttribute("data-like");
         const data_liked = click.getAttribute("data-liked");
         try {
             if (like === "like") {
                 if (data_liked === "true") {
-                    await deletLikes(user_data, card_id, click);
+                    await deletLikes( card_id, click);
                     console.log("Removed like");
                 } else {
                     await addLikes(card_id, 1, true, false, click);
@@ -22,7 +24,7 @@ export function checkandAdd() {
                 }
             } else if (like === "Dislikes") {
                 if (data_liked === "true") {
-                    await deletLikes(user_data, card_id, click);
+                    await deletLikes(card_id);
                     console.log("Removed dislike");
                 } else {
                     await addLikes(card_id, -1, false, true, click);

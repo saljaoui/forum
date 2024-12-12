@@ -1,19 +1,18 @@
 export function checklogin() {
+    console.log("error here 2");
     const value = getcookies()
-    const token = value[0]
-    const userId = value[1]
-    console.log(userId);
-    if (token != null && userId != null) {
-        let join = document.querySelector(".join");
-        join.style.display = "none";
+    const token = value[0] 
+    if (token != null ) {
         let aside_nav = document.querySelector(".aside-nav");
         aside_nav.style.display = "block";
+        
+        let join = document.querySelector(".join");
+        join.style.display = "none";
         while (join.firstChild) {
             join.removeChild(join.firstChild);
         }
     } else {
-
-        let join = document.querySelector(".join");
+         let join = document.querySelector(".join");
         join.style.display = "block";
         let aside_nav = document.querySelector(".aside-nav");
         aside_nav.style.display = "none";
@@ -35,9 +34,8 @@ function getcookies() {
         let [key, value] = ele.split("=");
         if (key === "token") {
             token = value;
-        } else if (key === "user_id") {
-            userId = value;
-        }
-    });
+        }  
+    }); 
+    
     return [token, userId]
 }

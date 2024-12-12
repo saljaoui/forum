@@ -20,9 +20,6 @@ if (searchInput) {
   })
 }
 
-
-
-
 export async function fetchData() {
   const responce = await fetch("/api/home", {
     method: "GET",
@@ -53,34 +50,34 @@ document.addEventListener("DOMContentLoaded", () => {
   checkandAdd();
 });
 
-if (document.cookie) {
-  let join = document.querySelector(".join");
-  join.style.display = "none";
-  let aside_nav = document.querySelector(".aside-nav");
-  aside_nav.style.display = "block";
-  while (join.firstChild) {
-    join.removeChild(join.firstChild);
-  }
-  // location.href="/home"
-  let tokens = document.cookie.split("; ");
-  let token = null;
-  let userId = null;
-  tokens.forEach((ele) => {
-    let [key, value] = ele.split("=");
-    if (key === "token") {
-      token = value;
-    } else if (key === "user_id") {
-      userId = value;
-    }
-  });
-  // console.log(token, userId);
-} else {
+// if (document.cookie) {
+//   let join = document.querySelector(".join");
+//   join.style.display = "none";
+//   let aside_nav = document.querySelector(".aside-nav");
+//   aside_nav.style.display = "block";
+//   while (join.firstChild) {
+//     join.removeChild(join.firstChild);
+//   }
+//   // location.href="/home"
+//   let tokens = document.cookie.split("; ");
+//   let token = null;
+//   let userId = null;
+//   tokens.forEach((ele) => {
+//     let [key, value] = ele.split("=");
+//     if (key === "token") {
+//       token = value;
+//     } else if (key === "user_id") {
+//       userId = value;
+//     }
+//   });
+//   // console.log(token, userId);
+// } else {
 
-  let join = document.querySelector(".join");
-  join.style.display = "block";
-  let aside_nav = document.querySelector(".aside-nav");
-  aside_nav.style.display = "none";
-  while (aside_nav.firstChild) {
-    aside_nav.removeChild(aside_nav.firstChild);
-  }
-}
+//   let join = document.querySelector(".join");
+//   join.style.display = "block";
+//   let aside_nav = document.querySelector(".aside-nav");
+//   aside_nav.style.display = "none";
+//   while (aside_nav.firstChild) {
+//     aside_nav.removeChild(aside_nav.firstChild);
+//   }
+// }

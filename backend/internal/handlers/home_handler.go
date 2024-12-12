@@ -11,17 +11,12 @@ import (
 func HomeHandle(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
 		HandleError(w, "Method Not Allowd", http.StatusMethodNotAllowed)
+		//JsoneResponse(w, "Method Not Allowd", http.StatusMethodNotAllowed)
 		return
 	}
-
 	posts := cards.GetAllCards()
-
-	w.Header().Set("Content-Type", "application/json")
-	err := json.NewEncoder(w).Encode(posts)
-	if err != nil {
-		HandleError(w, "Failed to encode response", http.StatusInternalServerError)
-		return
-	}
+	json.NewEncoder(w).Encode(posts)
+	// SELECT p.id, u.id, u.firstname, u.lastname, p.title, c.content, cat.name, c.created_at  FROM post p, card c, user u, post_category pc, category cat WHERE p.card_id=c.id AND c.user_id=u.id AND p.id = pc.post_id AND pc.category_id=cat.id
 }
 
 func LikesHandle(w http.ResponseWriter, r *http.Request) {
@@ -29,21 +24,15 @@ func LikesHandle(w http.ResponseWriter, r *http.Request) {
 		HandleError(w, "Method Not Allowd", http.StatusMethodNotAllowed)
 		return
 	}
-
-	var liked like.Like
+	liked := like.Like{}
 	decode := DecodeJson(r)
-	
-	w.Header().Set("Content-Type", "application/json")
 	err := decode.Decode(&liked)
 	if err != nil {
 		HandleError(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-
 	dislike := liked.ChecklikesUser()
-	err = json.NewEncoder(w).Encode(dislike)
-	if err != nil {
-		HandleError(w, "Failed to encode response", http.StatusInternalServerError)
-		return
-	}
+	// fmt.Println(dislike)
+	json.NewEncoder(w).Encode(dislike)
+	// JsoneResponse(w, dislike, http.StatusOK)
 }

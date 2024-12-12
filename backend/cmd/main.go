@@ -55,6 +55,23 @@ func setupAPIRoutes(mux *http.ServeMux) {
 
 func setupPageRoutes(mux *http.ServeMux) {
 
+	mux.HandleFunc("/register", func(w http.ResponseWriter, r *http.Request) {
+		cookies, err := r.Cookie("token")
+		if err != nil || cookies == nil {
+		http.ServeFile(w, r, "../../frontend/templates/register.html")
+		} else {
+			http.Redirect(w, r, "/home", http.StatusSeeOther)
+		}
+	})
+	mux.HandleFunc("/login", func(w http.ResponseWriter, r *http.Request) {
+		cookies, err := r.Cookie("token")
+		if err != nil || cookies == nil {
+		http.ServeFile(w, r, "../../frontend/templates/login.html")
+		} else {
+			http.Redirect(w, r, "/home", http.StatusSeeOther)
+		}
+	})
+
 	mux.HandleFunc("/about", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "../../frontend/templates/about.html")
 	})
@@ -80,15 +97,6 @@ func setupPageRoutes(mux *http.ServeMux) {
 			http.Redirect(w, r, "/login", http.StatusSeeOther)
 		} else {
 			http.ServeFile(w, r, "../../frontend/templates/profile.html")
-		}
-	})
-
-	mux.HandleFunc("/login", func(w http.ResponseWriter, r *http.Request) {
-		cookies, err := r.Cookie("token")
-		if err != nil || cookies == nil {
-			http.ServeFile(w, r, "../../frontend/templates/login.html")
-		} else {
-			http.Redirect(w, r, "/home", http.StatusSeeOther)
 		}
 	})
 
