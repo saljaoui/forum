@@ -972,6 +972,29 @@ button:hover {
   font-weight: 200;
 }
 
+.pagination-controls {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin: 20px 0;
+  padding: 10px;
+}
+
+
+.pagination-btn {
+  background: transparent;
+}
+
+.pagination-btn.active {
+  background: var(--color-action-hover);
+  color: var(--color-white);
+}
+
+.pagination-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
 @media (max-width: 1300px) {
 
   .nav-item h1 {
