@@ -1,7 +1,6 @@
 module forum-project
 
-go 1.23
-
+go 1.22.3
 
 require (
 	github.com/gofrs/uuid/v5 v5.3.0
