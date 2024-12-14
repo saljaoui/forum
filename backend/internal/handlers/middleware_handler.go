@@ -41,17 +41,17 @@ func AuthenticateMiddleware(next http.Handler) http.Handler {
 		user := repository.User{}
 		if err != nil || cookies == nil {
 			if err == http.ErrNoCookie {
-				HandleError(w,r, "Unauthorized: Cookie not presen", http.StatusUnauthorized)
+				JsoneResponse(w,r, "Unauthorized: Cookie not presen", http.StatusUnauthorized)
 				return
 			}
 		}
 		if cookies.Value == "" {
-			HandleError(w,r, "Unauthorized", http.StatusUnauthorized)
+			JsoneResponse(w,r, "Unauthorized", http.StatusUnauthorized)
 			return
 		}
 		messages := user.AuthenticatLogin(cookies.Value)
 		if messages.MessageError != "" {
-			HandleError(w,r, messages.MessageError, http.StatusUnauthorized)
+			JsoneResponse(w,r, messages.MessageError, http.StatusUnauthorized)
 
 			return
 		}

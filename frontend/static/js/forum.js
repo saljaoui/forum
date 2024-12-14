@@ -3,9 +3,10 @@ import { likes } from "./likescomment.js";
 import { cards } from "./card.js";
 import { checklogin } from "./checklogin.js";
 import { search } from "./search.js";
+import { status } from "./status.js";
 let content = []
 checklogin()
- const searchInput = document.querySelector("[data-search]")
+const searchInput = document.querySelector("[data-search]")
 search(searchInput)
 
 export async function fetchData() {
@@ -25,6 +26,8 @@ export async function fetchData() {
       likes(like)
       search(content)
     }
+  } else if (!responce.ok) {
+    status(responce)
   }
   // else if (responce.status === 401) {
   //   let body = document.querySelector("body")

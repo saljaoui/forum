@@ -2,6 +2,8 @@
 // const loginLink = document.querySelector('.login-link');
 // const registerLink = document.querySelector('.register-link');
 
+import { status } from "./status"
+
 // registerLink.addEventListener('click', () => {
 //   wrapper.classList.add('active');
 // });
@@ -31,6 +33,8 @@ login.addEventListener('submit', async (e) => {
         const data = await response.json();
         console.log(data);
         location.href = "/home"
+    } else if (!response.ok) {
+        status(response)
     } else {
         const errorData = await response.json();
         console.error("Error:", errorData);

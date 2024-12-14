@@ -1,3 +1,5 @@
+import { status } from "./status";
+
 const LogoutItem = document.querySelector(".signOut");
 
 export default async function logout() {
@@ -14,7 +16,9 @@ export default async function logout() {
         console.log("Logout successful");
         localStorage.clear();
         window.location.href = "/login";
-    }
+    }else if (!response.ok) {
+        status(response)
+      }
 }
 
 if (LogoutItem) {

@@ -1,5 +1,6 @@
 import { InitialComment } from "./createcomment.js"
 import { checklogin } from "./checklogin.js";
+import { status } from "./status.js";
 checklogin()
 const urlParams = new URLSearchParams(window.location.search);
 const cardData = urlParams.get("card_id");
@@ -15,6 +16,7 @@ async function fetchdata() {
     let comments = document.querySelector(".comments")
     let data = ""
     let path = window.location.pathname
+
     if (path !== "/comment") {
         return ""
     } else {
@@ -22,6 +24,7 @@ async function fetchdata() {
             method: "GET",
         })
         if (response.ok) {
+
             data = await response.json();
             fullname.textContent = data.lastName + " " + data.firstName
             content.textContent = data.content
@@ -33,19 +36,17 @@ async function fetchdata() {
                 card.setAttribute("data-id_card", data.id)
             })
         } else if (!response.ok) {
-            let data =await response.json()
-            window.history.pushState({data:data,code:response.status},"data","/err")
-            location.href="/err"
-           return;
+            status(response)
         }
-       
+
     }
 }
 await fetchdata()
 async function GetComments() {
-
     let path = window.location.pathname
     if (path !== "/comment") {
+        console.log("error in path ");
+
         return ""
     } else {
         const response = await fetch(`/api/comment?target_id=${cardData}`, {
@@ -60,9 +61,7 @@ async function GetComments() {
             comments.innerHTML = ""
             InitialComment(datacomment, comments)
         } else if (!response.ok) {
-            let data =await response.json()
-            window.history.pushState({data:data,code:response.status},"data","/err")
-            location.href="/err?"
+            status(response)
         }
         else {
             console.log("err");

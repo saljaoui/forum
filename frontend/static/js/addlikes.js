@@ -7,9 +7,7 @@ export function checkandAdd() {
 
         if (!click || !click.matches(".is_liked, .disliked")) return; // Ignore unrelated clicks
         e.preventDefault();
-     
-        
-        
+
         const card_id = click.getAttribute("data-id_card");
         const like = click.getAttribute("data-like");
         const data_liked = click.getAttribute("data-liked");

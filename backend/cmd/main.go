@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
+	"strconv"
 
 	_ "github.com/mattn/go-sqlite3"
 
@@ -20,9 +22,6 @@ func main() {
 	mux := http.NewServeMux()
 
 	setupAPIRoutes(mux)
-
-	// mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("../../frontend/static"))))
-
 	setupPageRoutes(mux)
 
 	serverAddr := ":3333"
@@ -34,7 +33,6 @@ func main() {
 }
 
 func setupAPIRoutes(mux *http.ServeMux) {
-
 	mux.HandleFunc("/api/register", handlers.HandleRegister)
 	mux.HandleFunc("/api/home", handlers.HomeHandle)
 	mux.HandleFunc("/api/category", handlers.HandelCategory)
@@ -50,11 +48,12 @@ func setupAPIRoutes(mux *http.ServeMux) {
 	mux.Handle("/api/like", handlers.AuthenticateMiddleware(http.HandlerFunc(handlers.HandelLike)))
 	mux.Handle("/api/deleted", handlers.AuthenticateMiddleware(http.HandlerFunc(handlers.HandelDeletLike)))
 	mux.Handle("/api/logout", handlers.AuthenticateMiddleware(http.HandlerFunc(handlers.HandleLogOut)))
-
 }
 
 func setupPageRoutes(mux *http.ServeMux) {
-	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("../../frontend/static"))))
+	mux.Handle("/static/", http.StripPrefix("/static/",
+		http.FileServer(http.Dir("../../frontend/static"))))
+
 	mux.HandleFunc("/register", func(w http.ResponseWriter, r *http.Request) {
 		cookies, err := r.Cookie("token")
 		if err != nil || cookies == nil {
@@ -71,24 +70,8 @@ func setupPageRoutes(mux *http.ServeMux) {
 			http.Redirect(w, r, "/home", http.StatusSeeOther)
 		}
 	})
-
 	mux.HandleFunc("/about", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "../../frontend/templates/about.html")
-	})
-
-	mux.HandleFunc("/err", func(w http.ResponseWriter, r *http.Request) {
-		//code := http.StatusInternalServerError
-
-		// Optionally retrieve more context, like the Referer header, to determine the code
-		//
-		code :=r.f
-
-		// Write the correct status code
-		w.WriteHeader(code)
-
-		// Serve the error page
-		//http.ServeFile(w, r, "../../frontend/templates/err.html")
-		http.ServeFile(w, r, "../../frontend/templates/err.html")
 	})
 
 	mux.HandleFunc("/home", func(w http.ResponseWriter, r *http.Request) {
@@ -106,7 +89,6 @@ func setupPageRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		handlers.HandleError(w, r, http.StatusText(404), 404)
 	})
-
 	mux.HandleFunc("/profile", func(w http.ResponseWriter, r *http.Request) {
 		cookies, err := r.Cookie("token")
 		if err != nil || cookies == nil {
@@ -115,7 +97,6 @@ func setupPageRoutes(mux *http.ServeMux) {
 			http.ServeFile(w, r, "../../frontend/templates/profile.html")
 		}
 	})
-
 	mux.HandleFunc("/settings", func(w http.ResponseWriter, r *http.Request) {
 		cookies, err := r.Cookie("token")
 		if err != nil || cookies == nil {
@@ -125,4 +106,27 @@ func setupPageRoutes(mux *http.ServeMux) {
 		}
 	})
 
+	mux.HandleFunc("/err", func(w http.ResponseWriter, r *http.Request) {
+		code := r.URL.Query().Get("code")
+		status_code, err := strconv.Atoi(code)
+
+		if err != nil || (status_code != 404 && status_code != 400 && status_code != 500) {
+			status_code = http.StatusInternalServerError
+		}
+		// user := http.Cookie{
+		// 	Name:  "status",
+		// 	Value: strconv.Itoa(status_code),
+		// }
+		// http.SetCookie(w, &user)
+
+		w.WriteHeader(status_code)
+		filePath := "../../frontend/templates/err.html"
+		fileContent, err := os.ReadFile(filePath)
+		if err != nil {
+			handlers.JsoneResponse(w, r, "Error loading the error page", http.StatusInternalServerError)
+			return
+		}
+		// Write the file content to the ResponseWriter
+		w.Write(fileContent)
+	})
 }

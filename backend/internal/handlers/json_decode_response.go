@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 )
 
@@ -17,10 +18,10 @@ func JsoneResponse(w http.ResponseWriter, r *http.Request, message any, code int
 		"message": message,
 	})
 	if err != nil {
-		//HandleError(w, r,"Failed to encode JSON response", http.StatusInternalServerError)
+		fmt.Println(err)
+		http.Error(w, "Failed to encode JSON response", http.StatusInternalServerError)
 		return
 	}
-	//http.ServeFile(w, r, "../../frontend/templates/err.html")
 }
 
 func NewEncoderJsone(w http.ResponseWriter) *json.Encoder {

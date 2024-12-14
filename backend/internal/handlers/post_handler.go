@@ -9,7 +9,7 @@ import (
 
 func HandlePost(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
-		HandleError(w,r, "Status Method Not Allowed", http.StatusMethodNotAllowed)
+		JsoneResponse(w, r, "Status Method Not Allowed", http.StatusMethodNotAllowed)
 		return
 	}
 	id_user := GetUserId(r)
@@ -17,7 +17,7 @@ func HandlePost(w http.ResponseWriter, r *http.Request) {
 	decode := DecodeJson(r)
 	err := decode.Decode(&post)
 	if err != nil {
-		HandleError(w,r, err.Error(), http.StatusBadRequest)
+		JsoneResponse(w, r, err.Error(), http.StatusBadRequest)
 		return
 	}
 	post.User_Id = id_user
@@ -27,9 +27,9 @@ func HandlePost(w http.ResponseWriter, r *http.Request) {
 	for _, name := range post.Name_Category {
 		err := category.AddCategory(id, name)
 		if err != nil {
-			HandleError(w,r, err.Error(), http.StatusBadRequest)
+			JsoneResponse(w, r, err.Error(), http.StatusBadRequest)
 			return
 		}
 	}
-	JsoneResponse(w, r,"create post Seccessfuly", http.StatusCreated)
+	JsoneResponse(w, r, "create post Seccessfuly", http.StatusCreated)
 }

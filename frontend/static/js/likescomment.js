@@ -1,36 +1,39 @@
 import { checklogin } from "./checklogin.js";
+import { status } from "./status.js";
 export async function likes(likeElements) {
-    let login=checklogin()
+    let login = checklogin()
 
-    if(!login){
-         
+    if (!login) {
+
         likeElements.forEach(async (click) => {
-           let card_id = click.getAttribute("data-id_card");
-           let like = click.getAttribute("data-like");
+            let card_id = click.getAttribute("data-id_card");
+            let like = click.getAttribute("data-like");
             const response = await fetch("api/likes", {
-               method: "POST",
-               body: JSON.stringify({ card_id: +card_id }),
-           });
-           if (response.ok) {
-               let data = await response.json();
-               data.forEach((el) => {
+                method: "POST",
+                body: JSON.stringify({ card_id: +card_id }),
+            });
+            if (response.ok) {
+                let data = await response.json();
+                data.forEach((el) => {
                     let tokens = document.cookie.split("token=")
-                    if (el.Uuid ===tokens[1]) {
-                       localStorage.setItem("user_login", el.User_id);
-                       if (el.UserLiked && like === "like") {
-                           click.classList.add("clicked");
-                           click.setAttribute("data-liked", "true");
-                       } else if (el.UserDisliked && like === "Dislikes") {
-                           click.classList.add("clicked_disliked");
-                           click.setAttribute("data-liked", "true");
-                       }
-                   }
-               });
-           }
-       });
-    }else{
+                    if (el.Uuid === tokens[1]) {
+                        localStorage.setItem("user_login", el.User_id);
+                        if (el.UserLiked && like === "like") {
+                            click.classList.add("clicked");
+                            click.setAttribute("data-liked", "true");
+                        } else if (el.UserDisliked && like === "Dislikes") {
+                            click.classList.add("clicked_disliked");
+                            click.setAttribute("data-liked", "true");
+                        }
+                    }
+                });
+            } else if (!response.ok) {
+                status(response)
+            }
+        });
+    } else {
         console.log();
-        
+
     }
 }
 
@@ -51,12 +54,9 @@ export async function addLikes(card_id, liked, lik, dislk, click) {
             }),
         });
 
-        if (response.ok) {
-            let data = await response.json();
-        } 
-        // else if (response.status === 401) {
-        //     //location.href = "/login";
-        // }
+        if (!response.ok) {
+            status(response)
+        }
     } catch (error) {
         console.log(error);
     }
@@ -64,7 +64,7 @@ export async function addLikes(card_id, liked, lik, dislk, click) {
 
 export async function deletLikes(card_id) {
     console.log(card_id);
-    
+
     let response = await fetch("/api/deleted", {
         method: "DELETE",
         headers: {
@@ -74,21 +74,13 @@ export async function deletLikes(card_id) {
         body: JSON.stringify({ card_id: +card_id }),
     });
 
-    if (response.ok) {
-        let data = await response.json();
-        // fetchCard(card_id,click)
-        // //console.log(data);
-        // // if (context === "post") {
-        // //     fetchData(); // Refresh post section
-        // //     return
-        // //  } else if (context === "comment") {
-        // //       // Reload only the comment section
-        // //      fetchCard(card_id)
-        // //  }
+    if (!response.ok) {
+        status(response)
     }
-     else  {
+
+    else {
         let data = await response.json();
         console.log(data);
-         
+
     }
 }

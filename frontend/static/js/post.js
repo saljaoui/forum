@@ -1,5 +1,6 @@
 
 import { fetchData } from './forum.js';
+import { status } from './status.js';
 
 async function creatPost(categoriesSelected) {
          let content = document.querySelector("#content")
@@ -22,7 +23,9 @@ async function creatPost(categoriesSelected) {
             const data = await response.json();
             console.log("Success:", data);
 
-        }
+        }else if (!response.ok) {
+            status(response)
+          }
         // else if (response.status === 401) {
         //     location.href = "/login"
         // }else {
