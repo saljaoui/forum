@@ -20,6 +20,30 @@ profileNav.forEach((navItem) => {
     });
   });
 });
+
+function profileInfo() {
+  const profileInfo = document.querySelector('.profile-info');
+  let dataUser = JSON.parse(localStorage.getItem("data"))
+  console.log(dataUser.firstname);
+  
+  
+
+  const profileName = document.createElement('h1');
+  profileName.classList.add('profile-name');
+  profileName.textContent = dataUser.firstname + " " + dataUser.lastname;
+  
+  const profileHandle = document.createElement('p');
+  profileHandle.classList.add('profile-handle');
+  profileHandle.textContent = `🌟` + dataUser.email;
+
+  profileInfo.appendChild(profileName);
+  profileInfo.appendChild(profileHandle);
+}
+
+profileInfo()
+
+
+
 //--------------------------------------
  async function fetchData(id) {
   const responce = await fetch("/api/profile/"+id, {

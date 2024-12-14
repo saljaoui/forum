@@ -14,6 +14,8 @@ let login = document.querySelector("#login")
 
 login.addEventListener('submit', async (e) => {
     e.preventDefault()
+
+
     let email = document.querySelector('#email').value
     let password = document.querySelector('#password').value
     const response = await fetch("/api/login", {
@@ -27,9 +29,17 @@ login.addEventListener('submit', async (e) => {
             password: password
         })
     })
+
+
     if (response.ok) {
         const data = await response.json();
-        console.log(data);
+        const userData = {
+            firstname: data.message.firstname,
+            lastname: data.message.lastname,
+            email: data.message.email
+        };
+        
+        localStorage.setItem("data", JSON.stringify(userData));
         location.href = "/home"
     } else {
         const errorData = await response.json();
