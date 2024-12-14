@@ -51,7 +51,7 @@ body {
 .content_post {
   position: relative;
   overflow-y: scroll;
-  max-height: 93.2vh;
+  max-height: 80vh;
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
@@ -974,9 +974,11 @@ button:hover {
 
 .pagination-controls {
   display: flex;
+  position: fixed;
+  bottom: 0;
   gap: 8px;
   justify-content: center;
-  margin: 20px 0;
+  margin: 10px 0;
   padding: 10px;
 }
 
