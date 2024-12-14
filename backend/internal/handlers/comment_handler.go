@@ -49,7 +49,7 @@ func Handler_AddComment(res http.ResponseWriter, req *http.Request) {
 		return
 	}
 	if statusCode == http.StatusOK {
-		JsoneResponse(res, "comment added succesfuly", http.StatusCreated)
+		JsoneResponse(res,req, "comment added succesfuly", http.StatusCreated)
 		return
 	}
 }

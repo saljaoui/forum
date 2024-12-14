@@ -27,7 +27,7 @@ func HandelLike(w http.ResponseWriter, r *http.Request) {
 		HandleError(w,r, m.MessageError, http.StatusBadRequest)
 		return
 	}
-	JsoneResponse(w, m.MessageSucc, http.StatusCreated)
+	JsoneResponse(w,r, m.MessageSucc, http.StatusCreated)
 }
 
 func HandelDeletLike(w http.ResponseWriter, r *http.Request) {
@@ -47,5 +47,5 @@ func HandelDeletLike(w http.ResponseWriter, r *http.Request) {
 	}
 	like.User_Id = id_user
 	like.DeletLike()
-	JsoneResponse(w, "DELETED Like", http.StatusCreated)
+	JsoneResponse(w,r, "DELETED Like", http.StatusCreated)
 }

@@ -58,7 +58,7 @@ func setupPageRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("/register", func(w http.ResponseWriter, r *http.Request) {
 		cookies, err := r.Cookie("token")
 		if err != nil || cookies == nil {
-		http.ServeFile(w, r, "../../frontend/templates/register.html")
+			http.ServeFile(w, r, "../../frontend/templates/register.html")
 		} else {
 			http.Redirect(w, r, "/home", http.StatusSeeOther)
 		}
@@ -66,7 +66,7 @@ func setupPageRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("/login", func(w http.ResponseWriter, r *http.Request) {
 		cookies, err := r.Cookie("token")
 		if err != nil || cookies == nil {
-		http.ServeFile(w, r, "../../frontend/templates/login.html")
+			http.ServeFile(w, r, "../../frontend/templates/login.html")
 		} else {
 			http.Redirect(w, r, "/home", http.StatusSeeOther)
 		}
@@ -75,6 +75,22 @@ func setupPageRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("/about", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "../../frontend/templates/about.html")
 	})
+
+	mux.HandleFunc("/err", func(w http.ResponseWriter, r *http.Request) {
+		//code := http.StatusInternalServerError
+
+		// Optionally retrieve more context, like the Referer header, to determine the code
+		//
+		code :=r.f
+
+		// Write the correct status code
+		w.WriteHeader(code)
+
+		// Serve the error page
+		//http.ServeFile(w, r, "../../frontend/templates/err.html")
+		http.ServeFile(w, r, "../../frontend/templates/err.html")
+	})
+
 	mux.HandleFunc("/home", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "../../frontend/templates/home.html")
 	})
@@ -88,7 +104,7 @@ func setupPageRoutes(mux *http.ServeMux) {
 		http.ServeFile(w, r, "../../frontend/templates/comment.html")
 	})
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		handlers.HandleError(w, r,http.StatusText(404), 404)
+		handlers.HandleError(w, r, http.StatusText(404), 404)
 	})
 
 	mux.HandleFunc("/profile", func(w http.ResponseWriter, r *http.Request) {
@@ -108,5 +124,5 @@ func setupPageRoutes(mux *http.ServeMux) {
 			http.ServeFile(w, r, "../../frontend/templates/settings.html")
 		}
 	})
-	
+
 }

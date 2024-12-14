@@ -11,7 +11,7 @@ func DecodeJson(r *http.Request) *json.Decoder {
 	return decode
 }
 
-func JsoneResponse(w http.ResponseWriter, message any, code int) {
+func JsoneResponse(w http.ResponseWriter, r *http.Request, message any, code int) {
 	w.WriteHeader(code)
 	err := json.NewEncoder(w).Encode(map[string]any{
 		"message": message,
@@ -20,6 +20,7 @@ func JsoneResponse(w http.ResponseWriter, message any, code int) {
 		//HandleError(w, r,"Failed to encode JSON response", http.StatusInternalServerError)
 		return
 	}
+	//http.ServeFile(w, r, "../../frontend/templates/err.html")
 }
 
 func NewEncoderJsone(w http.ResponseWriter) *json.Encoder {

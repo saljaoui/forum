@@ -29,17 +29,19 @@ async function fetchdata() {
             is_liked.textContent = data.likes
             is_Dislikes.textContent = data.dislikes
             comments.textContent = data.comments
+            cards.forEach(async (card) => {
+                card.setAttribute("data-id_card", data.id)
+            })
         } else if (!response.ok) {
-            // Redirect to the backend error page with appropriate status and message
-            window.location.href = `/error?code=${response.status}&msg=${encodeURIComponent("Failed to fetch card data.")}`;
-            return;
+            let data =await response.json()
+            window.history.pushState({data:data,code:response.status},"data","/err")
+            location.href="/err"
+           return;
         }
-        cards.forEach(async (card) => {
-            card.setAttribute("data-id_card", data.id)
-        })
+       
     }
 }
-fetchdata()
+await fetchdata()
 async function GetComments() {
 
     let path = window.location.pathname
@@ -58,15 +60,16 @@ async function GetComments() {
             comments.innerHTML = ""
             InitialComment(datacomment, comments)
         } else if (!response.ok) {
-            console.log('test here');
-
+            let data =await response.json()
+            window.history.pushState({data:data,code:response.status},"data","/err")
+            location.href="/err?"
         }
         else {
             console.log("err");
         }
     }
 }
-GetComments()
+await GetComments()
 export {
     fetchdata,
     GetComments

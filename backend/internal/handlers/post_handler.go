@@ -31,5 +31,5 @@ func HandlePost(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
-	JsoneResponse(w, "create post Seccessfuly", http.StatusCreated)
+	JsoneResponse(w, r,"create post Seccessfuly", http.StatusCreated)
 }

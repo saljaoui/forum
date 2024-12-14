@@ -1,8 +1,8 @@
 package handlers
 
 import (
+	"html/template"
 	"net/http"
-	"text/template"
 )
 
 // func HandleError(w http.ResponseWriter, r *http.Request, msg string, code int) {
@@ -25,18 +25,12 @@ import (
 // }
 
 func HandleError(w http.ResponseWriter, r *http.Request, mes string, codes int) {
-	// w.WriteHeader(codes)
-	// JsoneResponse(w,mes,codes)
-	w.WriteHeader(codes)
-
-	// Parse the error template
+	 w.WriteHeader(codes)
 	tmpl, err := template.ParseFiles("../../frontend/templates/err.html")
 	if err != nil {
 		http.Error(w, "Error loading error page", http.StatusInternalServerError)
 		return
 	}
-
-	// Pass the error message and status code to the template
 	err = tmpl.Execute(w, struct {
 		Msg  string
 		Code int
@@ -46,5 +40,7 @@ func HandleError(w http.ResponseWriter, r *http.Request, mes string, codes int) 
 	})
 	if err != nil {
 		http.Error(w, "Error rendering template", http.StatusInternalServerError)
+		return
 	}
+	return
 }

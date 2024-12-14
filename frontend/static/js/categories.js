@@ -29,9 +29,9 @@ export default async function fetchData(categoryName) {
     let data = await responce.json();
     let user_info = document.querySelector(".main");
      content = cards(data,user_info)
-      console.log(content);
+      //console.log(content);
       search(content)
-      console.log(content);
+     // console.log(content);
       
     let like = document.querySelectorAll("#likes");
     likes(like)
