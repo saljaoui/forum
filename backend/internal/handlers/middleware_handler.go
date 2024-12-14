@@ -36,6 +36,7 @@ type Response struct {
 // }
 
 func AuthenticateMiddleware(next http.Handler) http.Handler {
+	
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		cookies, err := r.Cookie("token")
 		user := repository.User{}
