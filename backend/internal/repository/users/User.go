@@ -39,6 +39,7 @@ type UUID struct {
 }
 type Logout struct {
 	Id int64 `json:"id"`
+	Uuid string `json:"uuid"`
 }
 
 func generatUUID() string {
@@ -167,7 +168,7 @@ func (u *UUID) UUiduser(uuid string) (m messages.Messages) {
 	if err != nil {
 		m.MessageError = "Unauthorized token"
 	}
- 	id_user,err :=strconv.Atoi(id)
+ 	id_user,err := strconv.Atoi(id)
 	if err!=nil {
 			fmt.Println(err,"here this error")
 	}
