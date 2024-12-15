@@ -1,3 +1,5 @@
+import { status } from "./status.js"
+
 let register = document.querySelector("#form-submit")
 register.addEventListener('submit', async (e) => {
     e.preventDefault()
@@ -29,11 +31,13 @@ register.addEventListener('submit', async (e) => {
         const data = await response.json();
         console.log("Success:", data);
         window.alert("You have register successfuly")
-      //  localStorage.setItem("user_id",data)
+        location.href="/home"
+        //  localStorage.setItem("user_id",data)
+    } else if (!response.ok) {
+        status(response)
     } else {
         const errorData = await response.json();
         console.error("Error:", errorData);
         alert(`Error: ${errorData.message || "Request failed"}`);
     }
-
 })

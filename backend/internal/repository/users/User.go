@@ -38,7 +38,8 @@ type UUID struct {
 	Iduser int
 }
 type Logout struct {
-	Id int64 `json:"id"`
+	Id   int64  `json:"id"`
+	Uuid string `json:"uuid"`
 }
 
 type IsItLogged struct {
@@ -168,13 +169,13 @@ func (us *User) AuthenticatLogin(UUID string) (m messages.Messages) {
 }
 
 func (u *UUID) UUiduser(uuid string) (m messages.Messages) {
- 	id, err := getUserIdWithUUID(uuid)
+	id, err := getUserIdWithUUID(uuid)
 	if err != nil {
 		m.MessageError = "Unauthorized token"
 	}
- 	id_user,err :=strconv.Atoi(id)
-	if err!=nil {
-			fmt.Println(err,"here this error")
+	id_user, err := strconv.Atoi(id)
+	if err != nil {
+		fmt.Println(err, "here this error")
 	}
 	u.Iduser = id_user
 	return m

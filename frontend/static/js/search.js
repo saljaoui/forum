@@ -1,6 +1,5 @@
 export function search(content) {
-console.log(content);
-
+ 
     const searchInput = document.querySelector("[data-search]")
     searchInput.addEventListener("input", (e) => {
         const value = e.target.value.toLowerCase()

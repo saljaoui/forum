@@ -5,11 +5,11 @@ import { GetComments } from "./comment.js";
 import { search } from "./search.js";
 import { isLogged } from "./isStillLogged.js";
 
+import { status } from "./status.js";
 
 const urlParams = new URLSearchParams(window.location.search);
 const cardData = urlParams.get("card_id");
-let user_id = localStorage.getItem("user_id")
-
+ 
 async function InitialComment(ele, comments) {
     let content = []
     content = ele.map((data) => {
@@ -72,18 +72,16 @@ async function fetchCard(card) {
         const response = await fetch(`/api/card?id=${cardId}`, {
             method: "GET",
         });
+        if (response.ok) {
+            const cardData = await response.json();
+            let cardElement = card.closest(".commens-card");
+            if (cardElement) {
+                await updateCard(cardElement, cardData, card);
+            }
+        }else   if (!response.ok) {
+            status(response)
+        }
 
-        if (!response.ok) {
-            const errorData = await response.json();
-            console.error("Error:", errorData);
-            alert(`Error: ${errorData.message || "Request failed"}`);
-            return;
-        }
-        const cardData = await response.json();
-         let cardElement = card.closest(".commens-card");
-        if (cardElement) {
-            await updateCard(cardElement, cardData, card);
-        }
     } catch (error) {
         console.error("Fetch Error:", error);
         alert("An error occurred while fetching the card data.");
@@ -138,6 +136,8 @@ async function createComment(content) {
         const data = await response.json();
         console.log("Success:", data);
 
+    } else if (!response.ok) {
+        status(response)
     } else {
         const errorData = response.json();
         console.error("Error:", errorData);

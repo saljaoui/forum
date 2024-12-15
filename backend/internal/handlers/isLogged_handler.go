@@ -8,7 +8,7 @@ import (
 
 func HandleIsLogged(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
-		HandleError(w, "Method Not Allowed", http.StatusMethodNotAllowed)
+		JsoneResponse(w, r, "Method Not Allowed", http.StatusMethodNotAllowed)
 		return
 	}
 	user := repository.User{}
@@ -17,6 +17,6 @@ func HandleIsLogged(w http.ResponseWriter, r *http.Request) {
 	if is.MessageError != "" {
 		
 	}
-	JsoneResponse(w, is, http.StatusOK)
+	JsoneResponse(w, r, is, http.StatusOK)
 	// json.NewEncoder(w).Encode(isLogged.IsItLogged)
 }
