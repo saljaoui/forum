@@ -1,10 +1,11 @@
 import { createComment } from "./createcomment.js"
 import {creatPost}  from './post.js';
 import { checklogin } from "./checklogin.js";
-function classes() {
-    let login=checklogin()
-
-    if(!login){
+async function classes() {
+    let login=await checklogin()
+    console.log(login);
+    
+     if(!login){
      let path = window.location.pathname
     const creategategory = document.querySelector(".postReply")
     const creatPostPopup = document.getElementById('creatPost-popup')//categories-popup
@@ -94,12 +95,12 @@ function classes() {
     post_close.addEventListener("click", () => {
         creatPostPopup.style.display = "none"
     })
-    }else{
+    }
+    else{
         console.log();
         
     }
 
-
-
 }
-classes() 
+
+await classes() 

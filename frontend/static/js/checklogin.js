@@ -12,15 +12,11 @@ export async function checklogin() {
             join.removeChild(join.firstChild);
         }
         if (window.location.reload) {
-            const response =await  fetch("/api/isLogged", {
+            const response = await fetch("/api/isLogged", {
                 method: "GET",
             })
-            let data = await  response.json()
-            console.log(data);
-            
+            let data = await response.json()
             if (!data) {
-                console.log(document.cookie);
-                
                 const cookies = document.cookie.split(";");
                 for (let i = 0; i < cookies.length; i++) {
                     const cookie = cookies[i];
@@ -30,8 +26,6 @@ export async function checklogin() {
                     location.href = "/login"
                 }
             }
-
-
         }
 
         is_logout = false
