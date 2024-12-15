@@ -22,8 +22,7 @@ if (searchInput) {
 }
 
 export async function fetchData(page=1) {
-  console.log(page);
-  
+   
   const responce = await fetch(`/api/home?page=${page}`, {
     method: "GET",
   });
@@ -33,8 +32,7 @@ export async function fetchData(page=1) {
 
 
       let data = await responce.json();
-      console.log(data);
-      
+       
       let user_info = document.querySelector(".main");
       content = cards(data.posts, user_info)
 

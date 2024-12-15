@@ -2,7 +2,7 @@ import { likes } from "./likescomment.js";
 import { checkandAdd } from "./addlikes.js";
 import { GetComments } from "./comment.js";
 
-import { search } from "./search.js";
+// import { search } from "./search.js";
 import { status } from "./status.js";
 
 const urlParams = new URLSearchParams(window.location.search);
@@ -54,7 +54,7 @@ async function InitialComment(ele, comments) {
         comments.appendChild(div)
         return { data: data.content, element: div }
     })
-    search(content)
+    // search(content)
     console.log(content);
 
     let like = document.querySelectorAll("#likes");

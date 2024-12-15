@@ -35,6 +35,8 @@ async function fetchdata() {
             cards.forEach(async (card) => {
                 card.setAttribute("data-id_card", data.id)
             })
+        } else if (!response.ok) {
+            status(response)
         }
 
     }
@@ -49,18 +51,14 @@ async function GetComments() {
         const response = await fetch(`/api/comment?target_id=${cardData}`, {
             method: "GET",
         });
-        if (response === null) {
-            console.log("here");
 
-            return ""
-        }
         if (response.ok) {
             let textResponse = await response.text(); // Get the response as plain text
             if (textResponse.trim() === "") {
                 console.error("Empty response body");
-                return; 
+                return;
             }
-        
+
             try {
                 let datacomment = JSON.parse(textResponse); // Manually parse JSON
                 console.log(datacomment);
@@ -70,7 +68,9 @@ async function GetComments() {
             } catch (e) {
                 console.error("Failed to parse JSON:", e.message);
             }
-           
+
+        } else if (!response.ok) {
+            status(response)
         }
         else {
             console.log("err");

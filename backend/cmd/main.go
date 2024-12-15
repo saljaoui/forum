@@ -5,7 +5,6 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"strconv"
 
 	_ "github.com/mattn/go-sqlite3"
 
@@ -48,6 +47,7 @@ func setupAPIRoutes(mux *http.ServeMux) {
 	mux.Handle("/api/like", handlers.AuthenticateMiddleware(http.HandlerFunc(handlers.HandelLike)))
 	mux.Handle("/api/deleted", handlers.AuthenticateMiddleware(http.HandlerFunc(handlers.HandelDeletLike)))
 	mux.Handle("/api/logout", handlers.AuthenticateMiddleware(http.HandlerFunc(handlers.HandleLogOut)))
+	mux.Handle("/api/err", handlers.AuthenticateMiddleware(http.HandlerFunc(handlers.HandleError)))
 }
 
 func setupPageRoutes(mux *http.ServeMux) {
@@ -86,9 +86,9 @@ func setupPageRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("/comment", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "../../frontend/templates/comment.html")
 	})
-	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		handlers.HandleError(w, r, http.StatusText(404), 404)
-	})
+	// mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+	// 	handlers.HandleError(w, r, http.StatusText(404), 404)
+	// })
 	mux.HandleFunc("/profile", func(w http.ResponseWriter, r *http.Request) {
 		cookies, err := r.Cookie("token")
 		if err != nil || cookies == nil {
@@ -107,14 +107,14 @@ func setupPageRoutes(mux *http.ServeMux) {
 	})
 
 	mux.HandleFunc("/err", func(w http.ResponseWriter, r *http.Request) {
-		code := r.URL.Query().Get("code")
-		status_code, err := strconv.Atoi(code)
+		// code := r.URL.Query().Get("code")
+		// status_code, err := strconv.Atoi(code)
 
-		if err != nil || (status_code != 404 && status_code != 400 && status_code != 500) {
-			status_code = http.StatusInternalServerError
-		}
+		// if err != nil || (status_code != 404 && status_code != 400 && status_code != 500) {
+		// 	status_code = http.StatusInternalServerError
+		// }
 
-		w.WriteHeader(status_code)
+		// w.WriteHeader(status_code)
 		filePath := "../../frontend/templates/err.html"
 		fileContent, err := os.ReadFile(filePath)
 		if err != nil {
