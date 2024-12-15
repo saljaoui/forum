@@ -103,7 +103,6 @@ func getAllCardsForPages(page int, postsPerPage int) ([]Card_View_Data, int) {
 
     offset := (page - 1) * postsPerPage
 
-
     query := `SELECT c.id, c.user_id, c.content, c.created_at, u.firstname, u.lastname,
               count(cm.id) comments,
               (SELECT count(*) FROM likes l WHERE l.card_id = c.id and l.is_like = 1) likes,
