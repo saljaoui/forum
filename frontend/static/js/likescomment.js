@@ -1,7 +1,7 @@
 
 export async function likes(likeElements) {
-    const user_data = localStorage.getItem("user_id");
-    likeElements.forEach(async (click) => {
+    
+     likeElements.forEach(async (click) => {
         let card_id = click.getAttribute("data-id_card");
         let like = click.getAttribute("data-like");
          const response = await fetch("api/likes", {
@@ -11,7 +11,9 @@ export async function likes(likeElements) {
         if (response.ok) {
             let data = await response.json();
             data.forEach((el) => {
-                if (el.User_id === +user_data) {
+                 let tokens = document.cookie.split("token=")
+                console.log(tokens[1]===el.Uuid);
+                if (el.Uuid ===tokens[1]) {
                     localStorage.setItem("user_login", el.User_id);
                     if (el.UserLiked && like === "like") {
                         click.classList.add("clicked");
@@ -54,14 +56,16 @@ export async function addLikes(card_id, liked, lik, dislk, click) {
     }
 }
 
-export async function deletLikes(user_id, card_id, click) {
+export async function deletLikes(card_id) {
+    console.log(card_id);
+    
     let response = await fetch("/api/deleted", {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",
             Accept: "application/json",
         },
-        body: JSON.stringify({ user_id: +user_id, card_id: +card_id }),
+        body: JSON.stringify({ card_id: +card_id }),
     });
 
     if (response.ok) {
@@ -76,7 +80,9 @@ export async function deletLikes(user_id, card_id, click) {
         // //      fetchCard(card_id)
         // //  }
     }
-    //  else if (response.status === 401) {
-    //     //location.href = "/login";
-    // }
+     else  {
+        let data = await response.json();
+        console.log(data);
+         
+    }
 }

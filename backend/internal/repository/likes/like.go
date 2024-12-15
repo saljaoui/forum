@@ -15,13 +15,13 @@ type Like struct {
 	Userdisliked bool `json:"userdisliked"`
 }
 type DeletLikes struct {
-	User_Id int `json:"user_id"`
+	User_Id int `json:"uuid"`
 	Card_Id int `json:"card_id"`
 }
 type ResponseUserLikeds struct {
 	UserLiked    bool
 	UserDisliked bool
-	User_id      int
+	Uuid         string
 }
 
 func NewLike(user_id, card_id int) *Like {

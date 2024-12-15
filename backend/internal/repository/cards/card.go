@@ -79,7 +79,11 @@ func GetAllCards() []card_View {
 	return list_Cards
 }
 
-func convert(data_Row card_View_Data) card_View {
+func GetAllCardsForPages(page int, postsPerPage int) ([]Card_View_Data, int) {
+    return getAllCardsForPages(page, postsPerPage)
+}
+
+func convert(data_Row Card_View_Data) card_View {
 	card := card_View{}
 	card.Id = data_Row.Id
 	card.User_Id = data_Row.User_Id

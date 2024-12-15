@@ -1,6 +1,6 @@
 export function cards(data,user_info) {
     let content = []
-    if(user_info===null){
+    if(user_info===null) {
       return
     }
     user_info.innerHTML = "";

@@ -3,7 +3,6 @@ package handlers
 import (
 	"fmt"
 	"net/http"
-	"strconv"
 	"time"
 
 	repository "forum-project/backend/internal/repository/users"
@@ -32,7 +31,7 @@ func HandleRegister(w http.ResponseWriter, r *http.Request) {
 	}
 
 	SetCookie(w, "token", uuid, time.Now().Add(2*time.Minute))
-	SetCookie(w, "user_id", fmt.Sprint(userRegiseter.Id), time.Now().Add(2*time.Minute))
+	// SetCookie(w, "user_id", fmt.Sprint(userRegiseter.Id), time.Now().Add(2*time.Minute))
 	JsoneResponse(w, userRegiseter, http.StatusOK)
 }
 
@@ -41,7 +40,7 @@ func HandleLogin(w http.ResponseWriter, r *http.Request) {
 		HandleError(w, "Method Not Allowed", http.StatusMethodNotAllowed)
 		return
 	}
-	
+
 	var user repository.Login
 	decode := DecodeJson(r)
 	err := decode.Decode(&user)
@@ -49,16 +48,16 @@ func HandleLogin(w http.ResponseWriter, r *http.Request) {
 		HandleError(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-
 	loged, message, uuid := user.Authentication()
 	user.Getuuid(uuid.String())
 	if message.MessageError != "" {
-		HandleError(w, message.MessageError, http.StatusBadRequest)
+		JsoneResponse(w, message.MessageError, http.StatusBadRequest)
+		// HandleError(w, message.MessageError, http.StatusBadRequest)
 		return
 	}
 
 	SetCookie(w, "token", uuid.String(), time.Now().Add(1*time.Hour))
-	SetCookie(w, "user_id", fmt.Sprint(loged.Id), time.Now().Add(1*time.Hour))
+	// SetCookie(w, "user_id", fmt.Sprint(loged.Id), time.Now().Add(1*time.Hour))
 	JsoneResponse(w, loged, http.StatusOK)
 }
 
@@ -77,24 +76,16 @@ func HandleLogOut(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	jsonValue, err := r.Cookie("user_id")
-	if err != nil {
-		HandleError(w, "Missing or invalid user_id cookie", http.StatusBadRequest)
+	logout.Id = int64(GetUserId(r))
+	var uuid repository.UUID
+
+	message := uuid.UUiduser(logout.Uuid)
+	if message.MessageError != "" {
+		HandleError(w, "Missing or invalid Uuid", http.StatusBadRequest)
 		return
 	}
 
-	user_id, err := strconv.Atoi(jsonValue.Value)
-	if err != nil {
-		HandleError(w, "Invalid user_id value", http.StatusBadRequest)
-		return
-	}
-
-	if int64(user_id) != logout.Id {
-		HandleError(w, "Unauthorized access", http.StatusUnauthorized)
-		return
-	}
-
-	message := logout.LogOut()
+	message = logout.LogOut()
 	if message.MessageError != "" {
 		HandleError(w, message.MessageError, http.StatusBadRequest)
 		return
@@ -110,23 +101,22 @@ func SetCookie(w http.ResponseWriter, name string, value string, time time.Time)
 		Value:   value,
 		Expires: time,
 		Path:    "/",
-		HttpOnly: true,
 	}
 	http.SetCookie(w, &user)
 }
 
 func GetUserId(r *http.Request) int {
-    cookie, err := r.Cookie("user_id")
-    if err != nil {
-        return 0
-    }
+	cookie, err := r.Cookie("token")
+	if err != nil {
+		return 0
+	}
+	uuid := repository.UUID{}
+	m := uuid.UUiduser(cookie.Value)
+	if m.MessageError != "" {
+		fmt.Println(m.MessageError)
+	}
 
-    userID, err := strconv.Atoi(cookie.Value)
-    if err != nil {
-        return 0
-    }
-
-    return userID
+	return uuid.Iduser
 }
 
 func clearCookies(w http.ResponseWriter) {

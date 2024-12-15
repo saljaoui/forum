@@ -3,6 +3,7 @@ package handlers
 import (
 	//"encoding/json"
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -34,7 +35,7 @@ func Handel_GetCommet(res http.ResponseWriter, req *http.Request) {
 	// 	}
 	// }
 	json.NewEncoder(res).Encode(comments)
-	//JsoneResponse(res, comments, http.StatusOK)
+	// JsoneResponse(res, comments, http.StatusOK)
 }
 
 func Handler_AddComment(res http.ResponseWriter, req *http.Request) {
@@ -52,9 +53,16 @@ func Handler_AddComment(res http.ResponseWriter, req *http.Request) {
 		return
 	}
 }
+//82a3abe1-39e9-47f5-bb1d-1ade395d4206//82a3abe1-39e9-47f5-bb1d-1ade395d4206
 
 func addComment(req *http.Request) int {
+	iduser := GetUserId(req)
 	comment := comment.Comment{}
+ 	comment.User_Id = iduser
+	if comment.User_Id == 0 {
+		fmt.Println("error")
+		return -1
+	}
 	decoder := json.NewDecoder(req.Body)
 	err := decoder.Decode(&comment)
 	if err != nil {

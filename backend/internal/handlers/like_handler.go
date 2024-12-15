@@ -37,15 +37,15 @@ func HandelDeletLike(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	like := like.DeletLikes{}
+	id_user := GetUserId(r)
 	decode := DecodeJson(r)
 	err := decode.Decode(&like)
 	if err != nil {
+		// fmt.Println(err)
 		HandleError(w, "err.Error()", http.StatusBadRequest)
 		return
 	}
-	//  var wg sync.WaitGroup
-	//  wg.Add(1)
+	like.User_Id = id_user
 	like.DeletLike()
-	// wg.Wait()
 	JsoneResponse(w, "DELETED Like", http.StatusCreated)
 }

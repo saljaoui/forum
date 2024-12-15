@@ -1,7 +1,6 @@
 import { navigate } from "./home.js";
-import { cards } from "./card.js";
 import { likes } from "./likescomment.js";
-
+import {cards}from "./card.js";
 const profileNav = document.querySelectorAll(".profile-nav a");
 navigate();
 let content = []
@@ -21,22 +20,49 @@ profileNav.forEach((navItem) => {
     });
   });
 });
+
+function profileInfo() {
+  const profileInfo = document.querySelector('.profile-info');
+  let dataUser = JSON.parse(localStorage.getItem("data"))
+  console.log(dataUser.firstname);
+  
+  
+
+  const profileName = document.createElement('h1');
+  profileName.classList.add('profile-name');
+  profileName.textContent = dataUser.firstname + " " + dataUser.lastname;
+  
+  const profileHandle = document.createElement('p');
+  profileHandle.classList.add('profile-handle');
+  profileHandle.textContent = `🌟 ` + dataUser.email;
+
+  profileInfo.appendChild(profileName);
+  profileInfo.appendChild(profileHandle);
+}
+
+profileInfo()
+
+
+
 //--------------------------------------
  async function fetchData(id) {
   const responce = await fetch("/api/profile/"+id, {
     method: "GET",
   });
   if (responce.ok) {
-    let user_info = document.querySelector(".profile");
-    let data = await responce.json();
-    cards(data, user_info)
-    let like = document.querySelectorAll("#likes");
-    likes(like)
-  } 
-  // else if (responce.status === 401) {
-  //  // location.href = "/login";
-  // } else {
-  //   let data = responce.json();
-  //   console.log(data);
-  // }
+    // SeccesCreatPost()
+    //const user_data = history.state;
+    // console.log(user_data);
+
+    let data = await responce.json();           
+    let user_info = document.querySelector(".main");
+    content = cards(data, user_info)
+
+    let like = document.querySelectorAll("#likes"); 
+    // console.log(data);
+    likes(like );
+  } else {
+    let data = responce.json();
+    console.log(data);
+  }
 }
