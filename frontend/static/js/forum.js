@@ -3,6 +3,7 @@ import { likes } from "./likescomment.js";
 import { cards } from "./card.js";
 import { checklogin } from "./checklogin.js";
 import { search } from "./search.js";
+import { status } from "./status.js";
 let content = []
 checklogin()
 const searchInput = document.querySelector("[data-search]")
@@ -42,6 +43,8 @@ export async function fetchData(page=1) {
       search(content)
       renderPagination(data, user_info);
     }
+  } else if (!responce.ok) {
+    status(responce)
   }
   // else if (responce.status === 401) {
   //   let body = document.querySelector("body")

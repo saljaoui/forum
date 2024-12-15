@@ -10,54 +10,54 @@ import (
 )
 
 type PaginatedResponse struct {
-    Posts       []cards.Card_View_Data `json:"posts"`
-    TotalPosts  int             `json:"totalPosts"`
-    TotalPages  int             `json:"totalPages"`
-    CurrentPage int             `json:"currentPage"`
-    PostsPerPage int            `json:"postsPerPage"`
+	Posts        []cards.Card_View_Data `json:"posts"`
+	TotalPosts   int                    `json:"totalPosts"`
+	TotalPages   int                    `json:"totalPages"`
+	CurrentPage  int                    `json:"currentPage"`
+	PostsPerPage int                    `json:"postsPerPage"`
 }
 
 func HomeHandle(w http.ResponseWriter, r *http.Request) {
-    if r.Method != http.MethodGet {
-        HandleError(w, "Method Not Allowed", http.StatusMethodNotAllowed)
-        return
-    }
+	if r.Method != http.MethodGet {
+		JsoneResponse(w, r, "Method Not Allowed", http.StatusMethodNotAllowed)
+		return
+	}
 
-    page := 1
-    pageStr := r.URL.Query().Get("page")
-    if pageStr != "" {
-        if p, err := strconv.Atoi(pageStr); err == nil && p > 0 {
-            page = p
-        }
-    }
-    
-    postsPerPage := 10
+	page := 1
+	pageStr := r.URL.Query().Get("page")
+	if pageStr != "" {
+		if p, err := strconv.Atoi(pageStr); err == nil && p > 0 {
+			page = p
+		}
+	}
 
-    posts, totalPosts := cards.GetAllCardsForPages(page , postsPerPage)
+	postsPerPage := 10
 
-    totalPages := (totalPosts + postsPerPage - 1) / postsPerPage
+	posts, totalPosts := cards.GetAllCardsForPages(page, postsPerPage)
 
-    response := PaginatedResponse{
-        Posts:        posts,
-        TotalPosts:   totalPosts,
-        TotalPages:   totalPages,
-        CurrentPage:  page,
-        PostsPerPage: postsPerPage,
-    }
+	totalPages := (totalPosts + postsPerPage - 1) / postsPerPage
 
-    json.NewEncoder(w).Encode(response)
+	response := PaginatedResponse{
+		Posts:        posts,
+		TotalPosts:   totalPosts,
+		TotalPages:   totalPages,
+		CurrentPage:  page,
+		PostsPerPage: postsPerPage,
+	}
+
+	json.NewEncoder(w).Encode(response)
 }
 
 func LikesHandle(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
-		HandleError(w, "Method Not Allowd", http.StatusMethodNotAllowed)
+		JsoneResponse(w, r, "Method Not Allowd", http.StatusMethodNotAllowed)
 		return
 	}
 	liked := like.Like{}
 	decode := DecodeJson(r)
 	err := decode.Decode(&liked)
 	if err != nil {
-		HandleError(w, err.Error(), http.StatusBadRequest)
+		JsoneResponse(w, r, err.Error(), http.StatusBadRequest)
 		return
 	}
 	dislike := liked.ChecklikesUser()

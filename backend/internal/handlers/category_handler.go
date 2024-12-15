@@ -13,7 +13,7 @@ func HandelCategory(w http.ResponseWriter, r *http.Request) {
 	decode := DecodeJson(r)
 	err := decode.Decode(&categoryStruct)
 	if err != nil {
-		HandleError(w, err.Error(), http.StatusBadRequest)
+		JsoneResponse(w,r, err.Error(), http.StatusBadRequest)
 		return
 	}
 	posts := category.GetPostsByCategoryId(categoryStruct.Category)

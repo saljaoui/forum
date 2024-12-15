@@ -2,6 +2,7 @@ import { navigate } from "./home.js"
 import { cards } from "./card.js";
 import { likes } from "./likescomment.js";
 import { search } from "./search.js";
+import { status } from "./status.js";
 const profileNav = document.querySelectorAll(".profile-nav a");
 navigate()
 let content = []
@@ -9,7 +10,7 @@ profileNav.forEach((navItem) => {
   navItem.addEventListener("click", () => {
     navItem.className = "active";
     fetchData(navItem.textContent)
-     profileNav.forEach((item) => {
+    profileNav.forEach((item) => {
       if (item != navItem) {
         item.className = "";
       }
@@ -28,14 +29,13 @@ export default async function fetchData(categoryName) {
   if (responce.ok) {
     let data = await responce.json();
     let user_info = document.querySelector(".main");
-     content = cards(data,user_info)
-      console.log(content);
-      search(content)
-      console.log(content);
-      
+    content = cards(data, user_info)
+    search(content)
     let like = document.querySelectorAll("#likes");
     likes(like)
-  }  
+  } else if (!responce.ok) {
+    status(responce)
+  }
 
 
 }
