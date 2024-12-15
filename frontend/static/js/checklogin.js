@@ -33,10 +33,7 @@ export async function checklogin() {
 
 
         }
-        // document.addEventListener('click',()=>{
-        //     console.log("here");
 
-        // })
         is_logout = false
     } else {
         let join = document.querySelector(".join");

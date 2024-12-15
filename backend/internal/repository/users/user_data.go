@@ -43,14 +43,20 @@ func CheckAuthenticat(id string) bool {
 	stm := `SELECT EXISTS (SELECT 1 FROM user WHERE UUID =  ?)  `
 	var exists bool
 	err := database.SelectOneRow(stm, id, id).Scan(&exists)
-	return err == nil
+	if err != nil {
+		fmt.Println(err)
+	}
+	return exists
 }
 
 func CheckUser(id int) bool {
 	stm := `SELECT EXISTS (SELECT 1 FROM user WHERE id =  ?)  `
 	var exists bool
 	err := database.SelectOneRow(stm, id, id).Scan(&exists)
-	return err == nil
+	if err != nil {
+		fmt.Println(err)
+	}
+	return exists
 }
 
 func getUserIdWithUUID(uuid string) (string, error) {
@@ -60,6 +66,5 @@ func getUserIdWithUUID(uuid string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	fmt.Println(uuiduser)
-	return uuiduser, nil
+ 	return uuiduser, nil
 }

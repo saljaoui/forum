@@ -17,8 +17,6 @@ func HandleIsLogged(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Println(err)
 	}
-	//fmt.Println(cookies.Value)
-	is := user.CheckAuthenticat(cookies.Value)
-	fmt.Println(is)
-	json.NewEncoder(w).Encode(is)
+ 	is := user.CheckAuthenticat(cookies.Value)
+ 	json.NewEncoder(w).Encode(is)
 }
