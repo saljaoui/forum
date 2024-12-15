@@ -2,7 +2,7 @@
 // const loginLink = document.querySelector('.login-link');
 // const registerLink = document.querySelector('.register-link');
 
-import { status } from "./status"
+import { status } from "./status.js"
 
 // registerLink.addEventListener('click', () => {
 //   wrapper.classList.add('active');
