@@ -1142,30 +1142,30 @@ button:hover {
   }
 
   .post, .commentFromPost {
-    padding: 10px; /* Reduce padding */
-    min-width: auto; /* Remove fixed minimum width */
-    width: 100%; /* Ensure full width usage */
+    padding: 10px;
+    min-width: auto;
+    width: 100%;
   }
 
   .post-header {
     display: flex;
-    flex-wrap: wrap; /* Allow wrapping for smaller screens */
-    gap: 10px; /* Add spacing between elements */
+    flex-wrap: wrap; 
+    gap: 10px; 
   }
 
   .post-header .avatar {
-    width: 40px; /* Smaller avatar size */
+    width: 40px;
     height: 40px;
   }
 
   .post-content {
-    font-size: 0.9em; /* Reduce font size for compact display */
+    font-size: 0.9em;
   }
 
   .post-actions {
     display: flex;
-    justify-content: space-around; /* Space actions evenly */
-    font-size: 0.8em; /* Smaller action icons and text */
+    justify-content: space-around;
+    font-size: 0.8em;
     gap: 5px;
   }
 
@@ -1241,11 +1241,11 @@ button:hover {
   }
 
   .header-nav {
-    padding: 5px; /* Reduce padding */
+    padding: 5px;
   }
 
   .header-nav h1 {
-    font-size: 1em; /* Smaller font size for the heading */
+    font-size: 1em;
     margin-bottom: 5px;
   }
 
@@ -1270,25 +1270,25 @@ button:hover {
   }
 
   .post, .commentFromPost {
-    padding: 8px; /* Further reduce padding */
+    padding: 8px;
   }
 
   .post-header {
-    gap: 5px; /* Smaller spacing */
+    gap: 5px;
   }
 
   .post-header .avatar {
-    width: 35px; /* Even smaller avatar size */
+    width: 35px;
     height: 35px;
   }
 
   .post-content {
-    font-size: 0.85em; /* Further reduce font size */
+    font-size: 0.85em; 
   }
 
   .post-actions {
     align-items: flex-start;
-    gap: 3px; /* Smaller spacing between actions */
+    gap: 3px;
   }
 
   .profile-nav {
