@@ -1,4 +1,4 @@
-import { status } from "./status";
+import { status } from "./status.js";
 
 const LogoutItem = document.querySelector(".signOut");
 

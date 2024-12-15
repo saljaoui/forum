@@ -25,7 +25,7 @@ import (
 // }
 
 func HandleError(w http.ResponseWriter, r *http.Request, mes string, codes int) {
-	 w.WriteHeader(codes)
+	w.WriteHeader(codes)
 	tmpl, err := template.ParseFiles("../../frontend/templates/err.html")
 	if err != nil {
 		http.Error(w, "Error loading error page", http.StatusInternalServerError)

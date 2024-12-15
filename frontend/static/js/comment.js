@@ -45,7 +45,6 @@ await fetchdata()
 async function GetComments() {
     let path = window.location.pathname
     if (path !== "/comment") {
-        console.log("error in path ");
 
         return ""
     } else {

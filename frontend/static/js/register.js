@@ -31,6 +31,7 @@ register.addEventListener('submit', async (e) => {
         const data = await response.json();
         console.log("Success:", data);
         window.alert("You have register successfuly")
+        location.href="/home"
         //  localStorage.setItem("user_id",data)
     } else if (!response.ok) {
         status(response)

@@ -113,11 +113,6 @@ func setupPageRoutes(mux *http.ServeMux) {
 		if err != nil || (status_code != 404 && status_code != 400 && status_code != 500) {
 			status_code = http.StatusInternalServerError
 		}
-		// user := http.Cookie{
-		// 	Name:  "status",
-		// 	Value: strconv.Itoa(status_code),
-		// }
-		// http.SetCookie(w, &user)
 
 		w.WriteHeader(status_code)
 		filePath := "../../frontend/templates/err.html"
