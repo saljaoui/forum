@@ -5,7 +5,7 @@ import { checklogin } from "./checklogin.js";
 import { search } from "./search.js";
 import { status } from "./status.js";
 let content = []
-checklogin()
+ await checklogin()
 const searchInput = document.querySelector("[data-search]")
 if (searchInput) {
   searchInput.addEventListener("input", (e) => {

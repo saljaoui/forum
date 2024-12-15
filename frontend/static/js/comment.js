@@ -1,7 +1,7 @@
 import { InitialComment } from "./createcomment.js"
 import { checklogin } from "./checklogin.js";
 import { status } from "./status.js";
-checklogin()
+await checklogin()
 const urlParams = new URLSearchParams(window.location.search);
 const cardData = urlParams.get("card_id");
 
