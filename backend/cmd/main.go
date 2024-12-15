@@ -53,8 +53,8 @@ func setupAPIRoutes(mux *http.ServeMux) {
 func setupPageRoutes(mux *http.ServeMux) {
 	mux.Handle("/static/", http.StripPrefix("/static/",
 		http.FileServer(http.Dir("../../frontend/static"))))
-
 	mux.HandleFunc("/register", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Println()
 		cookies, err := r.Cookie("token")
 		if err != nil || cookies == nil {
 			http.ServeFile(w, r, "../../frontend/templates/register.html")
@@ -73,7 +73,6 @@ func setupPageRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("/about", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "../../frontend/templates/about.html")
 	})
-
 	mux.HandleFunc("/home", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "../../frontend/templates/home.html")
 	})
@@ -86,9 +85,10 @@ func setupPageRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("/comment", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "../../frontend/templates/comment.html")
 	})
-	// mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-	// 	handlers.HandleError(w, r, http.StatusText(404), 404)
-	// })
+	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Println(r.URL.Path)
+		validatePath(w, r)
+	})
 	mux.HandleFunc("/profile", func(w http.ResponseWriter, r *http.Request) {
 		cookies, err := r.Cookie("token")
 		if err != nil || cookies == nil {
@@ -107,14 +107,6 @@ func setupPageRoutes(mux *http.ServeMux) {
 	})
 
 	mux.HandleFunc("/err", func(w http.ResponseWriter, r *http.Request) {
-		// code := r.URL.Query().Get("code")
-		// status_code, err := strconv.Atoi(code)
-
-		// if err != nil || (status_code != 404 && status_code != 400 && status_code != 500) {
-		// 	status_code = http.StatusInternalServerError
-		// }
-
-		// w.WriteHeader(status_code)
 		filePath := "../../frontend/templates/err.html"
 		fileContent, err := os.ReadFile(filePath)
 		if err != nil {
@@ -124,4 +116,36 @@ func setupPageRoutes(mux *http.ServeMux) {
 		// Write the file content to the ResponseWriter
 		w.Write(fileContent)
 	})
+}
+
+func isValidPath(path string, paths []string) bool {
+	for _, v := range paths {
+		if path == v {
+			return true
+		}
+	}
+	return false
+}
+
+func validatePath(w http.ResponseWriter, r *http.Request) {
+	paths := []string{
+		"/comment",
+		"/register",
+		"/login",
+		"/logout",
+		"/about",
+		"/contact",
+		"/home",
+		"/categories",
+		"/profile",
+		"/settings",
+		"/err",
+	}
+	if r.URL.Path == "/" {
+		http.Redirect(w, r, "/home", http.StatusFound)
+	} else if !isValidPath(r.URL.Path, paths) {
+		http.Redirect(w, r, "/err", http.StatusFound)
+		// handlers.JsoneResponse(w, r, "PAGE NOT FOUND", http.StatusNotFound)
+		return
+	}
 }

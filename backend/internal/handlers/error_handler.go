@@ -19,6 +19,7 @@ func HandleError(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("Error decoding JSON:", err)
 		return
 	}
+	fmt.Println(errRes.Code)
 	if errRes.Code == http.StatusNotFound {
 		JsoneResponse(w, r, "404 Not Found: The requested resource could not be located", errRes.Code)
 	} else if errRes.Code == http.StatusBadRequest {

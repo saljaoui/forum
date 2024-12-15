@@ -4,6 +4,7 @@ let profile = document.querySelector("#profile")//search
 let settings = document.querySelector("#settings")
 
 import { checklogin } from "./checklogin.js";
+
 checklogin()
  function navigate(){
 

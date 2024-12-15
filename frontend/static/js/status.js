@@ -1,6 +1,4 @@
 export async function status(response) {
-    console.log(response);
-    
     let data = await fetch("/api/err", {
         method: "POST",
         headers: {
@@ -17,7 +15,7 @@ export async function status(response) {
         window.history.pushState(
             { data: re, code: response.status }, // State object
             "",                                  // Title (optional, not used here)
-            `/err`       // URL for error page
+            `/err`                               // URL for error page
         );
    
         location.href="/err"

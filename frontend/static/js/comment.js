@@ -24,7 +24,6 @@ async function fetchdata() {
             method: "GET",
         })
         if (response.ok) {
-
             data = await response.json();
             fullname.textContent = data.lastName + " " + data.firstName
             content.textContent = data.content
@@ -53,7 +52,7 @@ async function GetComments() {
         });
 
         if (response.ok) {
-            let textResponse = await response.text(); // Get the response as plain text
+            let textResponse = await response.text();
             if (textResponse.trim() === "") {
                 console.error("Empty response body");
                 return;
