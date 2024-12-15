@@ -51,8 +51,9 @@ body {
 .content_post {
   position: relative;
   overflow-y: scroll;
-  max-height: 85vh;
+  max-height: 87vh;
   scrollbar-width: none;
+  border-bottom: 1px solid var(--color-light);
   -ms-overflow-style: none;
 }
 

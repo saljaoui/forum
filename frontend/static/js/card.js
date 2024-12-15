@@ -14,7 +14,7 @@ export function cards(data,user_info) {
             <img src="../static/imgs/profilePic.png" class="avatar" alt="${ele.firstName}'s profile picture" />
             <div class="user-info">
               <div class="display-name">${ele.firstName + " " + ele.lastName}</div>
-              <span class="username">@aoc.bsky.social</span>
+              <span class="username">Created after</span>
               <span class="timestamp">· ${date.getHours()}h</span>
             </div>
           </div>
