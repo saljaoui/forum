@@ -35,8 +35,6 @@ async function fetchdata() {
             cards.forEach(async (card) => {
                 card.setAttribute("data-id_card", data.id)
             })
-        } else if (!response.ok) {
-            status(response)
         }
 
     }
@@ -52,15 +50,27 @@ async function GetComments() {
             method: "GET",
         });
         if (response === null) {
+            console.log("here");
+
             return ""
         }
         if (response.ok) {
-            let datacomment = await response.json()
-            let comments = document.querySelector(".allcomment")
-            comments.innerHTML = ""
-            InitialComment(datacomment, comments)
-        } else if (!response.ok) {
-            status(response)
+            let textResponse = await response.text(); // Get the response as plain text
+            if (textResponse.trim() === "") {
+                console.error("Empty response body");
+                return; 
+            }
+        
+            try {
+                let datacomment = JSON.parse(textResponse); // Manually parse JSON
+                console.log(datacomment);
+                let comments = document.querySelector(".allcomment");
+                comments.innerHTML = "";
+                InitialComment(datacomment, comments);
+            } catch (e) {
+                console.error("Failed to parse JSON:", e.message);
+            }
+           
         }
         else {
             console.log("err");
