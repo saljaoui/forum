@@ -1,5 +1,6 @@
 
 export function checklogin() {
+    console.log("error here 2");
     const value = getcookies()
     const token = value[0]
     let is_logout=null 

@@ -64,7 +64,6 @@ export async function addLikes(card_id, liked, lik, dislk, click) {
 
 export async function deletLikes(card_id) {
     console.log(card_id);
-
     let response = await fetch("/api/deleted", {
         method: "DELETE",
         headers: {

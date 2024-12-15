@@ -1,4 +1,4 @@
-import { status } from "./status"
+import { status } from "./status.js"
 
 let register = document.querySelector("#form-submit")
 register.addEventListener('submit', async (e) => {
@@ -39,5 +39,4 @@ register.addEventListener('submit', async (e) => {
         console.error("Error:", errorData);
         alert(`Error: ${errorData.message || "Request failed"}`);
     }
-
 })

@@ -3,7 +3,6 @@ package handlers
 import (
 	"fmt"
 	"net/http"
-	"strconv"
 	"time"
 
 	repository "forum-project/backend/internal/repository/users"
@@ -77,24 +76,16 @@ func HandleLogOut(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	jsonValue, err := r.Cookie("user_id")
-	if err != nil {
-		JsoneResponse(w, r, "Missing or invalid user_id cookie", http.StatusBadRequest)
+	logout.Id = int64(GetUserId(r))
+	var uuid repository.UUID
+
+	message := uuid.UUiduser(logout.Uuid)
+	if message.MessageError != "" {
+		JsoneResponse(w,r, "Missing or invalid Uuid", http.StatusBadRequest)
 		return
 	}
 
-	user_id, err := strconv.Atoi(jsonValue.Value)
-	if err != nil {
-		JsoneResponse(w, r, "Invalid user_id value", http.StatusBadRequest)
-		return
-	}
-
-	if int64(user_id) != logout.Id {
-		JsoneResponse(w, r, "Unauthorized access", http.StatusUnauthorized)
-		return
-	}
-
-	message := logout.LogOut()
+	message = logout.LogOut()
 	if message.MessageError != "" {
 		JsoneResponse(w, r, message.MessageError, http.StatusBadRequest)
 		return
