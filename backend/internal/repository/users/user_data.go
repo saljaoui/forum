@@ -63,13 +63,3 @@ func getUserIdWithUUID(uuid string) (string, error) {
 	fmt.Println(uuiduser)
 	return uuiduser, nil
 }
-
-func IsLogged(token string) (bool, error){
-	stm := `SELECT EXISTS (select id from user where UUID=?)`
-	var isitlogge bool
-	err := database.SelectOneRow(stm, token).Scan(&isitlogge)
-	if err != nil {
-		return false, err
-	}
-	return isitlogge, nil
-}

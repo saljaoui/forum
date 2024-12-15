@@ -49,18 +49,16 @@ func HandleLogin(w http.ResponseWriter, r *http.Request) {
 		HandleError(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	GetUserId(r)
-
 	loged, message, uuid := user.Authentication()
 	user.Getuuid(uuid.String())
 	if message.MessageError != "" {
-		JsoneResponse(w,message.MessageError, http.StatusBadRequest)
-		//HandleError(w, message.MessageError, http.StatusBadRequest)
+		JsoneResponse(w, message.MessageError, http.StatusBadRequest)
+		// HandleError(w, message.MessageError, http.StatusBadRequest)
 		return
 	}
 
 	SetCookie(w, "token", uuid.String(), time.Now().Add(1*time.Hour))
-	//SetCookie(w, "user_id", fmt.Sprint(loged.Id), time.Now().Add(1*time.Hour))
+	// SetCookie(w, "user_id", fmt.Sprint(loged.Id), time.Now().Add(1*time.Hour))
 	JsoneResponse(w, loged, http.StatusOK)
 }
 

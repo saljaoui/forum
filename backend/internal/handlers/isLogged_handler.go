@@ -3,7 +3,7 @@ package handlers
 import (
 	"net/http"
 
-	user "forum-project/backend/internal/repository/users"
+	repository "forum-project/backend/internal/repository/users"
 )
 
 func HandleIsLogged(w http.ResponseWriter, r *http.Request) {
@@ -11,13 +11,12 @@ func HandleIsLogged(w http.ResponseWriter, r *http.Request) {
 		HandleError(w, "Method Not Allowed", http.StatusMethodNotAllowed)
 		return
 	}
+	user := repository.User{}
 	cookies, _ := r.Cookie("token")
-	is, err := user.IsLogged(cookies.Value)
-	if err != nil {
-		HandleError(w, err.Error(), http.StatusInternalServerError)
-		return
+	is := user.AuthenticatLogin(cookies.Value)
+	if is.MessageError != "" {
+		
 	}
-
 	JsoneResponse(w, is, http.StatusOK)
 	// json.NewEncoder(w).Encode(isLogged.IsItLogged)
 }

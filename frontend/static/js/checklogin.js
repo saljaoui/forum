@@ -11,6 +11,14 @@ export function checklogin() {
         while (join.firstChild) {
             join.removeChild(join.firstChild);
         }
+        if(window.location.reload){
+            console.log("herrrrrrr");
+            
+        }
+        document.addEventListener('click',()=>{
+            console.log("here");
+            
+        })
     } else {
          let join = document.querySelector(".join");
         join.style.display = "block";
@@ -23,6 +31,7 @@ export function checklogin() {
         if (post_comment) {
             post_comment.remove()
         }
+        
     }
 }
 
