@@ -39,7 +39,7 @@ func selectUser(log *Login) *User {
 	return &user
 }
 
-func checkAuthenticat(id string) bool {
+func CheckAuthenticat(id string) bool {
 	stm := `SELECT EXISTS (SELECT 1 FROM user WHERE UUID =  ?)  `
 	var exists bool
 	err := database.SelectOneRow(stm, id, id).Scan(&exists)

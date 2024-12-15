@@ -39,6 +39,7 @@ func setupAPIRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("/api/login", handlers.HandleLogin)
 	mux.HandleFunc("/api/comment", handlers.Handel_GetCommet)
 	mux.HandleFunc("/api/card", handlers.GetCard_handler)
+	mux.HandleFunc("/api/isLogged", handlers.HandleIsLogged)
 
 	mux.Handle("/api/likes", handlers.AuthenticateMiddleware((http.HandlerFunc(handlers.LikesHandle))))
 	mux.Handle("/api/profile/posts", handlers.AuthenticateMiddleware((http.HandlerFunc(handlers.HandleProfilePosts))))
@@ -48,6 +49,8 @@ func setupAPIRoutes(mux *http.ServeMux) {
 	mux.Handle("/api/like", handlers.AuthenticateMiddleware(http.HandlerFunc(handlers.HandelLike)))
 	mux.Handle("/api/deleted", handlers.AuthenticateMiddleware(http.HandlerFunc(handlers.HandelDeletLike)))
 	mux.Handle("/api/logout", handlers.AuthenticateMiddleware(http.HandlerFunc(handlers.HandleLogOut)))
+	// mux.Handle("/api/isLogged", handlers.AuthenticateMiddleware(http.HandlerFunc(handlers.HandleIsLogged)))
+
 }
 
 func setupPageRoutes(mux *http.ServeMux) {
