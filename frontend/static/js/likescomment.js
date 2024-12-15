@@ -1,7 +1,7 @@
 import { checklogin } from "./checklogin.js";
 import { status } from "./status.js";
 export async function likes(likeElements) {
-    let login = checklogin()
+    let login =await checklogin()
 
     if (!login) {
 
