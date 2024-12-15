@@ -34,7 +34,7 @@ function profileInfo() {
   
   const profileHandle = document.createElement('p');
   profileHandle.classList.add('profile-handle');
-  profileHandle.textContent = `🌟` + dataUser.email;
+  profileHandle.textContent = `🌟 ` + dataUser.email;
 
   profileInfo.appendChild(profileName);
   profileInfo.appendChild(profileHandle);

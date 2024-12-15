@@ -51,7 +51,7 @@ body {
 .content_post {
   position: relative;
   overflow-y: scroll;
-  max-height: 80vh;
+  max-height: 85vh;
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
@@ -980,6 +980,9 @@ button:hover {
   justify-content: center;
   margin: 10px 0;
   padding: 10px;
+  left: 0;
+  right: 0;
+  margin: auto;
 }
 
 
@@ -990,6 +993,7 @@ button:hover {
 .pagination-btn.active {
   background: var(--color-action-hover);
   color: var(--color-white);
+  border: none;
 }
 
 .pagination-btn:disabled {
@@ -1040,13 +1044,18 @@ button:hover {
   }
 
   .newPost-popup {
-    position: fixed;
-    bottom: 0;
-    right: 0;
-    margin: 40px;
+    position: relative;
+    margin: auto;
   }
 
+  .newPost-popup h1 {
+    display: none;
+  }
 
+  .aside-nav button {
+    padding: 0 0 0 1px;
+    width: 40px;
+  }
 
   .search {
     position: fixed;
@@ -1064,17 +1073,9 @@ button:hover {
   .link-list {
     display: none;
   }
-  .newPost-popup {
-    position: relative;
-    margin: auto;
-  }
-  .aside-nav button {
-    padding: 0 0 0 1px;
-    width: 40px;
-  }
-  .newPost-popup h1 {
-    display: none;
-  }
+
+
+
 
 }
 
