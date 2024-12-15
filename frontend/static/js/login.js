@@ -2,8 +2,6 @@
 // const loginLink = document.querySelector('.login-link');
 // const registerLink = document.querySelector('.register-link');
 
-import { status } from "./status.js"
-
 // registerLink.addEventListener('click', () => {
 //   wrapper.classList.add('active');
 // });
@@ -16,6 +14,8 @@ let login = document.querySelector("#login")
 
 login.addEventListener('submit', async (e) => {
     e.preventDefault()
+
+
     let email = document.querySelector('#email').value
     let password = document.querySelector('#password').value
     const response = await fetch("/api/login", {
@@ -29,12 +29,18 @@ login.addEventListener('submit', async (e) => {
             password: password
         })
     })
+
+
     if (response.ok) {
         const data = await response.json();
-        console.log(data);
+        const userData = {
+            firstname: data.message.firstname,
+            lastname: data.message.lastname,
+            email: data.message.email
+        };
+        
+        localStorage.setItem("data", JSON.stringify(userData));
         location.href = "/home"
-    } else if (!response.ok) {
-        status(response)
     } else {
         const errorData = await response.json();
         console.error("Error:", errorData);
