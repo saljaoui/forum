@@ -1137,13 +1137,23 @@ button:hover {
 
 @media (max-width: 768px) {
 
+  .pagination-controls {
+    gap: 5px;
+    padding: 8px;
+  }
+
+  .pagination-btn {
+    font-size: 0.9em;
+    padding: 5px 8px;
+  }
+
   .post-actions {
     margin-left: 15px;
   }
 
   .post, .commentFromPost {
-    padding: 10px; /* Reduce padding */
-    min-width: auto; /* Remove fixed minimum width */
+    padding: 10px;
+    min-width: auto;
     width: 100%; /* Ensure full width usage */
   }
 
@@ -1176,7 +1186,6 @@ button:hover {
   }
 
   .wrapper {
-    width: 90%;
     margin: 0 15px;
   }
 
@@ -1264,6 +1273,18 @@ button:hover {
 }
 
 @media (max-width: 576px) {
+
+  .pagination-controls {
+   
+    gap: 4px; /* Further reduce gap */
+    padding: 5px; /* Compact padding */
+  }
+
+  .pagination-btn {
+    width: 60px;
+    font-size: 0.85em; /* Smaller font size */
+    padding: 6px; /* Adjust padding */
+  }
 
   .post-actions {
     margin-left: 5px;
@@ -1364,9 +1385,19 @@ button:hover {
 
 @media (max-width: 480px) {
   .wrapper {
-    width: 95%;
+    width: 90%;
     height: auto;
     min-height: 400px;
+  }
+
+  .display-name {
+    font-size: 15px;
+  }
+  .username {
+    font-size: 15px;
+  }
+  .timestamp {
+    font-size: 15px;
   }
 
   .input-box {
@@ -1416,6 +1447,11 @@ button:hover {
   .nav-item ion-icon {
     font-size: 14px;
     margin: 3px;
+  }
+  .pagination-btn {
+    width: 40px;
+    font-size: 0.8em;
+    padding: 6px;
   }
 }
 
