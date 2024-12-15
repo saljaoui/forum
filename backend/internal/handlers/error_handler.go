@@ -42,5 +42,4 @@ func HandleError(w http.ResponseWriter, r *http.Request, mes string, codes int) 
 		http.Error(w, "Error rendering template", http.StatusInternalServerError)
 		return
 	}
-	return
 }

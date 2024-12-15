@@ -1,5 +1,5 @@
 
-export function checklogin() {
+export async function checklogin() {
      const value = getcookies()
     const token = value[0]
     let is_logout=null 
@@ -12,6 +12,29 @@ export function checklogin() {
         while (join.firstChild) {
             join.removeChild(join.firstChild);
         }
+        if(window.location.reload){
+            const response = await fetch("/api/isLogged", {
+                method: "GET",
+            })
+            let data = await response.json()
+            if (!data) {
+
+                    const cookies = document.cookie.split(";");
+                    for (let i = 0; i < cookies.length; i++) {
+                        const cookie = cookies[i];
+                        const eqPos = cookie.indexOf("=");
+                        const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+                        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
+                        location.href = "/login"
+                }
+            }
+            
+            
+        }
+        // document.addEventListener('click',()=>{
+        //     console.log("here");
+            
+        // })
         is_logout =false
     } else {
          let join = document.querySelector(".join");
