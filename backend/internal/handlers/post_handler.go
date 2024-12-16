@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"net/http"
 
 	category "forum-project/backend/internal/repository/categories"
@@ -14,11 +15,18 @@ func HandlePost(w http.ResponseWriter, r *http.Request) {
 	}
 	id_user := GetUserId(r)
 	post := posts.Post{}
+
 	decode := DecodeJson(r)
 	err := decode.Decode(&post)
 	if err != nil {
 		JsoneResponse(w, r, err.Error(), http.StatusBadRequest)
 		return
+	}
+	for _, n := range post.Name_Category {
+		if !checkGategory(n) {
+			JsoneResponse(w, r, "All Input Fields Are Required ", http.StatusBadRequest)
+			return
+		}
 	}
 	post.User_Id = id_user
 	post.CheckPostErr(w)
@@ -32,4 +40,27 @@ func HandlePost(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	JsoneResponse(w, r, "create post Seccessfuly", http.StatusCreated)
+}
+
+func checkGategory(name string) bool {
+	cate := []string{
+		"General",
+		"Technology",
+		"Sports",
+		"Entertainment",
+		"Science",
+		"Health",
+		"Food",
+		"Travel",
+		"Fashion",
+		"Art",
+		"Music",
+	}
+	fmt.Println(name)
+	for _, v := range cate {
+		if v == name {
+			return true
+		}
+	}
+	return false
 }

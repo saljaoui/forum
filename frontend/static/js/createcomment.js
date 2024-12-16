@@ -1,8 +1,7 @@
 import { likes } from "./likescomment.js";
 import { checkandAdd } from "./addlikes.js";
 import { GetComments } from "./comment.js";
-
-// import { search } from "./search.js";
+ 
 import { status } from "./status.js";
 
 const urlParams = new URLSearchParams(window.location.search);
@@ -113,6 +112,7 @@ async function updateCard(cardElement, cardData) {
         ` ;
     }
     let allLikes = document.querySelectorAll("#likes")
+    
     likes(allLikes)
 }
 

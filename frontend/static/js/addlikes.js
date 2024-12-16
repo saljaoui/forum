@@ -4,7 +4,8 @@ import {  fetchCard } from "./createcomment.js";
 export function checkandAdd() {
     document.body.addEventListener("click", async (e) => {
         const click = e.target.closest(".action");
-
+        console.log(click);
+        
         if (!click || !click.matches(".is_liked, .disliked")) return; // Ignore unrelated clicks
         e.preventDefault();
         const card_id = click.getAttribute("data-id_card");

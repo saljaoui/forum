@@ -7,7 +7,8 @@ import (
 )
 
 type errsResponse struct {
-	Code int `json:"code"`
+	Code int    `json:"code"`
+	Msg  string `json:"msg"`
 }
 
 func HandleError(w http.ResponseWriter, r *http.Request) {
@@ -20,12 +21,12 @@ func HandleError(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if errRes.Code == http.StatusNotFound {
-		JsoneResponse(w, r, "404 Not Found: The requested resource could not be located", errRes.Code)
+		JsoneResponse(w, r, errRes.Msg, errRes.Code)
 	} else if errRes.Code == http.StatusBadRequest {
-		JsoneResponse(w, r, "400 Bad Request: The server could not understand your request.", errRes.Code)
+		JsoneResponse(w, r, errRes.Msg, errRes.Code)
 	} else if errRes.Code == http.StatusMethodNotAllowed {
-		JsoneResponse(w, r, "405 Method Not Allowed: The requested HTTP method is not supported for this resource.", errRes.Code)
+		JsoneResponse(w, r, errRes.Msg, errRes.Code)
 	} else if errRes.Code == http.StatusInternalServerError {
-		JsoneResponse(w, r, "500 Internal Server Error: The server encountered an unexpected condition.", http.StatusInternalServerError)
+		JsoneResponse(w, r, errRes.Msg, http.StatusInternalServerError)
 	}
 }

@@ -17,22 +17,16 @@ async function creatPost(categoriesSelected) {
                 name: categoriesSelected
             })
         })
-
         if (response.ok) {
             await fetchData()
             const data = await response.json();
+           
             console.log("Success:", data);
 
         }else if (!response.ok) {
            await status(response)
-          }
-        // else if (response.status === 401) {
-        //     location.href = "/login"
-        // }else {
-        //     const errorData = response.json();
-        //     console.error("Error:", errorData);
-        //     alert(`Error: ${errorData.message || "Request failed"}`);
-        // }
+        }
+        console.log(response);
     
 }
 export {

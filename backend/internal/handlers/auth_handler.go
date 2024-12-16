@@ -17,7 +17,6 @@ func HandleRegister(w http.ResponseWriter, r *http.Request) {
 	var user repository.User
 	decode := DecodeJson(r)
 	decode.DisallowUnknownFields()
-
 	err := decode.Decode(&user)
 	if err != nil {
 		JsoneResponse(w, r, err.Error(), http.StatusBadRequest)

@@ -1,4 +1,8 @@
 export async function status(response) {
+  let d=await response.json();
+    console.log(response.message);
+    
+    
     let data = await fetch("/api/err", {
         method: "POST",
         headers: {
@@ -6,7 +10,8 @@ export async function status(response) {
             "Accept": "application/json",
         },
         body: JSON.stringify({
-            code: response.status
+            code: response.status,
+            msg: d.message
         })
     });
 

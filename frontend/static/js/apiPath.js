@@ -1,0 +1,16 @@
+///api/register
+///api/home
+///api/category
+//api/login
+//api/comment
+//api/card
+//api/isLogged
+//api/likes
+//api/profile/posts
+//api/profile/likes
+//api/post
+//api/addcomment
+//api/like
+//api/deleted
+//api/logout
+//api/err

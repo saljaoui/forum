@@ -1,6 +1,6 @@
 import { status } from "./status.js";
 export  function likes(likeElements) {
-    if(document.cookie!=""){
+  //  if(document.cookie!=""){
 
         likeElements.forEach(async (click) => {
             let card_id = click.getAttribute("data-id_card");
@@ -28,7 +28,7 @@ export  function likes(likeElements) {
                 await status(response)
             }
         });
-    }    
+   // }    
 }
 
 export async function addLikes(card_id, liked, lik, dislk, click) {
