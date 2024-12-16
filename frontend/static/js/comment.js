@@ -1,7 +1,7 @@
 import { InitialComment } from "./createcomment.js"
 import { checklogin } from "./checklogin.js";
 import { status } from "./status.js";
-checklogin()
+await checklogin()
 const urlParams = new URLSearchParams(window.location.search);
 const cardData = urlParams.get("card_id");
 
@@ -24,7 +24,6 @@ async function fetchdata() {
             method: "GET",
         })
         if (response.ok) {
-
             data = await response.json();
             fullname.textContent = data.lastName + " " + data.firstName
             content.textContent = data.content
@@ -35,6 +34,8 @@ async function fetchdata() {
             cards.forEach(async (card) => {
                 card.setAttribute("data-id_card", data.id)
             })
+        } else if (!response.ok) {
+         await   status(response)
         }
 
     }
@@ -49,18 +50,14 @@ async function GetComments() {
         const response = await fetch(`/api/comment?target_id=${cardData}`, {
             method: "GET",
         });
-        if (response === null) {
-            console.log("here");
 
-            return ""
-        }
         if (response.ok) {
-            let textResponse = await response.text(); // Get the response as plain text
+            let textResponse = await response.text();
             if (textResponse.trim() === "") {
                 console.error("Empty response body");
-                return; 
+                return;
             }
-        
+
             try {
                 let datacomment = JSON.parse(textResponse); // Manually parse JSON
                 console.log(datacomment);
@@ -70,7 +67,9 @@ async function GetComments() {
             } catch (e) {
                 console.error("Failed to parse JSON:", e.message);
             }
-           
+
+        } else if (!response.ok) {
+         await  status(response)
         }
         else {
             console.log("err");
@@ -79,6 +78,5 @@ async function GetComments() {
 }
 await GetComments()
 export {
-    fetchdata,
     GetComments
 }

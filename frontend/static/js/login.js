@@ -38,7 +38,6 @@ login.addEventListener('submit', async (e) => {
             lastname: data.message.lastname,
             email: data.message.email
         };
-        
         localStorage.setItem("data", JSON.stringify(userData));
         location.href = "/home"
     } else {

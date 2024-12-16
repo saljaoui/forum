@@ -24,7 +24,7 @@ async function creatPost(categoriesSelected) {
             console.log("Success:", data);
 
         }else if (!response.ok) {
-            status(response)
+           await status(response)
           }
         // else if (response.status === 401) {
         //     location.href = "/login"

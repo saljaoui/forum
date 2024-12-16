@@ -156,7 +156,7 @@ func hashPassword(password string) string {
 }
 
 func (us *User) AuthenticatLogin(UUID string) (m messages.Messages) {
-	exists := checkAuthenticat(UUID)
+	exists := CheckAuthenticat(UUID)
 	if !exists {
 		m.MessageError = "Unauthorized token"
 	}

@@ -1,9 +1,6 @@
-import { checklogin } from "./checklogin.js";
 import { status } from "./status.js";
-export async function likes(likeElements) {
-    let login = checklogin()
-
-    if (!login) {
+export  function likes(likeElements) {
+    if(document.cookie!=""){
 
         likeElements.forEach(async (click) => {
             let card_id = click.getAttribute("data-id_card");
@@ -28,15 +25,11 @@ export async function likes(likeElements) {
                     }
                 });
             } else if (!response.ok) {
-                status(response)
+                await status(response)
             }
         });
-    } else {
-        console.log();
-
-    }
+    }    
 }
-
 
 export async function addLikes(card_id, liked, lik, dislk, click) {
     try {
@@ -55,7 +48,7 @@ export async function addLikes(card_id, liked, lik, dislk, click) {
         });
 
         if (!response.ok) {
-            status(response)
+            await status(response)
         }
     } catch (error) {
         console.log(error);
@@ -74,7 +67,7 @@ export async function deletLikes(card_id) {
     });
 
     if (!response.ok) {
-        status(response)
+        await status(response)
     }
 
     else {
