@@ -7,9 +7,9 @@ const profileNav = document.querySelectorAll(".profile-nav a");
 navigate()
 let content = []
 profileNav.forEach((navItem) => {
-  navItem.addEventListener("click", () => {
+  navItem.addEventListener("click", async () => {
     navItem.className = "active";
-    fetchData(navItem.textContent)
+    await fetchData(navItem.textContent)
     profileNav.forEach((item) => {
       if (item != navItem) {
         item.className = "";
@@ -18,7 +18,7 @@ profileNav.forEach((navItem) => {
   });
 });
 
-export default async function fetchData(categoryName) {
+async function fetchData(categoryName) {
   const responce = await fetch("/api/category", {
     method: "POST",
     headers: {
@@ -32,9 +32,9 @@ export default async function fetchData(categoryName) {
     content = cards(data, user_info)
     search(content)
     let like = document.querySelectorAll("#likes");
-    likes(like)
+      likes(like)
   } else if (!responce.ok) {
-    status(responce)
+  await  status(responce)
   }
 
 

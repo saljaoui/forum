@@ -58,7 +58,7 @@ async function InitialComment(ele, comments) {
     console.log(content);
 
     let like = document.querySelectorAll("#likes");
-    await likes(like)
+     likes(like)
 }
 
 
@@ -77,7 +77,7 @@ async function fetchCard(card) {
                 await updateCard(cardElement, cardData, card);
             }
         }else   if (!response.ok) {
-            status(response)
+          await  status(response)
         }
 
     } catch (error) {
@@ -113,7 +113,7 @@ async function updateCard(cardElement, cardData) {
         ` ;
     }
     let allLikes = document.querySelectorAll("#likes")
-    await likes(allLikes)
+      likes(allLikes)
 }
 
 async function createComment(content) {
@@ -129,12 +129,12 @@ async function createComment(content) {
         })
     })
     if (response.ok) {
-        GetComments()
+     await   GetComments()
         const data = await response.json();
         console.log("Success:", data);
 
     } else if (!response.ok) {
-        status(response)
+       await  status(response)
     } else {
         const errorData = response.json();
         console.error("Error:", errorData);

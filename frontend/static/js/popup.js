@@ -1,11 +1,11 @@
 import { createComment } from "./createcomment.js"
 import {creatPost}  from './post.js';
-import { checklogin } from "./checklogin.js";
+// import { checklogin } from "./checklogin.js";
 async function classes() {
-    let login=await checklogin()
-    console.log(login);
+    // let login=await checklogin()
+    // console.log(login);
     
-     if(!login){
+    //  if(!login){
      let path = window.location.pathname
     const creategategory = document.querySelector(".postReply")
     const creatPostPopup = document.getElementById('creatPost-popup')//categories-popup
@@ -58,9 +58,9 @@ async function classes() {
             });
         })
     
-        create_btn.addEventListener("click", () => {
+        create_btn.addEventListener("click",async () => {
             if (categoriesSelected.length > 0 && content.value.length > 0) {
-                creatPost(categoriesSelected)
+               await creatPost(categoriesSelected)
                 creatPostPopup.style.display = "none"
                 closeCategories()
                 content.value = ""
@@ -96,11 +96,6 @@ async function classes() {
         creatPostPopup.style.display = "none"
     })
     }
-    else{
-        console.log();
-        
-    }
-
-}
+   
 
 await classes() 

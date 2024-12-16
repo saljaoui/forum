@@ -35,7 +35,7 @@ async function fetchdata() {
                 card.setAttribute("data-id_card", data.id)
             })
         } else if (!response.ok) {
-            status(response)
+         await   status(response)
         }
 
     }
@@ -69,7 +69,7 @@ async function GetComments() {
             }
 
         } else if (!response.ok) {
-            status(response)
+         await  status(response)
         }
         else {
             console.log("err");
@@ -78,6 +78,5 @@ async function GetComments() {
 }
 await GetComments()
 export {
-    fetchdata,
     GetComments
 }
