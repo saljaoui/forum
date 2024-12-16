@@ -18,7 +18,14 @@ profileNav.forEach((navItem) => {
   });
 });
 
+const categories = {
+  "General": 0,"Sports": 1,"Entertainment": 2,"Politics": 3,"Technology": 4,"Business": 5,"Science": 6,"Health": 7,"Food": 8,"Travel": 9,"Fashion": 10,"Art": 11,"Music": 12
+};
 export default async function fetchData(categoryName) {
+  if (categories[categoryName] === undefined) {
+    alert("don't touch in inspect");
+    return;
+  }
   const responce = await fetch("/api/category", {
     method: "POST",
     headers: {
@@ -36,6 +43,4 @@ export default async function fetchData(categoryName) {
   } else if (!responce.ok) {
     status(responce)
   }
-
-
 }
