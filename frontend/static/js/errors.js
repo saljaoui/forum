@@ -11,10 +11,11 @@ function errors() {
   if (user_data) {
     message.textContent = user_data.data.message
     status.textContent = user_data.code
-  }else  if (path === "/err" && !user_data) {
-    message.textContent = "404 Not Found: The requested resource could not be located"
-    status.textContent = 404
   }
+  // else  if (path === "/err" && !user_data) {
+  //   message.textContent = "404 Not Found: The requested resource could not be located"
+  //   status.textContent = 404
+  // }
   // else 
   // if (path != "/comment" && path != "/register" && path != "/login" && path != "/logout" &&
   //   path != "/about" && path != "/contact" && path != "/home" && path != "/categories"

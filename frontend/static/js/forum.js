@@ -27,9 +27,9 @@ export async function fetchData(page = 1) {
 
 }
 await fetchData()
-document.addEventListener("DOMContentLoaded", () => {
-  checkandAdd();
-});
+// document.addEventListener("DOMContentLoaded", () => {
+//   checkandAdd();
+// });
 
 
 function renderPagination(data, container) {

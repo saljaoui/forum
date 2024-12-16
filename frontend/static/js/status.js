@@ -24,8 +24,6 @@ export async function status(response) {
         );
    
         location.href="/err"
-    } else {
-        console.error("Failed to send status code:", data.status, data.statusText);
-    }
+    }  
 
 }

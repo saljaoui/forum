@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"fmt"
 	"net/http"
 
 	category "forum-project/backend/internal/repository/categories"
@@ -24,7 +23,7 @@ func HandlePost(w http.ResponseWriter, r *http.Request) {
 	}
 	for _, n := range post.Name_Category {
 		if !checkGategory(n) {
-			JsoneResponse(w, r, "All Input Fields Are Required ", http.StatusBadRequest)
+			JsoneResponse(w, r, "Your category is incorrect", http.StatusBadRequest)
 			return
 		}
 	}
@@ -56,7 +55,6 @@ func checkGategory(name string) bool {
 		"Art",
 		"Music",
 	}
-	fmt.Println(name)
 	for _, v := range cate {
 		if v == name {
 			return true

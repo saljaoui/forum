@@ -6,7 +6,7 @@ import { status } from "./status.js";
 
 const urlParams = new URLSearchParams(window.location.search);
 const cardData = urlParams.get("card_id");
- 
+checkandAdd()
 async function InitialComment(ele, comments) {
     let content = []
     content = ele.map((data) => {
@@ -53,9 +53,7 @@ async function InitialComment(ele, comments) {
         comments.appendChild(div)
         return { data: data.content, element: div }
     })
-    // search(content)
-    console.log(content);
-
+ 
     let like = document.querySelectorAll("#likes");
      likes(like)
 }
@@ -64,8 +62,7 @@ async function InitialComment(ele, comments) {
 async function fetchCard(card) {
     try {
         let cardId = card.getAttribute("data-id_card");
-        console.log(cardId);
-
+ 
         const response = await fetch(`/api/card?id=${cardId}`, {
             method: "GET",
         });
