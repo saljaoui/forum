@@ -1,5 +1,5 @@
 
-  async function checklogin() {
+async function checklogin() {
     const value = getcookies()
     const token = value[0]
     let is_logout = null
@@ -43,7 +43,7 @@
         }
         is_logout = true
     }
- }
+}
 
 function getcookies() {
     let tokens = document.cookie.split("; ");
@@ -57,7 +57,7 @@ function getcookies() {
 
     return [token]
 }
-export{
+export {
     checklogin,
-    
+
 }

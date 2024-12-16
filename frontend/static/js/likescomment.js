@@ -1,9 +1,5 @@
-import { checklogin } from "./checklogin.js";
 import { status } from "./status.js";
 export  function likes(likeElements) {
-    // let login =await checklogin()
-
-    // if (!login) {
 
     likeElements.forEach(async (click) => {
         let card_id = click.getAttribute("data-id_card");

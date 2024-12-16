@@ -113,7 +113,7 @@ async function updateCard(cardElement, cardData) {
         ` ;
     }
     let allLikes = document.querySelectorAll("#likes")
-      likes(allLikes)
+    likes(allLikes)
 }
 
 async function createComment(content) {
