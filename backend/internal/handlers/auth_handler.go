@@ -31,7 +31,6 @@ func HandleRegister(w http.ResponseWriter, r *http.Request) {
 	}
 
 	SetCookie(w, "token", uuid, time.Now().Add(2*time.Minute))
-	// SetCookie(w, "user_id", fmt.Sprint(userRegiseter.Id), time.Now().Add(2*time.Minute))
 	JsoneResponse(w, r, userRegiseter, http.StatusOK)
 }
 
@@ -81,7 +80,7 @@ func HandleLogOut(w http.ResponseWriter, r *http.Request) {
 
 	message := uuid.UUiduser(logout.Uuid)
 	if message.MessageError != "" {
-		JsoneResponse(w,r, "Missing or invalid Uuid", http.StatusBadRequest)
+		JsoneResponse(w, r, "Missing or invalid Uuid", http.StatusBadRequest)
 		return
 	}
 

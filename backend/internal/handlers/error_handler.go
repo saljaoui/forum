@@ -19,14 +19,13 @@ func HandleError(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("Error decoding JSON:", err)
 		return
 	}
-	fmt.Println(errRes.Code)
 	if errRes.Code == http.StatusNotFound {
 		JsoneResponse(w, r, "404 Not Found: The requested resource could not be located", errRes.Code)
 	} else if errRes.Code == http.StatusBadRequest {
 		JsoneResponse(w, r, "400 Bad Request: The server could not understand your request.", errRes.Code)
 	} else if errRes.Code == http.StatusMethodNotAllowed {
 		JsoneResponse(w, r, "405 Method Not Allowed: The requested HTTP method is not supported for this resource.", errRes.Code)
-	} else {
+	} else if errRes.Code == http.StatusInternalServerError {
 		JsoneResponse(w, r, "500 Internal Server Error: The server encountered an unexpected condition.", http.StatusInternalServerError)
 	}
 }

@@ -1,12 +1,12 @@
 package route
 
 import (
-	"fmt"
 	"net/http"
 	"os"
 
 	"forum-project/backend/internal/handlers"
 )
+
 func SetupAPIRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("/api/register", handlers.HandleRegister)
 	mux.HandleFunc("/api/home", handlers.HomeHandle)
@@ -23,14 +23,13 @@ func SetupAPIRoutes(mux *http.ServeMux) {
 	mux.Handle("/api/like", handlers.AuthenticateMiddleware(http.HandlerFunc(handlers.HandelLike)))
 	mux.Handle("/api/deleted", handlers.AuthenticateMiddleware(http.HandlerFunc(handlers.HandelDeletLike)))
 	mux.Handle("/api/logout", handlers.AuthenticateMiddleware(http.HandlerFunc(handlers.HandleLogOut)))
-	mux.Handle("/api/err", handlers.AuthenticateMiddleware(http.HandlerFunc(handlers.HandleError)))
+	mux.HandleFunc("/api/err", http.HandlerFunc(handlers.HandleError))
 }
 
 func SetupPageRoutes(mux *http.ServeMux) {
 	mux.Handle("/static/", http.StripPrefix("/static/",
 		http.FileServer(http.Dir("../../frontend/static"))))
 	mux.HandleFunc("/register", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Println()
 		cookies, err := r.Cookie("token")
 		if err != nil || cookies == nil {
 			http.ServeFile(w, r, "../../frontend/templates/register.html")
@@ -123,4 +122,3 @@ func validatePath(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 }
-
