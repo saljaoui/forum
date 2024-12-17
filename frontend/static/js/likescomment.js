@@ -1,3 +1,4 @@
+import { alertPopup } from "./alert.js";
 import { status } from "./status.js";
 export function likes(likeElements) {
     if (document.cookie != "") {
@@ -47,10 +48,12 @@ export async function addLikes(card_id, liked, lik, dislk, click) {
                     Userdisliked: dislk,
                 }),
             });
-
-            if (!response.ok) {
+              if (!response.ok && !response.status === 409 && !response.status === 400) {
                 await status(response)
-            }
+             }else if( response.status === 409 || response.status === 400) {
+                 const data = await response.json();
+                  alertPopup(data)
+              }
         }
     } catch (error) {
         console.log(error);

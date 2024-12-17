@@ -2,6 +2,7 @@ import { navigate } from "./home.js";
 import { likes } from "./likescomment.js";
 import { cards } from "./card.js";
 import { status } from "./status.js";
+import { alertPopup } from "./alert.js";
 const profileNav = document.querySelectorAll(".profile-nav a");
 navigate();
 let content = []
@@ -44,25 +45,24 @@ profileInfo()
 
 //--------------------------------------
 async function fetchData(id) {
-  const responce = await fetch("/api/profile/" + id, {
+  const response = await fetch("/api/profile/" + id, {
     method: "GET",
   });
-  if (responce.ok) {
-    // SeccesCreatPost()
-    //const user_data = history.state;
-    // console.log(user_data);
-
-    let data = await responce.json();
+  if (response.ok) {
+  
+    let data = await response.json();
     let user_info = document.querySelector(".main");
     content = cards(data, user_info)
 
     let like = document.querySelectorAll("#likes");
-    // console.log(data);
-    likes(like);
-  } else if (!responce.ok) {
-    status(responce)
-  } else {
-    let data = responce.json();
+     likes(like);
+  } else if (!response.ok && !response.status === 409 && !response.status === 400) {
+    await status(response)
+} else if (response.status === 409 || response.status === 400) {
+    const data = await response.json();
+    alertPopup(data)
+}  else {
+    let data = response.json();
     console.log(data);
   }
 }

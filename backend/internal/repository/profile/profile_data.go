@@ -31,7 +31,7 @@ func GetPostsProfileByLikes(user_id int) []posts.PostResponde {
 	u.firstname, 
 	u.lastname,
     count(cm.id) comments 
-	FROM post p, card c, user u, likes l LEFT  JOIN comment cm ON cm.card_id=c.id WHERE p.card_id=c.id 
+	FROM post p, card c, user u, likes l LEFT  JOIN comment cm ON cm.card_id=c.id WHERE p.card_id=c.id    AND l.is_like=1
 	AND c.user_id=u.id AND p.card_id = l.card_id AND l.user_id ="` + strconv.Itoa(user_id) + "\" GROUP BY c.id  ORDER BY c.id DESC"
 	return posts.GetPosts(query)
 }

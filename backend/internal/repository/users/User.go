@@ -66,7 +66,8 @@ func (users *User) Register() (ResponceUser, messages.Messages, string) {
 		message.MessageError = "All Input is Required"
 		return ResponceUser{}, message, ""
 	}
-	exists := emailExists(users.Email)
+	checkemail := strings.ToLower(users.Email)
+	exists := emailExists(checkemail)
 	if exists {
 		message.MessageError = "Email user already exists"
 		return ResponceUser{}, message, ""
@@ -96,8 +97,8 @@ func (users *User) Register() (ResponceUser, messages.Messages, string) {
 
 func (log *Login) Authentication() (ResponceUser, messages.Messages, uuid.UUID) {
 	message := messages.Messages{}
-
-	if log.Email == "" || !emailExists(log.Email) {
+	email := strings.ToLower(log.Email)
+	if log.Email == "" || !emailExists(email) {
 		message.MessageError = "Invalid email"
 		return ResponceUser{}, message, uuid.UUID{}
 	} else {

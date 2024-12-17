@@ -1,3 +1,4 @@
+import { alertPopup } from "./alert.js"
 import { status } from "./status.js"
 
 let register = document.querySelector("#form-submit")
@@ -22,20 +23,18 @@ register.addEventListener('submit', async (e) => {
             password: passwordRegister
         })
     })
-    // if (response.status === 401) {
-    //     const data = await response.json();
-    //     localStorage.setItem("token",data.token)
-    //     console.log("Success:", data);
-    // }
+ 
     if (response.ok) {
         const data = await response.json();
         console.log("Success:", data);
         window.alert("You have register successfuly")
         location.href="/home"
-        //  localStorage.setItem("user_id",data)
-    } else if (!response.ok) {
-        status(response)
-    } else {
+     } else if (!response.ok && !response.status === 409 && !response.status === 400) {
+        await status(response)
+    } else if (response.status === 409 || response.status === 400) {
+        const data = await response.json();
+        alertPopup(data)
+    }else {
         const errorData = await response.json();
         console.error("Error:", errorData);
         alert(`Error: ${errorData.message || "Request failed"}`);

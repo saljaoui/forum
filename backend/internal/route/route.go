@@ -79,7 +79,6 @@ func SetupPageRoutes(mux *http.ServeMux) {
 			http.ServeFile(w, r, "../../frontend/templates/settings.html")
 		}
 	})
-
 	mux.HandleFunc("/err", func(w http.ResponseWriter, r *http.Request) {
 		filePath := "../../frontend/templates/err.html"
 		fileContent, err := os.ReadFile(filePath)

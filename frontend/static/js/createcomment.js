@@ -3,6 +3,7 @@ import { checkandAdd } from "./addlikes.js";
 import { GetComments } from "./comment.js";
  
 import { status } from "./status.js";
+import { alertPopup } from "./alert.js";
 
 const urlParams = new URLSearchParams(window.location.search);
 const cardData = urlParams.get("card_id");
@@ -72,9 +73,12 @@ async function fetchCard(card) {
             if (cardElement) {
                 await updateCard(cardElement, cardData, card);
             }
-        }else   if (!response.ok) {
-          await  status(response)
-        }
+        }else if (!response.ok && !response.status === 409 && !response.status === 400) {
+            await status(response)
+         }else if( response.status === 409 || response.status === 400) {
+             const data = await response.json();
+              alertPopup(data)
+          }
 
     } catch (error) {
         console.error("Fetch Error:", error);
