@@ -22,14 +22,15 @@ func HandleRegister(w http.ResponseWriter, r *http.Request) {
 		JsoneResponse(w, r, err.Error(), http.StatusBadRequest)
 		return
 	}
-
-	userRegiseter, message, uuid := user.Register()
+	timeex := time.Now().Add(5 * time.Second).UTC()
+	fmt.Println(timeex.String())
+	userRegiseter, message, uuid := user.Register(timeex)
 	if message.MessageError != "" {
 		JsoneResponse(w, r, message.MessageError, http.StatusBadRequest)
 		return
 	}
 
-	SetCookie(w, "token", uuid, time.Now().Add(2*time.Minute))
+	SetCookie(w, "token", uuid, timeex)
 	JsoneResponse(w, r, userRegiseter, http.StatusOK)
 }
 
@@ -46,15 +47,16 @@ func HandleLogin(w http.ResponseWriter, r *http.Request) {
 		JsoneResponse(w, r, err.Error(), http.StatusBadRequest)
 		return
 	}
-	loged, message, uuid := user.Authentication()
+	timeex := time.Now().Add(5 * time.Second).UTC()
+	loged, message, uuid := user.Authentication(timeex)
 	user.Getuuid(uuid.String())
 	if message.MessageError != "" {
 		JsoneResponse(w, r, message.MessageError, http.StatusBadRequest)
- 		return
+		return
 	}
 
-	SetCookie(w, "token", uuid.String(), time.Now().Add(1*time.Hour))
- 	JsoneResponse(w, r, loged, http.StatusOK)
+	SetCookie(w, "token", uuid.String(), timeex)
+	JsoneResponse(w, r, loged, http.StatusOK)
 }
 
 func HandleLogOut(w http.ResponseWriter, r *http.Request) {
@@ -71,7 +73,6 @@ func HandleLogOut(w http.ResponseWriter, r *http.Request) {
 		JsoneResponse(w, r, "Invalid request format", http.StatusBadRequest)
 		return
 	}
-
 	logout.Id = int64(GetUserId(r))
 	var uuid repository.UUID
 
@@ -80,13 +81,11 @@ func HandleLogOut(w http.ResponseWriter, r *http.Request) {
 		JsoneResponse(w, r, "Missing or invalid Uuid", http.StatusBadRequest)
 		return
 	}
-
 	message = logout.LogOut()
 	if message.MessageError != "" {
 		JsoneResponse(w, r, message.MessageError, http.StatusBadRequest)
 		return
 	}
-
 	clearCookies(w)
 	w.WriteHeader(http.StatusOK)
 }
@@ -110,7 +109,7 @@ func GetUserId(r *http.Request) int {
 	uuid := repository.UUID{}
 	m := uuid.UUiduser(cookie.Value)
 	if m.MessageError != "" {
-		fmt.Println(m.MessageError,"here")
+		fmt.Println(m.MessageError, "here")
 	}
 
 	return uuid.Iduser
