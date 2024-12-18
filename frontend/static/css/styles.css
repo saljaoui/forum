@@ -1008,6 +1008,15 @@ button:hover {
     display: none;
   }
 
+  .newPost .newPost-header button {
+    width: max-content;
+    padding: 0px 5px;
+  }
+
+  #choice-categories h1 {
+    display: block;
+  }
+
   .aside-left nav {
     width: max-content;
   }
@@ -1083,6 +1092,12 @@ button:hover {
   .link-list {
     display: none;
   }
+
+  .newPost .newPost-header button {
+    width: max-content;
+    padding: 0px 5px;
+  }
+
   main {
     min-width: 65%;
   }
@@ -1269,6 +1284,10 @@ button:hover {
     margin-left: 5px;
   }
 
+  #choice-categories h1 {
+    font-size: 12px;
+  }
+
   .post, .commentFromPost {
     padding: 8px;
   }
@@ -1315,7 +1334,6 @@ button:hover {
 
   .newPost-content textarea {
     font-size: 1rem;
-    min-height: 150px;
   }
   
   .aside-nav {
