@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"fmt"
 	"net/http"
 	"time"
 
@@ -24,18 +23,7 @@ func AuthenticateMiddleware(next http.Handler) http.Handler {
 			}
 		}
 		if cookies.Value == "" {
-			// logout := repository.Logout{}
-			// u := repository.UUID{}
-			// u.UUiduser(cookies.Value)
-			// logout.Id = int64(u.Iduser)
-			// logout.Uuid = cookies.Value
-			// logout.LogOut()
-			// 		timeex := time.Now().Add(0* time.Second).UTC()
-			// err := updateUUIDUser("null", us.Id, timeex)
-			// if err != nil {
-			// 	m.MessageError = "Error To Update user"
-			// 	return
-			// }
+
 			JsoneResponse(w, r, "Unauthorized", http.StatusUnauthorized)
 			return
 		}
@@ -44,16 +32,13 @@ func AuthenticateMiddleware(next http.Handler) http.Handler {
 			JsoneResponse(w, r, messages.MessageError, http.StatusUnauthorized)
 			return
 		}
-		if time.Now().Before(expire) {
-			fmt.Println("The current time is before the expiration time.")
-		} else {
+		if !time.Now().Before(expire) {
 			logout := repository.Logout{}
 			u := repository.UUID{}
 			u.UUiduser(cookies.Value)
 			logout.Id = int64(u.Iduser)
 			logout.Uuid = cookies.Value
 			logout.LogOut()
-			  fmt.Println("The expiration time has passed. Meddel")
 		}
 		next.ServeHTTP(w, r)
 	})

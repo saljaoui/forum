@@ -13,7 +13,7 @@ func HandleRegister(w http.ResponseWriter, r *http.Request) {
 		JsoneResponse(w, r, "Method Not Allowed", http.StatusMethodNotAllowed)
 		return
 	}
-
+	defer r.Body.Close()
 	var user repository.User
 	decode := DecodeJson(r)
 	decode.DisallowUnknownFields()
@@ -39,7 +39,7 @@ func HandleLogin(w http.ResponseWriter, r *http.Request) {
 		JsoneResponse(w, r, "Method Not Allowed", http.StatusMethodNotAllowed)
 		return
 	}
-
+	defer r.Body.Close()
 	var user repository.Login
 	decode := DecodeJson(r)
 	err := decode.Decode(&user)
@@ -64,7 +64,7 @@ func HandleLogOut(w http.ResponseWriter, r *http.Request) {
 		JsoneResponse(w, r, "Method Not Allowed", http.StatusMethodNotAllowed)
 		return
 	}
-
+	defer r.Body.Close()
 	var logout repository.Logout
 	decode := DecodeJson(r)
 

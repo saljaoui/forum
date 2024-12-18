@@ -12,6 +12,7 @@ import (
 )
 
 func Handel_GetCommet(res http.ResponseWriter, req *http.Request) {
+	defer req.Body.Close()
 	if req.Method != http.MethodGet {
 		JsoneResponse(res, req, "Method Not Allowed", http.StatusMethodNotAllowed)
 		return
@@ -42,6 +43,7 @@ func Handel_GetCommet(res http.ResponseWriter, req *http.Request) {
 }
 
 func Handler_AddComment(res http.ResponseWriter, req *http.Request) {
+	defer req.Body.Close()
 	if req.Method != http.MethodPost {
 		JsoneResponse(res, req, "Method Not Allowed", http.StatusMethodNotAllowed)
 		return

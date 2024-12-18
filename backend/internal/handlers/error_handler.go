@@ -12,6 +12,7 @@ type errsResponse struct {
 }
 
 func HandleError(w http.ResponseWriter, r *http.Request) {
+	defer r.Body.Close()
 	var errRes errsResponse
 	decoder := json.NewDecoder(r.Body)
 	err := decoder.Decode(&errRes)

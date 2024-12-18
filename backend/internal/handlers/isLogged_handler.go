@@ -10,6 +10,7 @@ import (
 )
 
 func HandleIsLogged(w http.ResponseWriter, r *http.Request) {
+	defer r.Body.Close()
 	if r.Method != http.MethodGet {
 		JsoneResponse(w, r, "Method Not Allowed", http.StatusMethodNotAllowed)
 		return

@@ -7,9 +7,9 @@ import (
 )
 
 func DecodeJson(r *http.Request) *json.Decoder {
+	//defer r.Body.Close()
 	decode := json.NewDecoder(r.Body)
 	decode.DisallowUnknownFields()
-	defer r.Body.Close()
 	return decode
 }
 
