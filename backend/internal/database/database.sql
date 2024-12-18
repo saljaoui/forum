@@ -6,6 +6,7 @@ CREATE TABLE user(
     lastname text not NULL,
     email text not NULL UNIQUE,
     password text not NULL,
+    expires DATETIME,
     CreateAt DATETIME DEFAULT CURRENT_TIMESTAMP,
     UUID text
 );
