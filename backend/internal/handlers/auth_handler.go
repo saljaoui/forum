@@ -17,7 +17,6 @@ func HandleRegister(w http.ResponseWriter, r *http.Request) {
 	var user repository.User
 	decode := DecodeJson(r)
 	decode.DisallowUnknownFields()
-
 	err := decode.Decode(&user)
 	if err != nil {
 		JsoneResponse(w, r, err.Error(), http.StatusBadRequest)
@@ -51,13 +50,11 @@ func HandleLogin(w http.ResponseWriter, r *http.Request) {
 	user.Getuuid(uuid.String())
 	if message.MessageError != "" {
 		JsoneResponse(w, r, message.MessageError, http.StatusBadRequest)
-		// JsoneResponse(w, message.MessageError, http.StatusBadRequest)
-		return
+ 		return
 	}
 
 	SetCookie(w, "token", uuid.String(), time.Now().Add(1*time.Hour))
-	// SetCookie(w, "user_id", fmt.Sprint(loged.Id), time.Now().Add(1*time.Hour))
-	JsoneResponse(w, r, loged, http.StatusOK)
+ 	JsoneResponse(w, r, loged, http.StatusOK)
 }
 
 func HandleLogOut(w http.ResponseWriter, r *http.Request) {
@@ -113,7 +110,7 @@ func GetUserId(r *http.Request) int {
 	uuid := repository.UUID{}
 	m := uuid.UUiduser(cookie.Value)
 	if m.MessageError != "" {
-		fmt.Println(m.MessageError)
+		fmt.Println(m.MessageError,"here")
 	}
 
 	return uuid.Iduser

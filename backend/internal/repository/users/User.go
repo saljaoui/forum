@@ -2,6 +2,7 @@ package user
 
 import (
 	"fmt"
+	"regexp"
 	"strconv"
 	"strings"
 	"time"
@@ -66,7 +67,15 @@ func (users *User) Register() (ResponceUser, messages.Messages, string) {
 		message.MessageError = "All Input is Required"
 		return ResponceUser{}, message, ""
 	}
-	exists := emailExists(users.Email)
+
+	message = users.validateUser()
+	if message.MessageError != "" {
+		return ResponceUser{}, message, ""
+	}
+	
+
+	checkemail := strings.ToLower(users.Email)
+	exists := emailExists(checkemail)
 	if exists {
 		message.MessageError = "Email user already exists"
 		return ResponceUser{}, message, ""
@@ -94,10 +103,38 @@ func (users *User) Register() (ResponceUser, messages.Messages, string) {
 	return loged, message, uuid
 }
 
-func (log *Login) Authentication() (ResponceUser, messages.Messages, uuid.UUID) {
+func (users *User) validateUser() messages.Messages {
 	message := messages.Messages{}
 
-	if log.Email == "" || !emailExists(log.Email) {
+	nameRegex := regexp.MustCompile(`^[A-Za-z]{2,}$`)
+    if !nameRegex.MatchString(strings.TrimSpace(users.Firstname)) {
+        message.MessageError = "Invalid First name"
+        return message
+    }
+    
+    if !nameRegex.MatchString(strings.TrimSpace(users.Lastname)) {
+        message.MessageError = "Invalid Last name"
+        return message
+    }
+
+	emailRegex := regexp.MustCompile(`^[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$`)
+	if !emailRegex.MatchString(strings.ToLower(users.Email)) {
+		message.MessageError = "Invalid email format"
+		return message
+	}
+
+	if len(users.Password) < 8 {
+		message.MessageError = "Invalis password length less than 8"
+		return message
+	}
+
+	return message
+}
+
+func (log *Login) Authentication() (ResponceUser, messages.Messages, uuid.UUID) {
+	message := messages.Messages{}
+	email := strings.ToLower(log.Email)
+	if log.Email == "" || !emailExists(email) {
 		message.MessageError = "Invalid email"
 		return ResponceUser{}, message, uuid.UUID{}
 	} else {

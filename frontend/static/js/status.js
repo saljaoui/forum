@@ -1,4 +1,8 @@
 export async function status(response) {
+  let d=await response.json();
+    console.log(response.message);
+    
+    
     let data = await fetch("/api/err", {
         method: "POST",
         headers: {
@@ -6,21 +10,20 @@ export async function status(response) {
             "Accept": "application/json",
         },
         body: JSON.stringify({
-            code: response.status
+            code: response.status,
+            msg: d.message
         })
     });
 
     if (!data.ok) {
         let re = await data.json()
         window.history.pushState(
-            { data: re, code: response.status },
-            "",                                  
-            `/err`                              
+            { data: re, code: response.status }, // State object
+            "",                                  // Title (optional, not used here)
+            `/err`                               // URL for error page
         );
    
         location.href="/err"
-    } else {
-        console.error("Failed to send status code:", data.status, data.statusText);
-    }
+    }  
 
 }

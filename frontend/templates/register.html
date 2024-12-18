@@ -6,10 +6,13 @@
     <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login</title>
+  <link rel="stylesheet" href="../static/css/alert.css" />
+
     <link rel="stylesheet" href="../static/css/styles.css" />
 </head>
 
 <body>
+    <div class="alert"></div>
     <section class="sectionLogin">
         <div class="logoAndName">
             <a href="/home">
@@ -41,6 +44,10 @@
                         <input type="password" required id="passwordRegister" />
                         <label>Password</label>
                     </div>
+                    <div class="remember-forgot">
+                        <label><input class="checkbox" type="checkbox" /> I agree to the terms
+                            & conditions</label>
+                    </div>
                     <button type="submit" class="btn">register</button>
                     <div class="login-register">
                         <p>
@@ -57,7 +64,7 @@
         </div>
     </div>
     </section>
-
+    <script type="module" src="../static/js/alert.js"></script>
     <script type="module" src="../static/js/register.js"></script> 
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>

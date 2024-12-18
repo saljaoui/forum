@@ -1,6 +1,7 @@
+import { alertPopup } from "./alert.js";
 import { status } from "./status.js";
-export  function likes(likeElements) {
-    if(document.cookie!=""){
+export function likes(likeElements) {
+    if (document.cookie != "") {
 
         likeElements.forEach(async (click) => {
             let card_id = click.getAttribute("data-id_card");
@@ -28,27 +29,31 @@ export  function likes(likeElements) {
                 await status(response)
             }
         });
-    }    
+    }
 }
 
 export async function addLikes(card_id, liked, lik, dislk, click) {
     try {
-        let response = await fetch("/api/like", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                Accept: "application/json",
-            },
-            body: JSON.stringify({
-                is_liked: +liked,
-                card_id: +card_id,
-                UserLiked: lik,
-                Userdisliked: dislk,
-            }),
-        });
-
-        if (!response.ok) {
-            await status(response)
+        if (document.cookie != "") {
+            let response = await fetch("/api/like", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                },
+                body: JSON.stringify({
+                    is_liked: +liked,
+                    card_id: +card_id,
+                    UserLiked: lik,
+                    Userdisliked: dislk,
+                }),
+            });
+              if (!response.ok && !response.status === 409 && !response.status === 400) {
+                await status(response)
+             }else if( response.status === 409 || response.status === 400) {
+                 const data = await response.json();
+                  alertPopup(data)
+              }
         }
     } catch (error) {
         console.log(error);
@@ -56,23 +61,30 @@ export async function addLikes(card_id, liked, lik, dislk, click) {
 }
 
 export async function deletLikes(card_id) {
-    console.log(card_id);
-    let response = await fetch("/api/deleted", {
-        method: "DELETE",
-        headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-        },
-        body: JSON.stringify({ card_id: +card_id }),
-    });
+    try {
+        if (document.cookie != "") {
 
-    if (!response.ok) {
-        await status(response)
-    }
 
-    else {
-        let data = await response.json();
-        console.log(data);
+            let response = await fetch("/api/deleted", {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                },
+                body: JSON.stringify({ card_id: +card_id }),
+            });
+
+            if (!response.ok) {
+                await status(response)
+            }
+
+            else {
+                let data = await response.json();
+                console.log(data);
+
+            }
+        }
+    } catch (error) {
 
     }
 }

@@ -3,15 +3,16 @@ import { likes } from "./likescomment.js";
 import { cards } from "./card.js";
 import { search } from "./search.js";
 import { status } from "./status.js";
+import { alertPopup } from "./alert.js";
 let content = []
 export async function fetchData(page = 1) {
-  const responce = await fetch(`/api/home?page=${page}`, {
+  const response = await fetch(`/api/home?page=${page}`, {
     method: "GET",
   });
-  if (responce.ok) {
+  if (response.ok) {
     let path = window.location.pathname
     if (path !== "/profile") {
-      let data = await responce.json();
+      let data = await response.json();
       let user_info = document.querySelector(".main");
       content = cards(data.posts, user_info)
 
@@ -20,16 +21,19 @@ export async function fetchData(page = 1) {
       search(content)
       renderPagination(data, user_info);
     }
-  } else if (!responce.ok) {
-    await status(responce)
+  }else if (!response.ok && !response.status === 409 && !response.status === 400) {
+    await status(response)
+ }else if( response.status === 409 || response.status === 400) {
+     const data = await response.json();
+      alertPopup(data)
   }
 
 
 }
 await fetchData()
-document.addEventListener("DOMContentLoaded", () => {
-  checkandAdd();
-});
+// document.addEventListener("DOMContentLoaded", () => {
+//   checkandAdd();
+// });
 
 
 function renderPagination(data, container) {

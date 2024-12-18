@@ -154,6 +154,20 @@ button:hover {
   line-height: 1.3;
 }
 
+.remember-forgot label input {
+  accent-color: #162938;
+  margin-right: 3px;
+}
+
+.remember-forgot a {
+  color: var(--color-white);
+  text-decoration: none;
+}
+
+.remember-forgot a:hover {
+  text-decoration: underline;
+}
+
 .join h2 {
   font-size: 1.8em;
   font-weight: 900;
@@ -178,6 +192,10 @@ button:hover {
 
 .login-register p a:hover {
   text-decoration: underline;
+}
+
+.remember-forgot label input {
+  accent-color: var(--color-action-hover);
 }
 
 .link-list a {
@@ -424,6 +442,15 @@ button:hover {
   line-height: 57px;
 }
 
+.remember-forgot {
+  font-size: 0.9em;
+  color: var(--color-white);
+  font-weight: 500;
+  margin: 15px 0 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
 .sectionContact .wrapper {
   height: max-content;
 }
@@ -481,7 +508,7 @@ button:hover {
 
 .join {
   position: relative;
-  width: 210px;
+  width: 250px;
   margin-top: 25px;
   right: 0;
   margin-left: auto;
@@ -974,6 +1001,8 @@ button:hover {
   opacity: 0.5;
 }
 
+
+
 @media (max-width: 1300px) {
   .nav-item h1 {
     display: none;
@@ -1013,7 +1042,7 @@ button:hover {
     padding: 0 0 0 1px;
     width: 40px;
   }
-
+  
   .aside-nav button ion-icon {
     font-size: 20px;
   }
@@ -1048,24 +1077,19 @@ button:hover {
     margin-top: 10px;
     width: 500px;
   }
-  #choice-categories h1 {
-    display: block;
-  }
 }
 
 @media (max-width: 950px) {
   .link-list {
     display: none;
   }
-
   main {
     min-width: 65%;
   }
   .search {
     width: 50%;
   }
-  .post,
-  .commentFromPost {
+  .post, .commentFromPost {
     min-width: none;
     width: 100%;
   }
@@ -1112,42 +1136,12 @@ button:hover {
 }
 
 @media (max-width: 768px) {
-  .join {
-    width: 100px;
-  }
-
-  .join h2 {
-    font-size: 0.9em;
-    text-align: center;
-  }
-
-  .join .btnLogin-popup,
-  .join .btnSignUp-popup {
-    width: 100%;
-    font-size: 0.9em;
-  }
-
-  .join img.logo {
-    display: block;
-    margin: 0 auto 10px;
-  }
-
-  .pagination-controls {
-    gap: 5px;
-    padding: 8px;
-  }
-
-  .pagination-btn {
-    font-size: 0.9em;
-    padding: 5px 8px;
-  }
 
   .post-actions {
     margin-left: 15px;
   }
 
-  .post,
-  .commentFromPost {
+  .post, .commentFromPost {
     padding: 10px;
     min-width: auto;
     width: 100%;
@@ -1155,8 +1149,8 @@ button:hover {
 
   .post-header {
     display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
+    flex-wrap: wrap; 
+    gap: 10px; 
   }
 
   .post-header .avatar {
@@ -1166,10 +1160,6 @@ button:hover {
 
   .post-content {
     font-size: 0.9em;
-  }
-
-  #choice-categories h1 {
-    font-size: 0.5em;
   }
 
   .post-actions {
@@ -1186,6 +1176,7 @@ button:hover {
   }
 
   .wrapper {
+    width: 90%;
     margin: 0 15px;
   }
 
@@ -1224,26 +1215,26 @@ button:hover {
   .team-grid {
     grid-template-columns: 1fr;
   }
-
+  
   .aside-nav {
     width: 45px;
     padding: 3px;
   }
-
+  
   .aside-nav button {
     width: 30px;
     height: 30px;
     margin-left: 5px;
   }
-
+  
   .aside-nav button ion-icon {
     font-size: 15px;
   }
-
+  
   .nav-item {
     padding: 8px 4px;
   }
-
+  
   .nav-item ion-icon {
     font-size: 16px;
     margin: 5px;
@@ -1266,45 +1257,19 @@ button:hover {
   }
 
   .profile-nav a {
-    padding: 5px;
-    font-size: 0.85em;
+    padding: 5px; 
+    font-size: 0.85em; 
     min-width: 80px;
   }
 }
 
 @media (max-width: 576px) {
-  .join {
-    width: 80px;
-    margin-top: 15px;
-  }
-
-  .join h2 {
-    display: none;
-  }
-
-  .join .btnLogin-popup,
-  .join .btnSignUp-popup {
-    font-size: 0.85em;
-    padding: 6px;
-  }
-
-  .pagination-controls {
-    gap: 4px;
-    padding: 5px;
-  }
-
-  .pagination-btn {
-    width: 60px;
-    font-size: 0.85em;
-    padding: 6px;
-  }
 
   .post-actions {
     margin-left: 5px;
   }
 
-  .post,
-  .commentFromPost {
+  .post, .commentFromPost {
     padding: 8px;
   }
 
@@ -1318,7 +1283,7 @@ button:hover {
   }
 
   .post-content {
-    font-size: 0.85em;
+    font-size: 0.85em; 
   }
 
   .post-actions {
@@ -1340,8 +1305,7 @@ button:hover {
     margin: 3px 5px;
   }
 
-  .about-card,
-  .team-member {
+  .about-card, .team-member {
     padding: 20px;
   }
 
@@ -1351,38 +1315,39 @@ button:hover {
 
   .newPost-content textarea {
     font-size: 1rem;
+    min-height: 150px;
   }
-
+  
   .aside-nav {
     width: 40px;
     padding: 2px;
   }
-
+  
   .aside-nav button {
     width: 28px;
     height: 28px;
     margin-left: 4px;
   }
-
+  
   .aside-nav button ion-icon {
     font-size: 14px;
   }
-
+  
   .nav-item {
     padding: 6px 3px;
   }
-
+  
   .nav-item ion-icon {
     font-size: 15px;
     margin: 4px;
   }
 
   .header-nav {
-    padding: 3px;
+    padding: 3px; 
   }
 
   .header-nav h1 {
-    font-size: 0.9em;
+    font-size: 0.9em; 
   }
 
   .profile-nav {
@@ -1392,26 +1357,16 @@ button:hover {
 
   .profile-nav a {
     padding: 4px;
-    font-size: 0.8em;
+    font-size: 0.8em; 
     width: 100%;
   }
 }
 
 @media (max-width: 480px) {
   .wrapper {
-    width: 90%;
+    width: 95%;
     height: auto;
     min-height: 400px;
-  }
-
-  .display-name {
-    font-size: 15px;
-  }
-  .username {
-    font-size: 15px;
-  }
-  .timestamp {
-    font-size: 15px;
   }
 
   .input-box {
@@ -1438,38 +1393,31 @@ button:hover {
   .categories-list {
     max-height: 250px;
   }
-
+  
   .aside-nav {
     width: 35px;
     padding: 1px;
   }
-
+  
   .aside-nav button {
     width: 25px;
     height: 25px;
     margin-left: 3px;
   }
-
+  
   .aside-nav button ion-icon {
     font-size: 13px;
   }
-
+  
   .nav-item {
     padding: 5px 2px;
   }
-
+  
   .nav-item ion-icon {
     font-size: 14px;
     margin: 3px;
   }
-  .pagination-btn {
-    width: 40px;
-    font-size: 0.8em;
-    padding: 6px;
-  }
 }
-
-
 
 
 

@@ -69,7 +69,7 @@ async function classes() {
                     closeCategories()
                     content.value = ""
 
-                    location.href = "/home"
+                 //   location.href = "/home"
                 } else if (categoriesSelected.length === 0) {
                     categories_popup.style.display = "flex"
                 }

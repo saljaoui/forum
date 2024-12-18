@@ -3,6 +3,8 @@ package user
 import (
 	"database/sql"
 	"fmt"
+	"html"
+	"strings"
 
 	"forum-project/backend/internal/database"
 )
@@ -24,15 +26,21 @@ func updateUUIDUser(uudi string, userId int64) error {
 }
 
 func insertUser(users *User, password string) (sql.Result, error) {
+	Firstname := html.EscapeString(users.Firstname)
+	Lastname := html.EscapeString(users.Lastname)
+	Email := strings.ToLower(html.EscapeString(users.Email))
+	Password := html.EscapeString(password)
 	stm := "INSERT INTO user (firstname,lastname,email,password) VALUES(?,?,?,?)"
-	row, err := database.Exec(stm, users.Firstname, users.Lastname, users.Email, password)
+	row, err := database.Exec(stm, Firstname, Lastname, Email, Password)
 	return row, err
 }
 
 func selectUser(log *Login) *User {
 	user := User{}
+	email:=strings.ToLower(log.Email)
+	password:=strings.ToLower(log.Password)
 	query := "select id,email,password, firstname ,lastname FROM user where email=?"
-	err := database.SelectOneRow(query, log.Email, log.Password).Scan(&user.Id, &user.Email, &user.Password, &user.Firstname, &user.Lastname)
+	err := database.SelectOneRow(query, email, password).Scan(&user.Id, &user.Email, &user.Password, &user.Firstname, &user.Lastname)
 	if err != nil {
 		fmt.Println("error to select user", err)
 	}
@@ -66,5 +74,5 @@ func getUserIdWithUUID(uuid string) (string, error) {
 	if err != nil {
 		return "", err
 	}
- 	return uuiduser, nil
+	return uuiduser, nil
 }

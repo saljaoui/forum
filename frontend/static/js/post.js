@@ -1,6 +1,7 @@
 
 import { fetchData } from './forum.js';
 import { status } from './status.js';
+import {alertPopup} from './alert.js';
 
 async function creatPost(categoriesSelected) {
          let content = document.querySelector("#content")
@@ -17,22 +18,18 @@ async function creatPost(categoriesSelected) {
                 name: categoriesSelected
             })
         })
-
         if (response.ok) {
             await fetchData()
             const data = await response.json();
             console.log("Success:", data);
 
-        }else if (!response.ok) {
+        }else if (!response.ok && !response.status === 409 && !response.status === 400) {
            await status(response)
-          }
-        // else if (response.status === 401) {
-        //     location.href = "/login"
-        // }else {
-        //     const errorData = response.json();
-        //     console.error("Error:", errorData);
-        //     alert(`Error: ${errorData.message || "Request failed"}`);
-        // }
+        }else if( response.status === 409 || response.status === 400) {
+            const data = await response.json();
+             alertPopup(data)
+         }
+        //console.log(response);
     
 }
 export {

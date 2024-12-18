@@ -1,21 +1,10 @@
-// const wrapper = document.querySelector('.wrapper');
-// const loginLink = document.querySelector('.login-link');
-// const registerLink = document.querySelector('.register-link');
-
-// registerLink.addEventListener('click', () => {
-//   wrapper.classList.add('active');
-// });
-
-// loginLink.addEventListener('click', () => {
-//   wrapper.classList.remove('active');
-// });
+import { alertPopup } from "./alert.js"
+import { status } from "./status.js"
 
 let login = document.querySelector("#login")
 
 login.addEventListener('submit', async (e) => {
     e.preventDefault()
-
-
     let email = document.querySelector('#email').value
     let password = document.querySelector('#password').value
     const response = await fetch("/api/login", {
@@ -40,6 +29,12 @@ login.addEventListener('submit', async (e) => {
         };
         localStorage.setItem("data", JSON.stringify(userData));
         location.href = "/home"
+    } else if (!response.ok && !response.status === 409 && !response.status === 400) {
+        await status(response)
+    } else if (response.status === 409 || response.status === 400) {
+        const data = await response.json();
+ 
+        alertPopup(data)
     } else {
         const errorData = await response.json();
         console.error("Error:", errorData);

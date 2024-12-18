@@ -1,13 +1,13 @@
 import { likes } from "./likescomment.js";
 import { checkandAdd } from "./addlikes.js";
 import { GetComments } from "./comment.js";
-
-// import { search } from "./search.js";
+ 
 import { status } from "./status.js";
+import { alertPopup } from "./alert.js";
 
 const urlParams = new URLSearchParams(window.location.search);
 const cardData = urlParams.get("card_id");
- 
+checkandAdd()
 async function InitialComment(ele, comments) {
     let content = []
     content = ele.map((data) => {
@@ -54,9 +54,7 @@ async function InitialComment(ele, comments) {
         comments.appendChild(div)
         return { data: data.content, element: div }
     })
-    // search(content)
-    console.log(content);
-
+ 
     let like = document.querySelectorAll("#likes");
      likes(like)
 }
@@ -65,8 +63,7 @@ async function InitialComment(ele, comments) {
 async function fetchCard(card) {
     try {
         let cardId = card.getAttribute("data-id_card");
-        console.log(cardId);
-
+ 
         const response = await fetch(`/api/card?id=${cardId}`, {
             method: "GET",
         });
@@ -76,9 +73,12 @@ async function fetchCard(card) {
             if (cardElement) {
                 await updateCard(cardElement, cardData, card);
             }
-        }else   if (!response.ok) {
-          await  status(response)
-        }
+        }else if (!response.ok && !response.status === 409 && !response.status === 400) {
+            await status(response)
+         }else if( response.status === 409 || response.status === 400) {
+             const data = await response.json();
+              alertPopup(data)
+          }
 
     } catch (error) {
         console.error("Fetch Error:", error);
@@ -113,6 +113,7 @@ async function updateCard(cardElement, cardData) {
         ` ;
     }
     let allLikes = document.querySelectorAll("#likes")
+    
     likes(allLikes)
 }
 

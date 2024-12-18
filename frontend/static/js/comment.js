@@ -1,6 +1,7 @@
 import { InitialComment } from "./createcomment.js"
 import { checklogin } from "./checklogin.js";
 import { status } from "./status.js";
+import { alertPopup } from "./alert.js";
 await checklogin()
 const urlParams = new URLSearchParams(window.location.search);
 const cardData = urlParams.get("card_id");
@@ -34,9 +35,12 @@ async function fetchdata() {
             cards.forEach(async (card) => {
                 card.setAttribute("data-id_card", data.id)
             })
-        } else if (!response.ok) {
-         await   status(response)
-        }
+        } else if (!response.ok && !response.status === 409 && !response.status === 400) {
+            await status(response)
+         }else if( response.status === 409 || response.status === 400) {
+             const data = await response.json();
+              alertPopup(data)
+          }
 
     }
 }
