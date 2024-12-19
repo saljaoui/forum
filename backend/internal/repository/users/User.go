@@ -165,7 +165,6 @@ func (log *Login) Authentication(time time.Time) (ResponceUser, messages.Message
 
 func (log *Login) Getuuid(uuid string) {
 	log.UUID = uuid
-	// fmt.Println(log.UUID)
 }
 
 func (Log *Logout) LogOut() (m messages.Messages) {

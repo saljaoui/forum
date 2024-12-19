@@ -117,7 +117,6 @@ func validatePath(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/home", http.StatusFound)
 	} else if !isValidPath(r.URL.Path, paths) {
 		http.Redirect(w, r, "/err", http.StatusFound)
-		// handlers.JsoneResponse(w, r, "PAGE NOT FOUND", http.StatusNotFound)
 		return
 	}
 }

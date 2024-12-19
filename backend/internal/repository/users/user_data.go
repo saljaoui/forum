@@ -60,7 +60,7 @@ func CheckAuthenticat(uuid string) (bool, time.Time) {
 		fmt.Println(err, "here")
 	}
 	if !expires.Valid {
-		return exists, time.Time{} // Return zero-value time if NULL
+		return exists, time.Time{}
 	}
 	if !time.Now().Before(expires.Time) {
 		return false, time.Time{}
