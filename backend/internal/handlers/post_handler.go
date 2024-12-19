@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"fmt"
 	"net/http"
 
 	category "forum-project/backend/internal/repository/categories"
@@ -23,10 +22,9 @@ func HandlePost(w http.ResponseWriter, r *http.Request) {
 		JsoneResponse(w, r, err.Error(), http.StatusBadRequest)
 		return
 	}
-	if(checkdeblicat(post.Name_Category)){
-		fmt.Println("Duplicate")
-		JsoneResponse(w, r, "Duplicate category: The category already exists", http.StatusConflict)	
-		return 
+	if checkdeblicat(post.Name_Category) {
+		JsoneResponse(w, r, "Duplicate category: The category already exists", http.StatusConflict)
+		return
 	}
 	for _, n := range post.Name_Category {
 		if !checkGategory(n) {
@@ -47,16 +45,18 @@ func HandlePost(w http.ResponseWriter, r *http.Request) {
 	}
 	JsoneResponse(w, r, "create post Seccessfuly", http.StatusCreated)
 }
-func checkdeblicat(cat []string) bool{
-	for i:=0;i<len(cat);i++{
-		for j:=i+1;j<len(cat);j++{
-			if cat[i]==cat[j]{
+
+func checkdeblicat(cat []string) bool {
+	for i := 0; i < len(cat); i++ {
+		for j := i + 1; j < len(cat); j++ {
+			if cat[i] == cat[j] {
 				return true
 			}
 		}
 	}
 	return false
 }
+
 func checkGategory(name string) bool {
 	cate := []string{
 		"General",

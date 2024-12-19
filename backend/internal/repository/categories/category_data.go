@@ -7,15 +7,12 @@ import (
 
 func postCategory(postId int, category string) error {
 	categoryId, err := getCategoryId(category)
-	// fmt.Println(categoryId)
-	// fmt.Println(categoryId,postId)
 	if err != nil {
 		return err
 	}
 	query := "INSERT INTO post_category (post_id, category_id) VALUES(?,?)"
 	_, err = database.Exec(query, postId, categoryId)
 	if err != nil {
-
 		return err
 	}
 	return nil
@@ -32,8 +29,3 @@ func getCategoryId(category string) (int, error) {
 	}
 	return categoryId, nil
 }
-
-// func getPostsByCategoryId(category int) {
-// 	query := "SELECT * FROM post_category pc, post p WHERE pc.post_id = p.id AND pc.category_id = 3"
-
-// }

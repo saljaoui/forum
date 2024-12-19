@@ -1,13 +1,11 @@
 package handlers
 
 import (
-	//"encoding/json"
 	"encoding/json"
 	"fmt"
 	"net/http"
 	"strconv"
 
-	//"fmt"
 	comment "forum-project/backend/internal/repository/comments"
 )
 
@@ -30,16 +28,7 @@ func Handel_GetCommet(res http.ResponseWriter, req *http.Request) {
 		JsoneResponse(res, req, "Status Not Found", http.StatusNotFound)
 		return
 	}
-	// encoder := NewEncoderJsone(res)
-	// for _, c := range comments {
-	// 	err := encoder.Encode(c)
-	// 	if err != nil {
-	// 		JsoneResponse(res, "Error Encoding Comment", http.StatusInternalServerError)
-	// 		return
-	// 	}
-	// }
 	json.NewEncoder(res).Encode(comments)
-	// JsoneResponse(res, comments, http.StatusOK)
 }
 
 func Handler_AddComment(res http.ResponseWriter, req *http.Request) {
@@ -59,7 +48,6 @@ func Handler_AddComment(res http.ResponseWriter, req *http.Request) {
 	}
 }
 
-// 82a3abe1-39e9-47f5-bb1d-1ade395d4206//82a3abe1-39e9-47f5-bb1d-1ade395d4206
 func addComment(req *http.Request) int {
 	iduser := GetUserId(req)
 	comment := comment.Comment{}
