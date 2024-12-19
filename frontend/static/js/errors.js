@@ -6,6 +6,6 @@ function errors() {
     message.textContent = user_data.data.message
     status.textContent = user_data.code
   }
-  console.log(user_data);
+  //console.log(user_data);
 }
 errors()

@@ -98,6 +98,7 @@ func isValidPath(path string, paths []string) bool {
 	}
 	return false
 }
+
 // this is validate path function
 func validatePath(w http.ResponseWriter, r *http.Request) {
 	paths := []string{
@@ -116,8 +117,8 @@ func validatePath(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path == "/" {
 		http.Redirect(w, r, "/home", http.StatusFound)
 	} else if !isValidPath(r.URL.Path, paths) {
-		http.Redirect(w, r, "/err", http.StatusFound)
-		// handlers.JsoneResponse(w, r, "PAGE NOT FOUND", http.StatusNotFound)
+		// http.Redirect(w, r, "/err", http.StatusFound)
+		handlers.JsoneResponse(w, r, "PAGE NOT FOUND", http.StatusNotFound)
 		return
 	}
 }
