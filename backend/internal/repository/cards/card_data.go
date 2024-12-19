@@ -15,7 +15,7 @@ type Card_View_Data struct {
 	Id        int    `json:"id"`
 	User_Id   int    `json:"user_id"`
 	Content   string `json:"content"`
-	CreatedAt string `json:"CreatedAt"`
+	CreatedAt string `json:"createdat"`
 	FirstName string `json:"firstName"`
 	LastName  string `json:"lastName"`
 	Likes     int    `json:"likes"`

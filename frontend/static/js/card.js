@@ -6,9 +6,6 @@ export function cards(data,user_info) {
     user_info.innerHTML = "";
     if(data===null){return ""}
     content = data.map((ele) => {
-      console.log(ele.CreatedAt);
-      
-        let date = new Date(ele.CreatedAt);
         let contents = document.createElement("div");
         contents.innerHTML = `
         <div class="post commens-card">
@@ -16,8 +13,8 @@ export function cards(data,user_info) {
             <img src="../static/imgs/profilePic.png" class="avatar" alt="${ele.firstName}'s profile picture" />
             <div class="user-info">
               <div class="display-name">${ele.firstName + " " + ele.lastName}</div>
-              <span class="username">Created after</span>
-              <span class="timestamp">· ${getTimeDifferenceInHours(ele.CreatedAt)}</span>
+              <span class="username">Created</span>
+              <span class="timestamp">· ${getTimeDifferenceInHours(ele.createdat)}</span>
             </div>
           </div>
           <div class="post-content">
