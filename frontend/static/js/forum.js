@@ -37,9 +37,9 @@ await fetchData()
 
 
 function renderPagination(data, container) {
+  
   let path = window.location.pathname;
-  if (path !== '/comment') {
-    // Create pagination container if it doesn't exist
+  if (path !== '/comment' && path !== '/settings') {
     let paginationDiv = document.querySelector('.pagination-controls');
     if (!paginationDiv) {
       paginationDiv = document.createElement('div');

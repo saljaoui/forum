@@ -6,6 +6,8 @@ export function cards(data,user_info) {
     user_info.innerHTML = "";
     if(data===null){return ""}
     content = data.map((ele) => {
+      console.log(ele.CreatedAt);
+      
         let date = new Date(ele.CreatedAt);
         let contents = document.createElement("div");
         contents.innerHTML = `
@@ -15,7 +17,7 @@ export function cards(data,user_info) {
             <div class="user-info">
               <div class="display-name">${ele.firstName + " " + ele.lastName}</div>
               <span class="username">Created after</span>
-              <span class="timestamp">· ${date.getHours()}h</span>
+              <span class="timestamp">· ${getTimeDifferenceInHours(ele.CreatedAt)}</span>
             </div>
           </div>
           <div class="post-content">
@@ -50,4 +52,18 @@ export function cards(data,user_info) {
     return { data: ele.content, element: contents }
   });
   return content
+}
+
+function getTimeDifferenceInHours(createdAt) {
+  const now = new Date();
+  const createdTime = new Date(createdAt);
+  const diffInMilliseconds = now - createdTime;
+  let diffInHours = Math.floor(diffInMilliseconds / (1000 * 60 * 60));
+  if (diffInHours < 1) {
+  return Math.floor(diffInMilliseconds / (1000 * 60)) + " minutes ago";
+  }
+  if (diffInHours > 24) {
+    return Math.floor(diffInMilliseconds / (1000 * 60 * 60 * 24)) + " days ago";
+  }
+  return diffInHours + " hours ago";
 }
