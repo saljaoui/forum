@@ -2,6 +2,7 @@ package user
 
 import (
 	"fmt"
+	"regexp"
 	"strconv"
 	"strings"
 	"time"
@@ -50,7 +51,7 @@ func generatUUID() string {
 	return uuid.String()
 }
 
-func (users *User) Register() (ResponceUser, messages.Messages, string) {
+func (users *User) Register(timeex time.Time) (ResponceUser, messages.Messages, string) {
 	message := messages.Messages{}
 	uuid := generatUUID()
 	loged := ResponceUser{
@@ -66,7 +67,15 @@ func (users *User) Register() (ResponceUser, messages.Messages, string) {
 		message.MessageError = "All Input is Required"
 		return ResponceUser{}, message, ""
 	}
-	exists := emailExists(users.Email)
+
+	message = users.validateUser()
+	if message.MessageError != "" {
+		return ResponceUser{}, message, ""
+	}
+	
+
+	checkemail := strings.ToLower(users.Email)
+	exists := emailExists(checkemail)
 	if exists {
 		message.MessageError = "Email user already exists"
 		return ResponceUser{}, message, ""
@@ -84,7 +93,7 @@ func (users *User) Register() (ResponceUser, messages.Messages, string) {
 		message.MessageError = err.Error()
 		return ResponceUser{}, message, ""
 	} else {
-		err = updateUUIDUser(uuid, user_id)
+		err = updateUUIDUser(uuid, user_id, timeex)
 		if err != nil {
 			fmt.Println("Error to Update")
 		}
@@ -94,10 +103,38 @@ func (users *User) Register() (ResponceUser, messages.Messages, string) {
 	return loged, message, uuid
 }
 
-func (log *Login) Authentication() (ResponceUser, messages.Messages, uuid.UUID) {
+func (users *User) validateUser() messages.Messages {
 	message := messages.Messages{}
 
-	if log.Email == "" || !emailExists(log.Email) {
+	nameRegex := regexp.MustCompile(`^[A-Za-z]{2,}$`)
+    if !nameRegex.MatchString(strings.TrimSpace(users.Firstname)) {
+        message.MessageError = "Invalid First name"
+        return message
+    }
+    
+    if !nameRegex.MatchString(strings.TrimSpace(users.Lastname)) {
+        message.MessageError = "Invalid Last name"
+        return message
+    }
+
+	emailRegex := regexp.MustCompile(`^[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$`)
+	if !emailRegex.MatchString(strings.ToLower(users.Email)) {
+		message.MessageError = "Invalid email format"
+		return message
+	}
+
+	if len(users.Password) < 8 {
+		message.MessageError = "Invalis password length less than 8"
+		return message
+	}
+
+	return message
+}
+
+func (log *Login) Authentication(time time.Time) (ResponceUser, messages.Messages, uuid.UUID) {
+	message := messages.Messages{}
+	email := strings.ToLower(log.Email)
+	if log.Email == "" || !emailExists(email) {
 		message.MessageError = "Invalid email"
 		return ResponceUser{}, message, uuid.UUID{}
 	} else {
@@ -114,7 +151,7 @@ func (log *Login) Authentication() (ResponceUser, messages.Messages, uuid.UUID) 
 				Firstname: user.Firstname,
 				Lastname:  user.Lastname,
 			}
-			err = updateUUIDUser(uuid.String(), user.Id)
+			err = updateUUIDUser(uuid.String(), user.Id, time)
 			if err != nil {
 				fmt.Println("Error to Update")
 			}
@@ -128,11 +165,11 @@ func (log *Login) Authentication() (ResponceUser, messages.Messages, uuid.UUID) 
 
 func (log *Login) Getuuid(uuid string) {
 	log.UUID = uuid
-	// fmt.Println(log.UUID)
 }
 
 func (Log *Logout) LogOut() (m messages.Messages) {
-	err := updateUUIDUser("null", Log.Id)
+	timeex := time.Now().Add(0 * time.Second)
+	err := updateUUIDUser("null", Log.Id, timeex)
 	if err != nil {
 		m.MessageError = "Error To Update user"
 		return m
@@ -155,22 +192,25 @@ func hashPassword(password string) string {
 	return string(hashedPassword)
 }
 
-func (us *User) AuthenticatLogin(UUID string) (m messages.Messages) {
-	exists := checkAuthenticat(UUID)
+func (us *User) AuthenticatLogin(UUID string) (m messages.Messages, expire time.Time) {
+	exists, expire := CheckAuthenticat(UUID)
 	if !exists {
 		m.MessageError = "Unauthorized token"
 	}
-	return
+
+	return m, expire
 }
 
 func (u *UUID) UUiduser(uuid string) (m messages.Messages) {
 	id, err := getUserIdWithUUID(uuid)
 	if err != nil {
 		m.MessageError = "Unauthorized token"
+		return m
 	}
 	id_user, err := strconv.Atoi(id)
 	if err != nil {
-		fmt.Println(err, "here this error")
+		m.MessageError = "Unauthorized token"
+		return m
 	}
 	u.Iduser = id_user
 	return m

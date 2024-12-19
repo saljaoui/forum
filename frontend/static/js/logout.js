@@ -1,3 +1,4 @@
+import { alertPopup } from "./alert.js";
 import { status } from "./status.js";
 
 const LogoutItem = document.querySelector(".signOut");
@@ -19,9 +20,12 @@ export default async function logout() {
     if (response.ok) {
         console.log("Logout successful");
         window.location.href = "/login";
-    }else if (!response.ok) {
-        status(response)
-      }
+    }else if (!response.ok && !response.status === 409 && !response.status === 400) {
+        await status(response)
+    } else if (response.status === 409 || response.status === 400) {
+        const data = await response.json();
+        alertPopup(data)
+    } 
 }
 
 if (LogoutItem) {

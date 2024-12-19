@@ -51,8 +51,9 @@ body {
 .content_post {
   position: relative;
   overflow-y: scroll;
-  max-height: 85vh;
+  max-height: 87vh;
   scrollbar-width: none;
+  border-bottom: 1px solid var(--color-light);
   -ms-overflow-style: none;
 }
 
@@ -968,7 +969,7 @@ button:hover {
   border-radius: 5px;
 }
 
-.back-button:hover{
+.back-button:hover {
   font-weight: 200;
 }
 
@@ -985,7 +986,6 @@ button:hover {
   margin: auto;
 }
 
-
 .pagination-btn {
   background: transparent;
 }
@@ -1001,16 +1001,24 @@ button:hover {
   opacity: 0.5;
 }
 
-@media (max-width: 1300px) {
 
+
+@media (max-width: 1300px) {
   .nav-item h1 {
     display: none;
-    
+  }
+
+  .newPost .newPost-header button {
+    width: max-content;
+    padding: 0px 5px;
+  }
+
+  #choice-categories h1 {
+    display: block;
   }
 
   .aside-left nav {
     width: max-content;
-
   }
 
   .logo-user {
@@ -1036,11 +1044,28 @@ button:hover {
     left: 0;
     bottom: 0;
     top: 0;
-    border-right: 1px solid var(--color-light) ;
+    border-right: 1px solid var(--color-light);
+  }
+
+  .aside-nav button {
+    padding: 0 0 0 1px;
+    width: 40px;
+  }
+  
+  .aside-nav button ion-icon {
+    font-size: 20px;
+  }
+
+  .aside-nav h1 {
+    display: none;
   }
 
   .nav-item {
     width: max-content;
+  }
+
+  .nav-item ion-icon {
+    font-size: 23px;
   }
 
   .newPost-popup {
@@ -1052,11 +1077,6 @@ button:hover {
     display: none;
   }
 
-  .aside-nav button {
-    padding: 0 0 0 1px;
-    width: 40px;
-  }
-
   .search {
     position: fixed;
     top: 0;
@@ -1066,7 +1086,6 @@ button:hover {
     margin-top: 10px;
     width: 500px;
   }
-
 }
 
 @media (max-width: 950px) {
@@ -1074,29 +1093,349 @@ button:hover {
     display: none;
   }
 
+  .newPost .newPost-header button {
+    width: max-content;
+    padding: 0px 5px;
+  }
 
-
-
-}
-
-@media (max-width: 850px) {
-  .aside-right {
-    display: none;
+  main {
+    min-width: 65%;
+  }
+  .search {
+    width: 50%;
+  }
+  .post, .commentFromPost {
+    min-width: none;
+    width: 100%;
+  }
+  .aside-nav {
+    width: 60px;
+    padding: 5px;
+  }
+  .aside-nav button {
+    width: 35px;
+    height: 35px;
+  }
+  .aside-nav button ion-icon {
+    font-size: 18px;
+  }
+  .nav-item ion-icon {
+    font-size: 20px;
   }
 }
 
+@media (max-width: 850px) {
+  main {
+    min-width: 60%;
+  }
 
+  .logo-user img {
+    height: 35px;
+    width: 35px;
+    margin: 4px 6px;
+  }
 
+  .aside-nav {
+    width: 50px;
+  }
+  .aside-nav button {
+    width: 32px;
+    height: 32px;
+  }
+  .aside-nav button ion-icon {
+    font-size: 16px;
+  }
+  .nav-item ion-icon {
+    font-size: 18px;
+  }
+}
 
+@media (max-width: 768px) {
 
+  .post-actions {
+    margin-left: 15px;
+  }
 
+  .post, .commentFromPost {
+    padding: 10px;
+    min-width: auto;
+    width: 100%;
+  }
 
+  .post-header {
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 10px; 
+  }
 
+  .post-header .avatar {
+    width: 40px;
+    height: 40px;
+  }
 
+  .post-content {
+    font-size: 0.9em;
+  }
 
+  .post-actions {
+    display: flex;
+    justify-content: space-around;
+    font-size: 0.8em;
+    gap: 5px;
+  }
 
+  .post-actions .action {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+  }
 
+  .wrapper {
+    width: 90%;
+    margin: 0 15px;
+  }
 
+  .logo-user img {
+    height: 30px;
+    width: 30px;
+    margin: 4px 6px;
+  }
+
+  .form-box {
+    padding: 20px;
+  }
+
+  .newPost {
+    width: 95%;
+    margin: 50px 10px;
+  }
+
+  .post-content {
+    margin-left: 30px;
+  }
+
+  .post-actions {
+    margin-left: 30px;
+  }
+
+  .avatar {
+    width: 36px;
+    height: 36px;
+  }
+
+  .about-container {
+    padding: 80px 20px 30px;
+  }
+
+  .team-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .aside-nav {
+    width: 45px;
+    padding: 3px;
+  }
+  
+  .aside-nav button {
+    width: 30px;
+    height: 30px;
+    margin-left: 5px;
+  }
+  
+  .aside-nav button ion-icon {
+    font-size: 15px;
+  }
+  
+  .nav-item {
+    padding: 8px 4px;
+  }
+  
+  .nav-item ion-icon {
+    font-size: 16px;
+    margin: 5px;
+  }
+
+  .header-nav {
+    padding: 5px;
+  }
+
+  .header-nav h1 {
+    font-size: 1em;
+    margin-bottom: 5px;
+  }
+
+  .profile-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    overflow-x: auto;
+  }
+
+  .profile-nav a {
+    padding: 5px; 
+    font-size: 0.85em; 
+    min-width: 80px;
+  }
+}
+
+@media (max-width: 576px) {
+
+  .post-actions {
+    margin-left: 5px;
+  }
+
+  #choice-categories h1 {
+    font-size: 12px;
+  }
+
+  .post, .commentFromPost {
+    padding: 8px;
+  }
+
+  .post-header {
+    gap: 5px;
+  }
+
+  .post-header .avatar {
+    width: 35px;
+    height: 35px;
+  }
+
+  .post-content {
+    font-size: 0.85em; 
+  }
+
+  .post-actions {
+    align-items: flex-start;
+    gap: 3px;
+  }
+
+  .profile-nav {
+    gap: 8px;
+  }
+
+  .profile-content {
+    padding: 15px;
+  }
+
+  .logo-user img {
+    height: 20px;
+    width: 20px;
+    margin: 3px 5px;
+  }
+
+  .about-card, .team-member {
+    padding: 20px;
+  }
+
+  .pagination-controls {
+    flex-wrap: wrap;
+  }
+
+  .newPost-content textarea {
+    font-size: 1rem;
+  }
+  
+  .aside-nav {
+    width: 40px;
+    padding: 2px;
+  }
+  
+  .aside-nav button {
+    width: 28px;
+    height: 28px;
+    margin-left: 4px;
+  }
+  
+  .aside-nav button ion-icon {
+    font-size: 14px;
+  }
+  
+  .nav-item {
+    padding: 6px 3px;
+  }
+  
+  .nav-item ion-icon {
+    font-size: 15px;
+    margin: 4px;
+  }
+
+  .header-nav {
+    padding: 3px; 
+  }
+
+  .header-nav h1 {
+    font-size: 0.9em; 
+  }
+
+  .profile-nav {
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .profile-nav a {
+    padding: 4px;
+    font-size: 0.8em; 
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .wrapper {
+    width: 95%;
+    height: auto;
+    min-height: 400px;
+  }
+
+  .input-box {
+    height: 38px;
+    margin: 20px 0;
+  }
+
+  .btn {
+    height: 40px;
+  }
+
+  .profile-header {
+    height: 120px;
+  }
+
+  .status-code {
+    font-size: 72px;
+  }
+
+  .message {
+    font-size: 16px;
+  }
+
+  .categories-list {
+    max-height: 250px;
+  }
+  
+  .aside-nav {
+    width: 35px;
+    padding: 1px;
+  }
+  
+  .aside-nav button {
+    width: 25px;
+    height: 25px;
+    margin-left: 3px;
+  }
+  
+  .aside-nav button ion-icon {
+    font-size: 13px;
+  }
+  
+  .nav-item {
+    padding: 5px 2px;
+  }
+  
+  .nav-item ion-icon {
+    font-size: 14px;
+    margin: 3px;
+  }
+}
 
 
 

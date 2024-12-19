@@ -9,6 +9,7 @@ import (
 )
 
 func GetCard_handler(res http.ResponseWriter, req *http.Request) {
+	defer req.Body.Close()
 	if req.URL.Path != "/api/card" {
 		JsoneResponse(res, req, "Path not found", http.StatusNotFound)
 		return

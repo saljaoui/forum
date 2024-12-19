@@ -6,7 +6,6 @@ export function cards(data,user_info) {
     user_info.innerHTML = "";
     if(data===null){return ""}
     content = data.map((ele) => {
-        let date = new Date(ele.CreatedAt);
         let contents = document.createElement("div");
         contents.innerHTML = `
         <div class="post commens-card">
@@ -14,8 +13,8 @@ export function cards(data,user_info) {
             <img src="../static/imgs/profilePic.png" class="avatar" alt="${ele.firstName}'s profile picture" />
             <div class="user-info">
               <div class="display-name">${ele.firstName + " " + ele.lastName}</div>
-              <span class="username">@aoc.bsky.social</span>
-              <span class="timestamp">· ${date.getHours()}h</span>
+              <span class="username">Created</span>
+              <span class="timestamp">· ${getTimeDifferenceInHours(ele.createdat)}</span>
             </div>
           </div>
           <div class="post-content">
@@ -50,4 +49,19 @@ export function cards(data,user_info) {
     return { data: ele.content, element: contents }
   });
   return content
+}
+
+function getTimeDifferenceInHours(createdAt) {
+  const now = new Date();
+  const createdTime = new Date(createdAt);
+  const diffInMilliseconds = now - createdTime;
+  let diffInHours = Math.floor(diffInMilliseconds / (1000 * 60 * 60));
+  if (diffInHours < 1) {
+    const diffInMinutes = Math.floor(diffInMilliseconds / (1000 * 60));
+    return diffInMinutes < 1 ? "just now" : diffInMinutes + " minutes ago";
+  }
+  if (diffInHours > 24) {
+    return Math.floor(diffInMilliseconds / (1000 * 60 * 60 * 24)) + " days ago";
+  }
+  return diffInHours + " hours ago";
 }

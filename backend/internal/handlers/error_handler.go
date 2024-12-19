@@ -1,46 +1,38 @@
 package handlers
 
 import (
-	"html/template"
+	"encoding/json"
 	"net/http"
 )
 
-// func HandleError(w http.ResponseWriter, r *http.Request, msg string, code int) {
-// 	w.WriteHeader(code)
-// 	tmpl, err := template.ParseFiles("../../frontend/templates/err.html")
-// 	if err != nil {
-// 		http.Error(w, err.Error(), http.StatusInternalServerError)
-// 		return
-// 	}
-// 	tmpl.Execute(w, struct {
-// 		Msg  string
-// 		Code int
-// 	}{
-// 		Msg:  msg,
-// 		Code: code,
-// 	})
-// 	fmt.Println("i'm here")
-// 	//http.RedirectHandler("https://freshman.tech", http.StatusSeeOther)
-// 	// http.Redirect(w, r, "../../frontend/templates/err.html", code)
-// }
+type errsResponse struct {
+	Code int    `json:"code"`
+	Msg  string `json:"msg"`
+}
 
-func HandleError(w http.ResponseWriter, r *http.Request, mes string, codes int) {
-	w.WriteHeader(codes)
-	tmpl, err := template.ParseFiles("../../frontend/templates/err.html")
+func HandleError(w http.ResponseWriter, r *http.Request) {
+	defer r.Body.Close()
+	var errRes errsResponse
+	decoder := json.NewDecoder(r.Body)
+	err := decoder.Decode(&errRes)
 	if err != nil {
-		http.Error(w, "Error loading error page", http.StatusInternalServerError)
+		JsoneResponse(w, r, "Invalid JSON input", http.StatusBadRequest)
 		return
 	}
-	err = tmpl.Execute(w, struct {
-		Msg  string
-		Code int
-	}{
-		Msg:  mes,
-		Code: codes,
-	})
-	if err != nil {
-		http.Error(w, "Error rendering template", http.StatusInternalServerError)
+	if errRes.Code == http.StatusNotFound {
+		JsoneResponse(w, r, errRes.Msg, errRes.Code)
+		return
+	} else if errRes.Code == http.StatusBadRequest {
+		JsoneResponse(w, r, errRes.Msg, errRes.Code)
+		return
+	} else if errRes.Code == http.StatusMethodNotAllowed {
+		JsoneResponse(w, r, errRes.Msg, errRes.Code)
+		return
+	} else if errRes.Code == http.StatusInternalServerError {
+		JsoneResponse(w, r, errRes.Msg, http.StatusInternalServerError)
+		return
+	} else if errRes.Code == http.StatusForbidden {
+		JsoneResponse(w, r, errRes.Msg, http.StatusForbidden)
 		return
 	}
-	return
 }

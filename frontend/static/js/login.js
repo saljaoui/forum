@@ -1,16 +1,5 @@
-// const wrapper = document.querySelector('.wrapper');
-// const loginLink = document.querySelector('.login-link');
-// const registerLink = document.querySelector('.register-link');
-
+import { alertPopup } from "./alert.js"
 import { status } from "./status.js"
-
-// registerLink.addEventListener('click', () => {
-//   wrapper.classList.add('active');
-// });
-
-// loginLink.addEventListener('click', () => {
-//   wrapper.classList.remove('active');
-// });
 
 let login = document.querySelector("#login")
 
@@ -29,12 +18,23 @@ login.addEventListener('submit', async (e) => {
             password: password
         })
     })
+
+
     if (response.ok) {
         const data = await response.json();
-        console.log(data);
+        const userData = {
+            firstname: data.message.firstname,
+            lastname: data.message.lastname,
+            email: data.message.email
+        };
+        localStorage.setItem("data", JSON.stringify(userData));
         location.href = "/home"
-    } else if (!response.ok) {
-        status(response)
+    } else if (!response.ok && !response.status === 409 && !response.status === 400) {
+        await status(response)
+    } else if (response.status === 409 || response.status === 400) {
+        const data = await response.json();
+ 
+        alertPopup(data)
     } else {
         const errorData = await response.json();
         console.error("Error:", errorData);

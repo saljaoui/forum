@@ -8,6 +8,7 @@ import (
 )
 
 func HandelLike(w http.ResponseWriter, r *http.Request) {
+	defer r.Body.Close()
 	if r.Method != http.MethodPost {
 		w.WriteHeader(http.StatusMethodNotAllowed)
 		json.NewEncoder(w).Encode("Status Method Not Allowed")
@@ -41,8 +42,7 @@ func HandelDeletLike(w http.ResponseWriter, r *http.Request) {
 	decode := DecodeJson(r)
 	err := decode.Decode(&like)
 	if err != nil {
-		// fmt.Println(err)
-		JsoneResponse(w, r, "err.Error()", http.StatusBadRequest)
+		JsoneResponse(w, r, "Error of the Decode likes", http.StatusBadRequest)
 		return
 	}
 	like.User_Id = id_user

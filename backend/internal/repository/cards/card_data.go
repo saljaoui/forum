@@ -1,7 +1,6 @@
 package cards
 
 import (
-	//"fmt"
 	"forum-project/backend/internal/database"
 )
 
@@ -16,7 +15,7 @@ type Card_View_Data struct {
 	Id        int    `json:"id"`
 	User_Id   int    `json:"user_id"`
 	Content   string `json:"content"`
-	CreatedAt string `json:"CreatedAt"`
+	CreatedAt string `json:"createdat"`
 	FirstName string `json:"firstName"`
 	LastName  string `json:"lastName"`
 	Likes     int    `json:"likes"`
@@ -102,7 +101,6 @@ func getAllCardsForPages(page int, postsPerPage int) ([]Card_View_Data, int) {
     defer countRows.Close()
 
     offset := (page - 1) * postsPerPage
-
 
     query := `SELECT c.id, c.user_id, c.content, c.created_at, u.firstname, u.lastname,
               count(cm.id) comments,

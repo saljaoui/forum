@@ -3,6 +3,9 @@ package user
 import (
 	"database/sql"
 	"fmt"
+	"html"
+	"strings"
+	"time"
 
 	"forum-project/backend/internal/database"
 )
@@ -17,40 +20,62 @@ func emailExists(email string) bool {
 	return exists
 }
 
-func updateUUIDUser(uudi string, userId int64) error {
-	stm := "UPDATE user SET UUID=? WHERE id=?"
-	_, err := database.Exec(stm, uudi, userId)
+func updateUUIDUser(uudi string, userId int64, expires time.Time) error {
+	stm := "UPDATE user SET UUID=?, expires =?  WHERE id=?"
+	_, err := database.Exec(stm, uudi, expires, userId)
 	return err
 }
 
 func insertUser(users *User, password string) (sql.Result, error) {
+	Firstname := html.EscapeString(users.Firstname)
+	Lastname := html.EscapeString(users.Lastname)
+	Email := strings.ToLower(html.EscapeString(users.Email))
+	Password := html.EscapeString(password)
 	stm := "INSERT INTO user (firstname,lastname,email,password) VALUES(?,?,?,?)"
-	row, err := database.Exec(stm, users.Firstname, users.Lastname, users.Email, password)
+	row, err := database.Exec(stm, Firstname, Lastname, Email, Password)
 	return row, err
 }
 
 func selectUser(log *Login) *User {
 	user := User{}
+	email := strings.ToLower(log.Email)
+	password := strings.ToLower(log.Password)
 	query := "select id,email,password, firstname ,lastname FROM user where email=?"
-	err := database.SelectOneRow(query, log.Email, log.Password).Scan(&user.Id, &user.Email, &user.Password, &user.Firstname, &user.Lastname)
+	err := database.SelectOneRow(query, email, password).Scan(&user.Id, &user.Email, &user.Password, &user.Firstname, &user.Lastname)
 	if err != nil {
 		fmt.Println("error to select user", err)
 	}
 	return &user
 }
 
-func checkAuthenticat(id string) bool {
-	stm := `SELECT EXISTS (SELECT 1 FROM user WHERE UUID =  ?)  `
+func CheckAuthenticat(uuid string) (bool, time.Time) {
+	stm := `SELECT 
+			EXISTS (SELECT 1 FROM user WHERE UUID = ?),
+			(SELECT expires FROM user WHERE UUID = ? ) AS expires; `
 	var exists bool
-	err := database.SelectOneRow(stm, id, id).Scan(&exists)
-	return err == nil
+	var expires sql.NullTime
+
+	err := database.SelectOneRow(stm, uuid, uuid).Scan(&exists, &expires)
+	if err != nil {
+		fmt.Println(err, "here")
+	}
+	if !expires.Valid {
+		return exists, time.Time{}
+	}
+	if !time.Now().Before(expires.Time) {
+		return false, time.Time{}
+	}
+	return exists, expires.Time
 }
 
 func CheckUser(id int) bool {
 	stm := `SELECT EXISTS (SELECT 1 FROM user WHERE id =  ?)  `
 	var exists bool
 	err := database.SelectOneRow(stm, id, id).Scan(&exists)
-	return err == nil
+	if err != nil {
+		fmt.Println(err)
+	}
+	return exists
 }
 
 func getUserIdWithUUID(uuid string) (string, error) {
@@ -60,6 +85,5 @@ func getUserIdWithUUID(uuid string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	fmt.Println(uuiduser)
 	return uuiduser, nil
 }

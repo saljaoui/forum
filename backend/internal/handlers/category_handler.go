@@ -9,6 +9,7 @@ import (
 )
 
 func HandelCategory(w http.ResponseWriter, r *http.Request) {
+	defer r.Body.Close()
 	categoryStruct := category.Category{}
 	decode := DecodeJson(r)
 	err := decode.Decode(&categoryStruct)
