@@ -60,7 +60,8 @@ function getTimeDifferenceInHours(createdAt) {
   const diffInMilliseconds = now - createdTime;
   let diffInHours = Math.floor(diffInMilliseconds / (1000 * 60 * 60));
   if (diffInHours < 1) {
-  return Math.floor(diffInMilliseconds / (1000 * 60)) < 1 ? diffInHours + " minutes ago" : "just now";
+    const diffInMinutes = Math.floor(diffInMilliseconds / (1000 * 60));
+    return diffInMinutes < 1 ? "just now" : diffInMinutes + " minutes ago";
   }
   if (diffInHours > 24) {
     return Math.floor(diffInMilliseconds / (1000 * 60 * 60 * 24)) + " days ago";
