@@ -3,6 +3,11 @@ export function search(content) {
      if(path!=='/comment'){
 
         const searchInput = document.querySelector("[data-search]")
+
+        if (!searchInput) {
+            return;
+        }
+
         searchInput.addEventListener("input", (e) => {
             const value = e.target.value.toLowerCase()
             content.forEach(data => {

@@ -63,7 +63,6 @@ func GetLikes(post_id int) (int, int, int, int) {
 	if err != nil {
 		fmt.Println(err)
 		like = 0
-		// UserLiked = 0
 	}
 	querydislike := `SELECT COALESCE(UserLiked,0) ,COALESCE(Userdisliked,0) , COALESCE(SUM(l.is_like), 0) FROM 
 	post p, likes l WHERE p.card_id = l.card_id AND l.is_like = -1 AND p.id = ` + strconv.Itoa(post_id)
@@ -72,7 +71,6 @@ func GetLikes(post_id int) (int, int, int, int) {
 	err = db.QueryRow(querydislike).Scan(&UserdiLiked, &Userdisliked, &dislike)
 	if err != nil {
 		dislike = 0
-		//UserLiked = 0
 	}
 	return like, dislike * -1, UserLiked, Userdisliked
 }

@@ -8,7 +8,6 @@ import (
 )
 
 func HandleProfilePosts(w http.ResponseWriter, r *http.Request) {
-	
 	id_user := GetUserId(r)
 	posts := profile.GetPostsProfile(id_user)
 	json.NewEncoder(w).Encode(posts)

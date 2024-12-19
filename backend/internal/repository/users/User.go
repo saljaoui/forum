@@ -2,6 +2,7 @@ package user
 
 import (
 	"fmt"
+	"regexp"
 	"strconv"
 	"strings"
 	"time"
@@ -66,6 +67,13 @@ func (users *User) Register(timeex time.Time) (ResponceUser, messages.Messages, 
 		message.MessageError = "All Input is Required"
 		return ResponceUser{}, message, ""
 	}
+
+	message = users.validateUser()
+	if message.MessageError != "" {
+		return ResponceUser{}, message, ""
+	}
+	
+
 	checkemail := strings.ToLower(users.Email)
 	exists := emailExists(checkemail)
 	if exists {
@@ -93,6 +101,34 @@ func (users *User) Register(timeex time.Time) (ResponceUser, messages.Messages, 
 	}
 	loged.Id = user_id
 	return loged, message, uuid
+}
+
+func (users *User) validateUser() messages.Messages {
+	message := messages.Messages{}
+
+	nameRegex := regexp.MustCompile(`^[A-Za-z]{2,}$`)
+    if !nameRegex.MatchString(strings.TrimSpace(users.Firstname)) {
+        message.MessageError = "Invalid First name"
+        return message
+    }
+    
+    if !nameRegex.MatchString(strings.TrimSpace(users.Lastname)) {
+        message.MessageError = "Invalid Last name"
+        return message
+    }
+
+	emailRegex := regexp.MustCompile(`^[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$`)
+	if !emailRegex.MatchString(strings.ToLower(users.Email)) {
+		message.MessageError = "Invalid email format"
+		return message
+	}
+
+	if len(users.Password) < 8 {
+		message.MessageError = "Invalis password length less than 8"
+		return message
+	}
+
+	return message
 }
 
 func (log *Login) Authentication(time time.Time) (ResponceUser, messages.Messages, uuid.UUID) {
@@ -129,7 +165,6 @@ func (log *Login) Authentication(time time.Time) (ResponceUser, messages.Message
 
 func (log *Login) Getuuid(uuid string) {
 	log.UUID = uuid
-	// fmt.Println(log.UUID)
 }
 
 func (Log *Logout) LogOut() (m messages.Messages) {

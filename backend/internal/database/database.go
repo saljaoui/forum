@@ -44,13 +44,7 @@ func Config() *sql.DB {
 	if err != nil {
 		log.Fatal("error opening database: ", err)
 	}
-
-	// Set database to Write-Ahead Logging mode for better concurrency
-	// _, err = db.Exec("PRAGMA journal_mode=WAL;")
-	// if err != nil {
-	// 	log.Fatal("error setting WAL mode: ", err)
-	// }
-
+	
 	err = db.Ping()
 	if err != nil {
 		log.Fatal("error connecting to database:", err)

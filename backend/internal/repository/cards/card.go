@@ -1,38 +1,34 @@
 package cards
 
-import "fmt"
-
 type card struct {
-	Id  int
-	User_Id  int
+	Id        int
+	User_Id   int
 	Content   string
 	CreatedAt string
 }
 
-
 type card_View struct {
-	Id  int				`json:"id"`
-	User_Id  int		`json:"userid"`
-	Content   string	`json:"content"`
-	CreatedAt string	`json:"date"`
-	FirstName string	`json:"firstName"`
-	LastName  string	`json:"lastName"`
-	Likes 	  int		`json:"likes"`
-	DisLikes  int		`json:"dislikes"`
-	Comments  int		`json:"comments"`
-
+	Id        int    `json:"id"`
+	User_Id   int    `json:"userid"`
+	Content   string `json:"content"`
+	CreatedAt string `json:"date"`
+	FirstName string `json:"firstName"`
+	LastName  string `json:"lastName"`
+	Likes     int    `json:"likes"`
+	DisLikes  int    `json:"dislikes"`
+	Comments  int    `json:"comments"`
 }
 
-func NewCard(user_id int , content string) *card {
+func NewCard(user_id int, content string) *card {
 	return &card{
-		Id: -1,
+		Id:      -1,
 		User_Id: user_id,
 		Content: content,
 	}
 }
 
 func (C *card) Add() int {
-	C.Id = insertCard(C.User_Id,C.Content)
+	C.Id = insertCard(C.User_Id, C.Content)
 	return C.Id
 }
 
@@ -80,7 +76,7 @@ func GetAllCards() []card_View {
 }
 
 func GetAllCardsForPages(page int, postsPerPage int) ([]Card_View_Data, int) {
-    return getAllCardsForPages(page, postsPerPage)
+	return getAllCardsForPages(page, postsPerPage)
 }
 
 func convert(data_Row Card_View_Data) card_View {
@@ -95,14 +91,4 @@ func convert(data_Row Card_View_Data) card_View {
 	card.DisLikes = data_Row.DisLikes
 	card.Comments = data_Row.Comments
 	return card
-}
-func (C *card) PrintInfo() {
-	if C == nil {
-		fmt.Println("this card is NULL")
-		return 
-	}
-	fmt.Printf("id : %d \n",C.Id)
-	fmt.Printf("user_ID : %d \n",C.User_Id)
-	fmt.Printf("content : %s \n",C.Content)
-	fmt.Printf("date : %s \n",C.CreatedAt)
 }

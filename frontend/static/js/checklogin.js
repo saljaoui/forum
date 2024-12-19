@@ -16,8 +16,6 @@ async function checklogin() {
                 method: "GET",
             })
             let data = await response.json()
-            console.log(data);
-            
             if (!data) {
                 const cookies = document.cookie.split(";");
                 for (let i = 0; i < cookies.length; i++) {
