@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 )
 
@@ -12,36 +11,28 @@ type errsResponse struct {
 }
 
 func HandleError(w http.ResponseWriter, r *http.Request) {
-	// paths := []string{
-	// 	"/comment",
-	// 	"/register",
-	// 	"/login",
-	// 	"/logout",
-	// 	"/about",
-	// 	"/contact",
-	// 	"/home",
-	// 	"/categories",
-	// 	"/profile",
-	// 	"/settings",
-	// 	"/err",
-	// }
-	// route.IsValidPath()
 	defer r.Body.Close()
 	var errRes errsResponse
 	decoder := json.NewDecoder(r.Body)
 	err := decoder.Decode(&errRes)
 	if err != nil {
-		http.Error(w, "Invalid JSON input", http.StatusBadRequest)
-		fmt.Println("Error decoding JSON:", err)
+		JsoneResponse(w, r, "Invalid JSON input", http.StatusBadRequest)
 		return
 	}
 	if errRes.Code == http.StatusNotFound {
 		JsoneResponse(w, r, errRes.Msg, errRes.Code)
+		return
 	} else if errRes.Code == http.StatusBadRequest {
 		JsoneResponse(w, r, errRes.Msg, errRes.Code)
+		return
 	} else if errRes.Code == http.StatusMethodNotAllowed {
 		JsoneResponse(w, r, errRes.Msg, errRes.Code)
+		return
 	} else if errRes.Code == http.StatusInternalServerError {
 		JsoneResponse(w, r, errRes.Msg, http.StatusInternalServerError)
+		return
+	} else if errRes.Code == http.StatusForbidden {
+		JsoneResponse(w, r, errRes.Msg, http.StatusForbidden)
+		return
 	}
 }
