@@ -8,6 +8,7 @@ import (
 )
 
 func HandelLike(w http.ResponseWriter, r *http.Request) {
+	defer r.Body.Close()
 	if r.Method != http.MethodPost {
 		w.WriteHeader(http.StatusMethodNotAllowed)
 		json.NewEncoder(w).Encode("Status Method Not Allowed")

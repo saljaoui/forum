@@ -9,12 +9,7 @@ import (
 )
 
 func HandlePost(w http.ResponseWriter, r *http.Request) {
-	fmt.Println(r.URL.Path)
-	// if r.URL.Path != "/api/post" {
-	// 	JsoneResponse(w, r, "Invalid path", http.StatusBadRequest)
-	// 	return
-
-	// }
+	defer r.Body.Close()
 	if r.Method != http.MethodPost {
 		JsoneResponse(w, r, "Status Method Not Allowed", http.StatusMethodNotAllowed)
 		return

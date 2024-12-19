@@ -20,11 +20,16 @@ func InitDB() error {
 		if err != nil {
 			return fmt.Errorf("failed to read SQL file: %v", err)
 		}
+		_, err = db.Exec("PRAGMA foreign_keys = ON;")
+		if err != nil {
+			log.Fatalf("Failed to enable foreign keys: %v", err)
+		}
 
 		_, err = db.Exec(string(sqlFile))
 		if err != nil {
 			return fmt.Errorf("failed to execute SQL: %v", err)
 		}
+
 	}
 	return nil
 }
@@ -72,7 +77,7 @@ func Exec(query string, model ...any) (sql.Result, error) {
 	defer db.Close()
 	res, err := db.Exec(query, model...)
 	if err != nil {
-        return nil, fmt.Errorf("exec error: %v", err)
-    }
+		return nil, fmt.Errorf("exec error: %v", err)
+	}
 	return res, nil
 }

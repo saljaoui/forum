@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"html"
 	"strings"
+	"time"
 
 	"forum-project/backend/internal/database"
 )
@@ -19,9 +20,9 @@ func emailExists(email string) bool {
 	return exists
 }
 
-func updateUUIDUser(uudi string, userId int64) error {
-	stm := "UPDATE user SET UUID=? WHERE id=?"
-	_, err := database.Exec(stm, uudi, userId)
+func updateUUIDUser(uudi string, userId int64, expires time.Time) error {
+	stm := "UPDATE user SET UUID=?, expires =?  WHERE id=?"
+	_, err := database.Exec(stm, uudi, expires, userId)
 	return err
 }
 
@@ -37,8 +38,8 @@ func insertUser(users *User, password string) (sql.Result, error) {
 
 func selectUser(log *Login) *User {
 	user := User{}
-	email:=strings.ToLower(log.Email)
-	password:=strings.ToLower(log.Password)
+	email := strings.ToLower(log.Email)
+	password := strings.ToLower(log.Password)
 	query := "select id,email,password, firstname ,lastname FROM user where email=?"
 	err := database.SelectOneRow(query, email, password).Scan(&user.Id, &user.Email, &user.Password, &user.Firstname, &user.Lastname)
 	if err != nil {
@@ -47,14 +48,24 @@ func selectUser(log *Login) *User {
 	return &user
 }
 
-func CheckAuthenticat(id string) bool {
-	stm := `SELECT EXISTS (SELECT 1 FROM user WHERE UUID =  ?)  `
+func CheckAuthenticat(uuid string) (bool, time.Time) {
+	stm := `SELECT 
+			EXISTS (SELECT 1 FROM user WHERE UUID = ?),
+			(SELECT expires FROM user WHERE UUID = ? ) AS expires; `
 	var exists bool
-	err := database.SelectOneRow(stm, id, id).Scan(&exists)
+	var expires sql.NullTime
+
+	err := database.SelectOneRow(stm, uuid, uuid).Scan(&exists, &expires)
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println(err, "here")
 	}
-	return exists
+	if !expires.Valid {
+		return exists, time.Time{} // Return zero-value time if NULL
+	}
+	if !time.Now().Before(expires.Time) {
+		return false, time.Time{}
+	}
+	return exists, expires.Time
 }
 
 func CheckUser(id int) bool {

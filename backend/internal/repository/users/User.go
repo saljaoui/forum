@@ -51,7 +51,7 @@ func generatUUID() string {
 	return uuid.String()
 }
 
-func (users *User) Register() (ResponceUser, messages.Messages, string) {
+func (users *User) Register(timeex time.Time) (ResponceUser, messages.Messages, string) {
 	message := messages.Messages{}
 	uuid := generatUUID()
 	loged := ResponceUser{
@@ -93,7 +93,7 @@ func (users *User) Register() (ResponceUser, messages.Messages, string) {
 		message.MessageError = err.Error()
 		return ResponceUser{}, message, ""
 	} else {
-		err = updateUUIDUser(uuid, user_id)
+		err = updateUUIDUser(uuid, user_id, timeex)
 		if err != nil {
 			fmt.Println("Error to Update")
 		}
@@ -131,7 +131,7 @@ func (users *User) validateUser() messages.Messages {
 	return message
 }
 
-func (log *Login) Authentication() (ResponceUser, messages.Messages, uuid.UUID) {
+func (log *Login) Authentication(time time.Time) (ResponceUser, messages.Messages, uuid.UUID) {
 	message := messages.Messages{}
 	email := strings.ToLower(log.Email)
 	if log.Email == "" || !emailExists(email) {
@@ -151,7 +151,7 @@ func (log *Login) Authentication() (ResponceUser, messages.Messages, uuid.UUID) 
 				Firstname: user.Firstname,
 				Lastname:  user.Lastname,
 			}
-			err = updateUUIDUser(uuid.String(), user.Id)
+			err = updateUUIDUser(uuid.String(), user.Id, time)
 			if err != nil {
 				fmt.Println("Error to Update")
 			}
@@ -169,7 +169,8 @@ func (log *Login) Getuuid(uuid string) {
 }
 
 func (Log *Logout) LogOut() (m messages.Messages) {
-	err := updateUUIDUser("null", Log.Id)
+	timeex := time.Now().Add(0 * time.Second)
+	err := updateUUIDUser("null", Log.Id, timeex)
 	if err != nil {
 		m.MessageError = "Error To Update user"
 		return m
@@ -192,22 +193,25 @@ func hashPassword(password string) string {
 	return string(hashedPassword)
 }
 
-func (us *User) AuthenticatLogin(UUID string) (m messages.Messages) {
-	exists := CheckAuthenticat(UUID)
+func (us *User) AuthenticatLogin(UUID string) (m messages.Messages, expire time.Time) {
+	exists, expire := CheckAuthenticat(UUID)
 	if !exists {
 		m.MessageError = "Unauthorized token"
 	}
-	return
+
+	return m, expire
 }
 
 func (u *UUID) UUiduser(uuid string) (m messages.Messages) {
 	id, err := getUserIdWithUUID(uuid)
 	if err != nil {
 		m.MessageError = "Unauthorized token"
+		return m
 	}
 	id_user, err := strconv.Atoi(id)
 	if err != nil {
-		fmt.Println(err, "here this error")
+		m.MessageError = "Unauthorized token"
+		return m
 	}
 	u.Iduser = id_user
 	return m

@@ -18,6 +18,7 @@ type PaginatedResponse struct {
 }
 
 func HomeHandle(w http.ResponseWriter, r *http.Request) {
+	defer r.Body.Close()
 	if r.Method != http.MethodGet {
 		JsoneResponse(w, r, "Method Not Allowed", http.StatusMethodNotAllowed)
 		return
@@ -49,6 +50,7 @@ func HomeHandle(w http.ResponseWriter, r *http.Request) {
 }
 
 func LikesHandle(w http.ResponseWriter, r *http.Request) {
+	defer r.Body.Close()
 	if r.Method != http.MethodPost {
 		JsoneResponse(w, r, "Method Not Allowd", http.StatusMethodNotAllowed)
 		return
