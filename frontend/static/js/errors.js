@@ -1,13 +1,17 @@
-function errors() {
+import { status } from "./status.js";
+
+async function errors() {
   const user_data = history.state;
-  let status = document.querySelector(".status-code")
+  let statuscode = document.querySelector(".status-code")
   let message = document.querySelector(".message")
   if (user_data) {
     message.textContent = user_data.data.message
-    status.textContent = user_data.code
+    statuscode.textContent = user_data.code
   }else{
-    message.textContent="Page Not Found "
-    status.textContent=404
+    let code=404
+   await status(code)
+    // message.textContent="Page Not Found "
+    // status.textContent=404
   }
    
 }

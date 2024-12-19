@@ -1,7 +1,15 @@
 export async function status(response) {
-  let d=await response.json();
-    console.log(d);
-    
+    let statuscode = null
+    let message = null
+    if (response === 404) {
+        statuscode = 404
+        message = "Page Not Found"
+     } if (typeof response === "function") {
+        statuscode = response.status
+        d = await response.json();
+        message=d.message
+    }
+
     let data = await fetch("/api/err", {
         method: "POST",
         headers: {
@@ -9,20 +17,20 @@ export async function status(response) {
             "Accept": "application/json",
         },
         body: JSON.stringify({
-            code: response.status,
-            msg: d.message
+            code: statuscode,
+            msg: message
         })
     });
 
     if (!data.ok) {
         let re = await data.json()
         window.history.pushState(
-            { data: re, code: response.status }, // State object
+            { data: re, code: statuscode}, // State object
             "",                                  // Title (optional, not used here)
             `/err`                               // URL for error page
         );
-   
-        location.href="/err"
-    }  
+
+        location.href = "/err"
+    }
 
 }
