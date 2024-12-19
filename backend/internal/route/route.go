@@ -98,7 +98,7 @@ func isValidPath(path string, paths []string) bool {
 	}
 	return false
 }
-
+// this is validate path function
 func validatePath(w http.ResponseWriter, r *http.Request) {
 	paths := []string{
 		"/comment",
