@@ -99,10 +99,6 @@ func isValidPath(path string, paths []string) bool {
 	}
 	return false
 }
-<<<<<<< HEAD
-=======
-
->>>>>>> ddb563e047c5fc018278c62be96478443b7fd7bf
 // this is validate path function
 func validatePath(w http.ResponseWriter, r *http.Request) {
 	fmt.Println(r.URL.Path)
