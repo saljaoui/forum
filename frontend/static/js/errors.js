@@ -9,7 +9,7 @@ async function errors() {
     statuscode.textContent = user_data.code
   }else{
     let code=404
-   await status(code)
+    await status(code)
     // message.textContent="Page Not Found "
     // status.textContent=404
   }

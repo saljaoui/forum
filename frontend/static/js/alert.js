@@ -18,8 +18,6 @@ export function alertPopup(data) {
             </div>
         </div>
     `
- 
-
     function showPopup() {
         const popup = document.getElementById('popup');
         popup.classList.add('show');
@@ -28,7 +26,7 @@ export function alertPopup(data) {
     function hidePopup() {
         const popup = document.getElementById('popup');
         popup.classList.remove('show');
-        location.href="/home"
+       // location.href="/home"
     }
     showPopup()
     setTimeout(hidePopup, 900);

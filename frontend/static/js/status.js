@@ -25,7 +25,7 @@ export async function status(response) {
     if (!data.ok) {
         let re = await data.json()
         window.history.pushState(
-            { data: re, code: statuscode}, // State object
+            { data: re, code: statuscode},          // State object
             "",                                  // Title (optional, not used here)
             `/err`                               // URL for error page
         );

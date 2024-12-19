@@ -1,8 +1,10 @@
 package route
 
 import (
+	"fmt"
 	"net/http"
 	"os"
+	"strings"
 
 	"forum-project/backend/internal/handlers"
 )
@@ -27,24 +29,23 @@ func SetupAPIRoutes(mux *http.ServeMux) {
 }
 
 func SetupPageRoutes(mux *http.ServeMux) {
-	mux.Handle("/static/", http.StripPrefix("/static/",
-		http.FileServer(http.Dir("../../frontend/static"))))
-	mux.HandleFunc("/register", func(w http.ResponseWriter, r *http.Request) {
-		cookies, err := r.Cookie("token")
-		if err != nil || cookies == nil {
-			http.ServeFile(w, r, "../../frontend/templates/register.html")
-		} else {
-			http.Redirect(w, r, "/home", http.StatusSeeOther)
+	mux.HandleFunc("/static/", func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodGet {
+			handlers.JsoneResponse(w, r, "Method Not Allowed", http.StatusMethodNotAllowed)
+			return
 		}
-	})
-	mux.HandleFunc("/login", func(w http.ResponseWriter, r *http.Request) {
-		cookies, err := r.Cookie("token")
-		if err != nil || cookies == nil {
-			http.ServeFile(w, r, "../../frontend/templates/login.html")
-		} else {
-			http.Redirect(w, r, "/home", http.StatusSeeOther)
+		suffix := r.URL.Path[len("/static/"):]
+		if strings.Contains(suffix, ".js") {
+			http.ServeFile(w, r, "../../frontend/static/"+suffix)
+			return
 		}
+		if suffix != "css/alert.css" && suffix != "css/styles.css" && suffix != "imgs/logo.png" && suffix != "imgs/profilePic.png" {
+			handlers.JsoneResponse(w, r, "Access Forbidden", http.StatusForbidden)
+			return
+		}
+		http.ServeFile(w, r, "../../frontend/static/"+suffix)
 	})
+
 	mux.HandleFunc("/about", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "../../frontend/templates/about.html")
 	})
@@ -101,6 +102,7 @@ func isValidPath(path string, paths []string) bool {
 
 // this is validate path function
 func validatePath(w http.ResponseWriter, r *http.Request) {
+	fmt.Println(r.URL.Path)
 	paths := []string{
 		"/comment",
 		"/register",
@@ -116,8 +118,9 @@ func validatePath(w http.ResponseWriter, r *http.Request) {
 	}
 	if r.URL.Path == "/" {
 		http.Redirect(w, r, "/home", http.StatusFound)
+		return
 	} else if !isValidPath(r.URL.Path, paths) {
-		http.Redirect(w, r, "/err", http.StatusFound)
+		handlers.JsoneResponse(w, r, "Not Found", http.StatusNotFound)
 		return
 	}
 }
