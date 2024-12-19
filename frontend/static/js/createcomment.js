@@ -78,6 +78,7 @@ async function fetchCard(card) {
          }else if( response.status === 409 || response.status === 400) {
              const data = await response.json();
               alertPopup(data)
+              
           }
 
     } catch (error) {

@@ -12,6 +12,20 @@ type errsResponse struct {
 }
 
 func HandleError(w http.ResponseWriter, r *http.Request) {
+	// paths := []string{
+	// 	"/comment",
+	// 	"/register",
+	// 	"/login",
+	// 	"/logout",
+	// 	"/about",
+	// 	"/contact",
+	// 	"/home",
+	// 	"/categories",
+	// 	"/profile",
+	// 	"/settings",
+	// 	"/err",
+	// }
+	// route.IsValidPath()
 	defer r.Body.Close()
 	var errRes errsResponse
 	decoder := json.NewDecoder(r.Body)

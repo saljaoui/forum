@@ -22,7 +22,7 @@ func HandleRegister(w http.ResponseWriter, r *http.Request) {
 		JsoneResponse(w, r, err.Error(), http.StatusBadRequest)
 		return
 	}
-	timeex := time.Now().Add(5 * time.Second).UTC()
+	timeex := time.Now().Add(5 * time.Minute).UTC()
 	fmt.Println(timeex.String())
 	userRegiseter, message, uuid := user.Register(timeex)
 	if message.MessageError != "" {
@@ -47,7 +47,7 @@ func HandleLogin(w http.ResponseWriter, r *http.Request) {
 		JsoneResponse(w, r, err.Error(), http.StatusBadRequest)
 		return
 	}
-	timeex := time.Now().Add(5 * time.Second).UTC()
+	timeex := time.Now().Add(5 * time.Minute).UTC()
 	loged, message, uuid := user.Authentication(timeex)
 	user.Getuuid(uuid.String())
 	if message.MessageError != "" {

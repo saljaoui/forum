@@ -5,7 +5,10 @@ function errors() {
   if (user_data) {
     message.textContent = user_data.data.message
     status.textContent = user_data.code
+  }else{
+    message.textContent="Page Not Found "
+    status.textContent=404
   }
-  //console.log(user_data);
+   
 }
 errors()

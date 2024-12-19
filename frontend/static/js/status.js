@@ -1,7 +1,6 @@
 export async function status(response) {
   let d=await response.json();
-    console.log(response.message);
-    
+    console.log(d);
     
     let data = await fetch("/api/err", {
         method: "POST",
