@@ -90,14 +90,14 @@ func SetupPageRoutes(mux *http.ServeMux) {
 	})
 }
 
-func isValidPath(path string, paths []string) bool {
-	for _, v := range paths {
-		if path == v {
-			return true
-		}
-	}
-	return false
-}
+// func isValidPath(path string, paths []string) bool {
+// 	for _, v := range paths {
+// 		if path == v {
+// 			return true
+// 		}
+// 	}
+// 	return false
+// }
 
 func validatePath(w http.ResponseWriter, r *http.Request) {
 	paths := []string{
