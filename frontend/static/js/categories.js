@@ -19,7 +19,28 @@ profileNav.forEach((navItem) => {
   });
 });
 
+const listCategories = [
+  "General", 
+  "Technology", 
+  "Sports", 
+  "Entertainment", 
+  "Science", 
+  "Health", 
+  "Food", 
+  "Travel", 
+  "Fashion", 
+  "Art", 
+  "Music"
+];
+
+
 async function fetchData(categoryName) {
+
+  if (!listCategories.includes(categoryName)) {
+    alertPopup({message :"Invalid category"});
+    return
+  }
+
   const response = await fetch("/api/category", {
     method: "POST",
     headers: {
@@ -38,7 +59,7 @@ async function fetchData(categoryName) {
     await status(response)
  }else if( response.status === 409 || response.status === 400) {
      const data = await response.json();
-      alertPopup(data,)
+      alertPopup(data)
   }
 
 
