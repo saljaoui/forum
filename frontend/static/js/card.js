@@ -51,7 +51,7 @@ export function cards(data,user_info) {
   return content
 }
 
-function getTimeDifferenceInHours(createdAt) {
+export function getTimeDifferenceInHours(createdAt) {
   const now = new Date();
   const createdTime = new Date(createdAt);
   const diffInMilliseconds = now - createdTime;
