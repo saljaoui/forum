@@ -56,7 +56,7 @@ async function GetComments() {
         if (response.ok) {
             let textResponse = await response.text();
             if (textResponse.trim() === "") {
-                console.error("Empty response body");
+                console.log("Empty response body");
                 return;
             }
 

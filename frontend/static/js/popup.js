@@ -21,7 +21,8 @@ async function classes() {
         const categoriesList = Array.from(document.getElementsByClassName('category-item'))
         let categoriesSelected = []
 
-        if (path === "/comment") {
+
+        if (path === "/comment" && comment) {
             openCategories.style.display="none"
             while (categories_popup.firstChild) {
                 categories_popup.removeChild(categories_popup.firstChild)
