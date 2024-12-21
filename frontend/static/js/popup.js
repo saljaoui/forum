@@ -1,7 +1,9 @@
 import { createComment } from "./createcomment.js"
 import { creatPost } from './post.js';
- async function classes() {
- 
+// import { checklogin } from "./checklogin.js";
+async function classes() {
+    
+
     if (document.cookie != "") {
         let path = window.location.pathname
         const creategategory = document.querySelector(".postReply")
@@ -19,6 +21,7 @@ import { creatPost } from './post.js';
         let categoriesSelected = []
 
         if (path === "/comment") {
+            newPost.style.display="none"
             openCategories.style.display="none"
             while (categories_popup.firstChild) {
                 categories_popup.removeChild(categories_popup.firstChild)

@@ -22,7 +22,7 @@ async function creatPost(categoriesSelected) {
             const data = await response.json();
             console.log("Success:", data);
 
-        }else if( response.status === 409 || response.status === 400) {
+        }else if( response.status === 400) {
             const data = await response.json();
              alertPopup(data)
          }
