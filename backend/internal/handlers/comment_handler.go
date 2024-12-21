@@ -59,10 +59,10 @@ func addComment(req *http.Request) int {
 
 	decoder := DecodeJson(req)
 	err := decoder.Decode(&comment)
-	if err != nil || (comment.Content=="") {
+	if err != nil || (comment.Content == "") {
 		return http.StatusBadRequest
 	}
-	if comment.Content == "" {
+	if comment.Content == "" || len(comment.Content) > 1000 {
 		return http.StatusBadRequest
 	}
 	comment.Add()
