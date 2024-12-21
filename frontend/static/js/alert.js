@@ -23,8 +23,7 @@ export function alertPopup(data) {
 
     function hidePopup() {
         const popup = document.getElementById('popup');
-        popup.classList.remove('show');
-        // location.href="/home"
+        popup.classList.remove('show'); 
     }
     showPopup()
     setTimeout(hidePopup, 900);
