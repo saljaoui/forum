@@ -1,6 +1,8 @@
 import { createComment } from "./createcomment.js"
 import { creatPost } from './post.js';
+// import { checklogin } from "./checklogin.js";
 async function classes() {
+    
 
     if (document.cookie != "") {
         let path = window.location.pathname
@@ -19,26 +21,26 @@ async function classes() {
         let categoriesSelected = []
 
         if (path === "/comment") {
-
-            comment.addEventListener("click", () => {   
+            newPost.style.display="none"
+            openCategories.style.display="none"
+            while (categories_popup.firstChild) {
+                categories_popup.removeChild(categories_popup.firstChild)
+            }
+            while (openCategories.firstChild) {
+                openCategories.removeChild(openCategories.firstChild)
+            }
+            comment.addEventListener("click", () => {
                 creatPostPopup.style.display = "none"
                 createComment(content.value)
                 content.value = ""
             })
             creategategory.addEventListener("click", () => {
-                openCategories.style.display = "none"
-
-                while (categories_popup.firstChild) {
-                    categories_popup.removeChild(categories_popup.firstChild)
-                }
-                while (openCategories.firstChild) {
-                    openCategories.removeChild(openCategories.firstChild)
-                }
-                console.log("click comment");
                 create_btn.textContent = "Comment"
                 creatPostPopup.style.display = "flex"
             })
-
+            newPost.addEventListener("click", () => {
+                creatPostPopup.style.display = "none"
+            })
         } else {
             newPost.addEventListener("click", () => {
                 creatPostPopup.style.display = "flex"
@@ -67,7 +69,7 @@ async function classes() {
                     closeCategories()
                     content.value = ""
 
-                    //   location.href = "/home"
+                 //   location.href = "/home"
                 } else if (categoriesSelected.length === 0) {
                     categories_popup.style.display = "flex"
                 }
@@ -93,10 +95,7 @@ async function classes() {
                 });
             });
         }
-        newPost.addEventListener("click", () => {
-            openCategories.style.display = "block"
-            creatPostPopup.style.display = "block"
-        })
+
         post_close.addEventListener("click", () => {
             creatPostPopup.style.display = "none"
         })

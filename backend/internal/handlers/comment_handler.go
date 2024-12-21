@@ -58,7 +58,7 @@ func addComment(req *http.Request) int {
 	}
 	decoder := DecodeJson(req)
 	err := decoder.Decode(&comment)
-	if err != nil {
+	if err != nil || (comment.Content=="") {
 		return http.StatusBadRequest
 	}
 	comment.Add()
