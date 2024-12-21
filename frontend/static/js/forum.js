@@ -1,8 +1,7 @@
-import { checkandAdd } from "./addlikes.js";
 import { likes } from "./likescomment.js";
 import { cards } from "./card.js";
 import { search } from "./search.js";
-import { status } from "./status.js";
+
 import { alertPopup } from "./alert.js";
 let content = []
 export async function fetchData(page = 1) {
@@ -21,20 +20,18 @@ export async function fetchData(page = 1) {
       search(content)
       renderPagination(data, user_info);
     }
-  }else if (!response.ok && !response.status === 409 && !response.status === 400) {
-    await status(response)
- }else if( response.status === 409 || response.status === 400) {
-     const data = await response.json();
-      alertPopup(data)
+  } else if (response.status === 409 || response.status === 400) {
+    const data = await response.json();
+    alertPopup(data)
   }
 
 
 }
 await fetchData()
- 
+
 
 function renderPagination(data, container) {
-  
+
   let path = window.location.pathname;
   if (path !== '/comment' && path !== '/settings') {
     let paginationDiv = document.querySelector('.pagination-controls');

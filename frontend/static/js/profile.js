@@ -1,7 +1,7 @@
 import { navigate } from "./home.js";
 import { likes } from "./likescomment.js";
 import { cards } from "./card.js";
-import { status } from "./status.js";
+
 import { alertPopup } from "./alert.js";
 const profileNav = document.querySelectorAll(".profile-nav a");
 navigate();
@@ -56,9 +56,7 @@ async function fetchData(id) {
 
     let like = document.querySelectorAll("#likes");
      likes(like);
-  } else if (!response.ok && !response.status === 409 && !response.status === 400) {
-    await status(response)
-} else if (response.status === 409 || response.status === 400) {
+  }  else if (response.status === 409 || response.status === 400) {
     const data = await response.json();
     alertPopup(data)
 }  else {

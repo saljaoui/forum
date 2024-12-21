@@ -1,7 +1,6 @@
 package route
 
 import (
-	"fmt"
 	"net/http"
 	"os"
 	"strings"
@@ -25,25 +24,44 @@ func SetupAPIRoutes(mux *http.ServeMux) {
 	mux.Handle("/api/like", handlers.AuthenticateMiddleware(http.HandlerFunc(handlers.HandelLike)))
 	mux.Handle("/api/deleted", handlers.AuthenticateMiddleware(http.HandlerFunc(handlers.HandelDeletLike)))
 	mux.Handle("/api/logout", handlers.AuthenticateMiddleware(http.HandlerFunc(handlers.HandleLogOut)))
-	mux.HandleFunc("/api/err", http.HandlerFunc(handlers.HandleError))
 }
 
 func SetupPageRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("/static/", func(w http.ResponseWriter, r *http.Request) {
 		if r.Method != http.MethodGet {
-			handlers.JsoneResponse(w, r, "Method Not Allowed", http.StatusMethodNotAllowed)
+			handlers.JsoneResponseError(w, r, "Method Not Allowed", http.StatusMethodNotAllowed)
 			return
 		}
 		suffix := r.URL.Path[len("/static/"):]
+		if strings.Contains(suffix, ".js/") || strings.Contains(suffix, ".css/") {
+			handlers.JsoneResponseError(w, r, "Access Forbidden", http.StatusForbidden)
+			return
+		}
 		if strings.Contains(suffix, ".js") {
 			http.ServeFile(w, r, "../../frontend/static/"+suffix)
 			return
 		}
 		if suffix != "css/alert.css" && suffix != "css/styles.css" && suffix != "imgs/logo.png" && suffix != "imgs/profilePic.png" {
-			handlers.JsoneResponse(w, r, "Access Forbidden", http.StatusForbidden)
+			handlers.JsoneResponseError(w, r, "Access Forbidden", http.StatusNotFound)
 			return
 		}
 		http.ServeFile(w, r, "../../frontend/static/"+suffix)
+	})
+	mux.HandleFunc("/register", func(w http.ResponseWriter, r *http.Request) {
+		cookies, err := r.Cookie("token")
+		if err != nil || cookies == nil {
+			http.ServeFile(w, r, "../../frontend/templates/register.html")
+		} else {
+			http.Redirect(w, r, "/home", http.StatusSeeOther)
+		}
+	})
+	mux.HandleFunc("/login", func(w http.ResponseWriter, r *http.Request) {
+		cookies, err := r.Cookie("token")
+		if err != nil || cookies == nil {
+			http.ServeFile(w, r, "../../frontend/templates/login.html")
+		} else {
+			http.Redirect(w, r, "/home", http.StatusSeeOther)
+		}
 	})
 
 	mux.HandleFunc("/about", func(w http.ResponseWriter, r *http.Request) {
@@ -99,9 +117,9 @@ func isValidPath(path string, paths []string) bool {
 	}
 	return false
 }
+
 // this is validate path function
 func validatePath(w http.ResponseWriter, r *http.Request) {
-	fmt.Println(r.URL.Path)
 	paths := []string{
 		"/comment",
 		"/register",
@@ -118,8 +136,8 @@ func validatePath(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path == "/" {
 		http.Redirect(w, r, "/home", http.StatusFound)
 		return
-	} else if !isValidPath(r.URL.Path, paths) {
-		handlers.JsoneResponse(w, r, "Not Found", http.StatusNotFound)
+	} else if !isValidPath(r.URL.Path, paths)  || r.URL.Path == "/logout" {
+		handlers.JsoneResponseError(w, r, "Page Not Found", http.StatusNotFound)
 		return
 	}
 }

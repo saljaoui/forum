@@ -4,10 +4,10 @@ export async function status(response) {
     if (response === 404) {
         statuscode = 404
         message = "Page Not Found"
-     } if (typeof response === "function") {
+    } if (typeof response === "function") {
         statuscode = response.status
         d = await response.json();
-        message=d.message
+        message = d.message
     }
 
     let data = await fetch("/api/err", {
@@ -25,7 +25,7 @@ export async function status(response) {
     if (!data.ok) {
         let re = await data.json()
         window.history.pushState(
-            { data: re, code: statuscode},          // State object
+            { data: re, code: statuscode },          // State object
             "",                                  // Title (optional, not used here)
             `/err`                               // URL for error page
         );

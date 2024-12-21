@@ -939,28 +939,28 @@ button:hover {
   overflow-y: scroll;
   scrollbar-width: none;
 }
-.container {
-  text-align: center;
-  padding: 40px 60px;
-  border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  background-color: var(--color-light);
-}
+  .container {
+    text-align: center;
+    padding: 40px 60px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    background-color: var(--color-light);
+  }
 
-.status-code {
-  font-size: 100px;
-  font-weight: bold;
-  color: var(--color-white);
-  letter-spacing: 5px;
-  text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-  margin-bottom: 20px;
-}
+  .status-code {
+    font-size: 100px;
+    font-weight: bold;
+    color: var(--color-white);
+    letter-spacing: 5px;
+    text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    margin-bottom: 20px;
+  }
 
-.message {
-  font-size: 20px;
-  margin-bottom: 30px;
-  text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-}
+  .message {
+    font-size: 20px;
+    margin-bottom: 30px;
+    text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  }
 
 .back-button {
   padding: 0px 10px;

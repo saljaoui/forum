@@ -2,7 +2,7 @@ import { likes } from "./likescomment.js";
 import { checkandAdd } from "./addlikes.js";
 import { GetComments } from "./comment.js";
  
-import { status } from "./status.js";
+
 import { alertPopup } from "./alert.js";
 
 const urlParams = new URLSearchParams(window.location.search);

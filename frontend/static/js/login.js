@@ -29,9 +29,7 @@ login.addEventListener('submit', async (e) => {
         };
         localStorage.setItem("data", JSON.stringify(userData));
         location.href = "/home"
-    } else if (!response.ok && !response.status === 409 && !response.status === 400) {
-        await status(response)
-    } else if (response.status === 409 || response.status === 400) {
+    }  else if (response.status === 409 || response.status === 400) {
         const data = await response.json();
  
         alertPopup(data)

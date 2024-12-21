@@ -3,6 +3,7 @@ package handlers
 import (
 	"encoding/json"
 	"fmt"
+	"html/template"
 	"net/http"
 )
 
@@ -18,9 +19,30 @@ func JsoneResponse(w http.ResponseWriter, r *http.Request, message any, code int
 		"message": message,
 	})
 	if err != nil {
-		fmt.Println(err)
 		http.Error(w, "Failed to encode JSON response", http.StatusInternalServerError)
 		return
+	}
+}
+
+type ErrorPageData struct {
+	Code    int
+	Message any
+}
+
+func JsoneResponseError(w http.ResponseWriter, r *http.Request, message any, code int) {
+	tmpl, err := template.ParseFiles("../../frontend/templates/error.html")
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	w.WriteHeader(code)
+
+	err = tmpl.Execute(w, ErrorPageData{
+		Code:    code,
+		Message: message,
+	})
+	if err != nil {
+		http.Error(w, "Failed to render template", http.StatusInternalServerError)
 	}
 }
 

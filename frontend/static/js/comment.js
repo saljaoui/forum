@@ -1,6 +1,6 @@
 import { InitialComment } from "./createcomment.js"
 import { checklogin } from "./checklogin.js";
-import { status } from "./status.js";
+
 import { alertPopup } from "./alert.js";
 await checklogin()
 const urlParams = new URLSearchParams(window.location.search);
