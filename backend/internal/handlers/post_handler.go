@@ -26,6 +26,10 @@ func HandlePost(w http.ResponseWriter, r *http.Request) {
 		JsoneResponse(w, r, "Duplicate category: The category already exists", http.StatusConflict)
 		return
 	}
+	if post.Content == "" {
+		JsoneResponse(w, r, "Your content is emty", http.StatusBadRequest)
+		return
+	}
 	for _, n := range post.Name_Category {
 		if !checkGategory(n) {
 			JsoneResponse(w, r, "Your category is incorrect", http.StatusBadRequest)
