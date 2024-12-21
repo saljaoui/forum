@@ -24,7 +24,6 @@ export function alertPopup(data) {
     function hidePopup() {
         const popup = document.getElementById('popup');
         popup.classList.remove('show');
-         location.href="/home"
     }
     showPopup()
     setTimeout(hidePopup, 900);
