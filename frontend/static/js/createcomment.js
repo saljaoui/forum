@@ -4,9 +4,14 @@ import { GetComments } from "./comment.js";
 import { alertPopup } from "./alert.js";
 import { getTimeDifferenceInHours } from "./card.js";
 const urlParams = new URLSearchParams(window.location.search);
+const pathname =  location.pathname
 const cardData = urlParams.get("card_id");
 checkandAdd()
 async function InitialComment(ele, comments) {
+    if(pathname==="/home")
+    {
+
+    
      content = ele.map((data) => {
         
         let div = document.createElement("div")
@@ -57,6 +62,7 @@ async function InitialComment(ele, comments) {
  
     let like = document.querySelectorAll("#likes");
      likes(like)
+    }
 }
 
 
