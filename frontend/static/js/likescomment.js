@@ -48,10 +48,10 @@ export async function addLikes(card_id, liked, lik, dislk, click) {
                     Userdisliked: dislk,
                 }),
             });
-               if( response.status === 409 || response.status === 400) {
-                 const data = await response.json();
-                  alertPopup(data)
-              }
+            if (response.status === 400) {
+                const data = await response.json();
+                alertPopup(data)
+            }
         }
     } catch (error) {
         console.log(error);
@@ -71,15 +71,10 @@ export async function deletLikes(card_id) {
                 },
                 body: JSON.stringify({ card_id: +card_id }),
             });
-
-            if (!response.ok) {
-                await status(response)
-            }
-
-            else {
-                let data = await response.json();
-                console.log(data);
-
+ 
+            if (response.status === 400) {
+                const data = await response.json();
+                alertPopup(data)
             }
         }
     } catch (error) {

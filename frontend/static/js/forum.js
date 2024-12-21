@@ -20,7 +20,7 @@ export async function fetchData(page = 1) {
       search(content)
       renderPagination(data, user_info);
     }
-  } else if (response.status === 409 || response.status === 400) {
+  } else if ( response.status === 400) {
     const data = await response.json();
     alertPopup(data)
   }

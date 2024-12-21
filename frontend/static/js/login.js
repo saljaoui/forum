@@ -1,6 +1,5 @@
 import { alertPopup } from "./alert.js"
-import { status } from "./status.js"
-
+ 
 let login = document.querySelector("#login")
 
 login.addEventListener('submit', async (e) => {
@@ -29,7 +28,7 @@ login.addEventListener('submit', async (e) => {
         };
         localStorage.setItem("data", JSON.stringify(userData));
         location.href = "/home"
-    }  else if (response.status === 409 || response.status === 400) {
+    }  else if ( response.status === 400) {
         const data = await response.json();
  
         alertPopup(data)

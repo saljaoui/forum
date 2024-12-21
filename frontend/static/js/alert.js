@@ -1,10 +1,8 @@
 
 
 export function alertPopup(data) {
-    console.log(data,"hhere");
-    let alert=document.querySelector(".alert")
-    console.log(alert.textContent);
-    
+     let alert=document.querySelector(".alert")
+     
     alert.innerHTML+=`
         <div class="popup-container" id="popup">
             <div class="popup-message">

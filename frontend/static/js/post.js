@@ -1,7 +1,6 @@
 
 import { fetchData } from './forum.js';
-import { status } from './status.js';
-import {alertPopup} from './alert.js';
+ import {alertPopup} from './alert.js';
 
 async function creatPost(categoriesSelected) {
          let content = document.querySelector("#content")

@@ -1,16 +1,12 @@
 import { likes } from "./likescomment.js";
 import { checkandAdd } from "./addlikes.js";
 import { GetComments } from "./comment.js";
- 
-
 import { alertPopup } from "./alert.js";
-
 const urlParams = new URLSearchParams(window.location.search);
 const cardData = urlParams.get("card_id");
 checkandAdd()
 async function InitialComment(ele, comments) {
-    let content = []
-    content = ele.map((data) => {
+     content = ele.map((data) => {
         let div = document.createElement("div")
         div.className = "commens-card"
         div.innerHTML = `
@@ -73,9 +69,7 @@ async function fetchCard(card) {
             if (cardElement) {
                 await updateCard(cardElement, cardData, card);
             }
-        }else if (!response.ok && !response.status === 409 && !response.status === 400) {
-            await status(response)
-         }else if( response.status === 409 || response.status === 400) {
+        } else if( response.status === 409 || response.status === 400) {
              const data = await response.json();
               alertPopup(data)
               
@@ -135,9 +129,11 @@ async function createComment(content) {
         const data = await response.json();
         console.log("Success:", data);
 
-    } else if (!response.ok) {
-       await  status(response)
-    } else {
+    }  else if(  response.status === 400) {
+        const data = await response.json();
+         alertPopup(data)
+         
+     }else {
         const errorData = response.json();
         console.error("Error:", errorData);
         alert(`Error: ${errorData.message || "Request failed"}`);

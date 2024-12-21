@@ -1,6 +1,5 @@
 import { alertPopup } from "./alert.js"
-import { status } from "./status.js"
-
+ 
 let register = document.querySelector("#form-submit")
 register.addEventListener('submit', async (e) => {
     e.preventDefault()
