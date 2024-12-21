@@ -8,11 +8,10 @@ const pathname =  location.pathname
 const cardData = urlParams.get("card_id");
 checkandAdd()
 async function InitialComment(ele, comments) {
-    if(pathname==="/home")
+   
+    if(ele.length>0)
     {
-
-    
-     content = ele.map((data) => {
+       ele.map((data) => {
         
         let div = document.createElement("div")
         div.className = "commens-card"

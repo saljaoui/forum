@@ -58,16 +58,12 @@ async function GetComments() {
             if (textResponse.trim() === "") {
                 console.log("Empty response body");
                 return;
-            }
-
-            try {
+            } 
                 let datacomment = JSON.parse(textResponse); // Manually parse JSON
                  let comments = document.querySelector(".allcomment");
                 comments.innerHTML = "";
-                InitialComment(datacomment, comments);
-            } catch (e) {
-                console.error("Failed to parse JSON:", e.message);
-            }
+             await   InitialComment(datacomment, comments);
+            
 
         } else if(   response.status === 400) {
             const data = await response.json();
