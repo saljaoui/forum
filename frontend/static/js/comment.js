@@ -62,8 +62,8 @@ async function GetComments() {
                 let datacomment = JSON.parse(textResponse); // Manually parse JSON
                  let comments = document.querySelector(".allcomment");
                 comments.innerHTML = "";
-             await   InitialComment(datacomment, comments);
-            
+                await  InitialComment(datacomment, comments);
+                localStorage.setItem("card_id",cardData)
 
         } else if(   response.status === 400) {
             const data = await response.json();

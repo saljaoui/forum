@@ -1,6 +1,10 @@
 
 
 export function alertPopup(data) {
+    const params = location.pathname
+    let cardId = localStorage.getItem("card_id");
+        console.log(cardId);
+        
      let alert=document.querySelector(".alert")
      
     alert.innerHTML+=`
@@ -24,6 +28,10 @@ export function alertPopup(data) {
     function hidePopup() {
         const popup = document.getElementById('popup');
         popup.classList.remove('show');
+        if(params==="/comment"){
+            location.href=`/comment?card_id=${cardId}`
+        }
+        
     }
     showPopup()
     setTimeout(hidePopup, 900);

@@ -28,25 +28,37 @@ func SetupAPIRoutes(mux *http.ServeMux) {
 
 func SetupPageRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("/static/", func(w http.ResponseWriter, r *http.Request) {
-		if r.Method != http.MethodGet {
+ 		if r.Method != http.MethodGet {
 			handlers.JsoneResponseError(w, r, "Method Not Allowed", http.StatusMethodNotAllowed)
 			return
 		}
-		suffix := r.URL.Path[len("/static/"):]
-		if strings.Contains(suffix, ".js/") || strings.Contains(suffix, ".css/") {
-			handlers.JsoneResponseError(w, r, "Access Forbidden", http.StatusForbidden)
+
+ 		suffix := r.URL.Path[len("/static/"):]
+
+ 		if strings.Contains(suffix, ".css/") || strings.Contains(suffix, ".js/") || strings.Contains(suffix, ".png/") {
+			handlers.JsoneResponseError(w, r, "Not Found", http.StatusNotFound)
 			return
 		}
+ 
 		if strings.Contains(suffix, ".js") {
 			http.ServeFile(w, r, "../../frontend/static/"+suffix)
 			return
 		}
-		if suffix != "css/alert.css" && suffix != "css/styles.css" && suffix != "imgs/logo.png" && suffix != "imgs/profilePic.png" {
-			handlers.JsoneResponseError(w, r, "Access Forbidden", http.StatusNotFound)
-			return
+
+ 		allowedFiles := map[string]bool{
+			"css/alert.css":       true,
+			"css/styles.css":      true,
+			"imgs/logo.png":       true,
+			"imgs/profilePic.png": true,
 		}
+
+ 		if !allowedFiles[suffix] {
+			handlers.JsoneResponseError(w, r, "Access Forbidden", http.StatusForbidden)
+			return
+		} 
 		http.ServeFile(w, r, "../../frontend/static/"+suffix)
 	})
+
 	mux.HandleFunc("/register", func(w http.ResponseWriter, r *http.Request) {
 		cookies, err := r.Cookie("token")
 		if err != nil || cookies == nil {
@@ -136,7 +148,7 @@ func validatePath(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path == "/" {
 		http.Redirect(w, r, "/home", http.StatusFound)
 		return
-	} else if !isValidPath(r.URL.Path, paths)  || r.URL.Path == "/logout" {
+	} else if !isValidPath(r.URL.Path, paths) || r.URL.Path == "/logout" {
 		handlers.JsoneResponseError(w, r, "Page Not Found", http.StatusNotFound)
 		return
 	}
