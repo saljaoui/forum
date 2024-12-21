@@ -62,8 +62,7 @@ async function GetComments() {
 
             try {
                 let datacomment = JSON.parse(textResponse); // Manually parse JSON
-                console.log(datacomment);
-                let comments = document.querySelector(".allcomment");
+                 let comments = document.querySelector(".allcomment");
                 comments.innerHTML = "";
                 InitialComment(datacomment, comments);
             } catch (e) {

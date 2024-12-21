@@ -1,10 +1,7 @@
 import { createComment } from "./createcomment.js"
 import { creatPost } from './post.js';
-// import { checklogin } from "./checklogin.js";
-async function classes() {
-    // let login=await checklogin()
-    // console.log(login);
-
+ async function classes() {
+ 
     if (document.cookie != "") {
         let path = window.location.pathname
         const creategategory = document.querySelector(".postReply")
@@ -21,8 +18,7 @@ async function classes() {
         const categoriesList = Array.from(document.getElementsByClassName('category-item'))
         let categoriesSelected = []
 
-
-        if (path === "/comment" && comment) {
+        if (path === "/comment") {
             openCategories.style.display="none"
             while (categories_popup.firstChild) {
                 categories_popup.removeChild(categories_popup.firstChild)
