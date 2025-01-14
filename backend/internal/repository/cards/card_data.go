@@ -49,8 +49,8 @@ func getCardById(id int) *Card_Row {
 
 func getCard(targetID  int) Card_View_Data {
 	query := `SELECT c.id,c.user_id,c.content,c.created_at,u.firstname,u.lastname,
-	 (SELECT count(*) FROM comment cm WHERE cm.target_id = c.id)
-	 comments,(SELECT count(*) FROM likes l WHERE l.card_id = c.id and l.is_like = 1)
+	 (SELECT count(*) FROM comment cm WHERE cm.target_id = c.id)comments,
+	 (SELECT count(*) FROM likes l WHERE l.card_id = c.id and l.is_like = 1)
 	  likes , (SELECT count(*) FROM likes l WHERE l.card_id = c.id and l.is_like = -1) dislikes
 			FROM card c  JOIN user u ON c.user_id = u.id WHERE c.id = ?;`
 	Row := Card_View_Data{}

@@ -10,9 +10,9 @@ import (
 
 func SetupAPIRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("/api/register", handlers.HandleRegister)
+	mux.HandleFunc("/api/login", handlers.HandleLogin)
 	mux.HandleFunc("/api/home", handlers.HomeHandle)
 	mux.HandleFunc("/api/category", handlers.HandelCategory)
-	mux.HandleFunc("/api/login", handlers.HandleLogin)
 	mux.HandleFunc("/api/comment", handlers.Handel_GetCommet)
 	mux.HandleFunc("/api/card", handlers.GetCard_handler)
 	mux.HandleFunc("/api/isLogged", handlers.HandleIsLogged)
