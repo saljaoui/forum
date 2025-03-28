@@ -28,34 +28,34 @@ func SetupAPIRoutes(mux *http.ServeMux) {
 
 func SetupPageRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("/static/", func(w http.ResponseWriter, r *http.Request) {
- 		if r.Method != http.MethodGet {
+		if r.Method != http.MethodGet {
 			handlers.JsoneResponseError(w, r, "Method Not Allowed", http.StatusMethodNotAllowed)
 			return
 		}
 
- 		suffix := r.URL.Path[len("/static/"):]
+		suffix := r.URL.Path[len("/static/"):]
 
- 		if strings.Contains(suffix, ".css/") || strings.Contains(suffix, ".js/") || strings.Contains(suffix, ".png/") {
+		if strings.Contains(suffix, ".css/") || strings.Contains(suffix, ".js/") || strings.Contains(suffix, ".png/") {
 			handlers.JsoneResponseError(w, r, "Not Found", http.StatusNotFound)
 			return
 		}
- 
+
 		if strings.Contains(suffix, ".js") {
 			http.ServeFile(w, r, "../../frontend/static/"+suffix)
 			return
 		}
 
- 		allowedFiles := map[string]bool{
-			"css/alert.css":       true,
-			"css/styles.css":      true,
-			"imgs/logo.png":       true,
-			"imgs/profilePic.png": true,
-		}
+		// allowedFiles := map[string]bool{
+		// 	"css/alert.css":       true,
+		// 	"css/styles.css":      true,
+		// 	"imgs/logo.png":       true,
+		// 	"imgs/profilePic.png": true,
+		// }
 
- 		if !allowedFiles[suffix] {
-			handlers.JsoneResponseError(w, r, "Access Forbidden", http.StatusForbidden)
-			return
-		} 
+		// if !allowedFiles[suffix] {
+		// 	handlers.JsoneResponseError(w, r, "Access Forbidden", http.StatusForbidden)
+		// 	return
+		// }
 		http.ServeFile(w, r, "../../frontend/static/"+suffix)
 	})
 

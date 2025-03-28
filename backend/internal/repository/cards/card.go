@@ -4,6 +4,7 @@ type card struct {
 	Id        int
 	User_Id   int
 	Content   string
+	Image     string
 	CreatedAt string
 }
 
@@ -11,6 +12,7 @@ type card_View struct {
 	Id        int    `json:"id"`
 	User_Id   int    `json:"userid"`
 	Content   string `json:"content"`
+	Image_url string `json:"image"`
 	CreatedAt string `json:"date"`
 	FirstName string `json:"firstName"`
 	LastName  string `json:"lastName"`
@@ -19,16 +21,17 @@ type card_View struct {
 	Comments  int    `json:"comments"`
 }
 
-func NewCard(user_id int, content string) *card {
+func NewCard(user_id int, content string, image_url string) *card {
 	return &card{
 		Id:      -1,
 		User_Id: user_id,
 		Content: content,
+		Image:   image_url,
 	}
 }
 
 func (C *card) Add() int {
-	C.Id = insertCard(C.User_Id, C.Content)
+	C.Id = insertCard(C.User_Id, C.Content, C.Image)
 	return C.Id
 }
 
@@ -52,6 +55,7 @@ func GetOneCard(id int) card_View {
 	card.Id = data_Row.Id
 	card.User_Id = data_Row.User_Id
 	card.Content = data_Row.Content
+	card.Image_url = data_Row.Image_url
 	card.CreatedAt = data_Row.CreatedAt
 	card.FirstName = data_Row.FirstName
 	card.LastName = data_Row.LastName
@@ -84,6 +88,7 @@ func convert(data_Row Card_View_Data) card_View {
 	card.Id = data_Row.Id
 	card.User_Id = data_Row.User_Id
 	card.Content = data_Row.Content
+	card.Image_url = data_Row.Image_url
 	card.CreatedAt = data_Row.CreatedAt
 	card.FirstName = data_Row.FirstName
 	card.LastName = data_Row.LastName

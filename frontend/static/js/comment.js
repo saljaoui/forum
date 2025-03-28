@@ -9,6 +9,7 @@ const cardData = urlParams.get("card_id");
 async function fetchdata() {
     let fullname = document.querySelector(".full-name")
     let content = document.querySelector(".content")
+    let image = document.querySelector("#post-image")
     let time = document.querySelector(".time")
     let username = document.querySelector(".username")
     let cards = document.querySelectorAll("#likes")
@@ -28,6 +29,7 @@ async function fetchdata() {
             data = await response.json();
             fullname.textContent = data.lastName + " " + data.firstName
             content.textContent = data.content
+            data.image != "" || image != null ? image.src = "static/imgs/" + data.image : image.remove();
             username.textContent = data.lastName
             is_liked.textContent = data.likes
             is_Dislikes.textContent = data.dislikes

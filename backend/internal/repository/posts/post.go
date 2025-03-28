@@ -16,6 +16,7 @@ type Post struct {
 	User_Id       int      `json:"user_id"`
 	Title         string   `json:"title"`
 	Content       string   `json:"content"`
+	Image_url     string   `json:"image"`
 	Name_Category []string `json:"name"`
 	CreatedAt     string   `json:"createdat"`
 	Card_Id       int      `json:"card_id"`
@@ -29,6 +30,7 @@ type PostResponde struct {
 	LastName     string `json:"lastName"`
 	Title        string `json:"title"`
 	Content      string `json:"content"`
+	Image_url    string `json:"image"`
 	Likes        int    `json:"likes"`
 	Dislikes     int    `json:"dislikes"`
 	UserLiked    int    `json:"userliked"`
@@ -41,7 +43,7 @@ func (p *Post) Add() int {
 	content := html.EscapeString(p.Content)
 	title := html.EscapeString(p.Title)
 
-	card := cards.NewCard(p.User_Id, content)
+	card := cards.NewCard(p.User_Id, content, p.Image_url)
 	card.Add()
 	if card.Id == -1 {
 		return -1
@@ -73,6 +75,7 @@ func GetPosts(query string) []PostResponde {
 			&post.UserID,
 			&post.Post_Id,
 			&post.Content,
+			&post.Image_url,
 			&post.CreatedAt,
 			&post.FirstName,
 			&post.LastName,

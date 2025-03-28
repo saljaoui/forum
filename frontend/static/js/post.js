@@ -2,9 +2,9 @@
 import { fetchData } from './forum.js';
  import {alertPopup} from './alert.js';
 
-async function creatPost(categoriesSelected) {
+async function creatPost(categoriesSelected, uploadedImage) {
          let content = document.querySelector("#content")
-        console.log(content.value, categoriesSelected);
+         
         const response = await fetch("/api/post", {
             method: "POST",
             headers: {
@@ -14,6 +14,7 @@ async function creatPost(categoriesSelected) {
             body: JSON.stringify({
                 title: "title 2",
                 content: content.value,
+                image: uploadedImage,
                 name: categoriesSelected
             })
         })
@@ -24,9 +25,9 @@ async function creatPost(categoriesSelected) {
 
         }else if( response.status === 400) {
             const data = await response.json();
-             alertPopup(data)
-         }
-        //console.log(response);
+            alertPopup(data)
+        }
+        // console.log(response);
     
 }
 export {

@@ -1,6 +1,6 @@
 -- database: :memory:
 
-CREATE TABLE user(
+CREATE TABLE IF NOT EXISTS user(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     firstname text   not NULL,
     lastname text not NULL,
@@ -11,20 +11,20 @@ CREATE TABLE user(
     UUID text
 );
 
-CREATE TABLE post (
+CREATE TABLE IF NOT EXISTS post (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     title TEXT NOT NULL,
     card_id INTEGER,
     FOREIGN KEY (card_id) REFERENCES card(id)
 );
 
-CREATE TABLE category (
+CREATE TABLE IF NOT EXISTS category (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name text not NULL
 );
 
 
-CREATE TABLE post_category (
+CREATE TABLE IF NOT EXISTS post_category (
     post_id INTEGER,
     category_id INTEGER,
     PRIMARY KEY (post_id, category_id),
@@ -32,15 +32,16 @@ CREATE TABLE post_category (
     FOREIGN KEY (category_id) REFERENCES category(id)
 );
 
-CREATE TABLE card (
+CREATE TABLE IF NOT EXISTS card(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER,
     content TEXT NOT NULL,
+    Image_url TEXT,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES user(id)
 );
 
-CREATE TABLE comment (
+CREATE TABLE IF NOT EXISTS comment(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     card_id INTEGER,
     target_id INTEGER,
@@ -48,7 +49,7 @@ CREATE TABLE comment (
     FOREIGN KEY (target_id) REFERENCES card(id)
 );
 
-CREATE TABLE likes (
+CREATE TABLE IF NOT EXISTS likes (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER,
     card_id INTEGER,

@@ -14,15 +14,15 @@ type Comment struct {
 }
 
 type comment_View struct {
-	Id  int				`json:"id"`
-	User_Id  int		`json:"userid"`
-	Content   string	`json:"content"`
-	CreatedAt string	`json:"date"`
-	FirstName string	`json:"firstName"`
-	LastName  string	`json:"lastName"`
-	Likes 	  int		`json:"likes"`
-	DisLikes  int		`json:"dislikes"`
-	Comments  int		`json:"comments"`
+	Id        int    `json:"id"`
+	User_Id   int    `json:"userid"`
+	Content   string `json:"content"`
+	CreatedAt string `json:"date"`
+	FirstName string `json:"firstName"`
+	LastName  string `json:"lastName"`
+	Likes     int    `json:"likes"`
+	DisLikes  int    `json:"dislikes"`
+	Comments  int    `json:"comments"`
 }
 
 func NewComment(user_id int, content string, target int) *Comment {
@@ -36,7 +36,7 @@ func NewComment(user_id int, content string, target int) *Comment {
 }
 
 func (c *Comment) Add() int {
-	card := cards.NewCard(c.User_Id, c.Content)
+	card := cards.NewCard(c.User_Id, c.Content, "")
 	card.Add()
 	if card.Id == -1 {
 		return -1

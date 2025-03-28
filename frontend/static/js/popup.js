@@ -2,7 +2,7 @@ import { createComment } from "./createcomment.js"
 import { creatPost } from './post.js';
 // import { checklogin } from "./checklogin.js";
 async function classes() {
-    
+
 
     if (document.cookie != "") {
         let path = window.location.pathname
@@ -11,7 +11,8 @@ async function classes() {
         const post_close = document.querySelector('.post-close')
         const comment = document.querySelector(".create-comment")
         const categoryItems = document.querySelectorAll('.category-item');
-        const categories_popup = document.getElementById('categories-popup')
+        const categories_popup = document.getElementById('categories-popup');
+        const fileInput = document.getElementById('image');
         const newPost = document.querySelector('.newPost-popup')
         const cancel_btn = document.querySelector('.category')
         const openCategories = document.querySelector('.openCategories')
@@ -19,10 +20,11 @@ async function classes() {
         const done_btn = document.querySelector('.done-post')
         const categoriesList = Array.from(document.getElementsByClassName('category-item'))
         let categoriesSelected = []
+        let uploadedImage = ""
 
         if (path === "/comment") {
-            newPost.style.display="none"
-            openCategories.style.display="none"
+            newPost.style.display = "none"
+            openCategories.style.display = "none"
             while (categories_popup.firstChild) {
                 categories_popup.removeChild(categories_popup.firstChild)
             }
@@ -64,12 +66,12 @@ async function classes() {
 
             create_btn.addEventListener("click", async () => {
                 if (categoriesSelected.length > 0 && content.value.length > 0) {
-                    await creatPost(categoriesSelected)
+                    await creatPost(categoriesSelected, uploadedImage)
                     creatPostPopup.style.display = "none"
                     closeCategories()
                     content.value = ""
 
-                 //   location.href = "/home"
+                    //   location.href = "/home"
                 } else if (categoriesSelected.length === 0) {
                     categories_popup.style.display = "flex"
                 }
@@ -88,6 +90,29 @@ async function classes() {
                 categoriesSelected = []
                 categories_popup.style.display = "none"
             }
+
+            fileInput.addEventListener('change', async () => {
+                const selectedImage = fileInput.files[0];
+                if (selectedImage) {
+                    if (!['image/png', 'image/jpeg', 'image/gif', 'image/jpg'].includes(selectedImage.type)) {
+                        // 'Only .png, .jpeg, jpg, and .gif files are allowed.';
+                        return;
+                    }
+                    if (selectedImage.size > 20 * 1024 * 1024) {
+                        // 'File size must not exceed 20MB.';
+                        return;
+                    }
+                    console.log(selectedImage);
+                    const reader = new FileReader();
+                    reader.onloadend = () => {
+                        uploadedImage = reader.result;
+                        console.log(uploadedImage);
+                    };
+                    reader.readAsDataURL(selectedImage);
+                } else {
+                    uploadedImage = null;
+                }
+            })
 
             categoryItems.forEach(item => {
                 item.addEventListener('click', () => {
